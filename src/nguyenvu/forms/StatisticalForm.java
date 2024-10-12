@@ -43,7 +43,7 @@ public class StatisticalForm extends SimpleForm {
 
     @Override
     public void formInitAndOpen() {
-        System.out.println("init and open");
+//        System.out.println("init and open");
     }
 
     @Override
@@ -159,9 +159,9 @@ public class StatisticalForm extends SimpleForm {
     }
 
     private void createLineChartData() {
-        DefaultCategoryDataset<String, String> categoryDataset = new DefaultCategoryDataset<>();
+        categoryDataset = new DefaultCategoryDataset<>();
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Random ran = new Random();
         int randomDate = 30;
         for (int i = 1; i <= randomDate; i++) {
@@ -173,12 +173,14 @@ public class StatisticalForm extends SimpleForm {
             cal.add(Calendar.DATE, 1);
         }
 
+        Date date = null;
+        Date dateEnd = null;
         /**
          * Control the legend we do not show all legend
          */
         try {
-            Date date = df.parse(categoryDataset.getColumnKey(0));
-            Date dateEnd = df.parse(categoryDataset.getColumnKey(categoryDataset.getColumnCount() - 1));
+            date = df.parse(categoryDataset.getColumnKey(0));
+            dateEnd = df.parse(categoryDataset.getColumnKey(categoryDataset.getColumnCount() - 1));
 
             DateCalculator dcal = new DateCalculator(date, dateEnd);
             long diff = dcal.getDifferenceDays();
@@ -213,4 +215,5 @@ public class StatisticalForm extends SimpleForm {
     private PieChart pieChart1;
     private PieChart pieChart2;
     private PieChart pieChart3;
+    private DefaultCategoryDataset<String, String> categoryDataset;
 }

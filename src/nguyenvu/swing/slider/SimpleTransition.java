@@ -19,7 +19,7 @@ import javax.swing.UIManager;
  */
 public class SimpleTransition {
 
-    private static final float ZOOM_IN = 0.1f;
+    private static final float ZOOM_IN = 0.2f;
 
     public static SliderTransition getDefaultTransition(boolean toRight) {
         return new SliderTransition() {

@@ -77,7 +77,7 @@ public class Login extends JPanel {
 
             if (username.isEmpty() || password.isEmpty()) {
 //	        JOptionPane.showMessageDialog(this, "Tên đăng nhập và mật khẩu không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                MessageAlerts.getInstance().showMessage("Lỗi", "Tên đăng nhập hoặc mật khẩu không được để trống!");
+                MessageAlerts.getInstance().showMessage("Lỗi", "Tên đăng nhập hoặc mật khẩu không được để trống!", MessageAlerts.MessageType.ERROR);
                 return;
             }
 
@@ -91,7 +91,7 @@ public class Login extends JPanel {
                 FormManager.login(user);
             }
             else {
-                MessageAlerts.getInstance().showMessage("Lỗi", "Sai mật khẩu hoặc tên đăng nhập");
+                MessageAlerts.getInstance().showMessage("Đăng nhập thất bại", "Sai mật khẩu hoặc tên đăng nhập!");
                 txtUsername.setText("");
                 txtPassword.setText("");
             }

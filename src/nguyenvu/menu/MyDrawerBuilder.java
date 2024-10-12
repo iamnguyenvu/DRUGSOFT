@@ -2,6 +2,7 @@ package nguyenvu.menu;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import gui.BanHang;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.Icon;
@@ -124,6 +125,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
         MenuItem items[] = new MenuItem[]{
             new Item("Trang chủ", "dashboard.svg"),
+            new Item.Label("QUẢN LÝ"),
             new Item("Bán hàng", "email.svg"),
             new Item("Đổi trả", "chat.svg")
             .subMenu("Đổi sản phẩm")
@@ -138,6 +140,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             .subMenu("Doanh số nhân viên")
             .subMenu("Doanh số tổng quan"),
             new Item("Báo cáo", "page.svg"),
+            new Item.Label("KHÁC"),
             new Item("Đăng xuất", "logout.svg")
         };
 
@@ -210,6 +213,9 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                 if (index.length == 1) {
                     if (index[0] == 0) {
                         FormManager.showForm(new DashboardForm());
+                    }
+                    if (index[0] == 1) {
+                        FormManager.showForm(new BanHang());
                     }
                     if (index[0] == 9) {
                         // logout

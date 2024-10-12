@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import nguyenvu.components.SimpleForm;
 import nguyenvu.utils.DateCalculator;
@@ -40,7 +41,7 @@ public class DashboardForm extends SimpleForm {
 
     @Override
     public void formInitAndOpen() {
-        System.out.println("init and open");
+//        System.out.println("init and open");
     }
 
     @Override
@@ -64,19 +65,25 @@ public class DashboardForm extends SimpleForm {
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
 
+    private void createPreviewNofication() {
+        JPanel pnOutOfStock = new JPanel();
+        JLabel header1 = new JLabel("Sản phẩm sắp hết hạn");
+    }
+    
+    
     private void createLineChart() {
         lineChart = new LineChart();
         lineChart.setChartType(LineChart.ChartType.CURVE);
         lineChart.putClientProperty(FlatClientProperties.STYLE, ""
                 + "border:5,5,5,5,$Component.borderColor,,20");
-        add(lineChart);
+        add(lineChart, "height 500");
         createLineChartData();
     }
     
     private void createLineChartData() {
-        DefaultCategoryDataset<String, String> categoryDataset = new DefaultCategoryDataset<>();
+        categoryDataset = new DefaultCategoryDataset<>();
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Random ran = new Random();
         int randomDate = 30;
         for (int i = 1; i <= randomDate; i++) {
@@ -120,14 +127,14 @@ public class DashboardForm extends SimpleForm {
 
         lineChart.setCategoryDataset(categoryDataset);
         lineChart.getChartColor().addColor(Color.decode("#38bdf8"), Color.decode("#fb7185"), Color.decode("#34d399"));
-        JLabel header = new JLabel("Thống kê từ " + strDate + " đến " + strDateEnd); 
+        JLabel header = new JLabel("Thống kê tổng quan từ " + strDate + " đến " + strDateEnd); 
         header.putClientProperty(FlatClientProperties.STYLE, ""
                 + "font:bold +10");
         lineChart.setHeader(header);
-        header.setAlignmentX(CENTER_ALIGNMENT);
     }
 
     private LineChart lineChart;
+    private DefaultCategoryDataset<String, String> categoryDataset;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
