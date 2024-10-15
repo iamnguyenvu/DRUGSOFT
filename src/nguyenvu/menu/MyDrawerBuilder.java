@@ -3,6 +3,7 @@ package nguyenvu.menu;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import gui.BanHang;
+import gui.SanPham;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.Icon;
@@ -26,6 +27,7 @@ import nguyenvu.forms.InboxForm;
 import nguyenvu.forms.ReadForm;
 import nguyenvu.forms.DashboardForm;
 import nguyenvu.model.ModelUser;
+import nguyenvu.utils.WindowsTabbed;
 import raven.swing.AvatarIcon;
 
 /**
@@ -216,6 +218,9 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     }
                     if (index[0] == 1) {
                         FormManager.showForm(new BanHang());
+                    }
+                    if (index[0] == 3) {
+                        new SanPham().setVisible(true);
                     }
                     if (index[0] == 9) {
                         // logout
