@@ -1,9 +1,11 @@
 package nguyenvu.menu;
 
 import com.formdev.flatlaf.FlatClientProperties;
+
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+
 import gui.BanHang;
-import gui.SanPham;
+
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.Icon;
@@ -219,8 +221,9 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     if (index[0] == 1) {
                         FormManager.showForm(new BanHang());
                     }
+                    
                     if (index[0] == 3) {
-                        new SanPham().setVisible(true);
+                    	FormManager.showForm(new gui.SanPham());
                     }
                     if (index[0] == 9) {
                         // logout
