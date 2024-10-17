@@ -32,8 +32,8 @@ public class Login extends JPanel {
         setLayout(new MigLayout("fill,insets 20", "[center]", "[center]"));
         txtUsername = new JTextField();
         txtPassword = new JPasswordField();
-        chRememberMe = new JCheckBox("Remember me");
-        cmdLogin = new JButton("Login");
+        chRememberMe = new JCheckBox("Ghi nhớ đăng nhập");
+        cmdLogin = new JButton("Đăng nhập");
         JPanel panel = new JPanel(new MigLayout("wrap,fillx,insets 35 45 30 45", "fill,250:280"));
         panel.putClientProperty(FlatClientProperties.STYLE, ""
                 + "arc:20;"

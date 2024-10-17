@@ -27,7 +27,6 @@ import nguyenvu.forms.InboxForm;
 import nguyenvu.forms.ReadForm;
 import nguyenvu.forms.DashboardForm;
 import nguyenvu.model.ModelUser;
-import nguyenvu.utils.WindowsTabbed;
 import raven.swing.AvatarIcon;
 
 /**
@@ -135,7 +134,8 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item("Sản phẩm", "calendar.svg"),
             new Item("Hóa đơn", "forms.svg"),
             new Item("Khách hàng", "ui.svg"),
-            new Item("Nhân viên", "icon.svg"),
+            new Item("Nhân viên", "icon.svg"),        
+            new Item("Tài khoản", "key.svg"),
             new Item("Thống kê", "chart.svg")
             .subMenu("Sản phẩm sắp hết hạn")
             .subMenu("Sản phẩm sắp hết hàng")
@@ -222,7 +222,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     if (index[0] == 3) {
                         new SanPham().setVisible(true);
                     }
-                    if (index[0] == 9) {
+                    if (index[0] == 10) {
                         // logout
                         FormManager.logout();
                     }
