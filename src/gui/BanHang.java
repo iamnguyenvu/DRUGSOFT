@@ -13,7 +13,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import net.miginfocom.swing.MigLayout;
 import nguyenvu.components.SimpleForm;
+import nguyenvu.menu.FormManager;
 import nguyenvu.utils.RoundedTextField;
+import nguyenvu.utils.TableDeleteCellRender;
 import nguyenvu.utils.WindowsTabbed;
 
 /**
@@ -22,7 +24,6 @@ import nguyenvu.utils.WindowsTabbed;
  */
 public class BanHang extends SimpleForm {
 
-    private DefaultListModel<SanPham> model;
     public BanHang() {
         setPreferredSize(new Dimension(1000, 740));
         initComponents();
@@ -41,14 +42,19 @@ public class BanHang extends SimpleForm {
         return icon;
     }
 
-    private void txtKeyReleased(KeyEvent e) {
-        model = new DefaultListModel<>();
-        listSanPham.setM;
+    private void txtKeyReleased(KeyEvent ev) {
+        DefaultListModel model = new DefaultListModel<SanPham>();
+        listSanPham.setModel(model);
         try {
             String key = txtSearch.getText().trim();
-            
+            if(key.equals("")) {
+                model.removeAllElements();
+            }
+            else {
+                
+            }
         }
-        catch {
+        catch (Exception e) {
             
         }
     }
@@ -59,6 +65,9 @@ public class BanHang extends SimpleForm {
         pnSearch = new javax.swing.JPanel();
         btnFilter = new javax.swing.JButton(new FlatSVGIcon("gui/icon/filter.svg"));
         txtSearch = new RoundedTextField(40);
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listSanPham = new javax.swing.JList<>();
         pnContent = new javax.swing.JPanel();
         pnRightContent = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -89,9 +98,8 @@ public class BanHang extends SimpleForm {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jLayeredPane1 = new javax.swing.JLayeredPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listSanPham = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
 
         setPreferredSize(new java.awt.Dimension(1470, 730));
         setLayout(new java.awt.BorderLayout());
@@ -127,6 +135,23 @@ public class BanHang extends SimpleForm {
         txtSearch.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:5,5,5,5,$Component.borderColor,,20");
 
+        jScrollPane1.setViewportView(listSanPham);
+
+        jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+        );
+
+        pnSearch.add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 45, 730, 230));
+
         pnSearch.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:0,0,0,0,$Component.borderColor,,20");
 
@@ -148,6 +173,7 @@ public class BanHang extends SimpleForm {
         pnInputCustomer.add(btnAddCustomer, java.awt.BorderLayout.LINE_END);
 
         txtCustomer.setBackground(new java.awt.Color(204, 204, 204));
+        txtCustomer.setForeground(new java.awt.Color(102, 102, 102));
         txtCustomer.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 1));
         txtCustomer.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtCustomer.setPreferredSize(new java.awt.Dimension(85, 40));
@@ -390,20 +416,63 @@ public class BanHang extends SimpleForm {
                 .addGap(0, 12, Short.MAX_VALUE))
         );
 
-        jScrollPane1.setViewportView(listSanPham);
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(452, 500));
 
-        jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "STT", "hinhAnh", "maSP", "tenSP", "donVi", "soLuong", "donGia", "thanhTien", "btnDelete"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
 
-        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
-        jLayeredPane1.setLayout(jLayeredPane1Layout);
-        jLayeredPane1Layout.setHorizontalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
-        );
-        jLayeredPane1Layout.setVerticalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
-        );
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table.setPreferredSize(new java.awt.Dimension(675, 500));
+        table.setRowHeight(60);
+        table.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(table);
+        if (table.getColumnModel().getColumnCount() > 0) {
+            table.getColumnModel().getColumn(0).setResizable(false);
+            table.getColumnModel().getColumn(0).setPreferredWidth(20);
+            table.getColumnModel().getColumn(1).setResizable(false);
+            table.getColumnModel().getColumn(1).setPreferredWidth(60);
+            table.getColumnModel().getColumn(2).setResizable(false);
+            table.getColumnModel().getColumn(2).setPreferredWidth(100);
+            table.getColumnModel().getColumn(3).setResizable(false);
+            table.getColumnModel().getColumn(3).setPreferredWidth(200);
+            table.getColumnModel().getColumn(4).setResizable(false);
+            table.getColumnModel().getColumn(4).setPreferredWidth(80);
+            table.getColumnModel().getColumn(5).setResizable(false);
+            table.getColumnModel().getColumn(5).setPreferredWidth(40);
+            table.getColumnModel().getColumn(6).setResizable(false);
+            table.getColumnModel().getColumn(6).setPreferredWidth(100);
+            table.getColumnModel().getColumn(7).setResizable(false);
+            table.getColumnModel().getColumn(7).setPreferredWidth(100);
+            table.getColumnModel().getColumn(8).setResizable(false);
+            table.getColumnModel().getColumn(8).setPreferredWidth(30);
+        }
+        table.getColumnModel().getColumn(8).setCellRenderer(new TableDeleteCellRender());
+        //table.putClientProperty(FlatClientProperties.STYLE, ""
+            //                + "border:5,5,5,5,$Component.borderColor,,20");
 
         javax.swing.GroupLayout pnLeftContentLayout = new javax.swing.GroupLayout(pnLeftContent);
         pnLeftContent.setLayout(pnLeftContentLayout);
@@ -411,24 +480,24 @@ public class BanHang extends SimpleForm {
             pnLeftContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnLeftContentLayout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(pnFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 1057, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnLeftContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnFunc, javax.swing.GroupLayout.DEFAULT_SIZE, 1057, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
-            .addGroup(pnLeftContentLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnLeftContentLayout.setVerticalGroup(
             pnLeftContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnLeftContentLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
 
         pnFunc.putClientProperty(FlatClientProperties.STYLE, ""
+            + "border:5,5,5,5,$Component.borderColor,,20");
+        jScrollPane2.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:5,5,5,5,$Component.borderColor,,20");
 
         javax.swing.GroupLayout pnContentLayout = new javax.swing.GroupLayout(pnContent);
@@ -446,7 +515,7 @@ public class BanHang extends SimpleForm {
                 .addComponent(pnRightContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(pnContentLayout.createSequentialGroup()
-                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
+                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -501,6 +570,7 @@ public class BanHang extends SimpleForm {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblKhachDua;
     private javax.swing.JLabel lblPhaiTra;
     private javax.swing.JLabel lblSoLuongSP;
@@ -514,6 +584,7 @@ public class BanHang extends SimpleForm {
     private javax.swing.JPanel pnLeftContent;
     private javax.swing.JPanel pnRightContent;
     private javax.swing.JPanel pnSearch;
+    private javax.swing.JTable table;
     private javax.swing.JTextField txtCustomer;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
