@@ -15,6 +15,7 @@ public class SanPham {
     private String hinhAnhSP;         // Hình ảnh sản phẩm
     private LoaiSanPham loaiSanPham;  // Loại sản phẩm
     private int soLuong;
+    private String phanLoai;
     
     public String getMaSP() {
             return maSP;
@@ -90,6 +91,16 @@ public class SanPham {
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
+
+    public String getPhanLoai() {
+        return phanLoai;
+    }
+
+    public void setPhanLoai(String phanLoai) {
+        this.phanLoai = phanLoai;
+    }
+    
+    
     
     
     public SanPham() {
@@ -97,7 +108,7 @@ public class SanPham {
     }
     public SanPham(String maSP, String tenSP, LocalDate ngaySanXuat, LocalDate ngayHetHan, double khoiLuong,
                     String donViTinh, String nhaCungCap, double gia, String congDung, String hinhAnhSP,
-                    LoaiSanPham loaiSanPham, int soLuong) {
+                    LoaiSanPham loaiSanPham, int soLuong, String phanLoai) {
             super();
             this.maSP = maSP;
             this.tenSP = tenSP;
@@ -111,6 +122,7 @@ public class SanPham {
             this.hinhAnhSP = hinhAnhSP;
             this.loaiSanPham = loaiSanPham;
             this.soLuong = soLuong;
+            this.phanLoai = phanLoai;
     }
 
     public SanPham(String hinhAnhSP, String maSP, String tenSP, String donViTinh, int soLuong, double gia) {
@@ -124,7 +136,7 @@ public class SanPham {
 
     @Override
     public String toString() {
-        return "SanPham{" + "maSP=" + maSP + ", tenSP=" + tenSP + ", ngaySanXuat=" + ngaySanXuat + ", ngayHetHan=" + ngayHetHan + ", khoiLuong=" + khoiLuong + ", donViTinh=" + donViTinh + ", nhaCungCap=" + nhaCungCap + ", gia=" + gia + ", congDung=" + congDung + ", hinhAnhSP=" + hinhAnhSP + ", loaiSanPham=" + loaiSanPham + ", soLuong=" + soLuong + '}';
+        return "SanPham{" + "maSP=" + maSP + ", tenSP=" + tenSP + ", ngaySanXuat=" + ngaySanXuat + ", ngayHetHan=" + ngayHetHan + ", khoiLuong=" + khoiLuong + ", donViTinh=" + donViTinh + ", nhaCungCap=" + nhaCungCap + ", gia=" + gia + ", congDung=" + congDung + ", hinhAnhSP=" + hinhAnhSP + ", loaiSanPham=" + loaiSanPham + ", soLuong=" + soLuong + ", phanLoai=" + phanLoai + '}';
     }
 
 }
