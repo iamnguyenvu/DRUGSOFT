@@ -5,6 +5,8 @@
 package nguyenvu.utils;
 
 import java.util.ArrayList;
+
+import entity.KhachHang;
 import net.miginfocom.swing.MigLayout;
 
 /**

@@ -4,12 +4,15 @@ import javax.swing.JPanel;
 
 
 import nguyenvu.components.SimpleForm;
+import nguyenvu.utils.TableDeleteCellRender;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -17,9 +20,12 @@ import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
+import entity.LoaiSanPham;
+
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 
 import javax.swing.border.Border;
@@ -29,12 +35,13 @@ import javax.swing.JDialog;
 import javax.swing.JRadioButton;
 import java.awt.Color;
 
-public class SanPham extends SimpleForm {
+public class SanPham extends SimpleForm implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JTextField tf_timKiem;
 	private JTable tb_SanPham;
 	private DefaultTableModel dftb_SanPham;
+	private JButton btn_Add;
 
 	/**
 	 * Create the panel.
@@ -87,7 +94,7 @@ public class SanPham extends SimpleForm {
         tf_timKiem.setText("Nhập Tên Hoặc Mã Sản Phẩm"); // Hiện placeholder
         tf_timKiem.setForeground(Color.GRAY); // Đặt màu xám cho văn bản placeholder
 		
-		JButton btn_Search = new JButton(new FlatSVGIcon("gui/icon/search.svg",0.06f));
+		JButton btn_Search = new JButton(new FlatSVGIcon("gui/icon/search.svg",0.03f));
 		btn_Search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -95,14 +102,16 @@ public class SanPham extends SimpleForm {
 		btn_Search.setBounds(743, 16, 47, 32);
 		pnHeading.add(btn_Search);
 		
-		JButton btn_Add = new JButton(new FlatSVGIcon("gui/icon/add.svg",0.03f));
+		btn_Add = new JButton(new FlatSVGIcon("gui/icon/add.svg",0.03f));
 		btn_Add.addActionListener(new ActionListener() {
+			private formThemSanPham themSanPhamPanel;
+
 			public void actionPerformed(ActionEvent e) {
 				// Tạo JDialog chứa formThemSanPham
 		        JDialog dialog = new JDialog();
 		        
 		        // Thêm formThemSanPham vào dialog
-		        formThemSanPham themSanPhamPanel = new formThemSanPham();
+		        themSanPhamPanel = new formThemSanPham();
 		        dialog.getContentPane().add(themSanPhamPanel);
 		        
 		        // Đặt kích thước cho dialog (phù hợp với formThemSanPham)
@@ -126,23 +135,41 @@ public class SanPham extends SimpleForm {
 		pnContent.add(pnCenter, BorderLayout.CENTER);
 		pnCenter.setLayout(null);
 		
-		tb_SanPham = new JTable();
-		tb_SanPham.setBackground(new Color(255, 255, 255));
-		dftb_SanPham = new DefaultTableModel(
-				new Object[][] {
-					{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-					{null, null, null, null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null, null, null, null},
-				},
-				new String[] {
-					"M\u00E3 S\u1EA3n Ph\u1EA9m", "T\u00EAn S\u1EA3n Ph\u1EA9m", "Ng\u00E0y S\u1EA3n Xu\u1EA5t", "Ng\u00E0y H\u1EBFt H\u1EA1n", "Nh\u00E0 Cung C\u1EA5p", "G\u00EDa", "C\u00F4ng D\u1EE5ng", "H\u00ECnh \u1EA2nh", "Lo\u1EA1i S\u1EA3n Ph\u1EA9m", "X\u00F3a"
-				}
-			);
+		String []columnNames = {"Mã Sản Phẩm","Tên Sản Phẩm","Ngày Sản Xuất","Ngày Hết Hạn","Nhà Cung Cấp","Giá","Công Dụng","Hình Ảnh","Loại Sản Phẩm","Cập Nhật","Xóa"};
+
+		dftb_SanPham = new DefaultTableModel(columnNames, 0); // columnNames là mảng chứa tên cột
+		tb_SanPham = new JTable(dftb_SanPham);
 		tb_SanPham.setModel(dftb_SanPham);
+		tb_SanPham.setBackground(new Color(255, 255, 255));
+
+		tb_SanPham.getTableHeader().setReorderingAllowed(false);
+		tb_SanPham.setRowHeight(60);
 		
-		
-        
-		
+		if (tb_SanPham.getColumnModel().getColumnCount() > 0) {
+			tb_SanPham.getColumnModel().getColumn(0).setResizable(false);
+			tb_SanPham.getColumnModel().getColumn(0).setPreferredWidth(60);
+			tb_SanPham.getColumnModel().getColumn(1).setResizable(false);
+			tb_SanPham.getColumnModel().getColumn(1).setPreferredWidth(60);
+            tb_SanPham.getColumnModel().getColumn(2).setResizable(false);
+            tb_SanPham.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tb_SanPham.getColumnModel().getColumn(3).setResizable(false);
+            tb_SanPham.getColumnModel().getColumn(3).setPreferredWidth(60);
+            tb_SanPham.getColumnModel().getColumn(4).setResizable(false);
+            tb_SanPham.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tb_SanPham.getColumnModel().getColumn(5).setResizable(false);
+            tb_SanPham.getColumnModel().getColumn(5).setPreferredWidth(40);
+            tb_SanPham.getColumnModel().getColumn(6).setResizable(false);
+            tb_SanPham.getColumnModel().getColumn(6).setPreferredWidth(100);
+            tb_SanPham.getColumnModel().getColumn(7).setResizable(false);
+            tb_SanPham.getColumnModel().getColumn(7).setPreferredWidth(80);
+            tb_SanPham.getColumnModel().getColumn(8).setResizable(false);
+            tb_SanPham.getColumnModel().getColumn(8).setPreferredWidth(60);
+            tb_SanPham.getColumnModel().getColumn(9).setResizable(false);
+            tb_SanPham.getColumnModel().getColumn(9).setPreferredWidth(40);
+            tb_SanPham.getColumnModel().getColumn(10).setResizable(false);
+            tb_SanPham.getColumnModel().getColumn(10).setPreferredWidth(40);
+        }
+
 		JScrollPane scp_SanPham = new JScrollPane(tb_SanPham);
 		scp_SanPham.setBounds(23, 20, 1107, 700);
 		pnCenter.add(scp_SanPham);
@@ -187,6 +214,10 @@ public class SanPham extends SimpleForm {
 		radio_tenTuZA.setBounds(18, 70, 139, 21);
 		pn_SapXepTheoTen.add(radio_tenTuZA);
 		
+		ButtonGroup group_ten = new ButtonGroup();
+		group_ten.add(radio_tenTuAZ);
+		group_ten.add(radio_tenTuZA);
+		
 		JPanel pn_SapXepTheoGia = new JPanel();
 		pn_SapXepTheoGia.setBackground(new Color(255, 255, 255));
 		pn_SapXepTheoGia.setBorder(new TitledBorder(null, "G\u00EDa S\u1EA3n Ph\u1EA9m", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -205,6 +236,10 @@ public class SanPham extends SimpleForm {
 		radio_giaTuCaoDenThap.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		radio_giaTuCaoDenThap.setBounds(19, 80, 139, 21);
 		pn_SapXepTheoGia.add(radio_giaTuCaoDenThap);
+		
+		ButtonGroup group_gia = new ButtonGroup();
+		group_gia.add(radio_giaTuThapDenCao);
+		group_gia.add(radio_giaTuCaoDenThap);
 		
 		JPanel pn_NgaySanXuat = new JPanel();
 		pn_NgaySanXuat.setBackground(new Color(255, 255, 255));
@@ -225,6 +260,10 @@ public class SanPham extends SimpleForm {
 		radio_NsxGiamdan.setBounds(23, 79, 139, 21);
 		pn_NgaySanXuat.add(radio_NsxGiamdan);
 		
+		ButtonGroup group_ngsx = new ButtonGroup();
+		group_ngsx.add(radio_NsxTangdan);
+		group_ngsx.add(radio_NsxGiamdan);
+		
 		JPanel pn_NgayHetHan = new JPanel();
 		pn_NgayHetHan.setBorder(new TitledBorder(null, "Ng\u00E0y H\u1EBFt H\u1EA1n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pn_NgayHetHan.setBackground(new Color(255, 255, 255));
@@ -243,6 +282,35 @@ public class SanPham extends SimpleForm {
 		radio_NhhGiamdan.setBackground(Color.WHITE);
 		radio_NhhGiamdan.setBounds(25, 71, 139, 21);
 		pn_NgayHetHan.add(radio_NhhGiamdan);
+		
+		ButtonGroup group_nghh = new ButtonGroup();
+		group_nghh.add(radio_NhhTangdan);
+		group_nghh.add(radio_NhhGiamdan);
 
 	}
+	// Phương thức thêm dòng vào bảng
+	public void addRowTable(entity.SanPham dataRow) {
+	    // Thêm dòng mới vào mô hình bảng
+	    dftb_SanPham.addRow(new Object[] {
+	        dataRow.getMaSP(),
+	        dataRow.getTenSP(),
+	        dataRow.getNgaySanXuat(),
+	        dataRow.getNgayHetHan(),
+	        dataRow.getNhaCungCap(),
+	        dataRow.getGia(),
+	        dataRow.getCongDung(),
+	        dataRow.getHinhAnhSP(),
+	        dataRow.getLoaiSanPham().getMaLoaiSP(),
+		    
+	    });
+	    System.out.println("Thêm dòng thành công: " + dataRow.toString());
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

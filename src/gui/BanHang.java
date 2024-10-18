@@ -125,7 +125,7 @@ public class BanHang extends SimpleForm {
         btnFilter.setFocusPainted(false);
         btnFilter.setPreferredSize(new java.awt.Dimension(75, 40));
 
-        pnSearch.add(btnFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 5, 60, 40));
+//        pnSearch.add(btnFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 5, 60, 40));
 
         txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
         txtSearch.setPreferredSize(new java.awt.Dimension(85, 40));
@@ -141,7 +141,7 @@ public class BanHang extends SimpleForm {
                 txtSearchKeyReleased(evt);
             }
         });
-        pnSearch.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, 730, 40));
+//        pnSearch.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, 730, 40));
         //txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
 
@@ -164,7 +164,7 @@ public class BanHang extends SimpleForm {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
         );
 
-        pnSearch.add(layer, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 45, 730, 230));
+//        pnSearch.add(layer, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 45, 730, 230));
         layer.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:5,5,5,5,$Component.borderColor,,20");
 
@@ -176,7 +176,7 @@ public class BanHang extends SimpleForm {
         pnContent.setPreferredSize(new java.awt.Dimension(1100, 800));
 
         pnRightContent.setPreferredSize(new java.awt.Dimension(400, 700));
-        pnRightContent.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+//        pnRightContent.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnInputCustomer.setPreferredSize(new java.awt.Dimension(100, 40));
         pnInputCustomer.setLayout(new java.awt.BorderLayout());
@@ -408,7 +408,7 @@ public class BanHang extends SimpleForm {
         lblTienThua.putClientProperty(FlatClientProperties.STYLE, ""
             + "font:bold +3");
 
-        pnRightContent.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 380, 660));
+//        pnRightContent.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 380, 660));
         jPanel2.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:5,5,5,5,$Component.borderColor,,20");
 
