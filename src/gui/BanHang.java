@@ -118,16 +118,18 @@ public class BanHang extends SimpleForm {
         pnSearch.setBackground(new java.awt.Color(11, 101, 136));
         pnSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         pnSearch.setPreferredSize(new java.awt.Dimension(100, 50));
-        pnSearch.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnSearch.setLayout(null);
 
         btnFilter.setBackground(new java.awt.Color(11, 101, 136));
         btnFilter.setBorderPainted(false);
         btnFilter.setFocusPainted(false);
         btnFilter.setPreferredSize(new java.awt.Dimension(75, 40));
+
         pnSearch.add(btnFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 5, 60, 40));
 
         txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
         txtSearch.setPreferredSize(new java.awt.Dimension(85, 40));
+
         txtSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "[F2] Thêm sản phẩm vào đơn");
         txtSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,6 +143,7 @@ public class BanHang extends SimpleForm {
         });
         pnSearch.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, 730, 40));
         //txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+
 
         txtSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon("gui/icon/search.svg"));
         //txtSearch.putClientProperty(FlatClientProperties.STYLE, ""

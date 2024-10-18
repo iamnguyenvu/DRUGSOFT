@@ -17,9 +17,9 @@ public class CustomerSearchPanel extends javax.swing.JPanel {
         setLayout(new MigLayout("fillx", "0[]0", "0[]0"));
     }
     
-    public void setData(ArrayList<DataSearch> data) {
+    public void setData(ArrayList<KhachHang> data) {
         this.removeAll();
-        for (DataSearch ds : data) {
+        for (KhachHang kh : data) {
             
         }
     }
