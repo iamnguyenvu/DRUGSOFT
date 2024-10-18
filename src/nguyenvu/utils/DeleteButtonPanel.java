@@ -5,18 +5,33 @@
 package nguyenvu.utils;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JTable;
 
 /**
  *
  * @author HP
  */
 public class DeleteButtonPanel extends javax.swing.JPanel {
-
+    private boolean mousePress;
     /**
      * Creates new form DeleteButtonPanel
      */
     public DeleteButtonPanel() {
         initComponents();
+    }
+    
+    public void initEvent(TableDeleteEvent ev, int row, JTable table) {
+        btnDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(ev != null) ev.onDelete(row);
+                table.getCellEditor().stopCellEditing();
+            };
+        });
     }
 
     /**
@@ -28,10 +43,18 @@ public class DeleteButtonPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnDelete = new javax.swing.JButton(new FlatSVGIcon("gui/icon/delete2.svg", 0.4f));
+        btnDelete = new JButton(new FlatSVGIcon("gui/icon/delete2.svg", 0.4f));
 
         btnDelete.setContentAreaFilled(false);
         btnDelete.setOpaque(true);
+        btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnDeleteMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnDeleteMouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -50,6 +73,14 @@ public class DeleteButtonPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDeleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMousePressed
+        btnDelete.setBackground(new JTable().getSelectionBackground());
+    }//GEN-LAST:event_btnDeleteMousePressed
+
+    private void btnDeleteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseReleased
+        btnDelete.setBackground(new JTable().getBackground());
+    }//GEN-LAST:event_btnDeleteMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

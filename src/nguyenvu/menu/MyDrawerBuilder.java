@@ -5,6 +5,8 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import gui.BanHang;
+import gui.DoiTraSanPham;
+import gui.TraSanPham;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -130,9 +132,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item("Trang chủ", "dashboard.svg"),
             new Item.Label("QUẢN LÝ"),
             new Item("Bán hàng", "email.svg"),
-            new Item("Đổi trả", "chat.svg")
-            .subMenu("Đổi sản phẩm")
-            .subMenu("Trả sản phẩm"),
+            new Item("Đổi trả", "chat.svg"),
             new Item("Sản phẩm", "calendar.svg"),
             new Item("Hóa đơn", "forms.svg"),
             new Item("Khách hàng", "ui.svg"),
@@ -221,7 +221,9 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     if (index[0] == 1) {
                         FormManager.showForm(new BanHang());
                     }
-                    
+                    if (index[0] == 2) {
+                        FormManager.showForm(new DoiTraSanPham());
+                    }
                     if (index[0] == 3) {
                     	FormManager.showForm(new gui.SanPham());
                     }
@@ -230,13 +232,6 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                         FormManager.logout();
                     }
                 } else if (index.length == 2) {
-                    if (index[0] == 2) {
-                        if (index[1] == 0) {
-                            FormManager.showForm(new InboxForm());
-                        } else if (index[1] == 1) {
-                            FormManager.showForm(new ReadForm());
-                        }
-                    }
                     if (index[0] == 7) {
                         if (index[1] == 0) {
                             FormManager.showForm(new StatisticalForm());

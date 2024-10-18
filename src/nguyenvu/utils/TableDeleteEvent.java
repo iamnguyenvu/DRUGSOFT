@@ -4,17 +4,10 @@
  */
 package nguyenvu.utils;
 
-import javax.swing.JButton;
-import javax.swing.border.EmptyBorder;
-
 /**
  *
  * @author HP
  */
-public class TableDeleteButton extends JButton{
-
-    public TableDeleteButton() {
-        setContentAreaFilled(false);
-        setBorder(new EmptyBorder(3, 3, 3, 3));
-    }
+public interface TableDeleteEvent {
+    public void onDelete(int row);
 }
