@@ -314,7 +314,7 @@ public class formThemSanPham extends JPanel implements ActionListener{
 	        
 	        // Tạo đối tượng SanPham
 	        LoaiSanPham loaiSP = new LoaiSanPham(loaiSanPham);
-	        entity.SanPham sp = new entity.SanPham(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, congDung, hinhAnh, loaiSP);
+	        entity.SanPham sp = new entity.SanPham(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, congDung, hinhAnh, loaiSP, 10, "");
 	        
 	        // Thêm sản phẩm vào bảng
 	        sanPham.addRowTable(sp);

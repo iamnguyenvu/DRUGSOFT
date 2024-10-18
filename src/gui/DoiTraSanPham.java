@@ -115,14 +115,6 @@ public class DoiTraSanPham extends SimpleForm {
         txtTienKhachDua = new javax.swing.JTextField();
         pnLeftContent = new javax.swing.JPanel();
         pnFunc = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
@@ -443,95 +435,15 @@ public class DoiTraSanPham extends SimpleForm {
 
         pnFunc.setPreferredSize(new java.awt.Dimension(100, 400));
 
-        jButton2.setBackground(new java.awt.Color(183, 218, 246));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("jButton1");
-        jButton2.setPreferredSize(new java.awt.Dimension(80, 40));
-
-        jButton3.setBackground(new java.awt.Color(183, 218, 246));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("jButton1");
-        jButton3.setPreferredSize(new java.awt.Dimension(80, 40));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setBackground(new java.awt.Color(183, 218, 246));
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("jButton1");
-        jButton4.setPreferredSize(new java.awt.Dimension(80, 40));
-
-        jButton5.setBackground(new java.awt.Color(183, 218, 246));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("jButton1");
-        jButton5.setPreferredSize(new java.awt.Dimension(80, 40));
-
-        jButton6.setBackground(new java.awt.Color(183, 218, 246));
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("jButton1");
-        jButton6.setPreferredSize(new java.awt.Dimension(80, 40));
-
-        jButton7.setBackground(new java.awt.Color(183, 218, 246));
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("jButton1");
-        jButton7.setPreferredSize(new java.awt.Dimension(80, 40));
-
-        jButton8.setBackground(new java.awt.Color(183, 218, 246));
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("jButton1");
-        jButton8.setPreferredSize(new java.awt.Dimension(80, 40));
-
-        jButton9.setBackground(new java.awt.Color(183, 218, 246));
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("jButton1");
-        jButton9.setPreferredSize(new java.awt.Dimension(80, 40));
-
         javax.swing.GroupLayout pnFuncLayout = new javax.swing.GroupLayout(pnFunc);
         pnFunc.setLayout(pnFuncLayout);
         pnFuncLayout.setHorizontalGroup(
             pnFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnFuncLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(pnFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(65, 65, 65)
-                .addGroup(pnFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(65, 65, 65)
-                .addGroup(pnFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                .addGroup(pnFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31))
+            .addGap(0, 1057, Short.MAX_VALUE)
         );
         pnFuncLayout.setVerticalGroup(
             pnFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnFuncLayout.createSequentialGroup()
-                .addGroup(pnFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnFuncLayout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnFuncLayout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnFuncLayout.createSequentialGroup()
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnFuncLayout.createSequentialGroup()
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGap(0, 521, Short.MAX_VALUE)
         );
 
         jScrollPane2.setPreferredSize(new java.awt.Dimension(452, 500));
@@ -610,7 +522,7 @@ public class DoiTraSanPham extends SimpleForm {
                 .addContainerGap(14, Short.MAX_VALUE)
                 .addGroup(pnLeftContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnFunc, javax.swing.GroupLayout.DEFAULT_SIZE, 1057, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1057, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
         );
         pnLeftContentLayout.setVerticalGroup(
@@ -619,7 +531,7 @@ public class DoiTraSanPham extends SimpleForm {
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(pnFunc, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                .addComponent(pnFunc, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
                 .addGap(24, 24, 24))
         );
 
@@ -643,7 +555,7 @@ public class DoiTraSanPham extends SimpleForm {
                 .addComponent(pnRightContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(pnContentLayout.createSequentialGroup()
-                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
+                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -666,10 +578,6 @@ public class DoiTraSanPham extends SimpleForm {
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnThanhToanActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
         // TODO add your handling code here:
@@ -707,14 +615,6 @@ public class DoiTraSanPham extends SimpleForm {
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
