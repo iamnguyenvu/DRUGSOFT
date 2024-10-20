@@ -39,8 +39,12 @@
         <Property name="contentAreaFilled" type="boolean" value="false"/>
         <Property name="opaque" type="boolean" value="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDeleteMousePressed"/>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDeleteMouseReleased"/>
+      </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JButton(new FlatSVGIcon(&quot;gui/icon/delete2.svg&quot;, 0.4f))"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JButton(new FlatSVGIcon(&quot;gui/icon/delete2.svg&quot;, 0.4f))"/>
       </AuxValues>
     </Component>
   </SubComponents>
