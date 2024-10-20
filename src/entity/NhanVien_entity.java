@@ -2,7 +2,7 @@ package entity;
 
 import java.time.LocalDate;
 
-public class NhanVien {
+public class NhanVien_entity {
     private String maNV;                // Mã nhân viên
     private String hoNV;                // Họ nhân viên
     private String tenNV;               // Tên nhân viên
@@ -14,16 +14,16 @@ public class NhanVien {
     private LocalDate ngaySinh;         // Ngày sinh
     private boolean trangThai;          // Trạng thái
     private LocalDate ngayVaoLam;       // Ngày vào làm
-    private TaiKhoan taiKhoan;          // Tài khoản
-    private LoaiNhanVien loaiNhanVien;  // Loại nhân viên
+    private TaiKhoan_entity taiKhoan;          // Tài khoản
+    private LoaiNhanVien_entity loaiNhanVien;  // Loại nhân viên
     private String hinhAnhNV;           // Hình ảnh nhân viên
     
-	public NhanVien() {
+	public NhanVien_entity() {
 		super();
 	}
-	public NhanVien(String maNV, String hoNV, String tenNV, String gioiTinh, String sdt, String cccd, String chucVu,
-			String diaChi, LocalDate ngaySinh, boolean trangThai, LocalDate ngayVaoLam, TaiKhoan taiKhoan,
-			LoaiNhanVien loaiNhanVien, String hinhAnhNV) {
+	public NhanVien_entity(String maNV, String hoNV, String tenNV, String gioiTinh, String sdt, String cccd, String chucVu,
+			String diaChi, LocalDate ngaySinh, boolean trangThai, LocalDate ngayVaoLam, TaiKhoan_entity taiKhoan,
+			LoaiNhanVien_entity loaiNhanVien, String hinhAnhNV) {
 		super();
 		this.maNV = maNV;
 		this.hoNV = hoNV;
@@ -106,16 +106,16 @@ public class NhanVien {
 	public void setNgayVaoLam(LocalDate ngayVaoLam) {
 		this.ngayVaoLam = ngayVaoLam;
 	}
-	public TaiKhoan getTaiKhoan() {
+	public TaiKhoan_entity getTaiKhoan() {
 		return taiKhoan;
 	}
-	public void setTaiKhoan(TaiKhoan taiKhoan) {
+	public void setTaiKhoan(TaiKhoan_entity taiKhoan) {
 		this.taiKhoan = taiKhoan;
 	}
-	public LoaiNhanVien getLoaiNhanVien() {
+	public LoaiNhanVien_entity getLoaiNhanVien() {
 		return loaiNhanVien;
 	}
-	public void setLoaiNhanVien(LoaiNhanVien loaiNhanVien) {
+	public void setLoaiNhanVien(LoaiNhanVien_entity loaiNhanVien) {
 		this.loaiNhanVien = loaiNhanVien;
 	}
 	public String getHinhAnhNV() {

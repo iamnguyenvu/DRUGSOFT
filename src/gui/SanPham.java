@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
-import entity.LoaiSanPham;
+import entity.LoaiSanPham_entity;
 
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -289,7 +289,7 @@ public class SanPham extends SimpleForm implements ActionListener{
 
 	}
 	// Phương thức thêm dòng vào bảng
-	public void addRowTable(entity.SanPham dataRow) {
+	public void addRowTable(entity.SanPham_entity dataRow) {
 	    // Thêm dòng mới vào mô hình bảng
 	    dftb_SanPham.addRow(new Object[] {
 	        dataRow.getMaSP(),

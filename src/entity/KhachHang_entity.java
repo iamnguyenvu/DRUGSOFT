@@ -1,6 +1,6 @@
 package entity;
 
-public class KhachHang {
+public class KhachHang_entity {
     private String maKH; // Mã khách hàng
     private String tenKH; // Tên khách hàng
     private String SDT; // Số điện thoại
@@ -8,11 +8,11 @@ public class KhachHang {
     private String gioiTinh; // Giới tính
 
     // Constructor mặc định
-    public KhachHang() {
+    public KhachHang_entity() {
     }
 
     // Constructor với đầy đủ tham số
-    public KhachHang(String maKH, String tenKH, String SDT, int diemThuong, String gioiTinh) {
+    public KhachHang_entity(String maKH, String tenKH, String SDT, int diemThuong, String gioiTinh) {
         this.maKH = maKH;
         this.tenKH = tenKH;
         this.SDT = SDT;

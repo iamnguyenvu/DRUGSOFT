@@ -1,15 +1,15 @@
 package entity;
 
-public class LoaiHoaDon {
+public class LoaiHoaDon_entity {
     private String maLoaiHD; // Mã loại hóa đơn
     private String tenLoaiHD; // Tên loại hóa đơn
 
     // Constructor mặc định
-    public LoaiHoaDon() {
+    public LoaiHoaDon_entity() {
     }
 
     // Constructor với đầy đủ tham số
-    public LoaiHoaDon(String maLoaiHD, String tenLoaiHD) {
+    public LoaiHoaDon_entity(String maLoaiHD, String tenLoaiHD) {
         this.maLoaiHD = maLoaiHD;
         this.tenLoaiHD = tenLoaiHD;
     }

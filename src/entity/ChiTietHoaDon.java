@@ -4,15 +4,15 @@ public class ChiTietHoaDon {
     private String maCTHD; // Mã chi tiết hóa đơn
     private int soLuongSanPham; // Số lượng sản phẩm
     private double tongTien; // Tổng tiền
-    private HoaDon hoaDon; // Hóa đơn liên kết
-    private SanPham sanPham; // Sản phẩm liên kết
+    private HoaDon_entity hoaDon; // Hóa đơn liên kết
+    private SanPham_entity sanPham; // Sản phẩm liên kết
 
     // Constructor mặc định
     public ChiTietHoaDon() {
     }
 
     // Constructor với đầy đủ tham số
-    public ChiTietHoaDon(String maCTHD, int soLuongSanPham, double tongTien, HoaDon hoaDon, SanPham sanPham) {
+    public ChiTietHoaDon(String maCTHD, int soLuongSanPham, double tongTien, HoaDon_entity hoaDon, SanPham_entity sanPham) {
         this.maCTHD = maCTHD;
         this.soLuongSanPham = soLuongSanPham;
         this.tongTien = tongTien;
@@ -48,20 +48,20 @@ public class ChiTietHoaDon {
     }
 
     // Getter và Setter cho hoaDon
-    public HoaDon getHoaDon() {
+    public HoaDon_entity getHoaDon() {
         return hoaDon;
     }
 
-    public void setHoaDon(HoaDon hoaDon) {
+    public void setHoaDon(HoaDon_entity hoaDon) {
         this.hoaDon = hoaDon;
     }
 
     // Getter và Setter cho sanPham
-    public SanPham getSanPham() {
+    public SanPham_entity getSanPham() {
         return sanPham;
     }
 
-    public void setSanPham(SanPham sanPham) {
+    public void setSanPham(SanPham_entity sanPham) {
         this.sanPham = sanPham;
     }
 
