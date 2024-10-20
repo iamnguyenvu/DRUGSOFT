@@ -23,6 +23,8 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import net.miginfocom.swing.MigLayout;
 import nguyenvu.components.SimpleForm;
@@ -30,11 +32,15 @@ import nguyenvu.menu.FormManager;
 import nguyenvu.utils.LayerSearchList;
 import nguyenvu.utils.ListProductSearchPanel;
 import nguyenvu.utils.ProductSearchPanel;
+import nguyenvu.utils.ProductSelectListener;
+import nguyenvu.utils.QuantityCellEditor;
+import nguyenvu.utils.QuantityCellEvent;
+import nguyenvu.utils.QuantityCellRenderer;
 import nguyenvu.utils.RoundedTextField;
 import nguyenvu.utils.TableActionCellEditor;
 import nguyenvu.utils.TableActionEvent;
 import nguyenvu.utils.TableDeleteCellEditor;
-import nguyenvu.utils.TableDeleteCellRender;
+import nguyenvu.utils.TableDeleteCellRenderer;
 import nguyenvu.utils.TableDeleteEvent;
 import nguyenvu.utils.WindowsTabbed;
 
@@ -47,15 +53,37 @@ public class BanHang extends SimpleForm {
     private TableDeleteEvent ev;
     private JPopupMenu menuProduct;
     private ListProductSearchPanel listProductSearch;
+    private BanHang_DAO dao;
 
     public BanHang() {
         setPreferredSize(new Dimension(1020, 740));
         initComponents();
+        dao = new BanHang_DAO();
         listProductSearch = new ListProductSearchPanel();
         menuProduct = new JPopupMenu();
         menuProduct.add(listProductSearch);
         menuProduct.setFocusable(false);
         addKeyBindings();
+        
+        listProductSearch.addProductSelectListener(new ProductSelectListener() {
+            @Override
+            public void onProductSelected(SanPham_entity sp) {
+                for (int i = 0; i < table.getRowCount(); i++) {
+                    String existingMaSP = (String) table.getValueAt(i, 2);
+                    if (existingMaSP.equals(sp.getMaSP())) {
+                        // Nếu sản phẩm đã tồn tại, tăng số lượng
+                        int existingQuantity = (int) table.getValueAt(i, 5);
+                        table.setValueAt(existingQuantity + 1, i, 5); // Cập nhật số lượng
+                        // Cập nhật thành tiền
+                        double price = (double) table.getValueAt(i, 6);
+                        table.setValueAt(price * (existingQuantity + 1), i, 7);
+                        return;
+                    }
+                }
+                addProductToTable(sp);
+            }
+        });
+
         txtProductSearch.requestFocusInWindow();
     }
 
@@ -84,7 +112,7 @@ public class BanHang extends SimpleForm {
         addButtonKeyBindings();
     }
      
-     private void bindKeyToFocus(JComponent component, int key) {
+    private void bindKeyToFocus(JComponent component, int key) {
         InputMap inputMap = component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = component.getActionMap();
         inputMap.put(KeyStroke.getKeyStroke(key, 0), "focusComponent");
@@ -92,7 +120,6 @@ public class BanHang extends SimpleForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 component.requestFocusInWindow();
-                System.out.println(".actionPerformed()");
             }
         });
     }
@@ -183,25 +210,15 @@ public class BanHang extends SimpleForm {
         pnSearch.setBackground(new java.awt.Color(11, 101, 136));
         pnSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         pnSearch.setPreferredSize(new java.awt.Dimension(100, 50));
-        pnSearch.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnFilter.setBackground(new java.awt.Color(11, 101, 136));
         btnFilter.setBorderPainted(false);
         btnFilter.setFocusPainted(false);
         btnFilter.setPreferredSize(new java.awt.Dimension(75, 40));
-        pnSearch.add(btnFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 5, 60, 40));
 
         txtProductSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
         txtProductSearch.setPreferredSize(new java.awt.Dimension(85, 40));
         txtProductSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "[F2] Thêm sản phẩm vào đơn");
-        txtProductSearch.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtProductSearchMouseClicked(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                txtProductSearchMouseReleased(evt);
-            }
-        });
         txtProductSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtProductSearchActionPerformed(evt);
@@ -212,12 +229,6 @@ public class BanHang extends SimpleForm {
                 txtProductSearchKeyReleased(evt);
             }
         });
-        pnSearch.add(txtProductSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, 730, 40));
-        //txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-
-        txtProductSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon("gui/icon/search.svg"));
-        //txtSearch.putClientProperty(FlatClientProperties.STYLE, ""
-            //                + "border:5,5,5,5,$Component.borderColor,,20");
 
         jScrollPane1.setViewportView(listSanPham);
 
@@ -236,7 +247,34 @@ public class BanHang extends SimpleForm {
                 .addGap(0, 230, Short.MAX_VALUE))
         );
 
-        pnSearch.add(layer, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 45, 730, 230));
+        javax.swing.GroupLayout pnSearchLayout = new javax.swing.GroupLayout(pnSearch);
+        pnSearch.setLayout(pnSearchLayout);
+        pnSearchLayout.setHorizontalGroup(
+            pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnSearchLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnSearchLayout.createSequentialGroup()
+                        .addComponent(txtProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(layer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        pnSearchLayout.setVerticalGroup(
+            pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnSearchLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(layer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        //txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+
+        txtProductSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon("gui/icon/search.svg"));
+        //txtSearch.putClientProperty(FlatClientProperties.STYLE, ""
+            //                + "border:5,5,5,5,$Component.borderColor,,20");
         layer.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:5,5,5,5,$Component.borderColor,,20");
 
@@ -248,7 +286,6 @@ public class BanHang extends SimpleForm {
         pnContent.setPreferredSize(new java.awt.Dimension(1100, 800));
 
         pnRightContent.setPreferredSize(new java.awt.Dimension(400, 700));
-        pnRightContent.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnInputCustomer.setPreferredSize(new java.awt.Dimension(100, 40));
         pnInputCustomer.setLayout(new java.awt.BorderLayout());
@@ -366,7 +403,7 @@ public class BanHang extends SimpleForm {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
+                .addGap(8, 8, 8)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(btnLuuTam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -417,12 +454,12 @@ public class BanHang extends SimpleForm {
                             .addGap(16, 16, 16)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(btnSuggest6, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
-                                .addComponent(btnSuggest3, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)))
+                                .addComponent(btnSuggest3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                             .addComponent(lblKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(txtTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -496,7 +533,21 @@ public class BanHang extends SimpleForm {
         txtTienKhachDua.putClientProperty(FlatClientProperties.STYLE, ""
             + "font:bold +3");
 
-        pnRightContent.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 380, 660));
+        javax.swing.GroupLayout pnRightContentLayout = new javax.swing.GroupLayout(pnRightContent);
+        pnRightContent.setLayout(pnRightContentLayout);
+        pnRightContentLayout.setHorizontalGroup(
+            pnRightContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnRightContentLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        pnRightContentLayout.setVerticalGroup(
+            pnRightContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnRightContentLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         jPanel2.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:5,5,5,5,$Component.borderColor,,20");
 
@@ -608,12 +659,7 @@ public class BanHang extends SimpleForm {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "STT", "hinhAnh", "maSP", "tenSP", "donVi", "soLuong", "donGia", "thanhTien", "btnDelete"
@@ -653,7 +699,7 @@ public class BanHang extends SimpleForm {
             table.getColumnModel().getColumn(4).setResizable(false);
             table.getColumnModel().getColumn(4).setPreferredWidth(80);
             table.getColumnModel().getColumn(5).setResizable(false);
-            table.getColumnModel().getColumn(5).setPreferredWidth(40);
+            table.getColumnModel().getColumn(5).setPreferredWidth(100);
             table.getColumnModel().getColumn(6).setResizable(false);
             table.getColumnModel().getColumn(6).setPreferredWidth(100);
             table.getColumnModel().getColumn(7).setResizable(false);
@@ -661,7 +707,7 @@ public class BanHang extends SimpleForm {
             table.getColumnModel().getColumn(8).setResizable(false);
             table.getColumnModel().getColumn(8).setPreferredWidth(30);
         }
-        table.getColumnModel().getColumn(8).setCellRenderer(new TableDeleteCellRender());
+        table.getColumnModel().getColumn(8).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());
         table.getColumnModel().getColumn(8).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {
             @Override
             public void onDelete(int row) {
@@ -672,57 +718,77 @@ public class BanHang extends SimpleForm {
             }
         }));
 
-        javax.swing.GroupLayout pnLeftContentLayout = new javax.swing.GroupLayout(pnLeftContent);
-        pnLeftContent.setLayout(pnLeftContentLayout);
-        pnLeftContentLayout.setHorizontalGroup(
-            pnLeftContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnLeftContentLayout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addGroup(pnLeftContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnFunc, javax.swing.GroupLayout.DEFAULT_SIZE, 1057, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(14, 14, 14))
-        );
-        pnLeftContentLayout.setVerticalGroup(
-            pnLeftContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnLeftContentLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
-        );
+        //table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());
+        //table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(new QuantityCellEvent() {
+            //    @Override
+            //    public void onIncrease(int row) {
+                //        if (row >= 0) {
+                    //            int currentQuantity = (int) table.getValueAt(row, 5);
+                    //            table.setValueAt(currentQuantity + 1, row, 5);
+                    //        }
+                //    }
+            //
+            //    public void onDecrease(int row) {
+                //        if (row >= 0) {
+                    //            int currentQuantity = (int) table.getValueAt(row, 5);
+                    //            if (currentQuantity > 0) {
+                        //                table.setValueAt(currentQuantity - 1, row, 5);
+                        //            }
+                    //        }
+                //    }
+            //}));
 
-        pnFunc.putClientProperty(FlatClientProperties.STYLE, ""
-            + "border:5,5,5,5,$Component.borderColor,,20");
-        jScrollPane2.putClientProperty(FlatClientProperties.STYLE, ""
-            + "border:5,5,5,5,$Component.borderColor,,20");
+javax.swing.GroupLayout pnLeftContentLayout = new javax.swing.GroupLayout(pnLeftContent);
+pnLeftContent.setLayout(pnLeftContentLayout);
+pnLeftContentLayout.setHorizontalGroup(
+    pnLeftContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnLeftContentLayout.createSequentialGroup()
+        .addContainerGap(14, Short.MAX_VALUE)
+        .addGroup(pnLeftContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addComponent(pnFunc, javax.swing.GroupLayout.DEFAULT_SIZE, 1057, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGap(14, 14, 14))
+    );
+    pnLeftContentLayout.setVerticalGroup(
+        pnLeftContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnLeftContentLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(pnFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(24, 24, 24))
+    );
 
-        javax.swing.GroupLayout pnContentLayout = new javax.swing.GroupLayout(pnContent);
-        pnContent.setLayout(pnContentLayout);
-        pnContentLayout.setHorizontalGroup(
-            pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnContentLayout.createSequentialGroup()
-                .addComponent(pnLeftContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnRightContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        pnContentLayout.setVerticalGroup(
-            pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnContentLayout.createSequentialGroup()
-                .addComponent(pnRightContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(pnContentLayout.createSequentialGroup()
-                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+    pnFunc.putClientProperty(FlatClientProperties.STYLE, ""
+        + "border:5,5,5,5,$Component.borderColor,,20");
+    jScrollPane2.putClientProperty(FlatClientProperties.STYLE, ""
+        + "border:5,5,5,5,$Component.borderColor,,20");
 
-        //pnRightContent.setLayout(new MigLayout("wrap,fill,gap 10", "fill"));
-        //pnRightContent.putClientProperty(FlatClientProperties.STYLE, ""
-            //                + "border:5,5,5,5,$Component.borderColor,,20");
+    javax.swing.GroupLayout pnContentLayout = new javax.swing.GroupLayout(pnContent);
+    pnContent.setLayout(pnContentLayout);
+    pnContentLayout.setHorizontalGroup(
+        pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(pnContentLayout.createSequentialGroup()
+            .addComponent(pnLeftContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(pnRightContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+    );
+    pnContentLayout.setVerticalGroup(
+        pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(pnContentLayout.createSequentialGroup()
+            .addComponent(pnRightContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 0, Short.MAX_VALUE))
+        .addGroup(pnContentLayout.createSequentialGroup()
+            .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE)
+            .addContainerGap())
+    );
 
-        add(pnContent, java.awt.BorderLayout.CENTER);
-        //pnContent.add(new DonHangPanel());
+    //pnRightContent.setLayout(new MigLayout("wrap,fill,gap 10", "fill"));
+    //pnRightContent.putClientProperty(FlatClientProperties.STYLE, ""
+        //                + "border:5,5,5,5,$Component.borderColor,,20");
+
+    add(pnContent, java.awt.BorderLayout.CENTER);
+    //pnContent.add(new DonHangPanel());
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCustomerActionPerformed
@@ -740,10 +806,6 @@ public class BanHang extends SimpleForm {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void txtProductSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProductSearchKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtProductSearchKeyReleased
 
     private void btnSuggest3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuggest3ActionPerformed
         // TODO add your handling code here:
@@ -765,50 +827,45 @@ public class BanHang extends SimpleForm {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTienKhachDuaActionPerformed
 
-    private void txtProductSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtProductSearchMouseClicked
-        // TODO add your handling code here:
-        menuProduct.show(txtProductSearch, 0, txtProductSearch.getHeight());
-    }//GEN-LAST:event_txtProductSearchMouseClicked
-
-    private void txtProductSearchMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtProductSearchMouseReleased
-        // TODO add your handling code here:
-        String productKey = txtProductSearch.getText().trim().toLowerCase();
-        BanHang_DAO dao = new BanHang_DAO();
-        ArrayList<SanPham_entity> listSP = dao.searchSanPham(productKey);
-        listProductSearch.setData(listSP);
-        if(listProductSearch.getListSize() > 0) {
-            menuProduct.setPopupSize(menuProduct.getWidth(), listProductSearch.getListSize());
-            menuProduct.show(txtProductSearch, 0, txtProductSearch.getHeight());
-        }
-        
-    }//GEN-LAST:event_txtProductSearchMouseReleased
-
+    
     private void btnDeleteAllSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAllSPActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeleteAllSPActionPerformed
 
-    //    private void txtKeyReleased(KeyEvent ev) {
-//        DefaultListModel model = new DefaultListModel<SanPham>();
-//        listSanPham.setModel(model);
-//        try {
-//            String key = txtProductSearch.getText().trim();
-//            if(key.equals("")) {
-//                model.removeAllElements();
-//            }
-//            else {
-//                model.removeAllElements();
-//                BanHang_DAO dao = new BanHang_DAO();
-//                ArrayList<SanPham_entity> listSP = dao.searchSanPham(key);
-//                for (SanPham_entity sanPham : listSP) {
-//                    model.addElement(sanPham);
-//                }
-//            }
-//        }
-//        catch (Exception e) {
-//            
-//        }
-//    }
-//  
+    private void txtProductSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProductSearchKeyReleased
+        // TODO add your handling code here:
+        String productKey = txtProductSearch.getText().trim().toLowerCase();
+        if(productKey.length() > 0) {
+            ArrayList<SanPham_entity> listSP = dao.searchSanPham(productKey);
+            System.out.println("Searching for: " + productKey);
+            System.out.println("Found products: " + listSP.size());
+            listProductSearch.setData(listSP);
+
+            if(listProductSearch.getListSize() > 0) {
+                menuProduct.show(txtProductSearch, 0, txtProductSearch.getHeight());
+                menuProduct.setPopupSize(menuProduct.getWidth(), listProductSearch.getListSize() * 80);
+            } else {
+                menuProduct.setVisible(false);
+            }
+        }
+    }//GEN-LAST:event_txtProductSearchKeyReleased
+ 
+    private void addProductToTable(SanPham_entity sp) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        Object[] rowData = new Object[] {
+            model.getRowCount() + 1, // STT
+            sp.getHinhAnhSP(), // hinhAnh
+            sp.getMaSP(), // maSP
+            sp.getTenSP(), // tenSP
+            sp.getDonViTinh(), // donVi
+            1, // soLuong (mặc định là 1)
+            sp.getGia(), // donGia
+            sp.getGia(), // thanhTien (1 * donGia)
+            "Delete" // btnDelete
+        };
+        model.addRow(rowData);
+    }
+
     
     private void addStyleBtn(JButton btn) {
         btn.putClientProperty(FlatClientProperties.STYLE, ""

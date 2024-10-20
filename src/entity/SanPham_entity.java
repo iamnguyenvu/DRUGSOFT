@@ -95,9 +95,9 @@ public class SanPham_entity {
     public SanPham_entity() {
             super();
     }
-    public SanPham_entity(String maSP, String tenSP, LocalDate ngaySanXuat, LocalDate ngayHetHan, double khoiLuong,
+    public SanPham_entity(String maSP, String tenSP, int soLuong, LocalDate ngaySanXuat, LocalDate ngayHetHan, double khoiLuong,
                     String donViTinh, String nhaCungCap, double gia, String congDung, String hinhAnhSP,
-                    LoaiSanPham_entity loaiSanPham, int soLuong) {
+                    LoaiSanPham_entity loaiSanPham) {
             super();
             this.maSP = maSP;
             this.tenSP = tenSP;
@@ -125,8 +125,6 @@ public class SanPham_entity {
     @Override
     public String toString() {
         return "SanPham_entity{" + "maSP=" + maSP + ", tenSP=" + tenSP + ", ngaySanXuat=" + ngaySanXuat + ", ngayHetHan=" + ngayHetHan + ", khoiLuong=" + khoiLuong + ", donViTinh=" + donViTinh + ", nhaCungCap=" + nhaCungCap + ", gia=" + gia + ", congDung=" + congDung + ", hinhAnhSP=" + hinhAnhSP + ", loaiSanPham=" + loaiSanPham + ", soLuong=" + soLuong + '}';
-    }
-
-    
+    }  
 
 }

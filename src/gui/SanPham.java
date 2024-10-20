@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 
 import nguyenvu.components.SimpleForm;
-import nguyenvu.utils.TableDeleteCellRender;
+import nguyenvu.utils.TableDeleteCellRenderer;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -318,8 +318,8 @@ public class SanPham extends SimpleForm implements ActionListener{
 	}
 	//Phương thức thêm tất cả dữ liệu vào bảng
 	private void docDuLieuVaoTable() {
-		List<entity.SanPham> dssp = sp_dao.getAllSanPham();
-		for (entity.SanPham sp : dssp) {
+		List<entity.SanPham_entity> dssp = sp_dao.getAllSanPham();
+		for (entity.SanPham_entity sp : dssp) {
 			dftb_SanPham.addRow(new Object[] {sp.getMaSP(),sp.getTenSP(),sp.getSoLuong(),sp.getNgaySanXuat(),sp.getNgayHetHan(),sp.getKhoiLuong(),sp.getDonViTinh(),sp.getNhaCungCap(),sp.getGia(),sp.getCongDung(),sp.getHinhAnhSP(),sp.getLoaiSanPham().getMaLoaiSP()});
 		}
 	}

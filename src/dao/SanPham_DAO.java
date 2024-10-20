@@ -11,15 +11,15 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 
 import connectDB.connectDB;
-import entity.LoaiSanPham;
-import entity.SanPham;
+import entity.LoaiSanPham_entity;
+import entity.SanPham_entity;
 
 
 
 public class SanPham_DAO {
 	
-	public ArrayList<SanPham> getAllSanPham() {
-	    ArrayList<SanPham> dssp = new ArrayList<SanPham>();
+	public ArrayList<SanPham_entity> getAllSanPham() {
+	    ArrayList<SanPham_entity> dssp = new ArrayList<SanPham_entity>();
 	    Connection con = connectDB.accessDataBase();
 	    if (con == null) {
 	        return null;
@@ -45,9 +45,9 @@ public class SanPham_DAO {
 	            String congDung = rs.getString("congDung");
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
-	            LoaiSanPham loaisp = new LoaiSanPham(maLoaiSP);
+	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham sp = new SanPham(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, congDung, hinhAnhsp, loaisp, soLuong);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, soLuong, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, congDung, hinhAnhsp, loaisp);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {

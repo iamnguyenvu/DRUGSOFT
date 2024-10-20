@@ -6,30 +6,54 @@ package nguyenvu.utils;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import entity.SanPham_entity;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 import java.util.Locale;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import net.miginfocom.swing.MigLayout;
 
 /**
  *
  * @author HP
  */
 public class ProductSearchPanel extends javax.swing.JPanel{
+    private ProductSelectListener listener;
+    private SanPham_entity sp;
+    
+    // Setter cho listener
+    public void addProductSelectListener(ProductSelectListener listener) {
+        this.listener = listener;
+    }
+
+    private void productSelected() {
+        if (listener != null) {
+            listener.onProductSelected(sp);
+        }
+    }
+    
     public ProductSearchPanel(SanPham_entity sp) {
+        this.sp = sp;
         initComponents();
-//        setLayout(new MigLayout("fillx", "0[]0", "0[]0"));
         setProductData(sp);
+        addListeners();
+    }
+    
+    private void addListeners() {
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                productSelected();
+            }
+        });
     }
     
     private void setProductData(SanPham_entity sp) {
         NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
-        String giaVaDonVi = numberFormat.format(sp.getGia()) + "/" + sp.getDonViTinh();
-        lblImgSP.setIcon(new ImageIcon(getClass().getResource(sp.getHinhAnhSP())));
+        String giaVaDonVi = numberFormat.format(sp.getGia()) + "đ/" + sp.getDonViTinh();
+//        lblImgSP.setIcon(new ImageIcon(getClass().getResource(sp.getHinhAnhSP())));
         lblTenSP.setText(sp.getTenSP());
         lblTenSP.putClientProperty(FlatClientProperties.STYLE, ""
-            + "font:bold + 3");
+            + "font:bold +3");
         lblGiaDonViSP .setText(giaVaDonVi);
     }
     
@@ -51,7 +75,7 @@ public class ProductSearchPanel extends javax.swing.JPanel{
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTenSP, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
+                        .addComponent(lblTenSP, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
                         .addGap(10, 10, 10))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblGiaDonViSP, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -60,16 +84,16 @@ public class ProductSearchPanel extends javax.swing.JPanel{
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblImgSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(10, 10, 10))
+                        .addGap(10, 10, 10)
+                        .addComponent(lblImgSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap()
+                        .addComponent(lblTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblGiaDonViSP, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addComponent(lblGiaDonViSP, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)))
+                .addGap(10, 10, 10))
         );
     }// </editor-fold>//GEN-END:initComponents
 
