@@ -66,7 +66,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtSearch">
+        <Component class="javax.swing.JTextField" name="txtProductSearch">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -78,13 +78,15 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSearchActionPerformed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSearchKeyReleased"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtProductSearchMouseClicked"/>
+            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtProductSearchMouseReleased"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtProductSearchActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtProductSearchKeyReleased"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="//txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder());&#xa;&#xa;txtSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon(&quot;gui/icon/search.svg&quot;));&#xa;//txtSearch.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;//                + &quot;border:5,5,5,5,$Component.borderColor,,20&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="//txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder());&#xa;&#xa;txtProductSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon(&quot;gui/icon/search.svg&quot;));&#xa;//txtSearch.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;//                + &quot;border:5,5,5,5,$Component.borderColor,,20&quot;);"/>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new RoundedTextField(40)"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, &quot;[F2] Th&#xea;m s&#x1ea3;n ph&#x1ea9;m v&#xe0;o &#x111;&#x1a1;n&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtProductSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, &quot;[F2] Th&#xea;m s&#x1ea3;n ph&#x1ea9;m v&#xe0;o &#x111;&#x1a1;n&quot;);"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -252,22 +254,22 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="lblPhuongThucThanhToan" min="-2" pref="174" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jComboBox1" min="-2" pref="178" max="-2" attributes="0"/>
+                                      <Component id="cbbPhuongThucThanhToan" min="-2" pref="178" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jButton1" min="-2" pref="110" max="-2" attributes="0"/>
-                                          <Component id="jButton12" min="-2" pref="110" max="-2" attributes="0"/>
+                                          <Component id="btnSuggest1" min="-2" pref="110" max="-2" attributes="0"/>
+                                          <Component id="btnSuggest4" min="-2" pref="110" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jButton10" min="-2" pref="110" max="-2" attributes="0"/>
-                                          <Component id="jButton13" min="-2" pref="110" max="-2" attributes="0"/>
+                                          <Component id="btnSuggest2" min="-2" pref="110" max="-2" attributes="0"/>
+                                          <Component id="btnSuggest5" min="-2" pref="110" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jButton14" pref="110" max="32767" attributes="0"/>
-                                          <Component id="jButton11" pref="110" max="32767" attributes="0"/>
+                                          <Component id="btnSuggest6" pref="110" max="32767" attributes="0"/>
+                                          <Component id="btnSuggest3" pref="110" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
@@ -319,19 +321,19 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblPhuongThucThanhToan" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="jComboBox1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="cbbPhuongThucThanhToan" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jButton10" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="jButton1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="jButton11" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnSuggest2" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnSuggest1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnSuggest3" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jButton13" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="jButton12" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="jButton14" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnSuggest5" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnSuggest4" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnSuggest6" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -459,7 +461,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblSuDungDiemThuong">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="[F6] S&#x1eed; d&#x1ee5;ng &#x111;i&#x1ec3;m th&#x1b0;&#x1edf;ng"/>
+                    <Property name="text" type="java.lang.String" value="[F4] S&#x1eed; d&#x1ee5;ng &#x111;i&#x1ec3;m th&#x1b0;&#x1edf;ng"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[0, 30]"/>
                     </Property>
@@ -529,13 +531,13 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="L&#x1b0;u t&#x1ea1;m"/>
+                    <Property name="text" type="java.lang.String" value="[F7] L&#x1b0;u t&#x1ea1;m"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="btnLuuTam.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +4&quot;);"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton1">
+                <Component class="javax.swing.JButton" name="btnSuggest1">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="[1]"/>
                   </Properties>
@@ -553,28 +555,28 @@
                     <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jLabel1.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +3&quot;);"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton10">
+                <Component class="javax.swing.JButton" name="btnSuggest2">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="[2]"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton10ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuggest2ActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton11">
+                <Component class="javax.swing.JButton" name="btnSuggest3">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="[3]"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton11ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuggest3ActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblPhuongThucThanhToan">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Ph&#x1b0;&#x1a1;ng th&#x1ee9;c thanh to&#xe1;n"/>
+                    <Property name="text" type="java.lang.String" value="[F6] Ph&#x1b0;&#x1a1;ng th&#x1ee9;c thanh to&#xe1;n"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox1">
+                <Component class="javax.swing.JComboBox" name="cbbPhuongThucThanhToan">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="3">
@@ -591,22 +593,22 @@
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton12">
+                <Component class="javax.swing.JButton" name="btnSuggest4">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="[4]"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton13">
+                <Component class="javax.swing.JButton" name="btnSuggest5">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="[5]"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton14">
+                <Component class="javax.swing.JButton" name="btnSuggest6">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="[6]"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton14ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuggest6ActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtTienKhachDua">
@@ -671,17 +673,17 @@
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jButton3" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="btnDeleteAllSP" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jButton5" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="jButton4" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="btnNote" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jButton7" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="jButton6" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="btnTempProcess" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="65" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -697,17 +699,17 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jButton2" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <Component id="btnDeleteAllSP" min="-2" pref="80" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jButton3" min="-2" pref="80" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="jButton4" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <Component id="btnNote" min="-2" pref="80" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jButton5" min="-2" pref="80" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="jButton6" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <Component id="btnTempProcess" min="-2" pref="80" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jButton7" min="-2" pref="80" max="-2" attributes="0"/>
                               </Group>
@@ -723,7 +725,7 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="jButton2">
+                <Component class="javax.swing.JButton" name="btnDeleteAllSP">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f6" green="da" red="b7" type="rgb"/>
@@ -731,11 +733,17 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jButton1"/>
+                    <Property name="text" type="java.lang.String" value="[F8] X&#xf3;a t&#x1ea5;t c&#x1ea3; s&#x1ea3;n ph&#x1ea9;m"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[80, 40]"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteAllSPActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="addStyleBtn(btnDeleteAllSP);"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton3">
                   <Properties>
@@ -754,7 +762,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton4">
+                <Component class="javax.swing.JButton" name="btnNote">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f6" green="da" red="b7" type="rgb"/>
@@ -762,11 +770,14 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jButton1"/>
+                    <Property name="text" type="java.lang.String" value="[F9] Ghi ch&#xfa; &#x111;&#x1a1;n"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[80, 40]"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="addStyleBtn(btnNote);"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton5">
                   <Properties>
@@ -782,7 +793,7 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton6">
+                <Component class="javax.swing.JButton" name="btnTempProcess">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f6" green="da" red="b7" type="rgb"/>
@@ -790,11 +801,14 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jButton1"/>
+                    <Property name="text" type="java.lang.String" value="[F10] X&#x1eed; l&#xfd; &#x111;&#x1a1;n t&#x1ea1;m"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[80, 40]"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="addStyleBtn(btnTempProcess);"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton7">
                   <Properties>

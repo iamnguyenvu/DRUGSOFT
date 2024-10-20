@@ -4,42 +4,40 @@
  */
 package nguyenvu.utils;
 
-import entity.KhachHang_entity;
+import entity.SanPham_entity;
 import java.util.ArrayList;
-
-import entity.KhachHang_entity;
 import net.miginfocom.swing.MigLayout;
 
 /**
  *
  * @author HP
  */
-public class CustomerSearchPanel extends javax.swing.JPanel {
-    public CustomerSearchPanel() {
+public class ListProductSearchPanel extends javax.swing.JPanel {
+    
+    public ListProductSearchPanel() {
         initComponents();
         setLayout(new MigLayout("fillx", "0[]0", "0[]0"));
     }
-    
-    public void setData(ArrayList<KhachHang_entity> data) {
+
+    public void setData(ArrayList<SanPham_entity> listSP) {
         this.removeAll();
-        for (KhachHang_entity kh : data) {
-            
+        for (SanPham_entity sp : listSP) {
+            ProductSearchPanel pn = new ProductSearchPanel(sp);
+            this.add(pn, "wrap");
         }
+        repaint();
+        revalidate();
+    }
+    
+    public int getListSize() {
+        return getComponentCount();
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 427, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 72, Short.MAX_VALUE)
-        );
+        setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
 
 

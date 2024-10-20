@@ -1,15 +1,15 @@
 package entity;
 
-public class LoaiNhanVien {
+public class LoaiNhanVien_entity {
     private String maLoaiNV;   // Mã loại nhân viên
     private String tenLoaiNV;   // Tên loại nhân viên
 
     // Constructor mặc định
-    public LoaiNhanVien() {
+    public LoaiNhanVien_entity() {
     }
 
     // Constructor với tham số
-    public LoaiNhanVien(String maLoaiNV, String tenLoaiNV) {
+    public LoaiNhanVien_entity(String maLoaiNV, String tenLoaiNV) {
         this.maLoaiNV = maLoaiNV;
         this.tenLoaiNV = tenLoaiNV;
     }

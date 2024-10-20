@@ -20,9 +20,11 @@ import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
+
 import connectDB.connectDB;
 import dao.SanPham_DAO;
-import entity.LoaiSanPham;
+import entity.LoaiSanPham_entity;
+
 
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -306,8 +308,10 @@ public class SanPham extends SimpleForm implements ActionListener{
 		group_nghh.add(radio_NhhGiamdan);
 
 	}
+  
 	// Phương thức thêm dòng vào bảng
 	public void addRowTable(String masp, String tensp, int soLuong,LocalDate ngaySX, LocalDate ngayHH, String Nhacc, double gia,String congDung,String hinhAnh,String loaiSP) {
+
 	    // Thêm dòng mới vào mô hình bảng
 
 		dftb_SanPham.addRow(new Object[] {masp,tensp,soLuong,ngaySX,ngayHH,Nhacc,gia,congDung,hinhAnh,loaiSP});
