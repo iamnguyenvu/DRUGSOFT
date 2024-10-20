@@ -20,7 +20,7 @@ import nguyenvu.utils.RoundedTextField;
 import nguyenvu.utils.TableActionCellEditor;
 import nguyenvu.utils.TableActionEvent;
 import nguyenvu.utils.TableDeleteCellEditor;
-import nguyenvu.utils.TableDeleteCellRender;
+import nguyenvu.utils.TableDeleteCellRenderer;
 import nguyenvu.utils.TableDeleteEvent;
 import nguyenvu.utils.WindowsTabbed;
 
@@ -503,7 +503,7 @@ public class DoiTraSanPham extends SimpleForm {
             table.getColumnModel().getColumn(8).setResizable(false);
             table.getColumnModel().getColumn(8).setPreferredWidth(30);
         }
-        table.getColumnModel().getColumn(8).setCellRenderer(new TableDeleteCellRender());
+        table.getColumnModel().getColumn(8).setCellRenderer(new TableDeleteCellRenderer());
         table.getColumnModel().getColumn(8).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {
             @Override
             public void onDelete(int row) {

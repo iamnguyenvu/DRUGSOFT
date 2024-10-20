@@ -321,8 +321,8 @@ public class formThemSanPham extends SimpleForm implements ActionListener{
 	            }
 
 	            // Tạo đối tượng SanPham
-	            LoaiSanPham loaiSP = new LoaiSanPham(loaiSanPham);
-	            entity.SanPham sp = new entity.SanPham(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, congDung, hinhAnh, loaiSP, soLuong);
+	            LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
+	            entity.SanPham_entity sp = new entity.SanPham_entity(maSP, tenSP, soLuong, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, congDung, hinhAnh, loaiSP);
 
 	            // Thêm sản phẩm vào bảng (cần đối tượng `sanPham` để gọi phương thức `addRowTable`)
 	            sanPham.addRowTable(maSP, tenSP, soLuong, lcNgaySX, lcNgayHH, nhaCungCap, gia, congDung, hinhAnh, loaiSanPham);
@@ -333,16 +333,6 @@ public class formThemSanPham extends SimpleForm implements ActionListener{
 	            // Hiển thị thông báo lỗi nếu có bất kỳ ngoại lệ nào xảy ra
 	            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
 	        }
-
-	        
-	        // Tạo đối tượng SanPham_entity
-	        LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
-	        entity.SanPham_entity sp = new entity.SanPham_entity(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, congDung, hinhAnh, loaiSP, 10);
-	        
-	        // Thêm sản phẩm vào bảng
-	        sanPham.addRowTable(sp);
-	        System.out.println("Thêm sản phẩm thành công: " + maSP);
-
 	    }
 	}
 }
