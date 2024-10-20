@@ -1,17 +1,17 @@
 package entity;
 
-public class TaiKhoan {
+public class TaiKhoan_entity {
     private String tenDangNhap;  // Tên đăng nhập
     private String matKhau;      // Mật khẩu
     private boolean phanQuyen;   // Quyền truy cập (true = QuanLy, false = NhanVien)
     private boolean trangThai;    // Trạng thái (true = Online, false = Offline)
 
     // Constructor mặc định
-    public TaiKhoan() {
+    public TaiKhoan_entity() {
     }
 
     // Constructor với tham số
-    public TaiKhoan(String tenDangNhap, String matKhau, boolean phanQuyen, boolean trangThai) {
+    public TaiKhoan_entity(String tenDangNhap, String matKhau, boolean phanQuyen, boolean trangThai) {
         this.tenDangNhap = tenDangNhap;
         this.matKhau = matKhau;
         this.phanQuyen = phanQuyen;

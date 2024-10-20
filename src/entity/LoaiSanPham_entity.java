@@ -1,21 +1,21 @@
 package entity;
 
-public class LoaiSanPham {
+public class LoaiSanPham_entity {
     private String maLoaiSP;   // Mã loại sản phẩm
     private String tenLoaiSP;   // Tên loại sản phẩm
 
     // Constructor mặc định
-    public LoaiSanPham() {
+    public LoaiSanPham_entity() {
     }
 
     // Constructor với đầy đủ tham số
-    public LoaiSanPham(String maLoaiSP, String tenLoaiSP) {
+    public LoaiSanPham_entity(String maLoaiSP, String tenLoaiSP) {
         this.maLoaiSP = maLoaiSP;
         this.tenLoaiSP = tenLoaiSP;
     }
 
     // Constructor chỉ với maLoaiSP
-    public LoaiSanPham(String maLoaiSP) {
+    public LoaiSanPham_entity(String maLoaiSP) {
         this.maLoaiSP = maLoaiSP;
     }
 

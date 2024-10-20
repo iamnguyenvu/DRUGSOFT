@@ -18,18 +18,18 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" pref="60" max="-2" attributes="0"/>
+              <Component id="lblImgSP" min="-2" pref="60" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="lblGiaSP" min="-2" pref="118" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblDonVi" min="-2" pref="109" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="478" max="32767" attributes="0"/>
+                      <Component id="lblTenSP" pref="711" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="lblTenSP" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="lblGiaDonViSP" min="-2" pref="214" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -39,19 +39,13 @@
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel1" max="32767" attributes="0"/>
+                      <Component id="lblImgSP" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lblTenSP" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="lblDonVi" min="-2" pref="30" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="lblGiaSP" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="lblGiaDonViSP" pref="30" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -60,13 +54,11 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="lblImgSP">
     </Component>
     <Component class="javax.swing.JLabel" name="lblTenSP">
     </Component>
-    <Component class="javax.swing.JLabel" name="lblGiaSP">
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblDonVi">
+    <Component class="javax.swing.JLabel" name="lblGiaDonViSP">
     </Component>
   </SubComponents>
 </Form>
