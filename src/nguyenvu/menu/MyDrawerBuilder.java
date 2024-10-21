@@ -6,6 +6,8 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import gui.BanHang;
 import gui.DoiTraSanPham;
+import gui.KhachHang;
+import gui.TaiKhoan_GUI;
 import gui.TraSanPham;
 
 import java.awt.Color;
@@ -226,6 +228,12 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     }
                     if (index[0] == 3) {
                     	FormManager.showForm(new gui.SanPham());
+                    }
+                    if (index[0] == 5) {
+                    	FormManager.showForm(new KhachHang());
+                    }
+                    if (index[0] == 7) {
+                    	FormManager.showForm(new TaiKhoan_GUI());
                     }
                     if (index[0] == 10) {
                         // logout

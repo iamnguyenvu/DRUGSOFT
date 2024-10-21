@@ -4,8 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import entity.TaiKhoan;
 import connectDB.connectDB;
+import java.util.ArrayList;
 
 public class TaiKhoan_DAO {
 
@@ -39,21 +40,30 @@ public class TaiKhoan_DAO {
     }
 
     // Get all TaiKhoan
-    public String getAllTaiKhoan() {
-        Connection con = connectDB.accessDataBase();
+    // Get all TaiKhoan
+    public ArrayList<TaiKhoan> getAllTaiKhoan() {
+        ArrayList<TaiKhoan> dsTaiKhoan = new ArrayList<>();
+        Connection con = connectDB.accessDataBase();  // Kết nối tới SQL Server
         if (con == null) return null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        StringBuilder allInfo = new StringBuilder();
+
         try {
-            ps = con.prepareStatement("SELECT * FROM TaiKhoan");
+            ps = con.prepareStatement("SELECT * FROM TaiKhoan");  // Truy vấn SQL
             rs = ps.executeQuery();
+
             while (rs.next()) {
-                allInfo.append("Tên Đăng Nhập: ").append(rs.getString("tenDangNhap"))
-                       .append(", Mật Khẩu: ").append(rs.getString("matKhau")).append("\n");
+                String tenTK = rs.getString("tenDangNhap");
+                String mK = rs.getString("matKhau");
+                boolean pQ = rs.getBoolean("phanQuyen");
+                boolean tt = rs.getBoolean("trangThai");
+
+                // Khởi tạo đối tượng TaiKhoan và thêm vào danh sách
+                TaiKhoan tk = new TaiKhoan(tenTK, mK, pQ, tt);
+                dsTaiKhoan.add(tk);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace();  // Hiển thị lỗi nếu có
         } finally {
             try {
                 if (rs != null) rs.close();
@@ -63,18 +73,27 @@ public class TaiKhoan_DAO {
                 e.printStackTrace();
             }
         }
-        return allInfo.toString();
+
+        return dsTaiKhoan;  // Trả về danh sách tài khoản
     }
 
-    // Add a new TaiKhoan
-    public boolean addTaiKhoan(String tenDangNhap, String matKhau) {
+
+
+
+    
+    // Thêm tài khoản với đầy đủ thông tin
+    public boolean addTaiKhoan(String tenDangNhap, String matKhau, boolean phanQuyen, boolean trangThai) {
         Connection con = connectDB.accessDataBase();
         if (con == null) return false;
         PreparedStatement ps = null;
         try {
-            ps = con.prepareStatement("INSERT INTO TaiKhoan (tenDangNhap, matKhau) VALUES (?, ?)");
+            // Thêm phanQuyen và trangThai vào câu lệnh SQL
+            ps = con.prepareStatement(
+                "INSERT INTO TaiKhoan (tenDangNhap, matKhau, phanQuyen, trangThai) VALUES (?, ?, ?, ?)");
             ps.setString(1, tenDangNhap);
             ps.setString(2, matKhau);
+            ps.setBoolean(3, phanQuyen);
+            ps.setBoolean(4, trangThai);
             int result = ps.executeUpdate();
             return result > 0;
         } catch (SQLException e) {
@@ -89,6 +108,7 @@ public class TaiKhoan_DAO {
         }
         return false;
     }
+
 
     // Update TaiKhoan by tenDangNhap
     public boolean updateTaiKhoan(String tenDangNhap, String matKhau) {
