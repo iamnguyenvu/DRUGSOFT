@@ -29,7 +29,7 @@ public class BanHang_DAO {
             ps.setString(1, "%" + key + "%");
             ps.setString(2, "%" + key + "%");
             rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 SanPham_entity sp = new SanPham_entity(rs.getString(11), rs.getString(1), rs.getString(2), rs.getString(7), rs.getInt(3), rs.getDouble(9)); 
                 listSP.add(sp);
             }

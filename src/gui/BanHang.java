@@ -13,9 +13,11 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.InputMap;
@@ -25,7 +27,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import net.miginfocom.swing.MigLayout;
 import nguyenvu.components.SimpleForm;
 import nguyenvu.menu.FormManager;
@@ -54,6 +58,7 @@ public class BanHang extends SimpleForm {
     private JPopupMenu menuProduct;
     private ListProductSearchPanel listProductSearch;
     private BanHang_DAO dao;
+    private final DecimalFormat df = new DecimalFormat("#,##0.##");;
 
     public BanHang() {
         setPreferredSize(new Dimension(1020, 740));
@@ -61,6 +66,7 @@ public class BanHang extends SimpleForm {
         dao = new BanHang_DAO();
         listProductSearch = new ListProductSearchPanel();
         menuProduct = new JPopupMenu();
+        menuProduct.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         menuProduct.add(listProductSearch);
         menuProduct.setFocusable(false);
         addKeyBindings();
@@ -77,15 +83,24 @@ public class BanHang extends SimpleForm {
                         // Cập nhật thành tiền
                         double price = (double) table.getValueAt(i, 6);
                         table.setValueAt(price * (existingQuantity + 1), i, 7);
+                        menuProduct.setVisible(false);
+                        updateLblSoLuongSP();
                         return;
                     }
                 }
                 addProductToTable(sp);
+                menuProduct.setVisible(false);
             }
         });
 
         txtProductSearch.requestFocusInWindow();
     }
+    
+    private void updateThanhTien(int row, int newQuantity) {
+        double unitPrice = (double) table.getValueAt(row, 6); // Lấy đơn giá
+        table.setValueAt(newQuantity * unitPrice, row, 7); // Cập nhật thành tiền
+    }
+
 
     private Icon createIcon(String path, float scale) {
         FlatSVGIcon icon = new FlatSVGIcon(path, scale);
@@ -96,20 +111,20 @@ public class BanHang extends SimpleForm {
     }
 
     private void addKeyBindings() {
-        // Phím tắt cho txtProductSearch
         bindKeyToFocus(txtProductSearch, KeyEvent.VK_F2);
-
-        // Phím tắt cho txtCustomer
         bindKeyToFocus(txtCustomer, KeyEvent.VK_F3);
-
-        // Phím tắt cho cbbPhuongThucThanhToan
         bindKeyToFocus(cbbPhuongThucThanhToan, KeyEvent.VK_F6);
-
-        // Phím tắt cho txtTienKhachDua
         bindKeyToFocus(txtTienKhachDua, KeyEvent.VK_F5);
-
-        // Thêm phím tắt cho các nút
-        addButtonKeyBindings();
+        bindButtonKey(btnSuggest1, KeyEvent.VK_1);
+        bindButtonKey(btnSuggest2, KeyEvent.VK_2);
+        bindButtonKey(btnSuggest3, KeyEvent.VK_3);
+        bindButtonKey(btnSuggest4, KeyEvent.VK_4);
+        bindButtonKey(btnSuggest5, KeyEvent.VK_5);
+        bindButtonKey(btnSuggest6, KeyEvent.VK_6);
+        bindButtonKey(btnThanhToan, KeyEvent.VK_F1);
+        bindButtonKey(btnLuuTam, KeyEvent.VK_F7);
+        bindButtonKey(btnDeleteAllSP, KeyEvent.VK_F8);
+        bindButtonKey(btnNote, KeyEvent.VK_F9);
     }
      
     private void bindKeyToFocus(JComponent component, int key) {
@@ -137,7 +152,6 @@ public class BanHang extends SimpleForm {
     }
 
     private void addButtonKeyBindings() {
-        // Ví dụ phím tắt cho nút btnAddCustomer
         InputMap inputMapAddCustomer = btnAddCustomer.getInputMap(JComponent.WHEN_FOCUSED);
         ActionMap actionMapAddCustomer = btnAddCustomer.getActionMap();
         
@@ -148,8 +162,17 @@ public class BanHang extends SimpleForm {
                 btnAddCustomer.doClick();
             }
         });
-
-        // Thêm tương tự cho các nút khác như btnFilter, btnLuuTam, btnThanhToan...
+        
+        InputMap inputMapThanhToan = btnThanhToan.getInputMap(JComponent.WHEN_FOCUSED);
+        ActionMap actionMapThanhToan = btnThanhToan.getActionMap();
+        
+        inputMapThanhToan.put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "thanhToan");
+        actionMapThanhToan.put("thanhToan", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnAddCustomer.doClick();
+            }
+        });
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -167,16 +190,16 @@ public class BanHang extends SimpleForm {
         pnInputCustomer = new javax.swing.JPanel();
         btnAddCustomer = new javax.swing.JButton(new FlatSVGIcon("gui/icon/add.svg", 0.05f));
         txtCustomer = new javax.swing.JTextField();
+        lbl1 = new javax.swing.JLabel();
         lblSoLuongSP = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lbl2 = new javax.swing.JLabel();
         lblTongTien = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lbl3 = new javax.swing.JLabel();
         lblVAT = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        lbl4 = new javax.swing.JLabel();
         lblSuDungDiemThuong = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        lblPhaiTra = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        lbl5 = new javax.swing.JLabel();
+        lblKhachPhaiTra = new javax.swing.JLabel();
         lblKhachDua = new javax.swing.JLabel();
         btnThanhToan = new javax.swing.JButton();
         btnLuuTam = new javax.swing.JButton();
@@ -317,30 +340,30 @@ public class BanHang extends SimpleForm {
         txtCustomer.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon("gui/icon/search.svg"));
         txtCustomer.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_COMPONENT, btnAddCustomer);
 
-        lblSoLuongSP.setText("Số lượng sản phẩm");
+        lbl1.setText("Số lượng sản phẩm");
+        lbl1.setPreferredSize(new java.awt.Dimension(0, 30));
+
         lblSoLuongSP.setPreferredSize(new java.awt.Dimension(0, 30));
 
-        jLabel2.setPreferredSize(new java.awt.Dimension(0, 30));
+        lbl2.setText("Tổng tiền");
+        lbl2.setPreferredSize(new java.awt.Dimension(0, 30));
 
-        lblTongTien.setText("Tổng tiền");
         lblTongTien.setPreferredSize(new java.awt.Dimension(0, 30));
 
-        jLabel4.setPreferredSize(new java.awt.Dimension(0, 30));
+        lbl3.setText("VAT");
+        lbl3.setPreferredSize(new java.awt.Dimension(0, 30));
 
-        lblVAT.setText("VAT");
         lblVAT.setPreferredSize(new java.awt.Dimension(0, 30));
 
-        jLabel10.setPreferredSize(new java.awt.Dimension(0, 30));
+        lbl4.setText("[F4] Sử dụng điểm thưởng");
+        lbl4.setPreferredSize(new java.awt.Dimension(0, 30));
 
-        lblSuDungDiemThuong.setText("[F4] Sử dụng điểm thưởng");
         lblSuDungDiemThuong.setPreferredSize(new java.awt.Dimension(0, 30));
 
-        jLabel8.setPreferredSize(new java.awt.Dimension(0, 30));
+        lbl5.setText("Khách phải trả");
+        lbl5.setPreferredSize(new java.awt.Dimension(0, 30));
 
-        lblPhaiTra.setText("Khách phải trả");
-        lblPhaiTra.setPreferredSize(new java.awt.Dimension(0, 30));
-
-        jLabel11.setPreferredSize(new java.awt.Dimension(0, 30));
+        lblKhachPhaiTra.setPreferredSize(new java.awt.Dimension(0, 30));
 
         lblKhachDua.setText("[F5] Tiền khách đưa");
         lblKhachDua.setPreferredSize(new java.awt.Dimension(0, 30));
@@ -417,26 +440,26 @@ public class BanHang extends SimpleForm {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(lblSoLuongSP, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblSoLuongSP, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(6, 6, 6)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(lblVAT, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(6, 6, 6)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblVAT, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(lblPhaiTra, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl5, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblKhachPhaiTra, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addGap(1, 1, 1)
-                                    .addComponent(lblSuDungDiemThuong, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl4, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(6, 6, 6)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblSuDungDiemThuong, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(pnInputCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(3, 3, 3))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -468,24 +491,24 @@ public class BanHang extends SimpleForm {
                 .addComponent(pnInputCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSoLuongSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSoLuongSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblVAT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblVAT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSuDungDiemThuong, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSuDungDiemThuong, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPhaiTra, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblKhachPhaiTra, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -515,9 +538,9 @@ public class BanHang extends SimpleForm {
                 .addContainerGap())
         );
 
-        lblPhaiTra.putClientProperty(FlatClientProperties.STYLE, ""
+        lbl5.putClientProperty(FlatClientProperties.STYLE, ""
             + "font:bold +3");
-        jLabel11.putClientProperty(FlatClientProperties.STYLE, ""
+        lblKhachPhaiTra.putClientProperty(FlatClientProperties.STYLE, ""
             + "font:bold +3");
         lblKhachDua.putClientProperty(FlatClientProperties.STYLE, ""
             + "font:bold +3");
@@ -669,7 +692,7 @@ public class BanHang extends SimpleForm {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, true
+                false, false, false, false, false, true, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -690,6 +713,7 @@ public class BanHang extends SimpleForm {
         if (table.getColumnModel().getColumnCount() > 0) {
             table.getColumnModel().getColumn(0).setResizable(false);
             table.getColumnModel().getColumn(0).setPreferredWidth(20);
+            table.getColumnModel().getColumn(0).setCellRenderer(null);
             table.getColumnModel().getColumn(1).setResizable(false);
             table.getColumnModel().getColumn(1).setPreferredWidth(60);
             table.getColumnModel().getColumn(2).setResizable(false);
@@ -698,6 +722,7 @@ public class BanHang extends SimpleForm {
             table.getColumnModel().getColumn(3).setPreferredWidth(200);
             table.getColumnModel().getColumn(4).setResizable(false);
             table.getColumnModel().getColumn(4).setPreferredWidth(80);
+            table.getColumnModel().getColumn(4).setCellRenderer(null);
             table.getColumnModel().getColumn(5).setResizable(false);
             table.getColumnModel().getColumn(5).setPreferredWidth(100);
             table.getColumnModel().getColumn(6).setResizable(false);
@@ -715,26 +740,38 @@ public class BanHang extends SimpleForm {
                     ((DefaultTableModel) table.getModel()).removeRow(row);
                     ((DefaultTableModel) table.getModel()).fireTableDataChanged();
                 }
+                updateLblSoLuongSP();
             }
         }));
 
+        table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(this));
+        table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());
         //table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());
         //table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(new QuantityCellEvent() {
             //    @Override
             //    public void onIncrease(int row) {
-                //        if (row >= 0) {
-                    //            int currentQuantity = (int) table.getValueAt(row, 5);
-                    //            table.setValueAt(currentQuantity + 1, row, 5);
+                //        int currentQuantity = (int) table.getValueAt(row, 5);
+                //        table.setValueAt(currentQuantity + 1, row, 5);
+                //        updateThanhTien(row, currentQuantity + 1);
+                //    }
+            //
+            //    @Override
+            //    public void onDecrease(int row) {
+                //        int currentQuantity = (int) table.getValueAt(row, 5);
+                //        if (currentQuantity > 1) {
+                    //            table.setValueAt(currentQuantity - 1, row, 5);
+                    //            updateThanhTien(row, currentQuantity - 1);
                     //        }
                 //    }
             //
-            //    public void onDecrease(int row) {
-                //        if (row >= 0) {
-                    //            int currentQuantity = (int) table.getValueAt(row, 5);
-                    //            if (currentQuantity > 0) {
-                        //                table.setValueAt(currentQuantity - 1, row, 5);
-                        //            }
+            //    @Override
+            //    public void onUpdateQuantity(int row) {
+                //        int newQuantity = Integer.parseInt(table.getValueAt(row, 5).toString());
+                //        if (newQuantity < 1) {
+                    //            newQuantity = 1; // Giữ số lượng tối thiểu là 1
                     //        }
+                //        table.setValueAt(newQuantity, row, 5);
+                //        updateThanhTien(row, newQuantity);
                 //    }
             //}));
 
@@ -843,7 +880,7 @@ pnLeftContentLayout.setHorizontalGroup(
 
             if(listProductSearch.getListSize() > 0) {
                 menuProduct.show(txtProductSearch, 0, txtProductSearch.getHeight());
-                menuProduct.setPopupSize(menuProduct.getWidth(), listProductSearch.getListSize() * 80);
+                menuProduct.setPopupSize(menuProduct.getWidth(), listProductSearch.getListSize() * 82 + 3);
             } else {
                 menuProduct.setVisible(false);
             }
@@ -864,8 +901,21 @@ pnLeftContentLayout.setHorizontalGroup(
             "Delete" // btnDelete
         };
         model.addRow(rowData);
+        updateLblSoLuongSP();
     }
 
+    public void updateLblSoLuongSP() {
+        int sumSoLuong = 0;
+        double sumThanhTien = 0;
+        for (int i = 0; i < table.getRowCount(); i++) {
+            int soLuong = Integer.parseInt(table.getValueAt(i, 5).toString());
+            sumSoLuong += soLuong;
+            sumThanhTien += Double.parseDouble(table.getValueAt(i, 7).toString());
+        }
+        lblSoLuongSP.setText(String.valueOf(sumSoLuong));
+        lblTongTien.setText(df.format(sumThanhTien));
+        
+    }
     
     private void addStyleBtn(JButton btn) {
         btn.putClientProperty(FlatClientProperties.STYLE, ""
@@ -893,17 +943,17 @@ pnLeftContentLayout.setHorizontalGroup(
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLayeredPane layer;
+    private javax.swing.JLabel lbl1;
+    private javax.swing.JLabel lbl2;
+    private javax.swing.JLabel lbl3;
+    private javax.swing.JLabel lbl4;
+    private javax.swing.JLabel lbl5;
     private javax.swing.JLabel lblKhachDua;
-    private javax.swing.JLabel lblPhaiTra;
+    private javax.swing.JLabel lblKhachPhaiTra;
     private javax.swing.JLabel lblPhuongThucThanhToan;
     private javax.swing.JLabel lblSoLuongSP;
     private javax.swing.JLabel lblSuDungDiemThuong;

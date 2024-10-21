@@ -6,6 +6,7 @@ package nguyenvu.utils;
 
 import java.awt.Component;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
@@ -17,9 +18,11 @@ public class QuantityCellRenderer extends DefaultTableCellRenderer{
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component com = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-        IncreDecreButtonPanel pn = new IncreDecreButtonPanel();
-        pn.setBackground(com.getBackground());
-        return pn;  
+//        QuantityCellButtonPanel pn = new QuantityCellButtonPanel();
+//        pn.setBackground(table.getBackground());
+        setHorizontalAlignment(SwingConstants.CENTER);
+        com.setBackground(table.getBackground());
+        return com;  
     }
     
 }
