@@ -11,4 +11,5 @@ package nguyenvu.utils;
 public interface QuantityCellEvent {
     public void onIncrease(int row);
     public void onDecrease(int row);
+    public void onUpdateQuantity(int row);
 }

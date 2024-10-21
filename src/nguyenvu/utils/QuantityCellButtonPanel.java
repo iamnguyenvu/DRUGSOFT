@@ -13,10 +13,18 @@ import javax.swing.JTable;
  *
  * @author HP
  */
-public class IncreDecreButtonPanel extends javax.swing.JPanel{
-    
-    public IncreDecreButtonPanel() {
+public class QuantityCellButtonPanel extends javax.swing.JPanel{
+
+    public QuantityCellButtonPanel() {
         initComponents();
+    }
+    
+    public String getSoLuongText() {
+        return txtSoLuong.getText();
+    }
+    
+    public void setSoLuongText(String soLuong) {
+        txtSoLuong.setText(soLuong);
     }
     
     public void initEvent(QuantityCellEvent ev, int row, JTable table) {
@@ -27,22 +35,36 @@ public class IncreDecreButtonPanel extends javax.swing.JPanel{
                 table.getCellEditor().stopCellEditing();
             };
         });
-        
         btnDecrease.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(ev != null) ev.onDecrease(row);
+                int currentQuantity = Integer.parseInt(txtSoLuong.getText());
+                if (currentQuantity > 1) {
+                    if (ev != null) ev.onDecrease(row); // Gọi sự kiện giảm số lượng nếu lớn hơn 1
+                }
+                table.getCellEditor().stopCellEditing();
+            };
+        });
+        txtSoLuong.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(ev != null) ev.onUpdateQuantity(row);
                 table.getCellEditor().stopCellEditing();
             };
         });
     }
     
+    public void updateSoLuong(int quantity) {
+        txtSoLuong.setText(String.valueOf(quantity));
+    }
+
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         btnDecrease = new javax.swing.JButton(new FlatSVGIcon("gui/icon/minus.svg"));
-        lblSoLuong = new javax.swing.JLabel();
         btnIncrease = new javax.swing.JButton(new FlatSVGIcon("gui/icon/add.svg", 0.04f));
+        txtSoLuong = new javax.swing.JTextField();
 
         btnDecrease.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,6 +78,12 @@ public class IncreDecreButtonPanel extends javax.swing.JPanel{
             }
         });
 
+        txtSoLuong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSoLuongActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -64,26 +92,26 @@ public class IncreDecreButtonPanel extends javax.swing.JPanel{
                 .addContainerGap()
                 .addComponent(btnDecrease, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnIncrease, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnIncrease, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(15, Short.MAX_VALUE)
-                        .addComponent(btnDecrease, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(15, 15, 15))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lblSoLuong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(10, 10, 10))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnDecrease, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(10, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnIncrease, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -95,10 +123,15 @@ public class IncreDecreButtonPanel extends javax.swing.JPanel{
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDecreaseActionPerformed
 
+    private void txtSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoLuongActionPerformed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_txtSoLuongActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDecrease;
     private javax.swing.JButton btnIncrease;
-    private javax.swing.JLabel lblSoLuong;
+    private javax.swing.JTextField txtSoLuong;
     // End of variables declaration//GEN-END:variables
 }
