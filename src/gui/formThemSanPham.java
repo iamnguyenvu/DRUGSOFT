@@ -1,11 +1,12 @@
 package gui;
 
-import javax.swing.JPanel;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -16,6 +17,7 @@ import com.toedter.calendar.JDayChooser;
 
 import nguyenvu.components.SimpleForm;
 import entity.LoaiSanPham_entity;
+import entity.SanPham_entity;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -322,10 +324,10 @@ public class formThemSanPham extends SimpleForm implements ActionListener{
 
 	            // Tạo đối tượng SanPham
 	            LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
-	            entity.SanPham_entity sp = new entity.SanPham_entity(maSP, tenSP, soLuong, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, congDung, hinhAnh, loaiSP);
+	            SanPham_entity sp = new SanPham_entity(maSP, tenSP, soLuong, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, congDung, hinhAnh, loaiSP);
 
 	            // Thêm sản phẩm vào bảng (cần đối tượng `sanPham` để gọi phương thức `addRowTable`)
-	            sanPham.addRowTable(maSP, tenSP, soLuong, lcNgaySX, lcNgayHH, nhaCungCap, gia, congDung, hinhAnh, loaiSanPham);
+	            sanPham.addRowTable(sp);
 
 	            // Hiển thị thông báo thành công
 	            JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
