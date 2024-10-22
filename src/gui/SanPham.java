@@ -10,6 +10,8 @@ import nguyenvu.components.SimpleForm;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.BorderFactory;
@@ -29,8 +31,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.time.LocalDate;
+
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.awt.event.ActionEvent;
 
 import javax.swing.border.Border;
@@ -52,10 +57,10 @@ public class SanPham extends SimpleForm implements ActionListener{
 	private JComboBox cb_LocTheoLoai;
 	private JRadioButton radio_giaTuThapDenCao;
 	private JRadioButton radio_giaTuCaoDenThap;
-	private JRadioButton radio_NsxTangdan;
-	private JRadioButton radio_NsxGiamdan;
 	private JRadioButton radio_NhhTangdan;
 	private JRadioButton radio_NhhGiamdan;
+	private JRadioButton rdo_NhieuDenIt;
+	private JRadioButton rdo_ItToiNhieu;
 
 	/**
 	 * Create the panel.
@@ -133,6 +138,9 @@ public class SanPham extends SimpleForm implements ActionListener{
 		                product.getDonViTinh(),
 		                product.getNhaCungCap(),
 		                product.getGia(),
+
+		                product.getThanhPhan(),
+
 		                product.getCongDung(),
 		                product.getHinhAnhSP(),
 		                product.getLoaiSanPham().getMaLoaiSP(),
@@ -180,7 +188,7 @@ public class SanPham extends SimpleForm implements ActionListener{
 		pnContent.add(pnCenter, BorderLayout.CENTER);
 		pnCenter.setLayout(null);
 		
-		String []columnNames = {"Mã Sản Phẩm","Tên Sản Phẩm","Số Lượng","Ngày Sản Xuất","Ngày Hết Hạn","Khối Lượng","Đơn Vị Tính","Nhà Cung Cấp","Giá","Công Dụng","Hình Ảnh","Loại Sản Phẩm","Cập Nhật","Xóa"};
+		String []columnNames = {"Mã Sản Phẩm","Tên Sản Phẩm","Số Lượng","Ngày Sản Xuất","Ngày Hết Hạn","Khối Lượng","Đơn Vị Tính","Nhà Cung Cấp","Giá","Thành Phần","Công Dụng","Hình Ảnh","Loại Sản Phẩm","Cập Nhật","Xóa"};
 
 		dftb_SanPham = new DefaultTableModel(columnNames, 0); // columnNames là mảng chứa tên cột
 		tb_SanPham = new JTable(dftb_SanPham);
@@ -213,13 +221,15 @@ public class SanPham extends SimpleForm implements ActionListener{
             tb_SanPham.getColumnModel().getColumn(9).setResizable(false);
             tb_SanPham.getColumnModel().getColumn(9).setPreferredWidth(100);
             tb_SanPham.getColumnModel().getColumn(10).setResizable(false);
-            tb_SanPham.getColumnModel().getColumn(10).setPreferredWidth(80);
+            tb_SanPham.getColumnModel().getColumn(10).setPreferredWidth(100);
             tb_SanPham.getColumnModel().getColumn(11).setResizable(false);
             tb_SanPham.getColumnModel().getColumn(11).setPreferredWidth(60);
             tb_SanPham.getColumnModel().getColumn(12).setResizable(false);
             tb_SanPham.getColumnModel().getColumn(12).setPreferredWidth(40);
             tb_SanPham.getColumnModel().getColumn(13).setResizable(false);
             tb_SanPham.getColumnModel().getColumn(13).setPreferredWidth(40);
+            tb_SanPham.getColumnModel().getColumn(14).setResizable(false);
+            tb_SanPham.getColumnModel().getColumn(14).setPreferredWidth(40);
         }
 
 		JScrollPane scp_SanPham = new JScrollPane(tb_SanPham);
@@ -227,7 +237,7 @@ public class SanPham extends SimpleForm implements ActionListener{
 		pnCenter.add(scp_SanPham);
 		
 		// đưa dữ liệu từ database vào table
-		docDuLieuVaoTable();
+
 		
 		JPanel pnLoc = new JPanel();
 		pnLoc.setBackground(new Color(255, 255, 255));
@@ -238,16 +248,19 @@ public class SanPham extends SimpleForm implements ActionListener{
 		
 		JLabel lbLocTheoLoai = new JLabel("Loại Sản Phẩm");
 		lbLocTheoLoai.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lbLocTheoLoai.setBounds(10, 47, 106, 28);
+		lbLocTheoLoai.setBounds(10, 70, 106, 28);
 		pnLoc.add(lbLocTheoLoai);
 		
-		cb_LocTheoLoai = new JComboBox();
-		cb_LocTheoLoai.addItem("Tất Cả");
+		
+		cb_LocTheoLoai = new JComboBox<>();
+		// Thêm các mục vào JComboBox
+		cb_LocTheoLoai.addItem("Tất cả");
 		cb_LocTheoLoai.addItem("Thuoc");
 		cb_LocTheoLoai.addItem("TPCN");
 		cb_LocTheoLoai.addItem("TBYT");
-		cb_LocTheoLoai.setBounds(126, 47, 106, 28);
+		cb_LocTheoLoai.setBounds(126, 72, 106, 28);
 		cb_LocTheoLoai.setBorder(bottomBorder);
+		cb_LocTheoLoai.setSelectedIndex(0);
 		
 		pnLoc.add(cb_LocTheoLoai);
 		
@@ -259,7 +272,8 @@ public class SanPham extends SimpleForm implements ActionListener{
 		JPanel pn_SapXepTheoGia = new JPanel();
 		pn_SapXepTheoGia.setBackground(new Color(255, 255, 255));
 		pn_SapXepTheoGia.setBorder(new TitledBorder(null, "G\u00EDa S\u1EA3n Ph\u1EA9m", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pn_SapXepTheoGia.setBounds(10, 189, 275, 125);
+
+		pn_SapXepTheoGia.setBounds(10, 154, 275, 125);
 		pnLoc.add(pn_SapXepTheoGia);
 		pn_SapXepTheoGia.setLayout(null);
 		
@@ -279,31 +293,8 @@ public class SanPham extends SimpleForm implements ActionListener{
 		group_gia.add(radio_giaTuThapDenCao);
 		group_gia.add(radio_giaTuCaoDenThap);
 		radio_giaTuThapDenCao.setSelected(true);
-		
-		
-		JPanel pn_NgaySanXuat = new JPanel();
-		pn_NgaySanXuat.setBackground(new Color(255, 255, 255));
-		pn_NgaySanXuat.setBorder(new TitledBorder(null, "Ng\u00E0y S\u1EA3n Xu\u1EA5t", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pn_NgaySanXuat.setBounds(10, 358, 275, 125);
-		pnLoc.add(pn_NgaySanXuat);
-		pn_NgaySanXuat.setLayout(null);
-		
-		radio_NsxTangdan = new JRadioButton("Tăng Dần");
-		radio_NsxTangdan.setBounds(23, 28, 133, 25);
-		radio_NsxTangdan.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		radio_NsxTangdan.setBackground(Color.WHITE);
-		pn_NgaySanXuat.add(radio_NsxTangdan);
-		
-		radio_NsxGiamdan = new JRadioButton("Giảm Dần");
-		radio_NsxGiamdan.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		radio_NsxGiamdan.setBackground(Color.WHITE);
-		radio_NsxGiamdan.setBounds(23, 79, 139, 21);
-		pn_NgaySanXuat.add(radio_NsxGiamdan);
-		
+	
 		ButtonGroup group_ngsx = new ButtonGroup();
-		group_ngsx.add(radio_NsxTangdan);
-		group_ngsx.add(radio_NsxGiamdan);
-		radio_NsxTangdan.setSelected(true);
 		
 		JPanel pn_NgayHetHan = new JPanel();
 		pn_NgayHetHan.setBorder(new TitledBorder(null, "Ng\u00E0y H\u1EBFt H\u1EA1n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -326,35 +317,53 @@ public class SanPham extends SimpleForm implements ActionListener{
 		radio_NhhGiamdan.setBounds(25, 71, 139, 21);
 		pn_NgayHetHan.add(radio_NhhGiamdan);
 		
-		
-		radio_giaTuThapDenCao.addActionListener(e -> locSanPham());
-		radio_giaTuCaoDenThap.addActionListener(e -> locSanPham());
-		radio_NsxTangdan.addActionListener(e -> locSanPham());
-		radio_NsxGiamdan.addActionListener(e -> locSanPham());
-		radio_NhhTangdan.addActionListener(e -> locSanPham());
-		radio_NhhGiamdan.addActionListener(e -> locSanPham());
-		
 		ButtonGroup group_nghh = new ButtonGroup();
 		group_nghh.add(radio_NhhTangdan);
 		group_nghh.add(radio_NhhGiamdan);
 		radio_NhhTangdan.setSelected(true);
 		
-		JLabel lb_LocCongDung = new JLabel("Công Dụng");
-		lb_LocCongDung.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_LocCongDung.setBounds(10, 120, 106, 20);
-		pnLoc.add(lb_LocCongDung);
+
+		JPanel pnSLTON = new JPanel();
+		pnSLTON.setBorder(new TitledBorder(null, "S\u1ED1 L\u01B0\u1EE3ng T\u1ED3n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnSLTON.setBackground(new Color(255, 255, 255));
+		pnSLTON.setBounds(10, 344, 275, 114);
+		pnLoc.add(pnSLTON);
+		pnSLTON.setLayout(null);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(126, 114, 106, 28);
-		pnLoc.add(comboBox);
+		rdo_NhieuDenIt = new JRadioButton("Từ Nhiều Đến ít");
+		rdo_NhieuDenIt.setBackground(new Color(255, 255, 255));
+		rdo_NhieuDenIt.setBounds(21, 25, 157, 21);
+		pnSLTON.add(rdo_NhieuDenIt);
+		
+		rdo_ItToiNhieu = new JRadioButton("Từ Ít Đến Nhiều");
+		rdo_ItToiNhieu.setBackground(new Color(255, 255, 255));
+		rdo_ItToiNhieu.setBounds(21, 68, 157, 21);
+		pnSLTON.add(rdo_ItToiNhieu);
+		
+		ButtonGroup groupSL = new ButtonGroup();
+		groupSL.add(rdo_NhieuDenIt);
+		groupSL.add(rdo_ItToiNhieu);
+		
+		rdo_NhieuDenIt.setSelected(true);
+		
+		radio_giaTuThapDenCao.addActionListener(e -> docDuLieuVaoTable());
+		radio_giaTuCaoDenThap.addActionListener(e -> docDuLieuVaoTable());
+		radio_NhhTangdan.addActionListener(e -> docDuLieuVaoTable());
+		radio_NhhGiamdan.addActionListener(e -> docDuLieuVaoTable());
+		rdo_NhieuDenIt.addActionListener(e -> docDuLieuVaoTable());
+		rdo_ItToiNhieu.addActionListener(e -> docDuLieuVaoTable());
+		
+
 		cb_LocTheoLoai.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				locSanPham();
+
+				docDuLieuVaoTable();
 				
 			}
 		});
+		docDuLieuVaoTable();
 		
 	}
   
@@ -366,76 +375,82 @@ public class SanPham extends SimpleForm implements ActionListener{
 		dftb_SanPham.addRow(new Object[] {sp.getMaSP(),sp.getTenSP(),sp.getSoLuong(),sp.getNgaySanXuat(),sp.getNgayHetHan(),sp.getKhoiLuong(),sp.getDonViTinh(),sp.getNhaCungCap(),sp.getGia(),sp.getCongDung(),sp.getHinhAnhSP(),sp.getLoaiSanPham().getMaLoaiSP()});
 	}
 	//Phương thức thêm tất cả dữ liệu vào bảng
-	private void docDuLieuVaoTable() {
-		List<SanPham_entity> dssp = sp_dao.getAllSanPham();
-		for (SanPham_entity sp : dssp) {
-			dftb_SanPham.addRow(new Object[] {sp.getMaSP(),sp.getTenSP(),sp.getSoLuong(),sp.getNgaySanXuat(),sp.getNgayHetHan(),sp.getKhoiLuong(),sp.getDonViTinh(),sp.getNhaCungCap(),sp.getGia(),sp.getCongDung(),sp.getHinhAnhSP(),sp.getLoaiSanPham().getMaLoaiSP()});
-		}
-	}
 
 
-	private void locSanPham() {
-	    // Xóa dữ liệu hiện tại trong bảng
-	    dftb_SanPham.setRowCount(0);
+	    private void docDuLieuVaoTable() {
+	        dftb_SanPham.setRowCount(0); // Clear the current table model
+	        List<SanPham_entity> products = sp_dao.getAllSanPham(); // Assume this method exists
+	        
+	        // Filtering based on selected product type
+	        String selectedType = cb_LocTheoLoai.getSelectedItem().toString();
+	        
+	        if (!selectedType.equalsIgnoreCase("Tất cả")) {
+	            products = products.stream()
+	                .filter(sp -> sp.getLoaiSanPham().getMaLoaiSP().equalsIgnoreCase(selectedType))
+	                .collect(Collectors.toList());
+	        }
 
-	    // Lấy loại sản phẩm từ JComboBox
-	    String loaiSanPham = cb_LocTheoLoai.getSelectedItem().toString();
-	    
-	    // Lấy danh sách sản phẩm từ cơ sở dữ liệu
-	    List<SanPham_entity> danhSachSanPham = sp_dao.getAllSanPham();
-	    
-	    // Lọc theo loại sản phẩm nếu không phải "Tất Cả"
-	    if (!loaiSanPham.equals("Tất Cả")) {
-	        danhSachSanPham.removeIf(sp -> !sp.getLoaiSanPham().getMaLoaiSP().equals(loaiSanPham));
+	        // Sorting based on selected options
+	        Comparator<SanPham_entity> comparator = null;
+
+	        // Check quantity sorting option
+	        if (rdo_ItToiNhieu.isSelected()) {
+	            comparator = Comparator.comparingInt(SanPham_entity::getSoLuong);
+	        } else if (rdo_NhieuDenIt.isSelected()) {
+	            comparator = Comparator.comparingInt(SanPham_entity::getSoLuong).reversed();
+	        }
+
+	        // Check price sorting option
+	        if (radio_giaTuThapDenCao.isSelected()) {
+	            comparator = (comparator == null) ?
+	                Comparator.comparingDouble(SanPham_entity::getGia) :
+	                comparator.thenComparing(Comparator.comparingDouble(SanPham_entity::getGia));
+	        } else if (radio_giaTuCaoDenThap.isSelected()) {
+	            comparator = (comparator == null) ?
+	                Comparator.comparingDouble(SanPham_entity::getGia).reversed() :
+	                comparator.thenComparing(Comparator.comparingDouble(SanPham_entity::getGia).reversed());
+	        }
+
+	        // Check expiration date sorting option
+	        if (radio_NhhTangdan.isSelected()) {
+	            comparator = (comparator == null) ?
+	                Comparator.comparing(SanPham_entity::getNgayHetHan) :
+	                comparator.thenComparing(Comparator.comparing(SanPham_entity::getNgayHetHan));
+	        } else if (radio_NhhGiamdan.isSelected()) {
+	            comparator = (comparator == null) ?
+	                Comparator.comparing(SanPham_entity::getNgayHetHan).reversed() :
+	                comparator.thenComparing(Comparator.comparing(SanPham_entity::getNgayHetHan).reversed());
+	        }
+
+	        // Apply sorting if comparator is defined
+	        if (comparator != null) {
+	            products.sort(comparator);
+	        }
+
+	        // Adding products to the table model
+	        for (SanPham_entity product : products) {
+	            dftb_SanPham.addRow(new Object[]{
+	                product.getMaSP(),
+	                product.getTenSP(),
+	                product.getSoLuong(),
+	                product.getNgaySanXuat(),
+	                product.getNgayHetHan(),
+	                product.getKhoiLuong(),
+	                product.getDonViTinh(),
+	                product.getNhaCungCap(),
+	                product.getGia(),
+	                product.getThanhPhan(),
+	                product.getCongDung(),
+	                product.getHinhAnhSP(),
+	                product.getLoaiSanPham().getMaLoaiSP(),
+	                // Add actions for Update and Delete as necessary
+	            });
+	        }
 	    }
-
-	    
-	    // Sắp xếp theo giá sản phẩm
-	    if (radio_giaTuThapDenCao.isSelected()) {
-	        danhSachSanPham.sort(Comparator.comparingDouble(SanPham_entity::getGia));
-	    } else if (radio_giaTuCaoDenThap.isSelected()) {
-	        danhSachSanPham.sort(Comparator.comparingDouble(SanPham_entity::getGia).reversed());
-	    }
-	    // Sắp xếp theo ngày sản xuất
-	    if (radio_NsxTangdan.isSelected()) {
-	        danhSachSanPham.sort(Comparator.comparing(SanPham_entity::getNgaySanXuat));
-	    } else if (radio_NsxGiamdan.isSelected()) {
-	        danhSachSanPham.sort(Comparator.comparing(SanPham_entity::getNgaySanXuat).reversed());
-	    }
-	    // Sắp xếp theo ngày hết hạn
-	    if (radio_NhhTangdan.isSelected()) {
-	        danhSachSanPham.sort(Comparator.comparing(SanPham_entity::getNgayHetHan));
-	    } else if (radio_NhhGiamdan.isSelected()) {
-	        danhSachSanPham.sort(Comparator.comparing(SanPham_entity::getNgayHetHan).reversed());
-	    }
-	    
-	    // Thêm các sản phẩm vào bảng
-	    for (SanPham_entity sp : danhSachSanPham) {
-	        dftb_SanPham.addRow(new Object[] {
-	            sp.getMaSP(),
-	            sp.getTenSP(),
-	            sp.getSoLuong(),
-	            sp.getNgaySanXuat(),
-	            sp.getNgayHetHan(),
-	            sp.getKhoiLuong(),
-	            sp.getDonViTinh(),
-	            sp.getNhaCungCap(),
-	            sp.getGia(),
-	            sp.getCongDung(),
-	            sp.getHinhAnhSP(),
-	            sp.getLoaiSanPham().getMaLoaiSP()
-	        });
-	    }
-	}
-
-
-
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

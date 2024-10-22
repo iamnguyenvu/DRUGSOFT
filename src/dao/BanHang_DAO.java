@@ -30,7 +30,7 @@ public class BanHang_DAO {
             ps.setString(2, "%" + key + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
-                SanPham_entity sp = new SanPham_entity(rs.getString(11), rs.getString(1), rs.getString(2), rs.getString(7), rs.getInt(3), rs.getDouble(9)); 
+                SanPham_entity sp = new SanPham_entity(rs.getString(1), rs.getString(2), rs.getString(6), rs.getDouble(7), rs.getString(10), rs.getInt(9)); 
                 listSP.add(sp);
             }
         } catch (SQLException e) {

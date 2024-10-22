@@ -5,9 +5,13 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+
+
 
 import connectDB.connectDB;
 import entity.LoaiSanPham_entity;
@@ -34,19 +38,20 @@ public class SanPham_DAO {
 	            Date ngaySX = rs.getDate("ngaySanXuat");
 	            Date ngayHH = rs.getDate("ngayHetHan");
 
-	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null; // Sử dụng toLocalDate()
-	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null; // Sử dụng toLocalDate()
+	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null;
+	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null;
 
 	            double khoiLuong = rs.getDouble("khoiLuong");
 	            String donViTinh = rs.getString("donViTinh");
 	            String Nhacc = rs.getString("nhaCungCap");
 	            double gia = rs.getDouble("gia");
 	            String congDung = rs.getString("congDung");
+	            String thanhPhan = rs.getString("thanhPhan");
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, soLuong, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, congDung, hinhAnhsp, loaisp);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -83,11 +88,12 @@ public class SanPham_DAO {
 	            String Nhacc = rs.getString("nhaCungCap");
 	            double gia = rs.getDouble("gia");
 	            String congDung = rs.getString("congDung");
+	            String thanhPhan = rs.getString("thanhPhan");
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, soLuong, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, congDung, hinhAnhsp, loaisp);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -136,11 +142,12 @@ public class SanPham_DAO {
 	            String Nhacc = rs.getString("nhaCungCap");
 	            double gia = rs.getDouble("gia");
 	            String congDung = rs.getString("congDung");
+	            String thanhPhan = rs.getString("thanhPhan");
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, soLuong, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, congDung, hinhAnhsp, loaisp);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -151,44 +158,6 @@ public class SanPham_DAO {
 	}
 
 
-    // Get full product details by maSP
-    public String getSanPhamInfo(String maSP) {
-        Connection con = connectDB.accessDataBase();
-        if (con == null) return null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String info = null;
-        try {
-            ps = con.prepareStatement("SELECT * FROM SanPham WHERE maSP = ?");
-            ps.setString(1, maSP);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                info = "Mã SP: " + maSP +
-                       ", Tên: " + rs.getString("tenSP") +
-                       ", Ngày sản xuất: " + rs.getDate("ngaySanXuat") +
-                       ", Ngày hết hạn: " + rs.getDate("ngayHetHan") +
-      				 ", Khối lượng: " + rs.getDouble("khoiLuong") +
-		 				 ", Số Lượng: " + rs.getDouble("khoiLuong") +
-      				 ", Đơn vị tính: " + rs.getString("donViTinh") +
-                       ", Nhà cung cấp: " + rs.getString("nhaCungCap") +
-                       ", Giá: " + rs.getDouble("gia") +
-                       ", Công dụng: " + rs.getString("congDung") +
-                       ", Hình ảnh: " + rs.getString("hinhAnhSP") +
-                       ", Mã loại SP: " + rs.getString("maLoaiSP");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (con != null) con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return info;
-    }
 
     // Get product price by maSP
     public double getGia(String maSP) {
