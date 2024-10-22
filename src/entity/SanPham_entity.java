@@ -112,15 +112,10 @@ public class SanPham_entity {
             this.loaiSanPham = loaiSanPham;
             this.soLuong = soLuong;
     }
-
-    public SanPham_entity(String hinhAnhSP, String maSP, String tenSP, String donViTinh, int soLuong, double gia) {
-        this.maSP = maSP;
-        this.tenSP = tenSP;
-        this.donViTinh = donViTinh;
-        this.gia = gia;
-        this.hinhAnhSP = hinhAnhSP;
-        this.soLuong = soLuong;
-    }
+    
+    
+    
+    
 
     @Override
     public String toString() {
