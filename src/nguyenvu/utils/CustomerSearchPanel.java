@@ -4,7 +4,10 @@
  */
 package nguyenvu.utils;
 
+import entity.KhachHang_entity;
 import java.util.ArrayList;
+
+import entity.KhachHang_entity;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -17,9 +20,9 @@ public class CustomerSearchPanel extends javax.swing.JPanel {
         setLayout(new MigLayout("fillx", "0[]0", "0[]0"));
     }
     
-    public void setData(ArrayList<KhachHang> data) {
+    public void setData(ArrayList<KhachHang_entity> data) {
         this.removeAll();
-        for (KhachHang kh : data) {
+        for (KhachHang_entity kh : data) {
             
         }
     }
@@ -27,7 +30,16 @@ public class CustomerSearchPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setLayout(new java.awt.BorderLayout());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 427, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 72, Short.MAX_VALUE)
+        );
     }// </editor-fold>//GEN-END:initComponents
 
 
