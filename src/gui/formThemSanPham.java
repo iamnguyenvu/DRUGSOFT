@@ -57,6 +57,7 @@ public class formThemSanPham extends SimpleForm implements ActionListener{
 	private JTextArea ta_CongDung;
 	private JComboBox cb_LoaiSP;
 	private SanPham sanPham;
+	private JTextArea ta_ThanhPhan;
 
 	/**
 	 * Create the panel.
@@ -253,21 +254,32 @@ public class formThemSanPham extends SimpleForm implements ActionListener{
 		JPanel pn_HinhAnh = new JPanel();
 		pn_HinhAnh.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 		pn_HinhAnh.setBackground(new Color(255, 255, 255));
-		pn_HinhAnh.setBounds(789, 389, 320, 286);
+		pn_HinhAnh.setBounds(789, 373, 320, 302);
 		pnContent.add(pn_HinhAnh);
 		pn_HinhAnh.setLayout(null);
 		
 		JLabel lbCongDung = new JLabel("Công Dụng");
 		lbCongDung.setVerticalAlignment(SwingConstants.TOP);
 		lbCongDung.setFont(new Font("Serif", Font.PLAIN, 20));
-		lbCongDung.setBounds(23, 24, 105, 34);
+		lbCongDung.setBounds(10, 157, 105, 34);
 		pn_HinhAnh.add(lbCongDung);
 		
 		ta_CongDung = new JTextArea();
 		border = BorderFactory.createLineBorder(Color.BLACK, 1); // Độ dày 1 pixel
 		ta_CongDung.setBorder(border);
-		ta_CongDung.setBounds(10, 68, 300, 208);
+		ta_CongDung.setBounds(10, 190, 300, 102);
 		pn_HinhAnh.add(ta_CongDung);
+		
+		ta_ThanhPhan = new JTextArea();
+		ta_ThanhPhan.setBorder(border);
+		ta_ThanhPhan.setBounds(10, 58, 300, 102);
+		pn_HinhAnh.add(ta_ThanhPhan);
+		
+		JLabel lbThanhPhan = new JLabel("Thành Phần");
+		lbThanhPhan.setVerticalAlignment(SwingConstants.TOP);
+		lbThanhPhan.setFont(new Font("Serif", Font.PLAIN, 20));
+		lbThanhPhan.setBounds(10, 14, 105, 34);
+		pn_HinhAnh.add(lbThanhPhan);
 		
 		btn_Huy = new JButton("Hủy");
 		btn_Huy.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -321,10 +333,11 @@ public class formThemSanPham extends SimpleForm implements ActionListener{
 	            } else if (loaiSanPham.equals("Thiết Bị Y Tế")) {
 	                loaiSanPham = "TBYT";
 	            }
+	            String thanhPhan = ta_ThanhPhan.getText();
 
 	            // Tạo đối tượng SanPham
 	            LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
-	            SanPham_entity sp = new SanPham_entity(maSP, tenSP, soLuong, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, congDung, hinhAnh, loaiSP);
+	            SanPham_entity sp = new SanPham_entity(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong);
 
 	            // Thêm sản phẩm vào bảng (cần đối tượng `sanPham` để gọi phương thức `addRowTable`)
 	            sanPham.addRowTable(sp);

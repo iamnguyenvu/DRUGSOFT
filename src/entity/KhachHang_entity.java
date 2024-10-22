@@ -19,8 +19,14 @@ public class KhachHang_entity {
         this.diemThuong = diemThuong;
         this.gioiTinh = gioiTinh;
     }
+    
 
-    // Getter và Setter cho maKH
+    public KhachHang_entity(String maKH) {
+		super();
+		this.maKH = maKH;
+	}
+
+	// Getter và Setter cho maKH
     public String getMaKH() {
         return maKH;
     }

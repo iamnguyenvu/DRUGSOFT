@@ -241,30 +241,30 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lblSoLuongSP" min="-2" pref="174" max="-2" attributes="0"/>
+                                              <Component id="lbl1" min="-2" pref="174" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jLabel2" min="-2" pref="180" max="-2" attributes="0"/>
+                                              <Component id="lblSoLuongSP" min="-2" pref="180" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lblTongTien" min="-2" pref="174" max="-2" attributes="0"/>
+                                              <Component id="lbl2" min="-2" pref="174" max="-2" attributes="0"/>
                                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                              <Component id="jLabel4" min="-2" pref="180" max="-2" attributes="0"/>
+                                              <Component id="lblTongTien" min="-2" pref="180" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lblVAT" min="-2" pref="174" max="-2" attributes="0"/>
+                                              <Component id="lbl3" min="-2" pref="174" max="-2" attributes="0"/>
                                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                              <Component id="jLabel10" min="-2" pref="180" max="-2" attributes="0"/>
+                                              <Component id="lblVAT" min="-2" pref="180" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lblPhaiTra" min="-2" pref="172" max="-2" attributes="0"/>
+                                              <Component id="lbl5" min="-2" pref="172" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jLabel11" min="-2" pref="183" max="-2" attributes="0"/>
+                                              <Component id="lblKhachPhaiTra" min="-2" pref="183" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" attributes="0">
                                               <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                                              <Component id="lblSuDungDiemThuong" min="-2" pref="174" max="-2" attributes="0"/>
+                                              <Component id="lbl4" min="-2" pref="174" max="-2" attributes="0"/>
                                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                              <Component id="jLabel8" min="-2" pref="180" max="-2" attributes="0"/>
+                                              <Component id="lblSuDungDiemThuong" min="-2" pref="180" max="-2" attributes="0"/>
                                           </Group>
                                           <Component id="pnInputCustomer" alignment="0" min="-2" pref="360" max="-2" attributes="0"/>
                                       </Group>
@@ -309,28 +309,28 @@
                           <Component id="pnInputCustomer" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lbl1" min="-2" max="-2" attributes="0"/>
                               <Component id="lblSoLuongSP" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lbl2" min="-2" max="-2" attributes="0"/>
                               <Component id="lblTongTien" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lbl3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblVAT" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lbl4" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="lblSuDungDiemThuong" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="jLabel8" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblPhaiTra" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="jLabel11" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="lbl5" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="lblKhachPhaiTra" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -433,7 +433,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JLabel" name="lblSoLuongSP">
+                <Component class="javax.swing.JLabel" name="lbl1">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="S&#x1ed1; l&#x1b0;&#x1ee3;ng s&#x1ea3;n ph&#x1ea9;m"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -441,14 +441,14 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel2">
+                <Component class="javax.swing.JLabel" name="lblSoLuongSP">
                   <Properties>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[0, 30]"/>
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblTongTien">
+                <Component class="javax.swing.JLabel" name="lbl2">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="T&#x1ed5;ng ti&#x1ec1;n"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -456,14 +456,14 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel4">
+                <Component class="javax.swing.JLabel" name="lblTongTien">
                   <Properties>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[0, 30]"/>
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblVAT">
+                <Component class="javax.swing.JLabel" name="lbl3">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="VAT"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -471,14 +471,14 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel10">
+                <Component class="javax.swing.JLabel" name="lblVAT">
                   <Properties>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[0, 30]"/>
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblSuDungDiemThuong">
+                <Component class="javax.swing.JLabel" name="lbl4">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="[F4] S&#x1eed; d&#x1ee5;ng &#x111;i&#x1ec3;m th&#x1b0;&#x1edf;ng"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -486,14 +486,14 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel8">
+                <Component class="javax.swing.JLabel" name="lblSuDungDiemThuong">
                   <Properties>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[0, 30]"/>
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblPhaiTra">
+                <Component class="javax.swing.JLabel" name="lbl5">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Kh&#xe1;ch ph&#x1ea3;i tr&#x1ea3;"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -501,17 +501,17 @@
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lblPhaiTra.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +3&quot;);"/>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lbl5.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +3&quot;);"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel11">
+                <Component class="javax.swing.JLabel" name="lblKhachPhaiTra">
                   <Properties>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[0, 30]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jLabel11.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +3&quot;);"/>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lblKhachPhaiTra.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +3&quot;);"/>
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblKhachDua">
@@ -895,7 +895,7 @@
                         <Column editable="false" title="maSP" type="java.lang.String"/>
                         <Column editable="false" title="tenSP" type="java.lang.String"/>
                         <Column editable="false" title="donVi" type="java.lang.String"/>
-                        <Column editable="false" title="soLuong" type="java.lang.Integer"/>
+                        <Column editable="true" title="soLuong" type="java.lang.Integer"/>
                         <Column editable="false" title="donGia" type="java.lang.Double"/>
                         <Column editable="false" title="thanhTien" type="java.lang.Double"/>
                         <Column editable="true" title="btnDelete" type="java.lang.String"/>
@@ -904,12 +904,14 @@
                     <Property name="cellSelectionEnabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="false" type="code"/>
                     </Property>
-                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="table.getColumnModel().getColumn(8).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());&#xa;table.getColumnModel().getColumn(8).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {&#xa;    @Override&#xa;    public void onDelete(int row) {&#xa;        if (row &gt;= 0 &amp;&amp; row &lt; table.getRowCount()) {&#xa;            ((DefaultTableModel) table.getModel()).removeRow(row);&#xa;            ((DefaultTableModel) table.getModel()).fireTableDataChanged();&#xa;        }&#xa;    }&#xa;}));&#xa;&#xa;//table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());&#xa;//table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(new QuantityCellEvent() {&#xa;//    @Override&#xa;//    public void onIncrease(int row) {&#xa;//        if (row &gt;= 0) {&#xa;//            int currentQuantity = (int) table.getValueAt(row, 5);&#xa;//            table.setValueAt(currentQuantity + 1, row, 5);&#xa;//        }&#xa;//    }&#xa;//&#xa;//    public void onDecrease(int row) {&#xa;//        if (row &gt;= 0) {&#xa;//            int currentQuantity = (int) table.getValueAt(row, 5);&#xa;//            if (currentQuantity &gt; 0) {&#xa;//                table.setValueAt(currentQuantity - 1, row, 5);&#xa;//            }&#xa;//        }&#xa;//    }&#xa;//}));">
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="table.getColumnModel().getColumn(8).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());&#xa;table.getColumnModel().getColumn(8).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {&#xa;    @Override&#xa;    public void onDelete(int row) {&#xa;        if (row &gt;= 0 &amp;&amp; row &lt; table.getRowCount()) {&#xa;            ((DefaultTableModel) table.getModel()).removeRow(row);&#xa;            ((DefaultTableModel) table.getModel()).fireTableDataChanged();&#xa;        }&#xa;        updateLblSoLuongSP();&#xa;    }&#xa;}));&#xa;&#xa;table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(this));&#xa;table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());&#xa;//table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());&#xa;//table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(new QuantityCellEvent() {&#xa;//    @Override&#xa;//    public void onIncrease(int row) {&#xa;//        int currentQuantity = (int) table.getValueAt(row, 5);&#xa;//        table.setValueAt(currentQuantity + 1, row, 5);&#xa;//        updateThanhTien(row, currentQuantity + 1);&#xa;//    }&#xa;//    &#xa;//    @Override&#xa;//    public void onDecrease(int row) {&#xa;//        int currentQuantity = (int) table.getValueAt(row, 5);&#xa;//        if (currentQuantity &gt; 1) {&#xa;//            table.setValueAt(currentQuantity - 1, row, 5);&#xa;//            updateThanhTien(row, currentQuantity - 1);&#xa;//        }&#xa;//    }&#xa;//&#xa;//    @Override&#xa;//    public void onUpdateQuantity(int row) {&#xa;//        int newQuantity = Integer.parseInt(table.getValueAt(row, 5).toString());&#xa;//        if (newQuantity &lt; 1) {&#xa;//            newQuantity = 1; // Gi&#x1eef; s&#x1ed1; l&#x1b0;&#x1ee3;ng t&#x1ed1;i thi&#x1ec3;u l&#xe0; 1&#xa;//        }&#xa;//        table.setValueAt(newQuantity, row, 5);&#xa;//        updateThanhTien(row, newQuantity);&#xa;//    }&#xa;//}));">
                       <TableColumnModel selectionModel="0">
                         <Column maxWidth="-1" minWidth="-1" prefWidth="20" resizable="false">
                           <Title/>
                           <Editor/>
-                          <Renderer/>
+                          <Renderer editor="org.netbeans.modules.form.ComponentChooserEditor">
+                            <ComponentRef name="null"/>
+                          </Renderer>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="60" resizable="false">
                           <Title/>
@@ -929,7 +931,9 @@
                         <Column maxWidth="-1" minWidth="-1" prefWidth="80" resizable="false">
                           <Title/>
                           <Editor/>
-                          <Renderer/>
+                          <Renderer editor="org.netbeans.modules.form.ComponentChooserEditor">
+                            <ComponentRef name="null"/>
+                          </Renderer>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="100" resizable="false">
                           <Title/>
