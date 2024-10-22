@@ -113,16 +113,8 @@ public class SanPham_entity {
             this.soLuong = soLuong;
     }
 
-    public SanPham_entity(String hinhAnhSP, String maSP, String tenSP, String donViTinh, int soLuong, double gia) {
-        this.maSP = maSP;
-        this.tenSP = tenSP;
-        this.donViTinh = donViTinh;
-        this.gia = gia;
-        this.hinhAnhSP = hinhAnhSP;
-        this.soLuong = soLuong;
-    }
 
-    @Override
+	@Override
     public String toString() {
         return "SanPham_entity{" + "maSP=" + maSP + ", tenSP=" + tenSP + ", ngaySanXuat=" + ngaySanXuat + ", ngayHetHan=" + ngayHetHan + ", khoiLuong=" + khoiLuong + ", donViTinh=" + donViTinh + ", nhaCungCap=" + nhaCungCap + ", gia=" + gia + ", congDung=" + congDung + ", hinhAnhSP=" + hinhAnhSP + ", loaiSanPham=" + loaiSanPham + ", soLuong=" + soLuong + '}';
     }  
