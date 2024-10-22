@@ -27,7 +27,7 @@ public class SanPham_DAO {
 	    if (con == null) {
 	        return null;
 	    }
-	    String sql = "SELECT * FROM SanPham";
+	    String sql = "SELECT * FROM SanPham order by tenSP";
 	    try {
 	        java.sql.Statement st = con.createStatement();  
 	        ResultSet rs = st.executeQuery(sql);
@@ -156,11 +156,6 @@ public class SanPham_DAO {
 
 	    return dssp;
 	}
-
-
-    
-    
-
 
 
 

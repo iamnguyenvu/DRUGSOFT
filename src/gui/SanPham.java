@@ -31,6 +31,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -137,7 +138,9 @@ public class SanPham extends SimpleForm implements ActionListener{
 		                product.getDonViTinh(),
 		                product.getNhaCungCap(),
 		                product.getGia(),
+
 		                product.getThanhPhan(),
+
 		                product.getCongDung(),
 		                product.getHinhAnhSP(),
 		                product.getLoaiSanPham().getMaLoaiSP(),
@@ -269,6 +272,7 @@ public class SanPham extends SimpleForm implements ActionListener{
 		JPanel pn_SapXepTheoGia = new JPanel();
 		pn_SapXepTheoGia.setBackground(new Color(255, 255, 255));
 		pn_SapXepTheoGia.setBorder(new TitledBorder(null, "G\u00EDa S\u1EA3n Ph\u1EA9m", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+
 		pn_SapXepTheoGia.setBounds(10, 154, 275, 125);
 		pnLoc.add(pn_SapXepTheoGia);
 		pn_SapXepTheoGia.setLayout(null);
@@ -289,7 +293,7 @@ public class SanPham extends SimpleForm implements ActionListener{
 		group_gia.add(radio_giaTuThapDenCao);
 		group_gia.add(radio_giaTuCaoDenThap);
 		radio_giaTuThapDenCao.setSelected(true);
-		
+	
 		ButtonGroup group_ngsx = new ButtonGroup();
 		
 		JPanel pn_NgayHetHan = new JPanel();
@@ -313,14 +317,12 @@ public class SanPham extends SimpleForm implements ActionListener{
 		radio_NhhGiamdan.setBounds(25, 71, 139, 21);
 		pn_NgayHetHan.add(radio_NhhGiamdan);
 		
-		
-
-		
 		ButtonGroup group_nghh = new ButtonGroup();
 		group_nghh.add(radio_NhhTangdan);
 		group_nghh.add(radio_NhhGiamdan);
 		radio_NhhTangdan.setSelected(true);
 		
+
 		JPanel pnSLTON = new JPanel();
 		pnSLTON.setBorder(new TitledBorder(null, "S\u1ED1 L\u01B0\u1EE3ng T\u1ED3n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnSLTON.setBackground(new Color(255, 255, 255));
@@ -351,10 +353,12 @@ public class SanPham extends SimpleForm implements ActionListener{
 		rdo_NhieuDenIt.addActionListener(e -> docDuLieuVaoTable());
 		rdo_ItToiNhieu.addActionListener(e -> docDuLieuVaoTable());
 		
+
 		cb_LocTheoLoai.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 				docDuLieuVaoTable();
 				
 			}
@@ -371,6 +375,7 @@ public class SanPham extends SimpleForm implements ActionListener{
 		dftb_SanPham.addRow(new Object[] {sp.getMaSP(),sp.getTenSP(),sp.getSoLuong(),sp.getNgaySanXuat(),sp.getNgayHetHan(),sp.getKhoiLuong(),sp.getDonViTinh(),sp.getNhaCungCap(),sp.getGia(),sp.getCongDung(),sp.getHinhAnhSP(),sp.getLoaiSanPham().getMaLoaiSP()});
 	}
 	//Phương thức thêm tất cả dữ liệu vào bảng
+
 
 	    private void docDuLieuVaoTable() {
 	        dftb_SanPham.setRowCount(0); // Clear the current table model
@@ -442,10 +447,6 @@ public class SanPham extends SimpleForm implements ActionListener{
 	            });
 	        }
 	    }
-
-
-
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

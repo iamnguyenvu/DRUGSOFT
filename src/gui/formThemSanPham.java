@@ -337,6 +337,7 @@ public class formThemSanPham extends SimpleForm implements ActionListener{
 
 	            // Tạo đối tượng SanPham
 	            LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
+
 	            SanPham_entity sp = new SanPham_entity(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong);
 
 	            // Thêm sản phẩm vào bảng (cần đối tượng `sanPham` để gọi phương thức `addRowTable`)

@@ -127,6 +127,4 @@ public class SanPham_entity {
 				+ ", loaiSanPham=" + loaiSanPham + ", soLuong=" + soLuong + "]";
 	}
     
-    
-
 }

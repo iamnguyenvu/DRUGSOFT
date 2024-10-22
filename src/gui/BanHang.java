@@ -7,6 +7,7 @@ package gui;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import dao.BanHang_DAO;
+import entity.KhachHang_entity;
 import entity.SanPham_entity;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -34,6 +35,7 @@ import net.miginfocom.swing.MigLayout;
 import nguyenvu.components.SimpleForm;
 import nguyenvu.menu.FormManager;
 import nguyenvu.utils.LayerSearchList;
+import nguyenvu.utils.ListCustomerPanel;
 import nguyenvu.utils.ListProductSearchPanel;
 import nguyenvu.utils.ProductSearchPanel;
 import nguyenvu.utils.ProductSelectListener;
@@ -58,7 +60,10 @@ public class BanHang extends SimpleForm {
     private JPopupMenu menuProduct;
     private ListProductSearchPanel listProductSearch;
     private BanHang_DAO dao;
-    private final DecimalFormat df = new DecimalFormat("#,##0.##");;
+    private final DecimalFormat df = new DecimalFormat("#,##0.##");
+    
+    private JPopupMenu menuCustomer;
+    private ListCustomerPanel listCustomer;
 
     public BanHang() {
         setPreferredSize(new Dimension(1020, 740));
@@ -331,6 +336,11 @@ public class BanHang extends SimpleForm {
         txtCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCustomerActionPerformed(evt);
+            }
+        });
+        txtCustomer.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCustomerKeyReleased(evt);
             }
         });
         pnInputCustomer.add(txtCustomer, java.awt.BorderLayout.CENTER);
@@ -713,7 +723,6 @@ public class BanHang extends SimpleForm {
         if (table.getColumnModel().getColumnCount() > 0) {
             table.getColumnModel().getColumn(0).setResizable(false);
             table.getColumnModel().getColumn(0).setPreferredWidth(20);
-            table.getColumnModel().getColumn(0).setCellRenderer(null);
             table.getColumnModel().getColumn(1).setResizable(false);
             table.getColumnModel().getColumn(1).setPreferredWidth(60);
             table.getColumnModel().getColumn(2).setResizable(false);
@@ -722,7 +731,6 @@ public class BanHang extends SimpleForm {
             table.getColumnModel().getColumn(3).setPreferredWidth(200);
             table.getColumnModel().getColumn(4).setResizable(false);
             table.getColumnModel().getColumn(4).setPreferredWidth(80);
-            table.getColumnModel().getColumn(4).setCellRenderer(null);
             table.getColumnModel().getColumn(5).setResizable(false);
             table.getColumnModel().getColumn(5).setPreferredWidth(100);
             table.getColumnModel().getColumn(6).setResizable(false);
@@ -886,6 +894,24 @@ pnLeftContentLayout.setHorizontalGroup(
             }
         }
     }//GEN-LAST:event_txtProductSearchKeyReleased
+
+    private void txtCustomerKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCustomerKeyReleased
+        // TODO add your handling code here:
+        String customerSDTKey = txtCustomer.getText().trim().toLowerCase();
+        if(customerSDTKey.length() > 0) {
+            ArrayList<KhachHang_entity> listKH = dao.searchKhachHang(customerSDTKey);
+            System.out.println("Searching for: " + customerSDTKey);
+            System.out.println("Found customer: " + listKH.size());
+            listCustomer.setData(listKH);
+
+            if(listCustomer.getListSize() > 0) {
+                menuCustomer.show(txtCustomer, 0, txtCustomer.getHeight());
+                menuCustomer.setPopupSize(menuProduct.getWidth(), 51);
+            } else {
+                menuCustomer.setVisible(false);
+            }
+        }
+    }//GEN-LAST:event_txtCustomerKeyReleased
  
     private void addProductToTable(SanPham_entity sp) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
