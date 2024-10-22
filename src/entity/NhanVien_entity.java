@@ -21,6 +21,12 @@ public class NhanVien_entity {
 	public NhanVien_entity() {
 		super();
 	}
+	
+	public NhanVien_entity(String maNV) {
+		super();
+		this.maNV = maNV;
+	}
+
 	public NhanVien_entity(String maNV, String hoNV, String tenNV, String gioiTinh, String sdt, String cccd, String chucVu,
 			String diaChi, LocalDate ngaySinh, boolean trangThai, LocalDate ngayVaoLam, TaiKhoan_entity taiKhoan,
 			LoaiNhanVien_entity loaiNhanVien, String hinhAnhNV) {

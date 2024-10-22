@@ -7,8 +7,15 @@ public class LoaiHoaDon_entity {
     // Constructor mặc định
     public LoaiHoaDon_entity() {
     }
+    
 
-    // Constructor với đầy đủ tham số
+    public LoaiHoaDon_entity(String maLoaiHD) {
+		super();
+		this.maLoaiHD = maLoaiHD;
+	}
+
+
+	// Constructor với đầy đủ tham số
     public LoaiHoaDon_entity(String maLoaiHD, String tenLoaiHD) {
         this.maLoaiHD = maLoaiHD;
         this.tenLoaiHD = tenLoaiHD;

@@ -227,6 +227,12 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     if (index[0] == 3) {
                     	FormManager.showForm(new gui.SanPham());
                     }
+                    if (index[0] == 4) {
+                    	FormManager.showForm(new gui.HoaDon());
+                    }
+                    if (index[0] == 5) {
+                    	FormManager.showForm(new gui.ManHinhNen());
+                    }
                     if (index[0] == 10) {
                         // logout
                         FormManager.logout();
