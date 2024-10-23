@@ -30,7 +30,7 @@ public class BanHang_DAO {
             ps.setString(2, "%" + key + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
-                SanPham_entity sp = new SanPham_entity(rs.getString(11), rs.getString(1), rs.getString(2), rs.getString(7), rs.getInt(3), rs.getDouble(9)); 
+                SanPham_entity sp = new SanPham_entity(rs.getString(1), rs.getString(2), rs.getString(6), rs.getDouble(7), rs.getString(10), rs.getInt(9)); 
                 listSP.add(sp);
             }
         } catch (SQLException e) {
@@ -47,6 +47,37 @@ public class BanHang_DAO {
         
         return listSP;
     }
+    
+    public ArrayList<KhachHang_entity> searchKhachHang(String sdt) {
+        Connection con = connectDB.accessDataBase();
+        if(con == null) return null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<KhachHang_entity> listKH = new ArrayList<>();
+        try {
+            ps = con.prepareStatement("SELECT TOP 8 * FROM KhachHang WHERE SDT LIKE ?");
+            ps.setString(1, sdt + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                KhachHang_entity kh = new KhachHang_entity(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5)); 
+                listKH.add(kh);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return listKH;
+    }
+    
+    
     
     public KhachHang_entity getKhachHang(String sdt) {
         Connection con = connectDB.accessDataBase();
@@ -72,7 +103,7 @@ public class BanHang_DAO {
                 e.printStackTrace();
             }
         }
-        
         return null;
     }
+    
 }
