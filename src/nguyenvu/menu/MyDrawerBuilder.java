@@ -231,7 +231,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     	FormManager.showForm(new gui.HoaDon());
                     }
                     if (index[0] == 5) {
-                    	FormManager.showForm(new gui.ManHinhNen());
+//                    	FormManager.showForm(new gui.ManHinh());
                     }
                     if (index[0] == 10) {
                         // logout

@@ -5,7 +5,9 @@
         <group>
             <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/dao/DangNhap_DAO.java</file>
             <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/nguyenvu/application/Application.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/entity/SanPham_entity.java</file>
             <file>file:/D:/PhatTrienUngDung/DRUGSOFT/test/test/Test.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/dao/BanHang_DAO.java</file>
             <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/BanHang.java</file>
         </group>
     </open-files>

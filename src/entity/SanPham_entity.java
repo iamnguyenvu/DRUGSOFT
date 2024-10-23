@@ -41,6 +41,7 @@ public class SanPham_entity {
 		super();
 		this.maSP = maSP;
 	}
+
 	public String getMaSP() {
 		return maSP;
 	}
@@ -118,6 +119,16 @@ public class SanPham_entity {
 	}
 	public void setSoLuong(int soLuong) {
 		this.soLuong = soLuong;
+	}
+	
+	public SanPham_entity(String hinhAnhSP, String maSP, String tenSP, String donViTinh, int soLuong, double gia) {
+		super();
+		this.hinhAnhSP = hinhAnhSP;
+		this.maSP = maSP;
+		this.tenSP = tenSP;
+		this.donViTinh = donViTinh;
+		this.soLuong = soLuong;
+		this.gia = gia;
 	}
 	@Override
 	public String toString() {

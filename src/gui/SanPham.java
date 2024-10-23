@@ -344,12 +344,13 @@ public class SanPham extends SimpleForm implements ActionListener{
 		
 		rdo_NhieuDenIt.setSelected(true);
 		
-		radio_giaTuThapDenCao.addActionListener(e -> docDuLieuVaoTable());
-		radio_giaTuCaoDenThap.addActionListener(e -> docDuLieuVaoTable());
-		radio_NhhTangdan.addActionListener(e -> docDuLieuVaoTable());
-		radio_NhhGiamdan.addActionListener(e -> docDuLieuVaoTable());
-		rdo_NhieuDenIt.addActionListener(e -> docDuLieuVaoTable());
-		rdo_ItToiNhieu.addActionListener(e -> docDuLieuVaoTable());
+		radio_giaTuThapDenCao.addActionListener(e -> sapXepTheoGia());
+		radio_giaTuCaoDenThap.addActionListener(e -> sapXepTheoGia());
+		radio_NhhTangdan.addActionListener(e -> sapXepTheoNgayHetHan());
+		radio_NhhGiamdan.addActionListener(e -> sapXepTheoNgayHetHan());
+		rdo_NhieuDenIt.addActionListener(e -> sapXepTheoSoLuong(true));
+		rdo_ItToiNhieu.addActionListener(e -> sapXepTheoSoLuong(false));
+		
 		
 		cb_LocTheoLoai.addActionListener(new ActionListener() {
 			
@@ -372,76 +373,114 @@ public class SanPham extends SimpleForm implements ActionListener{
 	}
 	//Phương thức thêm tất cả dữ liệu vào bảng
 
-	    private void docDuLieuVaoTable() {
-	        dftb_SanPham.setRowCount(0); // Clear the current table model
-	        List<SanPham_entity> products = sp_dao.getAllSanPham(); // Assume this method exists
-	        
-	        // Filtering based on selected product type
-	        String selectedType = cb_LocTheoLoai.getSelectedItem().toString();
-	        
-	        if (!selectedType.equalsIgnoreCase("Tất cả")) {
-	            products = products.stream()
-	                .filter(sp -> sp.getLoaiSanPham().getMaLoaiSP().equalsIgnoreCase(selectedType))
-	                .collect(Collectors.toList());
-	        }
+	// Logic cập nhật cho việc sắp xếp
+	private void docDuLieuVaoTable() {
+	    dftb_SanPham.setRowCount(0); // Clear the current table model
+	    List<SanPham_entity> products = sp_dao.getAllSanPham(); // Assume this method exists
 
-	        // Sorting based on selected options
-	        Comparator<SanPham_entity> comparator = null;
+	    // Filtering based on selected product type
+	    String selectedType = cb_LocTheoLoai.getSelectedItem().toString();
 
-	        // Check quantity sorting option
-	        if (rdo_ItToiNhieu.isSelected()) {
-	            comparator = Comparator.comparingInt(SanPham_entity::getSoLuong);
-	        } else if (rdo_NhieuDenIt.isSelected()) {
-	            comparator = Comparator.comparingInt(SanPham_entity::getSoLuong).reversed();
-	        }
-
-	        // Check price sorting option
-	        if (radio_giaTuThapDenCao.isSelected()) {
-	            comparator = (comparator == null) ?
-	                Comparator.comparingDouble(SanPham_entity::getGia) :
-	                comparator.thenComparing(Comparator.comparingDouble(SanPham_entity::getGia));
-	        } else if (radio_giaTuCaoDenThap.isSelected()) {
-	            comparator = (comparator == null) ?
-	                Comparator.comparingDouble(SanPham_entity::getGia).reversed() :
-	                comparator.thenComparing(Comparator.comparingDouble(SanPham_entity::getGia).reversed());
-	        }
-
-	        // Check expiration date sorting option
-	        if (radio_NhhTangdan.isSelected()) {
-	            comparator = (comparator == null) ?
-	                Comparator.comparing(SanPham_entity::getNgayHetHan) :
-	                comparator.thenComparing(Comparator.comparing(SanPham_entity::getNgayHetHan));
-	        } else if (radio_NhhGiamdan.isSelected()) {
-	            comparator = (comparator == null) ?
-	                Comparator.comparing(SanPham_entity::getNgayHetHan).reversed() :
-	                comparator.thenComparing(Comparator.comparing(SanPham_entity::getNgayHetHan).reversed());
-	        }
-
-	        // Apply sorting if comparator is defined
-	        if (comparator != null) {
-	            products.sort(comparator);
-	        }
-
-	        // Adding products to the table model
-	        for (SanPham_entity product : products) {
-	            dftb_SanPham.addRow(new Object[]{
-	                product.getMaSP(),
-	                product.getTenSP(),
-	                product.getSoLuong(),
-	                product.getNgaySanXuat(),
-	                product.getNgayHetHan(),
-	                product.getKhoiLuong(),
-	                product.getDonViTinh(),
-	                product.getNhaCungCap(),
-	                product.getGia(),
-	                product.getThanhPhan(),
-	                product.getCongDung(),
-	                product.getHinhAnhSP(),
-	                product.getLoaiSanPham().getMaLoaiSP(),
-	                // Add actions for Update and Delete as necessary
-	            });
-	        }
+	    if (!selectedType.equalsIgnoreCase("Tất cả")) {
+	        products = products.stream()
+	            .filter(sp -> sp.getLoaiSanPham().getMaLoaiSP().equalsIgnoreCase(selectedType))
+	            .collect(Collectors.toList());
 	    }
+
+	    // Adding products to the table model
+	    for (SanPham_entity product : products) {
+	        dftb_SanPham.addRow(new Object[]{
+	            product.getMaSP(),
+	            product.getTenSP(),
+	            product.getSoLuong(),
+	            product.getNgaySanXuat(),
+	            product.getNgayHetHan(),
+	            product.getKhoiLuong(),
+	            product.getDonViTinh(),
+	            product.getNhaCungCap(),
+	            product.getGia(),
+	            product.getThanhPhan(),
+	            product.getCongDung(),
+	            product.getHinhAnhSP(),
+	            product.getLoaiSanPham().getMaLoaiSP(),
+	            // Add actions for Update and Delete as necessary
+	        });
+	    }
+	}
+	private void sapXepTheoGia() {
+	    List<SanPham_entity> products = sp_dao.getAllSanPham(); // Lấy tất cả sản phẩm từ cơ sở dữ liệu
+	    if (radio_giaTuThapDenCao.isSelected()) {
+	        products.sort(Comparator.comparingDouble(SanPham_entity::getGia));
+	    } else if (radio_giaTuCaoDenThap.isSelected()) {
+	        products.sort(Comparator.comparingDouble(SanPham_entity::getGia).reversed());
+	    }
+	    updateTableData(products);
+	}
+
+	private void updateTableData(List<SanPham_entity> products) {
+	    dftb_SanPham.setRowCount(0); // Xóa dữ liệu hiện tại trong bảng
+	    for (SanPham_entity product : products) {
+	        dftb_SanPham.addRow(new Object[]{
+	            product.getMaSP(),
+	            product.getTenSP(),
+	            product.getSoLuong(),
+	            product.getNgaySanXuat(),
+	            product.getNgayHetHan(),
+	            product.getKhoiLuong(),
+	            product.getDonViTinh(),
+	            product.getNhaCungCap(),
+	            product.getGia(),
+	            product.getThanhPhan(),
+	            product.getCongDung(),
+	            product.getHinhAnhSP(),
+	            product.getLoaiSanPham().getMaLoaiSP(),
+	            // Add actions for Update and Delete as necessary
+	        });
+	    }
+	}
+	private void sapXepTheoNgayHetHan() {
+	    List<SanPham_entity> products = sp_dao.getAllSanPham(); // Lấy tất cả sản phẩm từ cơ sở dữ liệu
+	    if (radio_NhhTangdan.isSelected()) {
+	        products.sort(Comparator.comparing(SanPham_entity::getNgayHetHan));
+	    } else if (radio_NhhGiamdan.isSelected()) {
+	        products.sort(Comparator.comparing(SanPham_entity::getNgayHetHan).reversed());
+	    }
+	    updateTableData(products);
+	}
+
+	private void sapXepTheoSoLuong(boolean tangDan) {
+	    List<SanPham_entity> danhSachSanPham = sp_dao.getAllSanPham(); // Giả sử có phương thức lấy tất cả sản phẩm
+	    if (tangDan) {
+	        danhSachSanPham = danhSachSanPham.stream()
+	                .sorted(Comparator.comparingInt(SanPham_entity::getSoLuong)) // Sắp xếp tăng dần
+	                .collect(Collectors.toList());
+	    } else {
+	        danhSachSanPham = danhSachSanPham.stream()
+	                .sorted(Comparator.comparingInt(SanPham_entity::getSoLuong).reversed()) // Sắp xếp giảm dần
+	                .collect(Collectors.toList());
+	    }
+
+	    // Cập nhật bảng với danh sách đã sắp xếp
+	    dftb_SanPham.setRowCount(0); // Xóa dữ liệu cũ
+	    for (SanPham_entity product : danhSachSanPham) {
+	        dftb_SanPham.addRow(new Object[]{
+	            product.getMaSP(),
+	            product.getTenSP(),
+	            product.getSoLuong(),
+	            product.getNgaySanXuat(),
+	            product.getNgayHetHan(),
+	            product.getKhoiLuong(),
+	            product.getDonViTinh(),
+	            product.getNhaCungCap(),
+	            product.getGia(),
+	            product.getThanhPhan(),
+	            product.getCongDung(),
+	            product.getHinhAnhSP(),
+	            product.getLoaiSanPham().getMaLoaiSP(),
+	            // Add actions for Update and Delete as necessary
+	        });
+	    }
+	}
 
 
 
