@@ -1,19 +1,22 @@
 package nguyenvu.menu;
 
-import com.formdev.flatlaf.FlatClientProperties;
-
-import com.formdev.flatlaf.extras.FlatSVGIcon;
-
-import gui.BanHang;
-import gui.DoiTraSanPham;
-import gui.TraSanPham;
-
 import java.awt.Color;
 import java.awt.Component;
+
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+
+import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+
+import gui.BanHang;
+import gui.DoiTraSanPham;
+import nguyenvu.forms.DashboardForm;
+import nguyenvu.forms.ReadForm;
+import nguyenvu.forms.StatisticalForm;
+import nguyenvu.model.ModelUser;
 import raven.drawer.component.DrawerPanel;
 import raven.drawer.component.SimpleDrawerBuilder;
 import raven.drawer.component.footer.SimpleFooterData;
@@ -26,11 +29,6 @@ import raven.drawer.component.menu.SimpleMenuOption;
 import raven.drawer.component.menu.SimpleMenuStyle;
 import raven.drawer.component.menu.data.Item;
 import raven.drawer.component.menu.data.MenuItem;
-import nguyenvu.forms.StatisticalForm;
-import nguyenvu.forms.InboxForm;
-import nguyenvu.forms.ReadForm;
-import nguyenvu.forms.DashboardForm;
-import nguyenvu.model.ModelUser;
 import raven.swing.AvatarIcon;
 
 /**
@@ -38,7 +36,6 @@ import raven.swing.AvatarIcon;
  * @author nguyenvu
  */
 public class MyDrawerBuilder extends SimpleDrawerBuilder {
-
     private ModelUser user;
     private final ThemesChange themesChange;
     private String avatarPath;
@@ -271,4 +268,5 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     public int getDrawerWidth() {
         return 270;
     }
+
 }
