@@ -126,5 +126,15 @@ public class SanPham_entity {
 				+ ", gia=" + gia + ", thanhPhan=" + thanhPhan + ", congDung=" + congDung + ", hinhAnhSP=" + hinhAnhSP
 				+ ", loaiSanPham=" + loaiSanPham + ", soLuong=" + soLuong + "]";
 	}
+
+    public SanPham_entity(String maSP, String tenSP, String donViTinh, double gia, String hinhAnhSP, int soLuong) {
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.donViTinh = donViTinh;
+        this.gia = gia;
+        this.hinhAnhSP = hinhAnhSP;
+        this.soLuong = soLuong;
+    }
     
+        
 }

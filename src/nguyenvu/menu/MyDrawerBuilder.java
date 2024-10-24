@@ -138,11 +138,11 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item("Khách hàng", "ui.svg"),
             new Item("Nhân viên", "icon.svg"),        
             new Item("Tài khoản", "key.svg"),
-            new Item("Thống kê", "chart.svg")
-            .subMenu("Sản phẩm sắp hết hạn")
-            .subMenu("Sản phẩm sắp hết hàng")
-            .subMenu("Doanh số nhân viên")
-            .subMenu("Doanh số tổng quan"),
+            new Item("Thống kê", "chart.svg"),
+//            .subMenu("Sản phẩm sắp hết hạn")
+//            .subMenu("Sản phẩm sắp hết hàng")
+//            .subMenu("Doanh số nhân viên")
+//            .subMenu("Doanh số tổng quan"),
             new Item("Báo cáo", "page.svg"),
             new Item.Label("KHÁC"),
             new Item("Đăng xuất", "logout.svg")
@@ -182,8 +182,8 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     // non user admin going to hide
                     boolean act
                             = 
-//                            checkMenu(index, new int[]{6}) && 
-                            checkMenu(index, new int[]{7, 4});
+                            checkMenu(index, new int[]{6}) && 
+                            checkMenu(index, new int[]{7});
                     return act;
                 }
                 return true;
@@ -233,20 +233,24 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     if (index[0] == 5) {
                     	FormManager.showForm(new gui.ManHinhNen());
                     }
+                    if (index[0] == 8) {
+                    	FormManager.showForm(new StatisticalForm());
+                    }
                     if (index[0] == 10) {
                         // logout
                         FormManager.logout();
                     }
-                } else if (index.length == 2) {
-                    if (index[0] == 7) {
-                        if (index[1] == 0) {
-                            FormManager.showForm(new StatisticalForm());
-                        }
-                        if (index[1] == 1) {
-                            FormManager.showForm(new ReadForm());
-                        }
-                    }
-                }
+                } 
+//                else if (index.length == 2) {
+//                    if (index[0] == 7) {
+//                        if (index[1] == 0) {
+//                            FormManager.showForm(new StatisticalForm());
+//                        }
+//                        if (index[1] == 1) {
+//                            FormManager.showForm(new ReadForm());
+//                        }
+//                    }
+//                }
             }
         });
 
