@@ -5,13 +5,17 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDayChooser;
 
-import entity.LoaiSanPham;
+
+import nguyenvu.components.SimpleForm;
+import entity.LoaiSanPham_entity;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -32,13 +36,13 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 
-public class formThemSanPham extends JPanel implements ActionListener{
+public class formThemSanPham extends SimpleForm implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JTextField tf_Tensp;
+	private JTextField tf_soLuong;
 	private JTextField tf_Gia;
 	private JTextField tf_HinhAnh;
-	private JTextField tf_masp;
+	private JTextField tf_Tensp;
 	private JTextField tf_KhoiLuong;
 	private JTextField tf_NhaCungCap;
 	private Border border;
@@ -55,8 +59,8 @@ public class formThemSanPham extends JPanel implements ActionListener{
 	/**
 	 * Create the panel.
 	 */
-	public formThemSanPham() {
-		sanPham = new SanPham(); // Khởi tạo đối tượng 
+	public formThemSanPham(SanPham sanPham) {
+		this.sanPham = sanPham;
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 		setPreferredSize(new Dimension(1150, 800));
 		setLayout(new BorderLayout(0, 0));
@@ -77,13 +81,13 @@ public class formThemSanPham extends JPanel implements ActionListener{
 		
 		JLabel lbTensp = new JLabel("Tên Sản Phẩm");
 		lbTensp.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lbTensp.setBounds(22, 110, 105, 46);
+		lbTensp.setBounds(20, 10, 105, 46);
 		pnCenter.add(lbTensp);
 		
-		tf_Tensp = new JTextField();
-		tf_Tensp.setColumns(10);
-		tf_Tensp.setBounds(20, 166, 299, 34);
-		pnCenter.add(tf_Tensp);
+		tf_soLuong = new JTextField();
+		tf_soLuong.setColumns(10);
+		tf_soLuong.setBounds(20, 166, 299, 34);
+		pnCenter.add(tf_soLuong);
 		
 		JLabel lb_Gia = new JLabel("Giá");
 		lb_Gia.setFont(new Font("Times New Roman", Font.PLAIN, 17));
@@ -129,15 +133,15 @@ public class formThemSanPham extends JPanel implements ActionListener{
 		btnChonHinhAnh.setBounds(581, 162, 75, 36);
 		pnCenter.add(btnChonHinhAnh);
 		
-		tf_masp = new JTextField();
-		tf_masp.setColumns(10);
-		tf_masp.setBounds(22, 66, 297, 34);
-		pnCenter.add(tf_masp);
+		tf_Tensp = new JTextField();
+		tf_Tensp.setColumns(10);
+		tf_Tensp.setBounds(22, 66, 297, 34);
+		pnCenter.add(tf_Tensp);
 		
-		JLabel lb_Masp = new JLabel("Mã Sản Phẩm");
-		lb_Masp.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_Masp.setBounds(22, 10, 105, 46);
-		pnCenter.add(lb_Masp);
+		JLabel lb_soLuong = new JLabel("Số Lượng");
+		lb_soLuong.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+		lb_soLuong.setBounds(22, 120, 105, 46);
+		pnCenter.add(lb_soLuong);
 		
 		JLabel lb_ThemMoiSP = new JLabel("Thêm Mới Sản Phẩm");
 		lb_ThemMoiSP.setFont(new Font("Serif", Font.PLAIN, 24));
@@ -274,51 +278,61 @@ public class formThemSanPham extends JPanel implements ActionListener{
 		btnXacNhan.setBounds(994, 703, 115, 42);
 		pnContent.add(btnXacNhan);
 		btnXacNhan.addActionListener(this);
+				
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	    Object o = e.getSource();
 	    if (o.equals(btnXacNhan)) {
-	        // Kiểm tra thông tin đầu vào
-	        String maSP = tf_masp.getText();
-	        String tenSP = tf_Tensp.getText();
-	        if (maSP.isEmpty() || tenSP.isEmpty()) {
-	            System.out.println("Mã sản phẩm hoặc tên sản phẩm không được để trống.");
-	            return;
-	        }
-	        
-	        // Lấy ngày sản xuất và ngày hết hạn từ JDateChooser
-	        java.util.Date ngaySX = dcNgaySanXuat.getDate();
-	        LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toInstant().atZone(ZoneId.systemDefault()).toLocalDate() : null;
+	        try {
+	            // Kiểm tra thông tin đầu vào
+	            String maSP = "sp1";  // Ví dụ mã sản phẩm tạm thời
+	            String tenSP = tf_Tensp.getText();
+	            if (maSP.isEmpty() || tenSP.isEmpty()) {
+	                JOptionPane.showMessageDialog(null, "Mã sản phẩm hoặc tên sản phẩm không được để trống.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
 
-	        java.util.Date ngayHH = dcNgayHetHan.getDate();
-	        LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toInstant().atZone(ZoneId.systemDefault()).toLocalDate() : null;
+	            // Lấy ngày sản xuất và ngày hết hạn từ JDateChooser
+	            java.util.Date ngaySX = dcNgaySanXuat.getDate();
+	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toInstant().atZone(ZoneId.systemDefault()).toLocalDate() : null;
 
-	        double khoiLuong = Double.parseDouble(tf_KhoiLuong.getText());
-	        String donViTinh = (String) cb_DonViTinh.getSelectedItem();
-	        String nhaCungCap = tf_NhaCungCap.getText();
-	        double gia = Double.parseDouble(tf_Gia.getText());
-	        String congDung = ta_CongDung.getText();
-	        String hinhAnh = tf_HinhAnh.getText();
-	        String loaiSanPham = (String) cb_LoaiSP.getSelectedItem();
-	        
-	        // Chuyển đổi loại sản phẩm
-	        if (loaiSanPham.equals("Thuốc")) {
-	            loaiSanPham = "Thuoc";
-	        } else if (loaiSanPham.equals("Thực Phẩm Chức Năng")) {
-	            loaiSanPham = "TPCN";
-	        } else if (loaiSanPham.equals("Thiết Bị Y Tế")) {
-	            loaiSanPham = "TBYT";
+	            java.util.Date ngayHH = dcNgayHetHan.getDate();
+	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toInstant().atZone(ZoneId.systemDefault()).toLocalDate() : null;
+
+	            // Lấy các giá trị còn lại
+	            double khoiLuong = Double.parseDouble(tf_KhoiLuong.getText());
+	            String donViTinh = (String) cb_DonViTinh.getSelectedItem();
+	            String nhaCungCap = tf_NhaCungCap.getText();
+	            double gia = Double.parseDouble(tf_Gia.getText());
+	            String congDung = ta_CongDung.getText();
+	            String hinhAnh = tf_HinhAnh.getText();
+	            String loaiSanPham = (String) cb_LoaiSP.getSelectedItem();
+	            int soLuong = Integer.parseInt(tf_soLuong.getText());
+
+	            // Chuyển đổi loại sản phẩm
+	            if (loaiSanPham.equals("Thuốc")) {
+	                loaiSanPham = "Thuoc";
+	            } else if (loaiSanPham.equals("Thực Phẩm Chức Năng")) {
+	                loaiSanPham = "TPCN";
+	            } else if (loaiSanPham.equals("Thiết Bị Y Tế")) {
+	                loaiSanPham = "TBYT";
+	            }
+
+	            // Tạo đối tượng SanPham
+	            LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
+	            entity.SanPham_entity sp = new entity.SanPham_entity(maSP, tenSP, soLuong, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, congDung, hinhAnh, loaiSP);
+
+	            // Thêm sản phẩm vào bảng (cần đối tượng `sanPham` để gọi phương thức `addRowTable`)
+	            sanPham.addRowTable(maSP, tenSP, soLuong, lcNgaySX, lcNgayHH, nhaCungCap, gia, congDung, hinhAnh, loaiSanPham);
+
+	            // Hiển thị thông báo thành công
+	            JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+	        } catch (Exception ex) {
+	            // Hiển thị thông báo lỗi nếu có bất kỳ ngoại lệ nào xảy ra
+	            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
 	        }
-	        
-	        // Tạo đối tượng SanPham
-	        LoaiSanPham loaiSP = new LoaiSanPham(loaiSanPham);
-	        entity.SanPham sp = new entity.SanPham(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, congDung, hinhAnh, loaiSP, 10, "");
-	        
-	        // Thêm sản phẩm vào bảng
-	        sanPham.addRowTable(sp);
-	        System.out.println("Thêm sản phẩm thành công: " + maSP);
 	    }
 	}
 }

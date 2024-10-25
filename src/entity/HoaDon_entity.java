@@ -2,27 +2,27 @@ package entity;
 
 import java.time.LocalDate;
 
-public class HoaDon {
+public class HoaDon_entity {
     private String maHD;                     // Mã hóa đơn
     private LocalDate ngayLapHD;              // Ngày lập hóa đơn
     private double tongTien;                  // Tổng tiền
     private double tienKhachTra;             // Tiền khách trả
     private String hinhThucThanhToan;        // Hình thức thanh toán
     private boolean trangThai;                // Trạng thái hóa đơn
-    private KhachHang khachHang;             // Khách hàng
-    private NhanVien nhanVien;               // Nhân viên
-    private LoaiHoaDon loaiHoaDon;           // Loại hóa đơn
+    private KhachHang_entity khachHang;             // Khách hàng
+    private NhanVien_entity nhanVien;               // Nhân viên
+    private LoaiHoaDon_entity loaiHoaDon;           // Loại hóa đơn
     private String ghiChu;                    // Ghi chú
 
     // Constructor mặc định
-    public HoaDon() {
+    public HoaDon_entity() {
     }
 
     // Constructor với đầy đủ tham số
-    public HoaDon(String maHD, LocalDate ngayLapHD, double tongTien,
+    public HoaDon_entity(String maHD, LocalDate ngayLapHD, double tongTien,
                   double tienKhachTra, String hinhThucThanhToan,
-                  boolean trangThai, KhachHang khachHang,
-                  NhanVien nhanVien, LoaiHoaDon loaiHoaDon, String ghiChu) {
+                  boolean trangThai, KhachHang_entity khachHang,
+                  NhanVien_entity nhanVien, LoaiHoaDon_entity loaiHoaDon, String ghiChu) {
         this.maHD = maHD;
         this.ngayLapHD = ngayLapHD;
         this.tongTien = tongTien;
@@ -90,29 +90,29 @@ public class HoaDon {
     }
 
     // Getter và Setter cho khachHang
-    public KhachHang getKhachHang() {
+    public KhachHang_entity getKhachHang() {
         return khachHang;
     }
 
-    public void setKhachHang(KhachHang khachHang) {
+    public void setKhachHang(KhachHang_entity khachHang) {
         this.khachHang = khachHang;
     }
 
     // Getter và Setter cho nhanVien
-    public NhanVien getNhanVien() {
+    public NhanVien_entity getNhanVien() {
         return nhanVien;
     }
 
-    public void setNhanVien(NhanVien nhanVien) {
+    public void setNhanVien(NhanVien_entity nhanVien) {
         this.nhanVien = nhanVien;
     }
 
     // Getter và Setter cho loaiHoaDon
-    public LoaiHoaDon getLoaiHoaDon() {
+    public LoaiHoaDon_entity getLoaiHoaDon() {
         return loaiHoaDon;
     }
 
-    public void setLoaiHoaDon(LoaiHoaDon loaiHoaDon) {
+    public void setLoaiHoaDon(LoaiHoaDon_entity loaiHoaDon) {
         this.loaiHoaDon = loaiHoaDon;
     }
 

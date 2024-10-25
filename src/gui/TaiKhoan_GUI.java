@@ -5,17 +5,29 @@
 package gui;
 
 import dao.TaiKhoan_DAO;
+import gui.vi.ButtonEditor;
+import gui.vi.ButtonRenderer;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import nguyenvu.components.SimpleForm;
 
 /**
 
  */
 public class TaiKhoan_GUI extends SimpleForm {
-
     private ButtonGroup groupPhanQuyen;
     private ButtonGroup groupTrangThai;
     private TaiKhoan_DAO taiKhoanDAO = new TaiKhoan_DAO();
@@ -28,12 +40,19 @@ public class TaiKhoan_GUI extends SimpleForm {
         initComponents();
         initializeDatabase();
         radioLoc();
+        setDefaultState();
         loadDataToTable(); 
 }
+    
     private void initializeDatabase() {
-    connectDB.connectDB.accessDataBase();  // Khởi tạo kết nối khi cần thiết
+        connectDB.connectDB.accessDataBase();
 }
 
+    private void setDefaultState() {
+        radioHoatDong.setSelected(true);  // Thiết lập trạng thái mặc định là 'Hoạt động'
+        radioNgungHoatDong.setSelected(false);
+        clearInputFields();  // Xóa nội dung các trường nhập liệu
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,6 +63,22 @@ public class TaiKhoan_GUI extends SimpleForm {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialogEdit = new javax.swing.JDialog();
+        pnEdit = new javax.swing.JPanel();
+        lblTenTKEdit = new javax.swing.JLabel();
+        lblMatKhauEdit = new javax.swing.JLabel();
+        lblPhanQuyenEdit = new javax.swing.JLabel();
+        lblTrangThaiEdit = new javax.swing.JLabel();
+        tfMatKhauEdit = new javax.swing.JTextField();
+        lblNhapLaiMatKhauEdit = new javax.swing.JLabel();
+        tfNhapLaiMatKhauEdit = new javax.swing.JTextField();
+        cbbPhanQuyenEdit = new javax.swing.JComboBox<>();
+        cbbTrangThaiEdit = new javax.swing.JComboBox<>();
+        btnHuyEdit = new javax.swing.JButton();
+        btnLuuEdit = new javax.swing.JButton();
+        pnHeadEdit = new javax.swing.JPanel();
+        lblHeadEdit = new javax.swing.JLabel();
+        tfTenTKEdit = new javax.swing.JTextField();
         pnContent = new javax.swing.JPanel();
         pnHeader = new javax.swing.JPanel();
         lblQuanLiTaiKhoan = new javax.swing.JLabel();
@@ -70,6 +105,145 @@ public class TaiKhoan_GUI extends SimpleForm {
         cbbPhanQuyen = new javax.swing.JComboBox<>();
         pfMatKhau = new javax.swing.JPasswordField();
         pfNhapLaiMatKhau = new javax.swing.JPasswordField();
+
+        dialogEdit.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pnEdit.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblTenTKEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        lblTenTKEdit.setText("Tên tài khoản");
+
+        lblMatKhauEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        lblMatKhauEdit.setText("Mật khẩu");
+
+        lblPhanQuyenEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        lblPhanQuyenEdit.setText("Phân quyền");
+
+        lblTrangThaiEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        lblTrangThaiEdit.setText("Trạng thái");
+
+        tfMatKhauEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+
+        lblNhapLaiMatKhauEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        lblNhapLaiMatKhauEdit.setText("Nhập lại mật khẩu");
+
+        tfNhapLaiMatKhauEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+
+        cbbPhanQuyenEdit.setBackground(new java.awt.Color(204, 204, 204));
+        cbbPhanQuyenEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        cbbPhanQuyenEdit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quản lý", "Nhân viên" }));
+        cbbPhanQuyenEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbPhanQuyenEditActionPerformed(evt);
+            }
+        });
+
+        cbbTrangThaiEdit.setBackground(new java.awt.Color(204, 204, 204));
+        cbbTrangThaiEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        cbbTrangThaiEdit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hoạt động", "Ngừng hoạt động" }));
+
+        btnHuyEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        btnHuyEdit.setText("Hủy");
+
+        btnLuuEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        btnLuuEdit.setText("Lưu");
+        btnLuuEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLuuEditActionPerformed(evt);
+            }
+        });
+
+        pnHeadEdit.setBackground(new java.awt.Color(204, 204, 204));
+
+        lblHeadEdit.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
+        lblHeadEdit.setText("Cập nhật thông tin tài khoản");
+
+        javax.swing.GroupLayout pnHeadEditLayout = new javax.swing.GroupLayout(pnHeadEdit);
+        pnHeadEdit.setLayout(pnHeadEditLayout);
+        pnHeadEditLayout.setHorizontalGroup(
+            pnHeadEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnHeadEditLayout.createSequentialGroup()
+                .addGap(203, 203, 203)
+                .addComponent(lblHeadEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(323, Short.MAX_VALUE))
+        );
+        pnHeadEditLayout.setVerticalGroup(
+            pnHeadEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnHeadEditLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(lblHeadEdit)
+                .addContainerGap(43, Short.MAX_VALUE))
+        );
+
+        tfTenTKEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        tfTenTKEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfTenTKEditActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnEditLayout = new javax.swing.GroupLayout(pnEdit);
+        pnEdit.setLayout(pnEditLayout);
+        pnEditLayout.setHorizontalGroup(
+            pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnEditLayout.createSequentialGroup()
+                .addGroup(pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnEditLayout.createSequentialGroup()
+                        .addGap(117, 117, 117)
+                        .addComponent(btnHuyEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(244, 244, 244)
+                        .addComponent(btnLuuEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnEditLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lblTenTKEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblMatKhauEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblPhanQuyenEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblNhapLaiMatKhauEdit)
+                            .addComponent(lblTrangThaiEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(37, 37, 37)
+                        .addGroup(pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cbbTrangThaiEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbbPhanQuyenEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfNhapLaiMatKhauEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfMatKhauEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfTenTKEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(pnHeadEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnEditLayout.setVerticalGroup(
+            pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnEditLayout.createSequentialGroup()
+                .addComponent(pnHeadEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTenTKEdit)
+                    .addComponent(tfTenTKEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMatKhauEdit)
+                    .addComponent(tfMatKhauEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNhapLaiMatKhauEdit)
+                    .addComponent(tfNhapLaiMatKhauEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addGroup(pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPhanQuyenEdit)
+                    .addComponent(cbbPhanQuyenEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGroup(pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTrangThaiEdit)
+                    .addComponent(cbbTrangThaiEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnHuyEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLuuEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21))
+        );
+
+        dialogEdit.getContentPane().add(pnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, -1));
 
         setPreferredSize(new java.awt.Dimension(1500, 800));
         setLayout(new java.awt.BorderLayout());
@@ -352,58 +526,103 @@ public class TaiKhoan_GUI extends SimpleForm {
     }//GEN-LAST:event_radioNgungHoatDongActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-       String tenTaiKhoan = tfTenTaiKhoan.getText().trim();
-       String matKhau = new String(pfMatKhau.getPassword()).trim();
-       boolean phanQuyen = cbbPhanQuyen.getSelectedItem().toString().equals("Quản lý");
-       boolean trangThai = radioHoatDong.isSelected();
+      String tenTaiKhoan = tfTenTaiKhoan.getText().trim();
+      String matKhau = new String(pfMatKhau.getPassword()).trim();
+      String nhapLaiMatKhau = new String(pfNhapLaiMatKhau.getPassword()).trim();
 
-       if (tenTaiKhoan.isEmpty() || matKhau.isEmpty()) {
-           javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin.");
-           return;
-       }
+      boolean phanQuyen = cbbPhanQuyen.getSelectedItem().toString().equals("Quản lý");
+      boolean trangThai = radioHoatDong.isSelected();  // Lấy trạng thái từ radio button
 
-       boolean success = taiKhoanDAO.addTaiKhoan(tenTaiKhoan, matKhau, phanQuyen, trangThai);
-       if (success) {
-           javax.swing.JOptionPane.showMessageDialog(this, "Thêm tài khoản thành công!");
-           loadDataToTable();  // Cập nhật bảng
-       } else {
-           javax.swing.JOptionPane.showMessageDialog(this, "Thêm tài khoản thất bại.");
-       }
+      // Log để kiểm tra xem trạng thái đã được lấy đúng chưa
+      System.out.println("Trạng thái được chọn: " + (trangThai ? "Hoạt động" : "Ngừng hoạt động"));
+
+      if (tenTaiKhoan.isEmpty() || matKhau.isEmpty() || nhapLaiMatKhau.isEmpty()) {
+          JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin.");
+          return;
+      }
+
+      if (!matKhau.equals(nhapLaiMatKhau)) {
+          JOptionPane.showMessageDialog(this, "Mật khẩu nhập lại không khớp.");
+          return;
+      }
+
+      boolean success = taiKhoanDAO.addTaiKhoan(tenTaiKhoan, matKhau, phanQuyen, trangThai);
+      if (success) {
+          JOptionPane.showMessageDialog(this, "Thêm tài khoản thành công!");
+          loadDataToTable();
+          clearInputFields();
+          setDefaultState();
+      } else {
+          JOptionPane.showMessageDialog(this, "Thêm tài khoản thất bại. Vui lòng thử lại.");
+      }
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
          clearInputFields();
+         setDefaultState();
     }//GEN-LAST:event_btnHuyActionPerformed
 
     private void btnKhoiPhucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoiPhucActionPerformed
         if (groupPhanQuyen != null) {
-        groupPhanQuyen.clearSelection();  // Bỏ chọn tất cả radio button phân quyền
-    }
-    if (groupTrangThai != null) {
-        groupTrangThai.clearSelection();  // Bỏ chọn tất cả radio button trạng thái
-    }
+            groupPhanQuyen.clearSelection();  // Bỏ chọn tất cả radio button phân quyền
+        }
+        if (groupTrangThai != null) {
+            groupTrangThai.clearSelection();  // Bỏ chọn tất cả radio button trạng thái
+        }
 
-    // Cập nhật bảng với toàn bộ dữ liệu gốc
-    DefaultTableModel model = new DefaultTableModel(
-        new Object[]{"STT", "Tên tài khoản", "Mật khẩu", "Phân quyền", "Trạng thái", "Cập nhật", "Xóa"},
-        0
-    );
+        // Cập nhật bảng với toàn bộ dữ liệu gốc
+        DefaultTableModel model = new DefaultTableModel(
+            new Object[]{"STT", "Tên tài khoản", "Mật khẩu", "Phân quyền", "Trạng thái", "Cập nhật", "Xóa"},
+            0
+        );
 
-    // Thêm tất cả dữ liệu gốc vào bảng
-    for (Object[] row : originalData) {
-        model.addRow(row);
-    }
+        // Thêm tất cả dữ liệu gốc vào bảng
+        for (Object[] row : originalData) {
+            model.addRow(row);
+        }
 
-    tableTK.setModel(model);  // Cập nhật bảng
+        tableTK.setModel(model);  // Cập nhật bảng
+
+        // Gọi lại phương thức thiết lập nút sau khi cập nhật bảng
+        nutChoBang();
     }//GEN-LAST:event_btnKhoiPhucActionPerformed
-    
+
+    private void cbbPhanQuyenEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbPhanQuyenEditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbbPhanQuyenEditActionPerformed
+
+    private void tfTenTKEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTenTKEditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfTenTKEditActionPerformed
+
+    private void btnLuuEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuEditActionPerformed
+        // Lấy dữ liệu từ các trường
+        String tenTaiKhoan = tfTenTKEdit.getText().trim();
+        String matKhau = tfMatKhauEdit.getText().trim();
+        String nhapLaiMatKhau = tfNhapLaiMatKhauEdit.getText().trim();
+        boolean phanQuyen = cbbPhanQuyenEdit.getSelectedItem().toString().equals("Quản lý");
+        boolean trangThai = cbbTrangThaiEdit.getSelectedItem().toString().equals("Hoạt động");
+        
+        // Kiểm tra dữ liệu nhập hợp lệ
+        if (!kiemTraNhap(tenTaiKhoan, matKhau, nhapLaiMatKhau)) return;
+        
+        // Cập nhật tài khoản trong cơ sở dữ liệu
+        boolean success = taiKhoanDAO.updateTaiKhoan(tenTaiKhoan, matKhau, phanQuyen, trangThai);
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Cập nhật tài khoản thành công!");
+            loadDataToTable();  // Cập nhật lại bảng với dữ liệu mới
+            dialogEdit.dispose();  // Đóng dialog
+        } else {
+            JOptionPane.showMessageDialog(this, "Cập nhật tài khoản thất bại. Vui lòng thử lại.");
+        }
+    }//GEN-LAST:event_btnLuuEditActionPerformed
+
     private void clearInputFields() {
-    tfTenTaiKhoan.setText("");
-    pfMatKhau.setText("");
-    pfNhapLaiMatKhau.setText("");
-    cbbPhanQuyen.setSelectedIndex(0);
-    radioHoatDong.setSelected(true);  // Mặc định chọn 'Hoạt động'
-}
+        tfTenTaiKhoan.setText("");
+        pfMatKhau.setText("");
+        pfNhapLaiMatKhau.setText("");
+        cbbPhanQuyen.setSelectedIndex(0);
+    }
     
     private void radioLoc(){
         groupPhanQuyen = new ButtonGroup();
@@ -416,80 +635,177 @@ public class TaiKhoan_GUI extends SimpleForm {
     }
     
     private void locTaiKhoan() {
-    // Lấy phân quyền được chọn
-    String phanQuyen = radioQuanLy.isSelected() ? "Quản lý" : 
-                       radioNhanVien.isSelected() ? "Nhân viên" : "";
+    // Lấy giá trị phân quyền và trạng thái từ radio button
+    String phanQuyen = "";
+    if (radioQuanLy.isSelected()) {
+        phanQuyen = "Quản lý";
+    } else if (radioNhanVien.isSelected()) {
+        phanQuyen = "Nhân viên";
+    }
 
-    // Lấy trạng thái được chọn
-    String trangThai = radioHoatDong.isSelected() ? "Hoạt động" : 
-                       radioNgungHoatDong.isSelected() ? "Ngừng hoạt động" : "";
+    String trangThai = "";
+    if (radioHoatDong.isSelected()) {
+        trangThai = "Hoạt động";
+    } else if (radioNgungHoatDong.isSelected()) {
+        trangThai = "Ngừng hoạt động";
+    }
 
-    // Tạo model mới để chứa các kết quả lọc
+    // Tạo model mới để chứa kết quả lọc
     DefaultTableModel filteredModel = new DefaultTableModel(
         new Object[]{"STT", "Tên tài khoản", "Mật khẩu", "Phân quyền", "Trạng thái", "Cập nhật", "Xóa"}, 
         0
     );
 
-    // Duyệt qua dữ liệu gốc và thêm các dòng thỏa mãn điều kiện vào model
+    int stt = 1; // Đếm số thứ tự mới sau khi lọc
     for (Object[] row : originalData) {
-        String tkPhanQuyen = row[3].toString();  // Lấy giá trị 'Phân quyền'
-        String tkTrangThai = row[4].toString();  // Lấy giá trị 'Trạng thái'
+        String tkPhanQuyen = row[3].toString();
+        String tkTrangThai = row[4].toString();
 
-        // Kiểm tra nếu tài khoản thỏa mãn cả phân quyền và trạng thái đã chọn
-        if ((phanQuyen.isEmpty() || tkPhanQuyen.equals(phanQuyen)) &&
-            (trangThai.isEmpty() || tkTrangThai.equals(trangThai))) {
+        // Kiểm tra nếu tài khoản thỏa mãn cả 2 điều kiện lọc
+        boolean matchPhanQuyen = phanQuyen.isEmpty() || tkPhanQuyen.equals(phanQuyen);
+        boolean matchTrangThai = trangThai.isEmpty() || tkTrangThai.equals(trangThai);
+
+        if (matchPhanQuyen && matchTrangThai) {
+            row[0] = stt++;  // Cập nhật STT
             filteredModel.addRow(row);
         }
     }
 
     // Cập nhật bảng với dữ liệu đã lọc
     tableTK.setModel(filteredModel);
+    
+    nutChoBang();
 }
 
     private void loadDataToTable() {
-    ArrayList<entity.TaiKhoan> dsTaiKhoan = taiKhoanDAO.getAllTaiKhoan();  // Gọi từ DAO
-    if (dsTaiKhoan == null) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Không thể tải dữ liệu từ SQL Server!");
-        return;
-    }
+        ArrayList<entity.TaiKhoan_entity> dsTaiKhoan = taiKhoanDAO.getAllTaiKhoan();
+        if (dsTaiKhoan == null) {
+            JOptionPane.showMessageDialog(this, "Không thể tải dữ liệu từ SQL Server!");
+            return;
+        }
 
-    DefaultTableModel model = (DefaultTableModel) tableTK.getModel();
-    model.setRowCount(0);  // Xóa dữ liệu cũ
+        DefaultTableModel model = (DefaultTableModel) tableTK.getModel();
+        model.setRowCount(0); // Xóa dữ liệu cũ
+        originalData.clear(); // Xóa dữ liệu gốc cũ
 
-    // Duyệt từng đối tượng TaiKhoan và thêm vào JTable
-    int stt = 1;
-    for (entity.TaiKhoan tk : dsTaiKhoan) {
-        Object[] row = {
-            stt++,  // Số thứ tự
-            tk.getTenDangNhap(),
-            tk.getMatKhau(),
-            tk.isPhanQuyen() ? "Quản lý" : "Nhân viên",
-            tk.isTrangThai() ? "Hoạt động" : "Ngừng hoạt động",
-            "Cập nhật",  // Giả lập nút "Cập nhật"
-            "Xóa"  // Giả lập nút "Xóa"
-        };
-        model.addRow(row);
-    }
+        int stt = 1;
+        for (entity.TaiKhoan_entity tk : dsTaiKhoan) {
+            Object[] row = {
+                stt++,
+                tk.getTenDangNhap(),
+                tk.getMatKhau(),
+                tk.isPhanQuyen() ? "Quản lý" : "Nhân viên",
+                tk.isTrangThai() ? "Hoạt động" : "Ngừng hoạt động",
+                "Chỉnh sửa",  // Placeholder
+                "Xóa"         // Placeholder
+            };
+            model.addRow(row);
+            originalData.add(row);  // Lưu dữ liệu vào originalData
+        }
+        nutChoBang();
+}
+    
+    public void showEditDialog(int row) {
+        DefaultTableModel model = (DefaultTableModel) tableTK.getModel();
+
+        // Lấy dữ liệu từ bảng
+        String tenTaiKhoan = model.getValueAt(row, 1).toString();
+        String matKhau = model.getValueAt(row, 2).toString();
+        String phanQuyen = model.getValueAt(row, 3).toString();
+        String trangThai = model.getValueAt(row, 4).toString();
+        
+//        if()
+//        {
+//            
+//        }
+        
+        // Đưa dữ liệu vào các trường trên form
+        tfMatKhauEdit.setText(matKhau);
+        tfNhapLaiMatKhauEdit.setText(matKhau);
+        tfTenTKEdit.setText(tenTaiKhoan);  // Nhập lại mật khẩu
+
+        cbbPhanQuyenEdit.setSelectedItem(phanQuyen);
+        cbbTrangThaiEdit.setSelectedItem(trangThai);
+
+        // Hiển thị dialog
+        dialogEdit.pack();
+        dialogEdit.setLocationRelativeTo(this);
+        dialogEdit.setVisible(true);
 }
 
+    private boolean kiemTraNhap(String tenTaiKhoan, String matKhau, String nhapLaiMatKhau) {
+        if (tenTaiKhoan.isEmpty() || matKhau.isEmpty() || nhapLaiMatKhau.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin.");
+            return false;
+        }
+        if (!matKhau.equals(nhapLaiMatKhau)) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu nhập lại không khớp.");
+            return false;
+        }
+        return true;
+    }
+    
+    private void nutChoBang() {
+         // Cột "Chỉnh sửa"
+        tableTK.getColumnModel().getColumn(5).setCellRenderer(
+            new ButtonRenderer("/gui/icon/edit.png")
+        );
+        tableTK.getColumnModel().getColumn(5).setCellEditor(
+            new ButtonEditor("/gui/icon/edit.png", tableTK, this, 5)
+        );
 
+        // Cột "Xóa"
+        tableTK.getColumnModel().getColumn(6).setCellRenderer(
+            new ButtonRenderer("/gui/icon/delete.png")
+        );
+        tableTK.getColumnModel().getColumn(6).setCellEditor(
+            new ButtonEditor("/gui/icon/delete.png", tableTK, this, 6)
+        );
+    }
 
+    public void confirmAndDeleteAccount(int row) {
+        DefaultTableModel model = (DefaultTableModel) tableTK.getModel();
+        String tenTaiKhoan = model.getValueAt(row, 1).toString();  // Lấy tên tài khoản.
+
+        boolean success = taiKhoanDAO.deleteTaiKhoan(tenTaiKhoan);  // Gọi phương thức DAO.
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Xóa tài khoản thành công!");
+            model.removeRow(row);  // Xóa hàng khỏi bảng.
+        } else {
+            JOptionPane.showMessageDialog(this, "Xóa tài khoản thất bại. Vui lòng thử lại.");
+        }
+    }
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHuy;
+    private javax.swing.JButton btnHuyEdit;
     private javax.swing.JButton btnKhoiPhuc;
     private javax.swing.JButton btnLuu;
+    private javax.swing.JButton btnLuuEdit;
     private javax.swing.JButton btnTim;
     private javax.swing.JComboBox<String> cbbPhanQuyen;
+    private javax.swing.JComboBox<String> cbbPhanQuyenEdit;
+    private javax.swing.JComboBox<String> cbbTrangThaiEdit;
+    private javax.swing.JDialog dialogEdit;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lblHeadEdit;
     private javax.swing.JLabel lblMatKhau;
+    private javax.swing.JLabel lblMatKhauEdit;
     private javax.swing.JLabel lblNhapLaiMatKhau;
+    private javax.swing.JLabel lblNhapLaiMatKhauEdit;
     private javax.swing.JLabel lblPhanQuyen;
+    private javax.swing.JLabel lblPhanQuyenEdit;
     private javax.swing.JLabel lblQuanLiTaiKhoan;
+    private javax.swing.JLabel lblTenTKEdit;
     private javax.swing.JLabel lblTenTaiKhoan;
     private javax.swing.JLabel lblTrangThai;
+    private javax.swing.JLabel lblTrangThaiEdit;
     private javax.swing.JPasswordField pfMatKhau;
     private javax.swing.JPasswordField pfNhapLaiMatKhau;
     private javax.swing.JPanel pnContent;
+    private javax.swing.JPanel pnEdit;
+    private javax.swing.JPanel pnHeadEdit;
     private javax.swing.JPanel pnHeader;
     private javax.swing.JPanel pnLoc;
     private javax.swing.JPanel pnThem;
@@ -499,6 +815,9 @@ public class TaiKhoan_GUI extends SimpleForm {
     private javax.swing.JRadioButton radioQuanLy;
     private javax.swing.JScrollPane spTable;
     private javax.swing.JTable tableTK;
+    private javax.swing.JTextField tfMatKhauEdit;
+    private javax.swing.JTextField tfNhapLaiMatKhauEdit;
+    private javax.swing.JTextField tfTenTKEdit;
     private javax.swing.JTextField tfTenTaiKhoan;
     private javax.swing.JTextField tfTim;
     // End of variables declaration//GEN-END:variables

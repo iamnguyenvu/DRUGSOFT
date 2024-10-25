@@ -41,6 +41,13 @@ public class KhachHang extends SimpleForm {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialogChinhSua = new javax.swing.JDialog();
+        pnChinhSua = new javax.swing.JPanel();
+        pnHeadCHinhSua = new javax.swing.JPanel();
+        lblHeadChinhSua = new javax.swing.JLabel();
+        lblMaKhachHang = new javax.swing.JLabel();
+        tfMaKhachHang = new javax.swing.JTextField();
+        lblTenKH = new javax.swing.JLabel();
         pnContent = new javax.swing.JPanel();
         pnHead = new javax.swing.JPanel();
         lblHead = new javax.swing.JLabel();
@@ -48,6 +55,79 @@ public class KhachHang extends SimpleForm {
         btnTim = new javax.swing.JButton();
         spBang = new javax.swing.JScrollPane();
         tbKhachHang = new javax.swing.JTable();
+
+        dialogChinhSua.setBackground(new java.awt.Color(255, 255, 255));
+
+        pnChinhSua.setBackground(new java.awt.Color(255, 255, 255));
+
+        pnHeadCHinhSua.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblHeadChinhSua.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
+        lblHeadChinhSua.setText("Chỉnh sửa thông tin khách hàng");
+
+        javax.swing.GroupLayout pnHeadCHinhSuaLayout = new javax.swing.GroupLayout(pnHeadCHinhSua);
+        pnHeadCHinhSua.setLayout(pnHeadCHinhSuaLayout);
+        pnHeadCHinhSuaLayout.setHorizontalGroup(
+            pnHeadCHinhSuaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnHeadCHinhSuaLayout.createSequentialGroup()
+                .addGap(226, 226, 226)
+                .addComponent(lblHeadChinhSua)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnHeadCHinhSuaLayout.setVerticalGroup(
+            pnHeadCHinhSuaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnHeadCHinhSuaLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(lblHeadChinhSua)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        lblMaKhachHang.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        lblMaKhachHang.setText("Mã khách hàng");
+
+        tfMaKhachHang.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+
+        lblTenKH.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        lblTenKH.setText("Họ và tên ");
+
+        javax.swing.GroupLayout pnChinhSuaLayout = new javax.swing.GroupLayout(pnChinhSua);
+        pnChinhSua.setLayout(pnChinhSuaLayout);
+        pnChinhSuaLayout.setHorizontalGroup(
+            pnChinhSuaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnHeadCHinhSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnChinhSuaLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(pnChinhSuaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnChinhSuaLayout.createSequentialGroup()
+                        .addComponent(lblMaKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(tfMaKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(52, Short.MAX_VALUE))
+        );
+        pnChinhSuaLayout.setVerticalGroup(
+            pnChinhSuaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnChinhSuaLayout.createSequentialGroup()
+                .addComponent(pnHeadCHinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnChinhSuaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMaKhachHang)
+                    .addComponent(tfMaKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addComponent(lblTenKH)
+                .addContainerGap(246, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout dialogChinhSuaLayout = new javax.swing.GroupLayout(dialogChinhSua.getContentPane());
+        dialogChinhSua.getContentPane().setLayout(dialogChinhSuaLayout);
+        dialogChinhSuaLayout.setHorizontalGroup(
+            dialogChinhSuaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnChinhSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        dialogChinhSuaLayout.setVerticalGroup(
+            dialogChinhSuaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnChinhSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         setMinimumSize(new java.awt.Dimension(1500, 800));
         setLayout(new java.awt.BorderLayout());
@@ -113,7 +193,7 @@ public class KhachHang extends SimpleForm {
         ));
         spBang.setViewportView(tbKhachHang);
 
-        pnContent.add(spBang, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 1460, 670));
+        pnContent.add(spBang, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 1460, 670));
 
         add(pnContent, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -166,11 +246,18 @@ public class KhachHang extends SimpleForm {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTim;
+    private javax.swing.JDialog dialogChinhSua;
     private javax.swing.JLabel lblHead;
+    private javax.swing.JLabel lblHeadChinhSua;
+    private javax.swing.JLabel lblMaKhachHang;
+    private javax.swing.JLabel lblTenKH;
+    private javax.swing.JPanel pnChinhSua;
     private javax.swing.JPanel pnContent;
     private javax.swing.JPanel pnHead;
+    private javax.swing.JPanel pnHeadCHinhSua;
     private javax.swing.JScrollPane spBang;
     private javax.swing.JTable tbKhachHang;
+    private javax.swing.JTextField tfMaKhachHang;
     private javax.swing.JTextField tfTim;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,11 +5,12 @@
 package dao;
 
 import connectDB.connectDB;
+import entity.KhachHang_entity;
+import entity.SanPham_entity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import gui.SanPham;
 import java.util.ArrayList;
 
 /**
@@ -17,17 +18,19 @@ import java.util.ArrayList;
  * @author HP
  */
 public class BanHang_DAO {
-    public ArrayList<SanPham> searchSanPham(String key) {
+    public ArrayList<SanPham_entity> searchSanPham(String key) {
         Connection con = connectDB.accessDataBase();
         if(con == null) return null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ArrayList<SanPham> listSP = null;
+        ArrayList<SanPham_entity> listSP = new ArrayList<>();
         try {
-            ps = con.prepareStatement("SELECT * FROM SanPham WHERE tenSP LIKE '% "+key+"%' OR maSP LIKE '% "+key+"%' LIMIT 8");
+            ps = con.prepareStatement("SELECT TOP 8 * FROM SanPham WHERE tenSP LIKE ? OR maSP LIKE ?");
+            ps.setString(1, "%" + key + "%");
+            ps.setString(2, "%" + key + "%");
             rs = ps.executeQuery();
-            if (rs.next()) {
-                SanPham sp = new SanPham(rs.getString(10), rs.getString(1), rs.getString(2), rs.getString(6), rs.getInt(12), rs.getDouble(8)); 
+            while (rs.next()) {
+                SanPham_entity sp = new SanPham_entity(rs.getString(11), rs.getString(1), rs.getString(2), rs.getString(7), rs.getInt(3), rs.getDouble(9)); 
                 listSP.add(sp);
             }
         } catch (SQLException e) {
@@ -43,5 +46,33 @@ public class BanHang_DAO {
         }
         
         return listSP;
+    }
+    
+    public KhachHang_entity getKhachHang(String sdt) {
+        Connection con = connectDB.accessDataBase();
+        if(con == null) return null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement("SELECT * FROM KhachHang WHERE SDT LIKE ?");
+            ps.setString(1, sdt);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                KhachHang_entity kh = new KhachHang_entity(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5)); 
+                return kh;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return null;
     }
 }

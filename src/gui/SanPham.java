@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 
 import nguyenvu.components.SimpleForm;
-import nguyenvu.utils.TableDeleteCellRender;
+import nguyenvu.utils.TableDeleteCellRenderer;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -20,12 +20,17 @@ import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
-import entity.LoaiSanPham;
+
+import connectDB.connectDB;
+import dao.SanPham_DAO;
+import entity.LoaiSanPham_entity;
+
 
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.time.LocalDate;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 import javax.swing.border.Border;
@@ -42,11 +47,16 @@ public class SanPham extends SimpleForm implements ActionListener{
 	private JTable tb_SanPham;
 	private DefaultTableModel dftb_SanPham;
 	private JButton btn_Add;
+	private SanPham_DAO sp_dao;
 
 	/**
 	 * Create the panel.
 	 */
 	public SanPham() {
+		
+		connectDB.accessDataBase();
+		sp_dao = new SanPham_DAO();
+		
 		setPreferredSize(new Dimension(1500, 800));
 		setLayout(new BorderLayout(0, 0));
 		
@@ -62,7 +72,7 @@ public class SanPham extends SimpleForm implements ActionListener{
 		pnHeading.setLayout(null);
 		
 		tf_timKiem = new JTextField();
-		tf_timKiem.setBounds(259, 21, 474, 27);
+		tf_timKiem.setBounds(259, 21, 518, 27);
 		pnHeading.add(tf_timKiem);
 		tf_timKiem.setColumns(10);
 		// Tạo đường viền chỉ có phía dưới
@@ -94,12 +104,12 @@ public class SanPham extends SimpleForm implements ActionListener{
         tf_timKiem.setText("Nhập Tên Hoặc Mã Sản Phẩm"); // Hiện placeholder
         tf_timKiem.setForeground(Color.GRAY); // Đặt màu xám cho văn bản placeholder
 		
-		JButton btn_Search = new JButton(new FlatSVGIcon("gui/icon/search.svg",0.03f));
+		JButton btn_Search = new JButton(new FlatSVGIcon("gui/icon/search_123.svg",0.6f));
 		btn_Search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btn_Search.setBounds(743, 16, 47, 32);
+		btn_Search.setBounds(787, 16, 47, 32);
 		pnHeading.add(btn_Search);
 		
 		btn_Add = new JButton(new FlatSVGIcon("gui/icon/add.svg",0.03f));
@@ -111,7 +121,7 @@ public class SanPham extends SimpleForm implements ActionListener{
 		        JDialog dialog = new JDialog();
 		        
 		        // Thêm formThemSanPham vào dialog
-		        themSanPhamPanel = new formThemSanPham();
+		        themSanPhamPanel = new formThemSanPham(SanPham.this);
 		        dialog.getContentPane().add(themSanPhamPanel);
 		        
 		        // Đặt kích thước cho dialog (phù hợp với formThemSanPham)
@@ -135,11 +145,12 @@ public class SanPham extends SimpleForm implements ActionListener{
 		pnContent.add(pnCenter, BorderLayout.CENTER);
 		pnCenter.setLayout(null);
 		
-		String []columnNames = {"Mã Sản Phẩm","Tên Sản Phẩm","Ngày Sản Xuất","Ngày Hết Hạn","Nhà Cung Cấp","Giá","Công Dụng","Hình Ảnh","Loại Sản Phẩm","Cập Nhật","Xóa"};
+		String []columnNames = {"Mã Sản Phẩm","Tên Sản Phẩm","Số Lượng","Ngày Sản Xuất","Ngày Hết Hạn","Khối Lượng","Đơn Vị Tính","Nhà Cung Cấp","Giá","Công Dụng","Hình Ảnh","Loại Sản Phẩm","Cập Nhật","Xóa"};
 
 		dftb_SanPham = new DefaultTableModel(columnNames, 0); // columnNames là mảng chứa tên cột
 		tb_SanPham = new JTable(dftb_SanPham);
 		tb_SanPham.setModel(dftb_SanPham);
+		
 		tb_SanPham.setBackground(new Color(255, 255, 255));
 
 		tb_SanPham.getTableHeader().setReorderingAllowed(false);
@@ -150,29 +161,38 @@ public class SanPham extends SimpleForm implements ActionListener{
 			tb_SanPham.getColumnModel().getColumn(0).setPreferredWidth(60);
 			tb_SanPham.getColumnModel().getColumn(1).setResizable(false);
 			tb_SanPham.getColumnModel().getColumn(1).setPreferredWidth(60);
-            tb_SanPham.getColumnModel().getColumn(2).setResizable(false);
-            tb_SanPham.getColumnModel().getColumn(2).setPreferredWidth(60);
+			tb_SanPham.getColumnModel().getColumn(2).setResizable(false);
+			tb_SanPham.getColumnModel().getColumn(2).setPreferredWidth(40);
             tb_SanPham.getColumnModel().getColumn(3).setResizable(false);
             tb_SanPham.getColumnModel().getColumn(3).setPreferredWidth(60);
             tb_SanPham.getColumnModel().getColumn(4).setResizable(false);
-            tb_SanPham.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tb_SanPham.getColumnModel().getColumn(4).setPreferredWidth(60);
             tb_SanPham.getColumnModel().getColumn(5).setResizable(false);
             tb_SanPham.getColumnModel().getColumn(5).setPreferredWidth(40);
             tb_SanPham.getColumnModel().getColumn(6).setResizable(false);
-            tb_SanPham.getColumnModel().getColumn(6).setPreferredWidth(100);
+            tb_SanPham.getColumnModel().getColumn(6).setPreferredWidth(40);
             tb_SanPham.getColumnModel().getColumn(7).setResizable(false);
             tb_SanPham.getColumnModel().getColumn(7).setPreferredWidth(80);
             tb_SanPham.getColumnModel().getColumn(8).setResizable(false);
-            tb_SanPham.getColumnModel().getColumn(8).setPreferredWidth(60);
+            tb_SanPham.getColumnModel().getColumn(8).setPreferredWidth(40);
             tb_SanPham.getColumnModel().getColumn(9).setResizable(false);
-            tb_SanPham.getColumnModel().getColumn(9).setPreferredWidth(40);
+            tb_SanPham.getColumnModel().getColumn(9).setPreferredWidth(100);
             tb_SanPham.getColumnModel().getColumn(10).setResizable(false);
-            tb_SanPham.getColumnModel().getColumn(10).setPreferredWidth(40);
+            tb_SanPham.getColumnModel().getColumn(10).setPreferredWidth(80);
+            tb_SanPham.getColumnModel().getColumn(11).setResizable(false);
+            tb_SanPham.getColumnModel().getColumn(11).setPreferredWidth(60);
+            tb_SanPham.getColumnModel().getColumn(12).setResizable(false);
+            tb_SanPham.getColumnModel().getColumn(12).setPreferredWidth(40);
+            tb_SanPham.getColumnModel().getColumn(13).setResizable(false);
+            tb_SanPham.getColumnModel().getColumn(13).setPreferredWidth(40);
         }
 
 		JScrollPane scp_SanPham = new JScrollPane(tb_SanPham);
 		scp_SanPham.setBounds(23, 20, 1107, 700);
 		pnCenter.add(scp_SanPham);
+		
+		// đưa dữ liệu từ database vào table
+		docDuLieuVaoTable();
 		
 		JPanel pnLoc = new JPanel();
 		pnLoc.setBackground(new Color(255, 255, 255));
@@ -288,22 +308,20 @@ public class SanPham extends SimpleForm implements ActionListener{
 		group_nghh.add(radio_NhhGiamdan);
 
 	}
+  
 	// Phương thức thêm dòng vào bảng
-	public void addRowTable(entity.SanPham dataRow) {
+	public void addRowTable(String masp, String tensp, int soLuong,LocalDate ngaySX, LocalDate ngayHH, String Nhacc, double gia,String congDung,String hinhAnh,String loaiSP) {
+
 	    // Thêm dòng mới vào mô hình bảng
-	    dftb_SanPham.addRow(new Object[] {
-	        dataRow.getMaSP(),
-	        dataRow.getTenSP(),
-	        dataRow.getNgaySanXuat(),
-	        dataRow.getNgayHetHan(),
-	        dataRow.getNhaCungCap(),
-	        dataRow.getGia(),
-	        dataRow.getCongDung(),
-	        dataRow.getHinhAnhSP(),
-	        dataRow.getLoaiSanPham().getMaLoaiSP(),
-		    
-	    });
-	    System.out.println("Thêm dòng thành công: " + dataRow.toString());
+
+		dftb_SanPham.addRow(new Object[] {masp,tensp,soLuong,ngaySX,ngayHH,Nhacc,gia,congDung,hinhAnh,loaiSP});
+	}
+	//Phương thức thêm tất cả dữ liệu vào bảng
+	private void docDuLieuVaoTable() {
+		List<entity.SanPham_entity> dssp = sp_dao.getAllSanPham();
+		for (entity.SanPham_entity sp : dssp) {
+			dftb_SanPham.addRow(new Object[] {sp.getMaSP(),sp.getTenSP(),sp.getSoLuong(),sp.getNgaySanXuat(),sp.getNgayHetHan(),sp.getKhoiLuong(),sp.getDonViTinh(),sp.getNhaCungCap(),sp.getGia(),sp.getCongDung(),sp.getHinhAnhSP(),sp.getLoaiSanPham().getMaLoaiSP()});
+		}
 	}
 
 
@@ -312,9 +330,5 @@ public class SanPham extends SimpleForm implements ActionListener{
 		// TODO Auto-generated method stub
 		
 	}
-
-    public SanPham(String string, String string0, String string1, String string2, int aInt, double aDouble) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
 }

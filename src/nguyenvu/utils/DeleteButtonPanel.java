@@ -5,7 +5,6 @@
 package nguyenvu.utils;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -16,10 +15,6 @@ import javax.swing.JTable;
  * @author HP
  */
 public class DeleteButtonPanel extends javax.swing.JPanel {
-    private boolean mousePress;
-    /**
-     * Creates new form DeleteButtonPanel
-     */
     public DeleteButtonPanel() {
         initComponents();
     }
@@ -75,11 +70,11 @@ public class DeleteButtonPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMousePressed
-        btnDelete.setBackground(new JTable().getSelectionBackground());
+//        btnDelete.setBackground(new JTable().getSelectionBackground());
     }//GEN-LAST:event_btnDeleteMousePressed
 
     private void btnDeleteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseReleased
-        btnDelete.setBackground(new JTable().getBackground());
+//        btnDelete.setBackground(new JTable().getBackground());
     }//GEN-LAST:event_btnDeleteMouseReleased
 
 

@@ -4,10 +4,10 @@
  */
 package nguyenvu.utils;
 
-import entity.KhachHang;
+import entity.KhachHang_entity;
 import java.util.ArrayList;
 
-import entity.KhachHang;
+import entity.KhachHang_entity;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -20,9 +20,9 @@ public class CustomerSearchPanel extends javax.swing.JPanel {
         setLayout(new MigLayout("fillx", "0[]0", "0[]0"));
     }
     
-    public void setData(ArrayList<KhachHang> data) {
+    public void setData(ArrayList<KhachHang_entity> data) {
         this.removeAll();
-        for (KhachHang kh : data) {
+        for (KhachHang_entity kh : data) {
             
         }
     }

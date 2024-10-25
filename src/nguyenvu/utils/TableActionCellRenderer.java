@@ -12,13 +12,12 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author HP
  */
-public class TableDeleteCellRender extends DefaultTableCellRenderer{
+public class TableActionCellRenderer extends DefaultTableCellRenderer{
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component com= super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-        DeleteButtonPanel pn = new DeleteButtonPanel();
-        pn.setBackground(com.getBackground());
-        return pn;
+        ActionButtonPanel ac = new ActionButtonPanel();
+        ac.setBackground(com.getBackground());
+        return ac;
     }
-    
 }
