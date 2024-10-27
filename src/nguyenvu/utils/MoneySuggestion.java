@@ -24,11 +24,11 @@ public class MoneySuggestion {
 
         int[] increments;
         if (tongTien <= 500000) {
-            increments = new int[]{50000, 100000, 200000, 500000};
+            increments = new int[]{10000, 20000, 50000, 100000, 200000, 500000};
         } else if (tongTien <= 1000000) {
-            increments = new int[]{100000, 200000, 500000, 1000000};
+            increments = new int[]{10000, 20000, 50000, 100000, 200000, 500000, 1000000};
         } else {
-            increments = new int[]{200000, 500000, 1000000, 2000000};
+            increments = new int[]{10000, 20000, 50000, 100000, 200000, 500000, 1000000, 2000000};
         }
 
         for (int increment : increments) {
@@ -36,10 +36,7 @@ public class MoneySuggestion {
             if (!suggestions.contains(nextSuggestion)) {
                 suggestions.add(nextSuggestion);
             }
-        }
-
-        while (suggestions.size() < 6) {
-            suggestions.add(suggestions.get(suggestions.size() - 1));
+            if (suggestions.size() >= 6) break;
         }
 
         return suggestions;

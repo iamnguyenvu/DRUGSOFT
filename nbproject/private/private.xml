@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/ProductSearchPanel.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/dao/BanHang_DAO.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/bill/BillManeger.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/menu/MyDrawerBuilder.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/MoneySuggestion.java</file>
             <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/BanHang.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/ListProductSearchPanel.java</file>
         </group>
     </open-files>
 </project-private>
