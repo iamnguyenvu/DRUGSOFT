@@ -1,9 +1,8 @@
 package entity;
 
 public class KhachHang_entity {
-    private String maKH; // Mã khách hàng
+    private String sdtKH; // Mã khách hàng
     private String tenKH; // Tên khách hàng
-    private String SDT; // Số điện thoại
     private int diemThuong; // Điểm thưởng
     private String gioiTinh; // Giới tính
 
@@ -11,75 +10,57 @@ public class KhachHang_entity {
     public KhachHang_entity() {
     }
 
-    // Constructor với đầy đủ tham số
-    public KhachHang_entity(String maKH, String tenKH, String SDT, int diemThuong, String gioiTinh) {
-        this.maKH = maKH;
-        this.tenKH = tenKH;
-        this.SDT = SDT;
-        this.diemThuong = diemThuong;
-        this.gioiTinh = gioiTinh;
-    }
-    
-
-    public KhachHang_entity(String maKH) {
+	public KhachHang_entity(String sdtKH) {
 		super();
-		this.maKH = maKH;
+		this.sdtKH = sdtKH;
 	}
 
-	// Getter và Setter cho maKH
-    public String getMaKH() {
-        return maKH;
-    }
+	public KhachHang_entity(String sdtKH, String tenKH, int diemThuong, String gioiTinh) {
+		super();
+		this.sdtKH = sdtKH;
+		this.tenKH = tenKH;
+		this.diemThuong = diemThuong;
+		this.gioiTinh = gioiTinh;
+	}
 
-    public void setMaKH(String maKH) {
-        this.maKH = maKH;
-    }
+	public String getSdtKH() {
+		return sdtKH;
+	}
 
-    // Getter và Setter cho tenKH
-    public String getTenKH() {
-        return tenKH;
-    }
+	public void setSdtKH(String sdtKH) {
+		this.sdtKH = sdtKH;
+	}
 
-    public void setTenKH(String tenKH) {
-        this.tenKH = tenKH;
-    }
+	public String getTenKH() {
+		return tenKH;
+	}
 
-    // Getter và Setter cho SDT
-    public String getSDT() {
-        return SDT;
-    }
+	public void setTenKH(String tenKH) {
+		this.tenKH = tenKH;
+	}
 
-    public void setSDT(String SDT) {
-        this.SDT = SDT;
-    }
+	public int getDiemThuong() {
+		return diemThuong;
+	}
 
-    // Getter và Setter cho diemThuong
-    public int getDiemThuong() {
-        return diemThuong;
-    }
+	public void setDiemThuong(int diemThuong) {
+		this.diemThuong = diemThuong;
+	}
 
-    public void setDiemThuong(int diemThuong) {
-        this.diemThuong = diemThuong;
-    }
+	public String getGioiTinh() {
+		return gioiTinh;
+	}
 
-    // Getter và Setter cho gioiTinh
-    public String getGioiTinh() {
-        return gioiTinh;
-    }
+	public void setGioiTinh(String gioiTinh) {
+		this.gioiTinh = gioiTinh;
+	}
 
-    public void setGioiTinh(String gioiTinh) {
-        this.gioiTinh = gioiTinh;
-    }
-
-    @Override
-    public String toString() {
-        return "KhachHang{" +
-                "maKH='" + maKH + '\'' +
-                ", tenKH='" + tenKH + '\'' +
-                ", SDT='" + SDT + '\'' +
-                ", diemThuong=" + diemThuong +
-                ", gioiTinh='" + gioiTinh + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "KhachHang_entity [sdtKH=" + sdtKH + ", tenKH=" + tenKH + ", diemThuong=" + diemThuong + ", gioiTinh="
+				+ gioiTinh + "]";
+	}
+	
+    
 }
 

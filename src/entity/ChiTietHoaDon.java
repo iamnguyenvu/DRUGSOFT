@@ -3,7 +3,7 @@ package entity;
 public class ChiTietHoaDon {
     private String maCTHD; // Mã chi tiết hóa đơn
     private int soLuongSanPham; // Số lượng sản phẩm
-    private double tongTien; // Tổng tiền
+    private double thanhTien; // Tổng tiền
     private HoaDon_entity hoaDon; // Hóa đơn liên kết
     private SanPham_entity sanPham; // Sản phẩm liên kết
 
@@ -12,10 +12,10 @@ public class ChiTietHoaDon {
     }
 
     // Constructor với đầy đủ tham số
-    public ChiTietHoaDon(String maCTHD, int soLuongSanPham, double tongTien, HoaDon_entity hoaDon, SanPham_entity sanPham) {
+    public ChiTietHoaDon(String maCTHD, int soLuongSanPham, double thanhTien, HoaDon_entity hoaDon, SanPham_entity sanPham) {
         this.maCTHD = maCTHD;
         this.soLuongSanPham = soLuongSanPham;
-        this.tongTien = tongTien;
+        this.thanhTien = thanhTien;
         this.hoaDon = hoaDon;
         this.sanPham = sanPham;
     }
@@ -39,12 +39,12 @@ public class ChiTietHoaDon {
     }
 
     // Getter và Setter cho tongTien
-    public double getTongTien() {
-        return tongTien;
+    public double getThanhTien() {
+        return thanhTien;
     }
 
-    public void setTongTien(double tongTien) {
-        this.tongTien = tongTien;
+    public void setThanhTien(double thanhTien) {
+        this.thanhTien = thanhTien;
     }
 
     // Getter và Setter cho hoaDon
@@ -65,14 +65,11 @@ public class ChiTietHoaDon {
         this.sanPham = sanPham;
     }
 
-    @Override
-    public String toString() {
-        return "ChiTietHoaDon{" +
-                "maCTHD='" + maCTHD + '\'' +
-                ", soLuongSanPham=" + soLuongSanPham +
-                ", tongTien=" + tongTien +
-                ", hoaDon=" + (hoaDon != null ? hoaDon.getMaHD() : "null") +
-                ", sanPham=" + (sanPham != null ? sanPham.getTenSP() : "null") +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "ChiTietHoaDon [maCTHD=" + maCTHD + ", soLuongSanPham=" + soLuongSanPham + ", thanhTien=" + thanhTien
+				+ ", hoaDon=" + hoaDon + ", sanPham=" + sanPham + "]";
+	}
+
+
 }
