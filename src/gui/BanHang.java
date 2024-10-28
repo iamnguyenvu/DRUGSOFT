@@ -146,7 +146,6 @@ public class BanHang extends SimpleForm {
                 kh = customer;
                 txtCustomer.setText(customer.getTenKH() + " - " + customer.getSDT());
                 menuCustomer.setVisible(false);
-//                txtTienKhachDua.requestFocus();
                 lblDiemThuong.setText(String.valueOf(customer.getDiemThuong()));
                 txtCustomer.requestFocusInWindow();
             }
@@ -199,13 +198,9 @@ public class BanHang extends SimpleForm {
         pnLeftContent = new javax.swing.JPanel();
         pnFunc = new javax.swing.JPanel();
         btnDeleteAllSP = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         btnNote = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         btnTempProcess = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
@@ -655,16 +650,6 @@ public class BanHang extends SimpleForm {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(183, 218, 246));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Xem danh sách sản phẩm");
-        jButton3.setPreferredSize(new java.awt.Dimension(80, 40));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         btnNote.setBackground(new java.awt.Color(183, 218, 246));
         btnNote.setForeground(new java.awt.Color(255, 255, 255));
         btnNote.setText("[F9] Ghi chú đơn hàng");
@@ -675,30 +660,15 @@ public class BanHang extends SimpleForm {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(183, 218, 246));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Xem thông tin khách hàng");
-        jButton5.setPreferredSize(new java.awt.Dimension(80, 40));
-
         btnTempProcess.setBackground(new java.awt.Color(183, 218, 246));
         btnTempProcess.setForeground(new java.awt.Color(255, 255, 255));
         btnTempProcess.setText("[F10] Xử lý đơn tạm");
         btnTempProcess.setPreferredSize(new java.awt.Dimension(80, 40));
 
-        jButton7.setBackground(new java.awt.Color(183, 218, 246));
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("jButton1");
-        jButton7.setPreferredSize(new java.awt.Dimension(80, 40));
-
         jButton8.setBackground(new java.awt.Color(183, 218, 246));
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("jButton1");
+        jButton8.setText("Xem danh sách sản phẩm");
         jButton8.setPreferredSize(new java.awt.Dimension(80, 40));
-
-        jButton9.setBackground(new java.awt.Color(183, 218, 246));
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("jButton1");
-        jButton9.setPreferredSize(new java.awt.Dimension(80, 40));
 
         javax.swing.GroupLayout pnFuncLayout = new javax.swing.GroupLayout(pnFunc);
         pnFunc.setLayout(pnFuncLayout);
@@ -706,54 +676,31 @@ public class BanHang extends SimpleForm {
             pnFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnFuncLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addGroup(pnFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeleteAllSP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnDeleteAllSP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65)
-                .addGroup(pnFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNote, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnNote, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65)
-                .addGroup(pnFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTempProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnTempProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                .addGroup(pnFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
         pnFuncLayout.setVerticalGroup(
             pnFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnFuncLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(pnFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnFuncLayout.createSequentialGroup()
-                        .addComponent(btnDeleteAllSP, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnFuncLayout.createSequentialGroup()
-                        .addComponent(btnNote, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnFuncLayout.createSequentialGroup()
-                        .addComponent(btnTempProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnFuncLayout.createSequentialGroup()
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 12, Short.MAX_VALUE))
+                    .addComponent(btnDeleteAllSP, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNote, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTempProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         addStyleBtn(btnDeleteAllSP);
-        addStyleBtn(jButton3);
         addStyleBtn(btnNote);
-        addStyleBtn(jButton5);
         addStyleBtn(btnTempProcess);
-        addStyleBtn(jButton7);
         addStyleBtn(jButton8);
-        addStyleBtn(jButton9);
 
         jScrollPane2.setPreferredSize(new java.awt.Dimension(452, 500));
 
@@ -789,23 +736,23 @@ public class BanHang extends SimpleForm {
         jScrollPane2.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
             table.getColumnModel().getColumn(0).setResizable(false);
-            table.getColumnModel().getColumn(0).setPreferredWidth(20);
+            table.getColumnModel().getColumn(0).setPreferredWidth(30);
             table.getColumnModel().getColumn(1).setResizable(false);
-            table.getColumnModel().getColumn(1).setPreferredWidth(60);
+            table.getColumnModel().getColumn(1).setPreferredWidth(80);
             table.getColumnModel().getColumn(2).setResizable(false);
-            table.getColumnModel().getColumn(2).setPreferredWidth(100);
+            table.getColumnModel().getColumn(2).setPreferredWidth(120);
             table.getColumnModel().getColumn(3).setResizable(false);
-            table.getColumnModel().getColumn(3).setPreferredWidth(200);
+            table.getColumnModel().getColumn(3).setPreferredWidth(280);
             table.getColumnModel().getColumn(4).setResizable(false);
-            table.getColumnModel().getColumn(4).setPreferredWidth(80);
+            table.getColumnModel().getColumn(4).setPreferredWidth(100);
             table.getColumnModel().getColumn(5).setResizable(false);
-            table.getColumnModel().getColumn(5).setPreferredWidth(100);
+            table.getColumnModel().getColumn(5).setPreferredWidth(50);
             table.getColumnModel().getColumn(6).setResizable(false);
             table.getColumnModel().getColumn(6).setPreferredWidth(100);
             table.getColumnModel().getColumn(7).setResizable(false);
             table.getColumnModel().getColumn(7).setPreferredWidth(100);
             table.getColumnModel().getColumn(8).setResizable(false);
-            table.getColumnModel().getColumn(8).setPreferredWidth(30);
+            table.getColumnModel().getColumn(8).setPreferredWidth(60);
         }
         table.getColumnModel().getColumn(8).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());
         table.getColumnModel().getColumn(8).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {
@@ -813,6 +760,9 @@ public class BanHang extends SimpleForm {
             public void onDelete(int row) {
                 if (row >= 0 && row < table.getRowCount()) {
                     ((DefaultTableModel) table.getModel()).removeRow(row);
+                    for(int i = 0; i < table.getRowCount(); ++i) {
+                        table.setValueAt((int)table.getValueAt(i, 0) - 1, i, 0);
+                    }
                     ((DefaultTableModel) table.getModel()).fireTableDataChanged();
                 }
                 updateLblSoLuongSP();
@@ -821,26 +771,27 @@ public class BanHang extends SimpleForm {
 
         table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(this));
         table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());
+        table.setTableHeader(null);
 
         javax.swing.GroupLayout pnLeftContentLayout = new javax.swing.GroupLayout(pnLeftContent);
         pnLeftContent.setLayout(pnLeftContentLayout);
         pnLeftContentLayout.setHorizontalGroup(
             pnLeftContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnLeftContentLayout.createSequentialGroup()
+            .addGroup(pnLeftContentLayout.createSequentialGroup()
                 .addContainerGap(16, Short.MAX_VALUE)
-                .addGroup(pnLeftContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnFunc, javax.swing.GroupLayout.DEFAULT_SIZE, 1057, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnLeftContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1057, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnFunc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1057, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         pnLeftContentLayout.setVerticalGroup(
             pnLeftContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnLeftContentLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(pnFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
 
         pnFunc.putClientProperty(FlatClientProperties.STYLE, ""
@@ -862,9 +813,9 @@ public class BanHang extends SimpleForm {
             pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnContentLayout.createSequentialGroup()
                 .addComponent(pnRightContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 235, Short.MAX_VALUE))
             .addGroup(pnContentLayout.createSequentialGroup()
-                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE)
+                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -926,11 +877,11 @@ public class BanHang extends SimpleForm {
             String billID = "HD001";                // Generate or retrieve actual bill ID
             InputStream qrCodeStream = null;        // Set the QR code stream if needed
 
-            // Initializing and printing the bill
+            // Initializing and printing the bill 
             ParameterBill billData = new ParameterBill(
                     getCurrentDate(), employeeName, customerName, customerPhone, 
                     totalAmount, discount, thanhToan, rewardPoints, 
-                    billID, qrCodeStream, fields);
+                    billID, generateQrcode(), fields);
 
             BillManeger.getInstance().printBill(billData);
             
@@ -942,10 +893,6 @@ public class BanHang extends SimpleForm {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnThanhToanActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btnSuggest3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuggest3ActionPerformed
         // TODO add your handling code here:
@@ -970,8 +917,7 @@ public class BanHang extends SimpleForm {
    
     private void btnDeleteAllSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAllSPActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.setRowCount(0);
+        refresh();
     }//GEN-LAST:event_btnDeleteAllSPActionPerformed
 
     private void txtProductSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProductSearchKeyReleased
@@ -1013,8 +959,7 @@ public class BanHang extends SimpleForm {
 
     private void btnNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoteActionPerformed
         // TODO add your handling code here:
-//        pnNote.setVisible(true);
-//        txtNote.requestFocus();
+        txtNote.requestFocus();
     }//GEN-LAST:event_btnNoteActionPerformed
 
     private void btnLuuTamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuTamActionPerformed
@@ -1045,8 +990,8 @@ public class BanHang extends SimpleForm {
         }
         
         lblTienThua.setText(df.format(String.valueOf(
-                Double.parseDouble(txtTienKhachDua.getText()) - 
-                        Double.parseDouble(lblKhachPhaiTra.getText().replace(",", "")))));
+            Double.parseDouble(txtTienKhachDua.getText()) - 
+                Double.parseDouble(lblKhachPhaiTra.getText().replace(",", "")))));
     }//GEN-LAST:event_txtTienKhachDuaFocusLost
 
     private void txtTienKhachDuaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTienKhachDuaKeyReleased
@@ -1153,7 +1098,8 @@ public class BanHang extends SimpleForm {
     }
     
     private void updateSuggestButton(double tongTien) {
-        List<Integer> suggestions = MoneySuggestion.suggestAmounts((int) tongTien);
+        List<Integer> suggestions = new ArrayList<>();
+        suggestions = MoneySuggestion.suggestAmounts((int) tongTien);
         double khachPhaiTra = Double.parseDouble(lblKhachPhaiTra.getText().replace(",", ""));
 
         for (int i = 1; i <= 6; i++) {
@@ -1275,11 +1221,7 @@ public class BanHang extends SimpleForm {
     private javax.swing.JButton btnTempProcess;
     private javax.swing.JButton btnThanhToan;
     private javax.swing.JComboBox<String> cbbPhuongThucThanhToan;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

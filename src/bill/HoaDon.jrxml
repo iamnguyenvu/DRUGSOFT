@@ -9,7 +9,7 @@
 	<parameter name="tenNV" class="java.lang.String"/>
 	<parameter name="tenKH" class="java.lang.String"/>
 	<parameter name="SDT" class="java.lang.String"/>
-	<parameter name="qrcode" class="java.lang.String"/>
+	<parameter name="qrcode" class="java.awt.Image"/>
 	<parameter name="tongTien" class="java.lang.String"/>
 	<parameter name="giamTru" class="java.lang.String"/>
 	<parameter name="maHD" class="java.lang.String"/>
@@ -350,11 +350,9 @@ Mã hóa đơn: ]]></text>
 				</textElement>
 				<text><![CDATA[Giá thanh toán đã bao gồm thuế VAT]]></text>
 			</staticText>
-			<image hAlign="Center" hyperlinkType="">
-				<reportElement x="0" y="90" width="186" height="60" uuid="2e2b1eae-d0dd-4f63-8da3-3f20ecbcf4a4"/>
-				<hyperlinkParameter name="$P{qrcode}">
-					<hyperlinkParameterExpression><![CDATA[]]></hyperlinkParameterExpression>
-				</hyperlinkParameter>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="80" width="186" height="80" uuid="01e09420-b383-451d-9dd9-26389ca16ea5"/>
+				<imageExpression><![CDATA[$P{qrcode}]]></imageExpression>
 			</image>
 		</band>
 	</lastPageFooter>
