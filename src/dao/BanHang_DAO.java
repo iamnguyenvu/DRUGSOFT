@@ -89,7 +89,7 @@ public class BanHang_DAO {
             ps.setString(1, sdt);
             rs = ps.executeQuery();
             if (rs.next()) {
-                KhachHang_entity kh = new KhachHang_entity(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5)); 
+                KhachHang_entity kh = new KhachHang_entity(rs.getString("maKH"), rs.getString("tenKH"), rs.getString("SDT"), rs.getInt("diemThuong"), rs.getString("gioiTinh")); 
                 return kh;
             }
         } catch (SQLException e) {
