@@ -27,18 +27,6 @@ public class ActionButton extends JButton{
         this.icon = icon;
         setContentAreaFilled(false);
         setBorder(new EmptyBorder(3, 3, 3, 3));
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                mousePress = true;
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                mousePress = false;
-            }
-            
-        });
     }
     
     @Override

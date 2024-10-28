@@ -238,16 +238,16 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                         FormManager.logout();
                     }
                 } 
-//                else if (index.length == 2) {
-//                    if (index[0] == 7) {
-//                        if (index[1] == 0) {
-//                            FormManager.showForm(new StatisticalForm());
-//                        }
+                else if (index.length == 2) {
+                    if (index[0] == 7) {
+                        if (index[1] == 0) {
+                            FormManager.showForm(new StatisticalForm());
+                        }
 //                        if (index[1] == 1) {
 //                            FormManager.showForm(new ReadForm());
 //                        }
-//                    }
-//                }
+                    }
+                }
             }
         });
 

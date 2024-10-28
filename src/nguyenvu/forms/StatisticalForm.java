@@ -60,7 +60,7 @@ public class StatisticalForm extends SimpleForm {
 
     private void createPieChart() {
         pieChart1 = new PieChart();
-        JLabel header1 = new JLabel("Product Income");
+        JLabel header1 = new JLabel("Sản phẩm sắp hết hạn");
         header1.putClientProperty(FlatClientProperties.STYLE, ""
                 + "font:+1");
         pieChart1.setHeader(header1);
@@ -71,7 +71,7 @@ public class StatisticalForm extends SimpleForm {
         add(pieChart1, "split 3,height 290");
 
         pieChart2 = new PieChart();
-        JLabel header2 = new JLabel("Product Cost");
+        JLabel header2 = new JLabel("Sản phẩm sắp hêt hàng");
         header2.putClientProperty(FlatClientProperties.STYLE, ""
                 + "font:+1");
         pieChart2.setHeader(header2);
@@ -82,7 +82,7 @@ public class StatisticalForm extends SimpleForm {
         add(pieChart2, "height 290");
 
         pieChart3 = new PieChart();
-        JLabel header3 = new JLabel("Product Profit");
+        JLabel header3 = new JLabel("Sản phẩm bán chạy");
         header3.putClientProperty(FlatClientProperties.STYLE, ""
                 + "font:+1");
         pieChart3.setHeader(header3);
@@ -106,7 +106,7 @@ public class StatisticalForm extends SimpleForm {
     private void createBarChart() {
         // BarChart 1
         barChart1 = new HorizontalBarChart();
-        JLabel header1 = new JLabel("Monthly Income");
+        JLabel header1 = new JLabel("Doanh thu 6 tháng gần nhất");
         header1.putClientProperty(FlatClientProperties.STYLE, ""
                 + "font:+1;"
                 + "border:0,0,5,0");
@@ -202,7 +202,7 @@ public class StatisticalForm extends SimpleForm {
 
         lineChart.setCategoryDataset(categoryDataset);
         lineChart.getChartColor().addColor(Color.decode("#38bdf8"), Color.decode("#fb7185"), Color.decode("#34d399"));
-        JLabel header = new JLabel("Income Data");
+        JLabel header = new JLabel("Thống kê trong tháng");
         header.putClientProperty(FlatClientProperties.STYLE, ""
                 + "font:+1;"
                 + "border:0,0,5,0");
