@@ -5,6 +5,9 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.util.UIScale;
+
+import gui.ManHinhNen;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -31,6 +34,7 @@ public class Application extends JFrame {
     }
 
     private void init() {
+    	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(UIScale.scale(new Dimension(1366, 768)));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -45,7 +49,7 @@ public class Application extends JFrame {
         // applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         GlassPanePopup.install(this);
         FormManager.install(this, UNDECORATED);
-        FormManager.showForm(new DashboardForm());
+        FormManager.showForm(new ManHinhNen());
         FormManager.logout();
         // applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
     }

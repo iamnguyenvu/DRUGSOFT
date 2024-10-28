@@ -161,31 +161,30 @@ public class SanPham_DAO {
 
     // Get product price by maSP
     public double getGia(String maSP) {
-//        Connection con = connectDB.accessDataBase();
-//        if (con == null) return 0;
-//        PreparedStatement ps = null;
-//        ResultSet rs = null;
-//        double gia = 0;
-//        try {
-//            ps = con.prepareStatement("SELECT gia FROM SanPham WHERE maSP = ?");
-//            ps.setString(1, maSP);
-//            rs = ps.executeQuery();
-//            if (rs.next()) {
-//                gia = rs.getDouble("gia");
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (rs != null) rs.close();
-//                if (ps != null) ps.close();
-//                if (con != null) con.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return gia;
-        return 100000.0; // Hardcoded example
+        Connection con = connectDB.accessDataBase();
+        if (con == null) return 0;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        double gia = 0;
+        try {
+            ps = con.prepareStatement("SELECT gia FROM SanPham WHERE maSP = ?");
+            ps.setString(1, maSP);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                gia = rs.getDouble("gia");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return gia;
     }
 
     // Get product supplier by maSP

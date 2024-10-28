@@ -213,7 +213,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             public void selected(MenuAction action, int[] index) {
                 if (index.length == 1) {
                     if (index[0] == 0) {
-                        FormManager.showForm(new DashboardForm());
+                    	FormManager.showForm(new gui.ManHinhNen());
                     }
                     if (index[0] == 1) {
                         FormManager.showForm(new BanHang());
@@ -228,7 +228,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     	FormManager.showForm(new gui.HoaDon());
                     }
                     if (index[0] == 5) {
-                    	FormManager.showForm(new gui.ManHinhNen());
+                    	
                     }
                     if (index[0] == 8) {
                     	FormManager.showForm(new StatisticalForm());
