@@ -71,7 +71,7 @@ public class HoaDon_DAO {
 			            double tienGiam = rs.getDouble("tienGiam");
 			            String hinhThucThanhToan = rs.getString("hinhThucThanhToan");
 			            boolean trangThai = rs.getBoolean("trangThai");
-			            String maKH = rs.getString("maKH");
+			            String maKH = rs.getString("sdtKH");
 			            String maNV = rs.getString("maNV");
 			            String maLoaiHD = rs.getString("maLoaiHD");
 			            
