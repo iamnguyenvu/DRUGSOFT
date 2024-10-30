@@ -144,7 +144,7 @@ public class BanHang extends SimpleForm {
             @Override
             public void onCustomerSeclect(KhachHang_entity customer) {
                 kh = customer;
-                txtCustomer.setText(customer.getTenKH() + " - " + customer.getSDT());
+                txtCustomer.setText(customer.getTenKH() + " - " + customer.getSdtKH());
                 menuCustomer.setVisible(false);
                 lblDiemThuong.setText(String.valueOf(customer.getDiemThuong()));
                 txtCustomer.requestFocusInWindow();
@@ -869,7 +869,7 @@ public class BanHang extends SimpleForm {
             // Setting up parameters for the bill
             String employeeName = "Employee Name";  // Replace with actual employee data if available
             String customerName = kh != null ? kh.getTenKH() : "Khách vãng lai"; // Default customer name if kh is null
-            String customerPhone = kh != null ? kh.getSDT() : "";
+            String customerPhone = kh != null ? kh.getSdtKH() : "";
             double totalAmount = calculateTotalAmount();
             int discount = kh != null ? giamTru : 0;                       // Adjust if discounts apply
 

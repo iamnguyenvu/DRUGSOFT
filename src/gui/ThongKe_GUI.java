@@ -5,6 +5,10 @@ import javax.swing.JPanel;
 import nguyenvu.components.SimpleForm;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
+import javax.swing.JLabel;
+import java.awt.Font;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.JButton;
 
 public class ThongKe_GUI extends SimpleForm {
 
@@ -21,8 +25,8 @@ public class ThongKe_GUI extends SimpleForm {
 		add(pnCenter, BorderLayout.CENTER);
 		pnCenter.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(22, 22, 438, 338);
+		JPanel panel =  new JPanel();
+		panel.setBounds(94, 114, 326, 246);
 		pnCenter.add(panel);
 		
 		JPanel panel_2 = new JPanel();
@@ -30,12 +34,46 @@ public class ThongKe_GUI extends SimpleForm {
 		pnCenter.add(panel_2);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(515, 22, 438, 338);
+		panel_1.setBounds(594, 114, 326, 246);
 		pnCenter.add(panel_1);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(1014, 22, 438, 338);
-		pnCenter.add(panel_3);
+		JPanel panel_4 = new JPanel();
+		panel_4.setBounds(10, 10, 1480, 94);
+		pnCenter.add(panel_4);
+		panel_4.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Thống Kê");
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
+		lblNewLabel.setBounds(30, 10, 187, 74);
+		panel_4.add(lblNewLabel);
+		
+		JDateChooser dcNgayBatDau = new JDateChooser();
+		dcNgayBatDau.setToolTipText("Từ Ngày");
+		dcNgayBatDau.setBounds(423, 30, 253, 31);
+		panel_4.add(dcNgayBatDau);
+		
+		JDateChooser dcNgayBatDau_1 = new JDateChooser();
+		dcNgayBatDau_1.setBounds(974, 30, 253, 31);
+		panel_4.add(dcNgayBatDau_1);
+		
+		JButton btnXacNhan = new JButton("Xác Nhận");
+		btnXacNhan.setFont(new Font("Arial", Font.BOLD, 12));
+		btnXacNhan.setBounds(1278, 30, 93, 31);
+		panel_4.add(btnXacNhan);
+		
+		JLabel lblNewLabel_1 = new JLabel("Từ Ngày");
+		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(333, 30, 87, 31);
+		panel_4.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Đến Ngày");
+		lblNewLabel_1_1.setFont(new Font("Arial", Font.PLAIN, 14));
+		lblNewLabel_1_1.setBounds(877, 30, 87, 31);
+		panel_4.add(lblNewLabel_1_1);
+		
+		JPanel panel_1_1 = new JPanel();
+		panel_1_1.setBounds(1095, 114, 326, 246);
+		pnCenter.add(panel_1_1);
 
 	}
 }
