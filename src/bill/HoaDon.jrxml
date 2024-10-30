@@ -128,7 +128,7 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="10">
+		<band height="11">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
@@ -165,46 +165,46 @@
 				</textElement>
 				<text><![CDATA[Thành tiền]]></text>
 			</staticText>
+			<line>
+				<reportElement x="0" y="10" width="186" height="1" uuid="818c0801-f10b-4d73-a10b-a90c7ddbfc59"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="30" splitType="Stretch">
+		<band height="30" splitType="Prevent">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<textField>
-				<reportElement x="0" y="0" width="186" height="16" uuid="95b4a5cf-6c29-4abb-b134-61035aff1e56"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="186" height="16" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="95b4a5cf-6c29-4abb-b134-61035aff1e56"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tenSP}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="50" y="16" width="30" height="14" uuid="c9daa3de-7be5-4e2b-8677-fc0578d6b08d"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="16" width="80" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="c9daa3de-7be5-4e2b-8677-fc0578d6b08d"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{soLuong}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.##">
-				<reportElement x="80" y="16" width="56" height="14" uuid="6611ac0d-6ed9-4203-a778-8e0223a2029e"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="80" y="16" width="56" height="14" isPrintWhenDetailOverflows="true" uuid="6611ac0d-6ed9-4203-a778-8e0223a2029e"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{donGia}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.##">
-				<reportElement x="136" y="16" width="50" height="14" uuid="effdfe28-d812-4e8f-a614-c8d3347f7eb5"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="136" y="16" width="50" height="14" isPrintWhenDetailOverflows="true" uuid="effdfe28-d812-4e8f-a614-c8d3347f7eb5"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{thanhTien}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="0" y="0" width="186" height="1" uuid="818c0801-f10b-4d73-a10b-a90c7ddbfc59"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dashed"/>
-				</graphicElement>
-			</line>
 		</band>
 	</detail>
 	<columnFooter>
