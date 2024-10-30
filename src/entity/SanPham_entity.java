@@ -147,5 +147,12 @@ public class SanPham_entity {
         this.soLuong = soLuong;
     }
     
-        
+//    Constructor for DoiTra, seems not essential
+
+    public SanPham_entity(String maSP, String tenSP, double gia) {
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.gia = gia;
+    }
+       
 }

@@ -53,9 +53,9 @@ public class StatisticalForm extends SimpleForm {
 
     private void init() {
         setLayout(new MigLayout("wrap,fill,gap 10", "fill"));
-//        createPieChart();
-//        createLineChart();
-//        createBarChart();
+        createPieChart();
+        createLineChart();
+        createBarChart();
     }
 
     private void createPieChart() {

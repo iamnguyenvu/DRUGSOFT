@@ -41,7 +41,7 @@ public class ModelUser {
     public void setName(String name) {
         this.name = name;
     }
-
+    
     public ModelUser(String userName, Integer role, String avatarPath, String name) {
         this.userName = userName;
         this.role = role;
