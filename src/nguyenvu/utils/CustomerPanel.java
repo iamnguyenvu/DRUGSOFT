@@ -48,7 +48,7 @@ public class CustomerPanel extends javax.swing.JPanel {
         lblTenKH.setText(kh.getTenKH());
         lblTenKH.putClientProperty(FlatClientProperties.STYLE, ""
             + "font:bold +1");
-        lblSDT.setText(kh.getSDT());
+        lblSDT.setText(kh.getSdtKH());
     }
     
     

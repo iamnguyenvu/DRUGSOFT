@@ -5,6 +5,7 @@
 package dao;
 
 import connectDB.connectDB;
+import entity.HoaDon_entity;
 import entity.KhachHang_entity;
 import entity.SanPham_entity;
 import java.sql.Connection;
@@ -55,11 +56,11 @@ public class BanHang_DAO {
         ResultSet rs = null;
         ArrayList<KhachHang_entity> listKH = new ArrayList<>();
         try {
-            ps = con.prepareStatement("SELECT TOP 8 * FROM KhachHang WHERE SDT LIKE ?");
+            ps = con.prepareStatement("SELECT TOP 8 * FROM KhachHang WHERE sdtKH LIKE ?");
             ps.setString(1, sdt + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
-                KhachHang_entity kh = new KhachHang_entity(rs.getString("maKH"), rs.getString("tenKH"), rs.getString("SDT"), rs.getInt("diemThuong"), rs.getString("gioiTinh")); 
+                KhachHang_entity kh = new KhachHang_entity(rs.getString("tenKH"), rs.getString("sdtKH"), rs.getInt("diemThuong"), rs.getString("gioiTinh")); 
                 listKH.add(kh);
             }
         } catch (SQLException e) {
@@ -89,7 +90,7 @@ public class BanHang_DAO {
             ps.setString(1, sdt);
             rs = ps.executeQuery();
             if (rs.next()) {
-                KhachHang_entity kh = new KhachHang_entity(rs.getString("maKH"), rs.getString("tenKH"), rs.getString("SDT"), rs.getInt("diemThuong"), rs.getString("gioiTinh")); 
+                KhachHang_entity kh = new KhachHang_entity(rs.getString("tenKH"), rs.getString("sdtKH"), rs.getInt("diemThuong"), rs.getString("gioiTinh")); 
                 return kh;
             }
         } catch (SQLException e) {
@@ -106,4 +107,34 @@ public class BanHang_DAO {
         return null;
     }
     
+//    public boolean insertHD(HoaDon_entity hd) {
+//        Connection con = connectDB.accessDataBase();
+//        PreparedStatement stmt = null;
+//        int n = 0;
+//        try {
+//                stmt = con.prepareStatement("INSERT INTO HoaDon VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+//                stmt.setString(1, hd.getMaHD());
+//                stmt.setTimestamp(2, hd.getNgayLapHD());
+//                stmt.setString(1, hd.getMaHD());
+//                stmt.setString(1, hd.getMaHD());
+//                stmt.setString(1, hd.getMaHD());
+//                stmt.setString(1, hd.getMaHD());
+//                stmt.setString(1, hd.getMaHD());
+//                stmt.setString(1, hd.getMaHD());
+//                stmt.setString(1, hd.getMaHD());
+//                stmt.setString(1, hd.getMaHD());
+//                n = stmt.executeUpdate();
+//        } catch (SQLException e) {
+//                // TODO: handle exception
+//                e.printStackTrace();
+//        } finally {
+//                 try {
+//             stmt.close();
+//         } catch (SQLException e) {
+//              e.printStackTrace();
+//         }
+//        }
+//        return n>0;
+//    }
+//    
 }

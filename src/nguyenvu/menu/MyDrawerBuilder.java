@@ -12,6 +12,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import gui.BanHang;
+import gui.DoiTra;
 import gui.DoiTraSanPham;
 import nguyenvu.forms.DashboardForm;
 import nguyenvu.forms.ReadForm;
@@ -216,10 +217,10 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     	FormManager.showForm(new gui.ManHinhNen());
                     }
                     if (index[0] == 1) {
-                        FormManager.showForm(new BanHang());
+                        FormManager.showForm(new BanHang(user));
                     }
                     if (index[0] == 2) {
-                        FormManager.showForm(new DoiTraSanPham());
+                        FormManager.showForm(new DoiTra(user));
                     }
                     if (index[0] == 3) {
                     	FormManager.showForm(new gui.SanPham());

@@ -128,8 +128,4 @@ public class ParameterBill {
     public void setListFB(List<FieldBill> listFB) {
         this.listFB = listFB;
     }
-    
-    
-    
-    
 }

@@ -8,7 +8,7 @@ DROP DATABASE [DRUGSOFT];
 
 Create Table TaiKhoan
 (
-	tenDangNhap varchar(16) not null check(LEN(tenDangNhap) Between 6 and 16) Primary Key,        ---Tên đăng nhập là khóa chính và <=6 tenDangNhap <= 16 ký tự
+	tenDangNhap Char(10) not null Primary Key,        ---Tên đăng nhập là khóa chính và <=6 tenDangNhap <= 16 ký tự
 	matKhau varchar(16) not null check(
 		LEN(matKhau) Between 8 and 16
 		And Patindex('%[0-9]%', matKhau) > 0
@@ -26,7 +26,6 @@ Create Table LoaiNhanVien
 	maLoaiNV VarChar(5) Not null Primary Key,
 	tenLoaiNV Nvarchar(50) Not Null
 )
-
 --Ràng buộc maLoaiNV trong bảng Loại Nhân viên : GỒM 2 LOẠI: NV(NHÂN VIÊN) VÀ QL(QUẢN LÝ)
 ALTER TABLE LoaiNhanVien
 ADD CONSTRAINT chk_maLoaiNV CHECK (maLoaiNV IN ('NV', 'QL'));
@@ -34,8 +33,7 @@ ADD CONSTRAINT chk_maLoaiNV CHECK (maLoaiNV IN ('NV', 'QL'));
 
 CREATE TABLE NhanVien (
     maNV Char(10) Not null Primary Key,      -- Mã nhân viên, định dạng NVYYMMRRRR
-	hoNV Nvarchar(20) Not Null,
-    tenNV Nvarchar(10) Not Null,   -- Tên nhân viên
+	hotenNV Nvarchar(30) Not Null,
 	gioiTinh Nvarchar (5) Not Null,   -- Giới Tính
     sdt Nvarchar(10) Not Null,       -- Số điện thoại
     cccd Char(12) Not Null,      -- Căn cước công dân
@@ -47,17 +45,15 @@ CREATE TABLE NhanVien (
 	hinhAnhNV NVARCHAR(255) NOT NULL
 );
 
---Thêm trường tenDangNhap vào bảng NhanVien
-Alter Table NhanVien
-Add tenDangNhap varchar(16) not null;
---set Khóa ngoại cho bảng NhanVien
-ALTER TABLE NhanVien
-ADD CONSTRAINT FK_TaiKhoan_NhanVien
-FOREIGN KEY (tenDangNhap) REFERENCES TaiKhoan(tenDangNhap);
-
+--set Khóa ngoại cho bảng TaiKhoan
+ALTER TABLE TaiKhoan
+ADD CONSTRAINT FK_NhanVien_TaiKhoan
+FOREIGN KEY (tenDangNhap) REFERENCES NhanVien(maNV);
 --Ràng buộc giới tính
 ALTER TABLE NhanVien
 ADD CONSTRAINT chk_gioiTinh CHECK (gioiTinh IN (N'Nam', N'Nữ', N'Khác'))
+
+
 -- ràng buộc sdt
 ALTER TABLE NhanVien
 ADD CONSTRAINT chk_sdt CHECK (
@@ -65,8 +61,9 @@ ADD CONSTRAINT chk_sdt CHECK (
     LEN(SDT) = 10 AND                             -- Độ dài phải là 10 ký tự
     SDT NOT LIKE '%[^0-9]%' AND                   -- Chỉ chứa ký tự số
     (SDT LIKE '03%' OR SDT LIKE '05%' OR         -- Bắt đầu bằng 03, 05, 07, hoặc 09
-     SDT LIKE '07%' OR SDT LIKE '09%')
+     SDT LIKE '07%' OR SDT LIKE '08%' OR SDT LIKE '09%')
 );
+
 --Ràng buộc cccd
 ALTER TABLE NhanVien
 ADD CONSTRAINT chk_cccd CHECK (cccd NOT LIKE '%[^0-9]%');
@@ -77,13 +74,16 @@ ADD CONSTRAINT chk_cccd CHECK (cccd NOT LIKE '%[^0-9]%');
 ALTER TABLE NhanVien
 ADD CONSTRAINT chk_chucVu CHECK (chucVu IN ('Nhanvien', 'Quanly'));
 
+
 --Ràng buộc ngày sinh phải đủ 18 tuổi 
 ALTER TABLE NhanVien
 ADD CONSTRAINT chk_ngaySinh CHECK (ngaySinh <= DATEADD(YEAR, -18, GETDATE()));
 
+
 --Ràng buộc ngày vào làm không vượt quá ngày hiện tại
 ALTER TABLE NhanVien
 ADD CONSTRAINT CK_ngayVaoLam CHECK (ngayVaoLam <= GETDATE());
+
 
 
 --Thêm trường maLoaiNV VÀO BẢNG NhanVien
@@ -107,7 +107,6 @@ BEGIN
     SELECT 
         @maNV = maNV, 
         @ngayVaoLam = ngayVaoLam, 
-        @tenDangNhap = tenDangNhap,
         @hinhAnhNV = hinhAnhNV  -- Lấy giá trị từ bảng inserted
     FROM inserted;
 
@@ -144,16 +143,15 @@ BEGIN
     END
 
     -- Nếu tất cả các điều kiện đều hợp lệ, thực hiện thêm bản ghi vào bảng NhanVien
-    INSERT INTO NhanVien (maNV, hoNV, tenNV,gioiTinh, sdt, cccd, chucVu, diaChi, ngaySinh, trangThai, ngayVaoLam, hinhAnhNV, tenDangNhap, maLoaiNV)
-    SELECT maNV, hoNV, tenNV,gioiTinh, sdt, cccd, chucVu, diaChi, ngaySinh, trangThai, ngayVaoLam, hinhAnhNV, tenDangNhap, maLoaiNV
+    INSERT INTO NhanVien (maNV, hotenNV,gioiTinh, sdt, cccd, chucVu, diaChi, ngaySinh, trangThai, ngayVaoLam, hinhAnhNV, maLoaiNV)
+    SELECT maNV, hotenNV,gioiTinh, sdt, cccd, chucVu, diaChi, ngaySinh, trangThai, ngayVaoLam, hinhAnhNV, maLoaiNV
     FROM inserted;
 END;
 
 --Tạo bảng Khách Hàng
 CREATE TABLE KhachHang (
-    maKH CHAR(13) NOT NULL PRIMARY KEY,  -- Mã khách hàng theo định dạng KHYYMMddRRRRR
+    sdtKH CHAR(10) NOT NULL primary key,           -- Số điện thoại (String)
     tenKH NVARCHAR(50) NOT NULL,         -- Tên khách hàng (String)
-    SDT CHAR(10) NOT NULL,           -- Số điện thoại (String)
     diemThuong INT NOT NULL DEFAULT 0,    -- Điểm thưởng (int)
     gioiTinh NVARCHAR(10) NOT NULL       -- Giới tính (String)
 );
@@ -165,40 +163,35 @@ INSTEAD OF INSERT
 AS
 BEGIN
     -- Khai báo các biến để lưu trữ giá trị
-    DECLARE @maKH CHAR(13), @tenKH NVARCHAR(50), @SDT CHAR(10), @diemThuong INT, @gioiTinh NVARCHAR(10);
-
-    -- Lấy ngày, tháng, năm hiện tại
-    DECLARE @currentYear NVARCHAR(2) = RIGHT(CONVERT(VARCHAR(4), YEAR(GETDATE())), 2);
-    DECLARE @currentMonth NVARCHAR(2) = RIGHT('0' + CAST(MONTH(GETDATE()) AS NVARCHAR), 2);
-    DECLARE @currentDay NVARCHAR(2) = RIGHT('0' + CAST(DAY(GETDATE()) AS NVARCHAR), 2);
-
+    DECLARE @sdtKH CHAR(10), @tenKH NVARCHAR(50), @diemThuong INT, @gioiTinh NVARCHAR(10);
+    
     -- Lặp qua tất cả các dòng được chèn
     DECLARE cur CURSOR FOR 
-    SELECT maKH, tenKH, SDT, diemThuong, gioiTinh FROM inserted;
+    SELECT sdtKH, tenKH, diemThuong, gioiTinh FROM inserted;
 
     OPEN cur;
-    FETCH NEXT FROM cur INTO @maKH, @tenKH, @SDT, @diemThuong, @gioiTinh;
+    FETCH NEXT FROM cur INTO @sdtKH, @tenKH, @diemThuong, @gioiTinh;
 
     WHILE @@FETCH_STATUS = 0
     BEGIN
-        -- Kiểm tra điều kiện cho maKH
-        IF NOT (
-            @maKH LIKE 'KH[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
-			AND SUBSTRING(@maKH,3,2) = RIGHT(CONVERT(VARCHAR(4), YEAR(GETDATE())), 2)
-			AND SUBSTRING(@maKH, 5, 2) = RIGHT('0' + CAST(MONTH(GETDATE()) AS NVARCHAR), 2)
-			AND SUBSTRING(@maKH, 7, 2) = RIGHT('0' + CAST(DAY(GETDATE()) AS NVARCHAR), 2)
-			AND ISNUMERIC(SUBSTRING(@maKH, 9, 5)) = 1
-			AND LEN(SUBSTRING(@maKH, 9, 5)) = 5
+        -- Kiểm tra điều kiện cho sdtKH
+        IF (
+            @sdtKH IS NULL OR                                 -- Không được để trống
+            LEN(@sdtKH) <> 10 OR                             -- Độ dài phải là 10 ký tự
+            @sdtKH LIKE '%[^0-9]%' OR                        -- Chỉ chứa ký tự số
+            NOT (@sdtKH LIKE '03%' OR @sdtKH LIKE '05%' OR   -- Bắt đầu bằng 03, 05, 07, hoặc 09
+                 @sdtKH LIKE '07%' OR @sdtKH LIKE '08%' OR @sdtKH LIKE '09%')
         )
         BEGIN
-            RAISERROR('Mã khách hàng không hợp lệ!', 16, 1);
+            RAISERROR('Số Điện Thoại khách hàng không hợp lệ!', 16, 1);
             ROLLBACK TRANSACTION;
             RETURN;
         END
         
         -- Kiểm tra điều kiện cho tenKH
-        IF NOT (
-            LEN(@tenKH) BETWEEN 2 AND 50 AND @tenKH NOT LIKE '%[^a-zA-Z ]%'
+        IF (
+            LEN(@tenKH) < 2 OR LEN(@tenKH) > 50 OR           -- Độ dài tên phải từ 2 đến 50 ký tự
+            @tenKH LIKE '%[^a-zA-Z ]%'                        -- Chỉ chứa ký tự chữ cái và khoảng trắng
         )
         BEGIN
             RAISERROR('Tên khách hàng không hợp lệ!', 16, 1);
@@ -206,28 +199,16 @@ BEGIN
             RETURN;
         END
 
-        -- Kiểm tra điều kiện cho SDT
-        IF NOT (
-            LEN(@SDT) = 10 AND @SDT NOT LIKE '%[^0-9]%' AND 
-            NOT EXISTS (SELECT 1 FROM KhachHang WHERE SDT = @SDT)
-        )
-        BEGIN
-            RAISERROR('Số điện thoại không hợp lệ hoặc đã tồn tại!', 16, 1);
-            ROLLBACK TRANSACTION;
-            RETURN;
-        END
-
         -- Nếu tất cả các điều kiện đều hợp lệ, thực hiện thêm bản ghi vào bảng KhachHang
-        INSERT INTO KhachHang (maKH, tenKH, SDT, diemThuong, gioiTinh)
-        VALUES (@maKH, @tenKH, @SDT, @diemThuong, @gioiTinh);
+        INSERT INTO KhachHang (sdtKH, tenKH, diemThuong, gioiTinh)
+        VALUES (@sdtKH, @tenKH, @diemThuong, @gioiTinh);
 
-        FETCH NEXT FROM cur INTO @maKH, @tenKH, @SDT, @diemThuong, @gioiTinh;
+        FETCH NEXT FROM cur INTO @sdtKH, @tenKH, @diemThuong, @gioiTinh;
     END
 
     CLOSE cur;
     DEALLOCATE cur;
 END;
-
 
 
 --TẠO BẢNG LOẠI HÓA ĐƠN
@@ -236,6 +217,7 @@ CREATE TABLE LoaiHoaDon
 	maLoaiHD NVARCHAR(20) NOT NULL PRIMARY KEY,
 	tenLoaiHD NVARCHAR(50) NOT NULL
 )
+
 --Ràng buộc maLoaiHD
 ALTER TABLE LoaiHoaDon
 ADD CONSTRAINT chk_loaiHD CHECK (maLoaiHD IN ('BanThuoc', 'DoiThuoc', 'TraThuoc'));
@@ -251,18 +233,17 @@ CREATE TABLE HoaDon (
     maHD CHAR(13) NOT NULL PRIMARY KEY,   -- maHD is a string
     ngayLapHD DATE NOT NULL,                  -- ngayLapHD is a LocalDate (mapped to SQL DATE)
 	tongTien DECIMAL(18,5) NOT NULL,                  -- tongTien is a double
-    tienKhachTra DECIMAL(18,5) NOT NULL,             -- tienKhachTra is a double
+	tienGiam DECIMAL(18,5) NOT NULL,
 	hinhThucThanhToan NVARCHAR(15) NOT NULL,
-    trangThai BIT NOT NULL,               -- trangThai is a booleanư
-	ghiChu Nvarchar(500)
+    trangThai BIT NOT NULL               -- trangThai is a booleanư
 );
 --Thêm trường maKH vào bảng Hóa Đơn
 ALTER TABLE HoaDon
-ADD maKH Char(13) Not Null;
+ADD sdtKH Char(10) Not Null;
 
 --Tạo khóa ngoại cho bảng HoaDon
 ALTER TABLE HoaDon
-ADD CONSTRAINT FK_KhachHang_HoaDon FOREIGN KEY (maKH) REFERENCES KhachHang(maKH)   -- Thiết lập khóa ngoại
+ADD CONSTRAINT FK_KhachHang_HoaDon FOREIGN KEY (sdtKH) REFERENCES KhachHang(sdtKH)   -- Thiết lập khóa ngoại
 
 --Thêm trường maNV vào bảng Hóa đơn
 ALTER TABLE HoaDon
@@ -279,23 +260,11 @@ ADD maLoaiHD Nvarchar(20) Not Null;
 --Tạo khóa ngoại cho bảng HoaDon
 ALTER TABLE HoaDon
 ADD CONSTRAINT FK_LoaiHoaDon_HoaDon FOREIGN KEY (maLoaiHD) REFERENCES LoaiHoaDon(maLoaiHD);   -- Thiết lập khóa ngoại
+
 --Tạo ràng buộc cho hinhThucThanhToan chỉ có 3 loại: TienMat,ChuyenKhoan,The
 ALTER TABLE HoaDon
-ADD CONSTRAINT chk_hinhThucThanhToan CHECK (hinhThucThanhToan IN ('TienMat', 'ChuyenKhoan', 'The'));
+ADD CONSTRAINT chk_hinhThucThanhToan CHECK (hinhThucThanhToan IN ('TienMat', 'ChuyenKhoan', 'TheTinDung'));
 
---Ràng buộc maHD
--- Thêm ràng buộc cho maHD
-ALTER TABLE HoaDon
-ADD CONSTRAINT chk_maHD CHECK (
-    maHD LIKE 'HD[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'  -- Định dạng HDYYMMddRRRRR
-    AND SUBSTRING(maHD, 3, 2) = RIGHT(CONVERT(VARCHAR(4), YEAR(GETDATE())), 2)  -- YY
-    AND SUBSTRING(maHD, 5, 2) = RIGHT('0' + CAST(MONTH(GETDATE()) AS NVARCHAR), 2)  -- MM
-    AND SUBSTRING(maHD, 7, 2) = RIGHT('0' + CAST(DAY(GETDATE()) AS NVARCHAR), 2)    -- dd
-    AND ISNUMERIC(SUBSTRING(maHD, 9, 5)) = 1  -- RRRRR phải là số
-    AND LEN(SUBSTRING(maHD, 9, 5)) = 5         -- Đảm bảo RRRRR có độ dài 5
-);
-
---TRIGGER HÓA ĐƠN
 -- TRIGGER HÓA ĐƠN
 CREATE TRIGGER trg_CheckHoaDon
 ON HoaDon
@@ -305,23 +274,22 @@ BEGIN
     SET NOCOUNT ON;
 
     DECLARE @maHD CHAR(13),
-            @maKH CHAR(13),
+            @sdtKH CHAR(13),
             @maNV CHAR(10),
             @maLoaiHD NVARCHAR(20),
             @ngayLapHD DATE,
             @tongTien DECIMAL(18,5),
-            @tienKhachTra DECIMAL(18,5),
+			@tienGiam DECIMAL(18,5),
             @hinhThucThanhToan NVARCHAR(15),
-            @trangThai BIT,
-			@ghiChu NVARCHAR(500);
+            @trangThai BIT;
 
     -- Lặp qua tất cả các dòng được chèn
     DECLARE cur CURSOR FOR 
-    SELECT maHD, maKH, maNV, maLoaiHD, ngayLapHD, tongTien, tienKhachTra, hinhThucThanhToan, trangThai ,ghiChu
+    SELECT maHD, sdtKH, maNV, maLoaiHD, ngayLapHD, tongTien,tienGiam, hinhThucThanhToan, trangThai 
     FROM inserted;
 
     OPEN cur;
-    FETCH NEXT FROM cur INTO @maHD, @maKH, @maNV, @maLoaiHD, @ngayLapHD, @tongTien, @tienKhachTra, @hinhThucThanhToan, @trangThai,@ghiChu;
+    FETCH NEXT FROM cur INTO @maHD, @sdtKH, @maNV, @maLoaiHD, @ngayLapHD, @tongTien,@tienGiam, @hinhThucThanhToan, @trangThai;
 
     WHILE @@FETCH_STATUS = 0
     BEGIN
@@ -335,7 +303,7 @@ BEGIN
             ISNUMERIC(SUBSTRING(@maHD, 9, 5)) = 1 AND
             LEN(SUBSTRING(@maHD, 9, 5)) = 5 AND
             -- Kiểm tra tính duy nhất của maKH
-            EXISTS (SELECT 1 FROM KhachHang WHERE maKH = @maKH) AND
+            EXISTS (SELECT 1 FROM KhachHang WHERE sdtKH = @sdtKH) AND
             -- Kiểm tra tính hợp lệ cho maNV
             EXISTS (SELECT 1 FROM NhanVien WHERE maNV = @maNV) AND
             -- Kiểm tra loại hóa đơn
@@ -351,15 +319,16 @@ BEGIN
         END
         
         -- Nếu thỏa mãn, thực hiện thêm vào bảng
-        INSERT INTO HoaDon (maHD, maKH, maNV, maLoaiHD, ngayLapHD, tongTien, tienKhachTra, hinhThucThanhToan, trangThai,ghiChu)
-        VALUES (@maHD, @maKH, @maNV, @maLoaiHD, @ngayLapHD, @tongTien, @tienKhachTra, @hinhThucThanhToan, @trangThai,@ghiChu);
+        INSERT INTO HoaDon (maHD, sdtKH, maNV, maLoaiHD, ngayLapHD, tongTien,tienGiam, hinhThucThanhToan, trangThai)
+        VALUES (@maHD, @sdtKH, @maNV, @maLoaiHD, @ngayLapHD, @tongTien,@tienGiam, @hinhThucThanhToan, @trangThai);
 
-        FETCH NEXT FROM cur INTO @maHD, @maKH, @maNV, @maLoaiHD, @ngayLapHD, @tongTien, @tienKhachTra, @hinhThucThanhToan, @trangThai,@ghiChu;
+        FETCH NEXT FROM cur INTO @maHD, @sdtKH, @maNV, @maLoaiHD, @ngayLapHD, @tongTien,@tienGiam, @hinhThucThanhToan, @trangThai;
     END
 
     CLOSE cur;
     DEALLOCATE cur;
 END;
+
 
 
 --Tạo bảng Loại Sản Phẩm
@@ -386,6 +355,7 @@ CREATE TABLE SanPham (
 	donViTinh NVarchar(6) NOT NULL,						-- đơn Vị tính
     nhaCungCap NVARCHAR(100) NOT NULL,                -- Nhà cung cấp
     gia DECIMAL(18, 5) CHECK (gia > 0) NOT NULL,     -- Giá, phải lớn hơn 0
+	thanhPhan NVARCHAR(255) NOT NULL,				--Thành Phần 
     congDung NVARCHAR(255) NOT NULL,                  -- Công dụng
     hinhAnhSP NVARCHAR(255) NOT NULL                  -- Đường dẫn hoặc URL của hình ảnh sản phẩm
 );
@@ -403,18 +373,9 @@ ADD CONSTRAINT chk_soLuong CHECK (soLuong > 0);
 ALTER TABLE SanPham
 ADD CONSTRAINT chk_khoiLuong CHECK (khoiLuong > 0);
 --Ràng Buộc đơn vị tính
+
 ALTER TABLE SanPham
-ADD CONSTRAINT chk_donViTinh CHECK (donViTinh IN (N'Vỉ', N'Chai', N'Viên', N'Hộp'));
---RÀNG BUỘC MASP
-ALTER TABLE SanPham
-ADD CONSTRAINT chk_maSP CHECK (
-        maSP LIKE 'SP[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'  -- Định dạng SPYYMMDDRRRRR
-        AND SUBSTRING(maSP, 3, 2) = RIGHT(CONVERT(VARCHAR(4), YEAR(GETDATE())), 2)  -- YY
-        AND SUBSTRING(maSP, 5, 2) = RIGHT('0' + CAST(MONTH(GETDATE()) AS NVARCHAR), 2)  -- MM
-        AND SUBSTRING(maSP, 7, 2) = RIGHT('0' + CAST(DAY(GETDATE()) AS NVARCHAR), 2)    -- DD
-        AND ISNUMERIC(SUBSTRING(maSP, 9, 5)) = 1  -- RRRRR phải là số
-        AND LEN(SUBSTRING(maSP, 9, 5)) = 5         -- Đảm bảo RRRRR có độ dài 5
-    )
+ADD CONSTRAINT chk_donViTinh CHECK (donViTinh IN (N'Vỉ', N'Chai', N'Viên', N'Hộp',N'Cái'));
 
 --Ràng buộc tên sp
 ALTER TABLE SanPham
@@ -475,8 +436,8 @@ BEGIN
     ELSE
     BEGIN
         -- Nếu đủ điều kiện, thêm bản ghi vào bảng
-        INSERT INTO SanPham (maSP, tenSP,soLuong, ngaySanXuat, ngayHetHan,khoiLuong,donViTinh, nhaCungCap, gia, congDung, hinhAnhSP, maLoaiSP)
-        SELECT maSP, tenSP,soLuong, ngaySanXuat, ngayHetHan,khoiLuong,donViTinh, nhaCungCap, gia, congDung, hinhAnhSP, maLoaiSP
+        INSERT INTO SanPham (maSP, tenSP,soLuong, ngaySanXuat, ngayHetHan,khoiLuong,donViTinh, nhaCungCap, gia,thanhPhan, congDung, hinhAnhSP, maLoaiSP)
+        SELECT maSP, tenSP,soLuong, ngaySanXuat, ngayHetHan,khoiLuong,donViTinh, nhaCungCap, gia,thanhPhan, congDung, hinhAnhSP, maLoaiSP
         FROM inserted;
     END
 END;
@@ -486,7 +447,7 @@ END;
 CREATE TABLE ChiTietHoaDon (
     maCTHD CHAR(15) NOT NULL PRIMARY KEY,  -- maCTHD format: CTHDYYMMddRRRRR
     soLuongSanPham INT CHECK (soLuongSanPham > 0), -- Số lượng sản phẩm phải lớn hơn 0
-    tongTien DECIMAL(18, 5) CHECK (tongTien > 0)  -- Tổng tiền phải lớn hơn 0
+    thanhTien DECIMAL(18, 5) CHECK (thanhTien > 0)  -- Tổng tiền phải lớn hơn 0
 );
 
 -- Thêm maHD vào bảng ChiTietHoaDon
@@ -520,7 +481,7 @@ BEGIN
             SUBSTRING(maCTHD, 7, 2) = RIGHT('0' + CAST(MONTH(GETDATE()) AS NVARCHAR), 2) AND  -- MM đúng
             SUBSTRING(maCTHD, 9, 2) = RIGHT('0' + CAST(DAY(GETDATE()) AS NVARCHAR), 2) AND  -- DD đúng
             soLuongSanPham > 0 AND  -- Số lượng sản phẩm hợp lệ
-            tongTien > 0  -- Tổng tiền hợp lệ
+            thanhTien > 0  -- Thành tiền hợp lệ
     )
     BEGIN
         -- Nếu có bản ghi không thỏa mãn điều kiện, thực hiện rollback
@@ -530,16 +491,28 @@ BEGIN
     ELSE
     BEGIN
         -- Nếu đủ điều kiện, thêm bản ghi vào bảng
-        INSERT INTO ChiTietHoaDon (maCTHD, soLuongSanPham, tongTien, maHD, maSP)
-        SELECT maCTHD, soLuongSanPham, tongTien, maHD, maSP
+        INSERT INTO ChiTietHoaDon (maCTHD, soLuongSanPham, thanhTien, maHD, maSP)
+        SELECT maCTHD, soLuongSanPham, thanhTien, maHD, maSP
         FROM inserted;
     END
 END;
 
 -- Thêm dữ liệu vào bảng TaiKhoan
 INSERT INTO TaiKhoan (tenDangNhap, matKhau, phanQuyen, trangThai) VALUES
-('adminUser', 'Admin@2024', 1, 1),
-('staffUser', 'Staff2024#', 0, 1);
+('NV24011234', 'Admin@2024', 1, 1),
+('NV24011367', 'Staff2024#', 0, 1),
+('NV24021864', 'Staff2024#', 0, 1),
+
+('NV24031897', 'Staff2024#', 0, 1),
+('NV24041765', 'Staff2024#', 0, 1),
+('NV24051823', 'Staff2024#', 0, 1),
+('NV24061952', 'Staff2024#', 0, 1),
+('NV24071324', 'Staff2024#', 0, 1),
+('NV24081476', 'Staff2024#', 0, 1),
+('NV24091365', 'Staff2024#', 0, 1),
+('NV24101987', 'Staff2024#', 0, 1),
+('NV24112432', 'Staff2024#', 0, 1),
+('NV24122567', 'Staff2024#', 0, 1);
 
 
 -- Thêm dữ liệu vào bảng LoaiNhanVien
@@ -548,37 +521,240 @@ INSERT INTO LoaiNhanVien (maLoaiNV, tenLoaiNV) VALUES
 ('QL', 'Quản lý');
 
 -- Thêm dữ liệu vào bảng NhanVien
-INSERT INTO NhanVien ([maNV],[hoNV],[tenNV],[gioiTinh],[sdt],[cccd],[chucVu],[diaChi],[ngaySinh],[trangThai],[ngayVaoLam],[hinhAnhNV],[tenDangNhap],[maLoaiNV])
-VALUES ('NV24011234', 'Nguyễn Văn', 'Anh','Nam', '0312345678', '012345678924', 'NhanVien', 'TP.HCM', '1999-05-09', 0, '2024-01-03', 'LêVănĐạt.jpg', 'adminUser', 'NV');
--- Them du lieu vao bang KhachHang
-INSERT INTO KhachHang (maKH, tenKH, SDT, diemThuong, gioiTinh)
+-- Thêm dữ liệu vào bảng NhanVien
+INSERT INTO NhanVien ([maNV],[hotenNV],[gioiTinh],[sdt],[cccd],[chucVu],[diaChi],[ngaySinh],[trangThai],[ngayVaoLam],[hinhAnhNV],[maLoaiNV])
 VALUES 
-('KH24101912345', 'NguyenLeNhuAn', '0123456788', 10, 'Nữ');
+	('NV24011234', N'Nguyễn Văn Anh',N'Nam', '0312345678', '032345678924', 'NhanVien', 'TP.HCM', '1999-05-09', 0, '2024-01-03', N'vandat.jpg', 'NV'),
+	('NV24011367', N'Lê Anh Thư',N'Nữ', '0948976223', '055999720718', 'NhanVien', 'TP.HCM', '1997-09-17', 0, '2024-01-25', N'anhthu.jpg', 'NV'),
+	('NV24021864', N'Đặng Lê An',N'Nam', '0319870627', '075376892083', 'NhanVien', 'TP.HCM', '1998-03-28', 0, '2024-02-10', N'lean.jpg', 'NV'),
+	('NV24031897', N'Nguyễn Chí Dũng',N'Nam', '0776793848', '087383949842', 'NhanVien', 'TP.HCM', '1999-07-09', 0, '2024-03-05', N'chidung.jpg', 'NV'),
+	('NV24041765', N'Lê Hoài Thu',N'Nữ', '0987357828', '037906523688', 'NhanVien', 'TP.HCM', '2000-08-25', 0, '2024-04-10', N'hoaithu.jpg', 'NV'),
+	('NV24051823', N'Phạm Hoàng Huy',N'Khác', '0368236574', '043456789102', 'NhanVien', 'TP.HCM', '2001-01-15', 0, '2024-05-12', N'hoanghuy.jpg', 'NV'),
+	('NV24061952', N'Trần Thanh Phong',N'Khác', '0923456789', '094856789101', 'NhanVien', 'TP.HCM', '1997-10-23', 0, '2024-06-18', N'thanhphong.jpg', 'NV'),
+	('NV24071324', N'Vũ Minh Thư',N'Nam', '0303456789', '047456789105', 'NhanVien', 'TP.HCM', '1998-11-11', 0, '2024-07-20', N'minhthu.jpg', 'NV'),
+	('NV24081476', N'Nguyễn Văn Toàn',N'Nữ', '0987456234', '093456728901', 'NhanVien', 'TP.HCM', '2002-04-05', 0, '2024-08-22', N'vantoan.jpg', 'NV'),
+	('NV24091365', N'Đoàn Thị Minh',N'Nữ', '0982345671', '094376282901', 'NhanVien', 'TP.HCM', '1999-02-07', 0, '2024-09-30', N'ĐoànThịMinh.jpg', 'NV'),
+	('NV24101987', N'Đỗ Quốc Anh',N'Khác', '0934678912', '041234578901', 'NhanVien', 'TP.HCM', '1995-07-25', 0, '2024-10-03', N'ĐỗQuốcAnh.jpg', 'NV'),
+	('NV24112432', N'Trần Thị Mai',N'Khác', '0987567891', '021578902345', 'NhanVien', 'TP.HCM', '2000-04-17', 0, '2024-10-01', N'TrầnThịMai.jpg', 'NV'),
+	('NV24122567', N'Lê Văn Phúc',N'Nam', '0309782345', '068123457689', 'NhanVien', 'TP.HCM', '1999-06-10', 0, '2024-09-20', N'LêVănPhúc.jpg', 'NV');
+-- Them du lieu vao bang KhachHang
+INSERT INTO KhachHang (sdtKH, tenKH, diemThuong, gioiTinh)
+VALUES 
+('0912345678', 'NgoVanHung', 1200, 'Nam'),
+('0387654320', 'PhamThiLan', 1600, 'Nu'),
+('0519876543', 'TranVanSon', 1900, 'Nam'),
+('0734567890', 'NguyenThiMai', 2100, 'Nu'),
+('0823456779', 'HoangManhTuan', 2400, 'Nam'),
+('0932345678', 'LeThiLan', 1300, 'Nu'),
+('0876543210', 'NguyenManhQuoc', 1600, 'Nam'),
+('0780654321', 'HoangVanThanh', 2000, 'Nam'),
+('0523456789', 'PhamThiMai', 2200, 'Nu'),
+('0318765432', 'LeVanBao', 2500, 'Nam'),
+('0302345678', 'DoVanQuang', 1300, 'Nam'),
+('0535678901', 'LeThiBaoNgoc', 1900, 'Nu'),
+('0745678901', 'TranVanDat', 1700, 'Nam'),
+('0818765432', 'NguyenKhanhLinh', 2500, 'Nam'),
+('0930045678', 'NgoThiLanAnh', 1000, 'Nu'),
+('0912987654', 'PhamThiHoa', 1800, 'Nu'),
+('0802345678', 'PhamHoaiLinh', 2200, 'Nu'),
+('0723456789', 'NguyenVanHung', 1900, 'Nam'),
+('0509876543', 'LeThiThao', 2000, 'Nu'),
+('0312987654', 'LeThiKim', 1800, 'Nu'),
+('0376543210', 'DoVanLam', 1400, 'Nam'),
+('0787654321', 'LeManhDat', 1800, 'Nam'),
+('0823456789', 'NgoMinhThu', 2100, 'Nu'),
+('0312345678', 'HoangVanDuc', 2300, 'Nam');
+
+
 
 -- Them du lieu vao bang LoaiHoaDon
 INSERT INTO LoaiHoaDon (maLoaiHD, tenLoaiHD)
 VALUES ('BanThuoc', 'BanThuoc'), 
-       ('DoiThuoc', 'DoiThupc'), 
+       ('DoiThuoc', 'DoiThuoc'), 
        ('TraThuoc', 'TraThuoc');
 -- Them du lieu vao bang LoaiSanPham
 INSERT INTO LoaiSanPham (maLoaiSP, tenLoaiSP)
 VALUES 
-('Thuoc', 'Thuốc'),
-('TPCN', 'Thực phẩm chức năng'),
-('TBYT', 'Thiết bị y tế');
+('Thuoc', N'Thuốc'),
+('TPCN', N'Thực phẩm chức năng'),
+('TBYT', N'Thiết bị y tế');
 
--- Them du lieu vao bang HoaDon
--- Thêm dữ liệu mẫu vào bảng HoaDon
-INSERT INTO HoaDon (maHD, ngayLapHD, tongTien, tienKhachTra, hinhThucThanhToan, trangThai, maKH, maNV, maLoaiHD)
+-- Thêm dữ liệu vào bảng HoaDon
+INSERT INTO HoaDon (maHD, ngayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, sdtKH, maNV, maLoaiHD)
 VALUES 
-    ('HD24101912345', '2024-09-30', 100000.00, 100000.00, 'TienMat', 1, 'KH24101912345', 'NV24011234', 'BanThuoc')
+    -- Tháng 1
+    ('HD24011567890', '2024-01-15', 150000.00, 1500, 'TienMat', 1, '0912345678', 'NV24122567', 'BanThuoc'), -- khách hàng 1
+    ('HD24010912345', '2024-01-09', 200000.00, 2000, 'ChuyenKhoan', 1, '0312987654', 'NV24122567', 'BanThuoc'), -- khách hàng 2
+    ('HD24011154321', '2024-01-11', 175000.00, 1750, 'TheTinDung', 1, '0312987654', 'NV24122567', 'BanThuoc'), -- khách hàng 3
+    ('HD24010867890', '2024-01-08', 100000.00, 1000, 'TienMat', 1, '0312987654', 'NV24122567', 'BanThuoc'), -- khách hàng 4
+    ('HD24011598765', '2024-01-15', 300000.00, 3000, 'TienMat', 1, '0312987654', 'NV24122567', 'BanThuoc'), -- khách hàng 5
+
+    -- Tháng 2
+    ('HD24022312345', '2024-02-23', 250000.00, 2500, 'TienMat', 1, '0745678901', 'NV24101987', 'BanThuoc'), -- khách hàng 6
+    ('HD24021767890', '2024-02-17', 320000.00, 3200, 'ChuyenKhoan', 1, '0745678901', 'NV24101987', 'BanThuoc'), -- khách hàng 7
+    ('HD24021198765', '2024-02-11', 110000.00, 1100, 'TheTinDung', 1, '0745678901', 'NV24101987', 'BanThuoc'), -- khách hàng 8
+    ('HD24020554321', '2024-02-05', 175000.00, 1750, 'TienMat', 1, '0745678901', 'NV24101987', 'BanThuoc'), -- khách hàng 9
+    ('HD24022987654', '2024-02-29', 500000.00, 5000, 'TienMat', 1, '0745678901', 'NV24101987', 'BanThuoc'), -- khách hàng 10
+
+    -- Tháng 3
+    ('HD24031412345', '2024-03-14', 180000.00, 1800, 'TienMat', 1, '0318765432', 'NV24101987', 'BanThuoc'), -- khách hàng 11
+    ('HD24030967890', '2024-03-09', 240000.00, 2400, 'TheTinDung', 1, '0318765432', 'NV24101987', 'BanThuoc'), -- khách hàng 12
+    ('HD24031154321', '2024-03-11', 125000.00, 1250, 'TienMat', 1, '0318765432', 'NV24101987', 'BanThuoc'), -- khách hàng 13
+    ('HD24030898765', '2024-03-08', 190000.00, 1900, 'ChuyenKhoan', 1, '0318765432', 'NV24101987', 'BanThuoc'), -- khách hàng 14
+    ('HD24031587654', '2024-03-15', 220000.00, 2200, 'TienMat', 1, '0318765432', 'NV24101987', 'BanThuoc'), -- khách hàng 15
+
+    -- Tháng 4
+    ('HD24041467890', '2024-04-14', 275000.00, 2750, 'TheTinDung', 1, '0912987654', 'NV24071324', 'BanThuoc'), -- khách hàng 16
+    ('HD24040954321', '2024-04-09', 150000.00, 1500, 'TienMat', 1, '0912987654', 'NV24071324', 'BanThuoc'), -- khách hàng 17
+    ('HD24041198765', '2024-04-11', 210000.00, 2100, 'ChuyenKhoan', 1, '0912987654', 'NV24071324', 'BanThuoc'), -- khách hàng 18
+    ('HD24040812345', '2024-04-08', 185000.00, 1850, 'TienMat', 1, '0912987654', 'NV24071324', 'BanThuoc'), -- khách hàng 19
+    ('HD24041565432', '2024-04-15', 300000.00, 3000, 'TienMat', 1, '0912987654', 'NV24071324', 'BanThuoc'), -- khách hàng 20
+
+    -- Tháng 5
+    ('HD24051498765', '2024-05-14', 210000.00, 2100, 'TienMat', 1, '0802345678', 'NV24101987', 'BanThuoc'), -- khách hàng 21
+    ('HD24050912345', '2024-05-09', 170000.00, 1700, 'ChuyenKhoan', 1, '0802345678', 'NV24101987', 'BanThuoc'), -- khách hàng 22
+    ('HD24051154321', '2024-05-11', 180000.00, 1800, 'TheTinDung', 1, '0802345678', 'NV24101987', 'BanThuoc'), -- khách hàng 23
+    ('HD24050867890', '2024-05-08', 135000.00, 1350, 'TienMat', 1, '0802345678', 'NV24101987', 'BanThuoc'), -- khách hàng 24
+    ('HD24051587654', '2024-05-15', 320000.00, 3200, 'TienMat', 1, '0802345678', 'NV24101987', 'BanThuoc'), -- khách hàng 25
+
+    -- Tháng 6
+    ('HD24061412345', '2024-06-14', 275000.00, 2750, 'TienMat', 1, '0318765432', 'NV24112432', 'BanThuoc'), -- khách hàng 26
+    ('HD24060967890', '2024-06-09', 300000.00, 3000, 'ChuyenKhoan', 1, '0318765432', 'NV24112432', 'BanThuoc'), -- khách hàng 27
+    ('HD24061154321', '2024-06-11', 150000.00, 1500, 'TheTinDung', 1, '0318765432', 'NV24112432', 'BanThuoc'), -- khách hàng 28
+    ('HD24060867890', '2024-06-08', 120000.00, 1200, 'TienMat', 1, '0318765432', 'NV24112432', 'BanThuoc'), -- khách hàng 29
+    ('HD24061598765', '2024-06-15', 400000.00, 4000, 'TienMat', 1, '0318765432', 'NV24112432', 'BanThuoc'), -- khách hàng 30
+
+-- Tháng 7
+    ('HD24072112345', '2024-07-21', 180000.00, 1800, 'TienMat', 1, '0932345678', 'NV24071324', 'BanThuoc'), -- khách hàng 6
+    ('HD24071567890', '2024-07-15', 230000.00, 2300, 'ChuyenKhoan', 1, '0932345678', 'NV24071324', 'BanThuoc'), -- khách hàng 7
+    ('HD24071154321', '2024-07-11', 120000.00, 1200, 'TheTinDung', 1, '0932345678', 'NV24071324', 'BanThuoc'), -- khách hàng 8
+    ('HD24070867890', '2024-07-08', 210000.00, 2100, 'TienMat', 1, '0932345678', 'NV24071324', 'BanThuoc'), -- khách hàng 9
+    ('HD24071587654', '2024-07-15', 330000.00, 3300, 'TienMat', 1, '0932345678', 'NV24071324', 'BanThuoc'), -- khách hàng 10
+
+-- Tháng 8
+    ('HD24082112345', '2024-08-21', 250000.00, 2500, 'TienMat', 1, '0387654320', 'NV24101987', 'BanThuoc'), -- khách hàng 11
+    ('HD24081567890', '2024-08-15', 300000.00, 3000, 'ChuyenKhoan', 1, '0387654320', 'NV24101987', 'BanThuoc'), -- khách hàng 12
+    ('HD24081154321', '2024-08-11', 175000.00, 1750, 'TheTinDung', 1, '0387654320', 'NV24101987', 'BanThuoc'), -- khách hàng 13
+    ('HD24080867890', '2024-08-08', 190000.00, 1900, 'TienMat', 1, '0387654320', 'NV24101987', 'BanThuoc'), -- khách hàng 14
+    ('HD24081598765', '2024-08-15', 420000.00, 4200, 'TienMat', 1, '0387654320', 'NV24101987', 'BanThuoc'), -- khách hàng 15
+
+-- Tháng 9
+    ('HD24092112345', '2024-09-21', 190000.00, 1900, 'TienMat', 1, '0823456779', 'NV24071324', 'BanThuoc'), -- khách hàng 16
+    ('HD24091567890', '2024-09-15', 210000.00, 2100, 'ChuyenKhoan', 1, '0823456779', 'NV24071324', 'BanThuoc'), -- khách hàng 17
+    ('HD24091154321', '2024-09-11', 200000.00, 2000, 'TheTinDung', 1, '0823456779', 'NV24071324', 'BanThuoc'), -- khách hàng 18
+    ('HD24090867890', '2024-09-08', 160000.00, 1600, 'TienMat', 1, '0823456779', 'NV24071324', 'BanThuoc'), -- khách hàng 19
+    ('HD24091598765', '2024-09-15', 370000.00, 3700, 'TienMat', 1, '0823456779', 'NV24071324', 'BanThuoc'), -- khách hàng 20
+
+-- Tháng 10
+    ('HD24102112345', '2024-10-21', 300000.00, 3000, 'TienMat', 1, '0802345678', 'NV24112432', 'BanThuoc'), -- khách hàng 21
+    ('HD24101567890', '2024-10-15', 410000.00, 4100, 'ChuyenKhoan', 1, '0802345678', 'NV24112432', 'BanThuoc'), -- khách hàng 22
+    ('HD24101154321', '2024-10-11', 230000.00, 2300, 'TheTinDung', 1, '0802345678', 'NV24112432', 'BanThuoc'), -- khách hàng 23
+    ('HD24100867890', '2024-10-08', 270000.00, 2700, 'TienMat', 1, '0802345678', 'NV24112432', 'BanThuoc'), -- khách hàng 24
+    ('HD24101587654', '2024-10-15', 480000.00, 4800, 'TienMat', 1, '0802345678', 'NV24112432', 'BanThuoc') -- khách hàng 25
+
+
+
+
+
 
 -- Them du lieu vao bang SanPham
-INSERT INTO SanPham (maSP, tenSP,soLuong, ngaySanXuat, ngayHetHan,khoiLuong,donViTinh, nhaCungCap, gia, congDung, hinhAnhSP, maLoaiSP)
-VALUES 
-('SP24101900001', 'Vitamin C',500, '2024-09-30', '2025-09-30',200,'Chai', 'Công ty TNHH Dược Phẩm ABC', 150000.00000, 'Hỗ trợ tăng cường hệ miễn dịch', 'http://example.com/images/vitamin_c.jpg', 'TPCN')
+
+INSERT INTO SanPham (maSP, tenSP, ngaySanXuat, ngayHetHan, nhaCungCap, gia, thanhPhan, congDung, hinhAnhSP, maLoaiSP, soLuong, khoiLuong, donViTinh)
+VALUES
+('SP23070100001', N'Viên uống Omega-3', '2023-07-01', '2024-07-01', N'Công ty TNHH Dược Phẩm ABC', 150000.00, N'Omega-3, Vitamin E', N'Hỗ trợ sức khỏe tim mạch', 'http://example.com/images/omega3.jpg', 'TPCN', 50, 200, N'Viên'),
+('SP23070200002', N'Viên uống Biotin', '2023-07-15', '2024-07-15', N'Công ty TNHH Dược Phẩm A', 120000.00, N'Biotin, Vitamin B7', N'Tăng cường sức khỏe tóc và da', 'http://example.com/images/biotin.jpg', 'TPCN', 30, 500, N'Viên'),
+('SP23070300003', N'Viên uống Probiotics', '2023-07-20', '2024-07-20', N'Công ty TNHH Dược Phẩm B', 130000.00, N'Probiotics, Lactobacillus', N'Hỗ trợ tiêu hóa', 'http://example.com/images/probiotics.jpg', 'TPCN', 60, 300, N'Viên'),
+('SP23070400004', N'Viên uống Vitamin C', '2023-07-25', '2024-07-25', N'Công ty TNHH Dược Phẩm C', 140000.00, N'Vitamin C, Acid Ascorbic', N'Tăng cường hệ miễn dịch', 'http://example.com/images/vitamin_c.jpg', 'TPCN', 40, 700, N'Viên'),
+('SP23070500005', N'Viên uống Vitamin D', '2023-07-30', '2024-07-30', N'Công ty TNHH Dược Phẩm D', 150000.00, N'Vitamin D3', N'Hỗ trợ xương', 'http://example.com/images/vitamin_d.jpg', 'TPCN', 25, 500, N'Viên'),
+
+('SP23080100006', N'Viên uống Chitosan', '2023-08-01', '2024-08-01', N'Công ty TNHH Dược Phẩm E', 160000.00, N'Chitosan', N'Hỗ trợ giảm cân', 'http://example.com/images/chitosan.jpg', 'TPCN', 30, 300, N'Viên'),
+('SP23080200007', N'Viên uống Sữa ong chúa', '2023-08-05', '2024-08-05', N'Công ty TNHH Dược Phẩm F', 170000.00, N'Sữa ong chúa, Vitamin A', N'Tăng cường sức khỏe', 'http://example.com/images/suadongchua.jpg', 'TPCN', 60, 500, N'Chai'),
+('SP23080300008', N'Viên uống Dầu cá', '2023-08-10', '2024-08-10', N'Công ty TNHH Dược Phẩm G', 180000.00, N'Dầu cá, Omega-3', N'Hỗ trợ sức khỏe tim mạch', 'http://example.com/images/daucap.jpg', 'TPCN', 40, 200, N'Viên'),
+('SP23080400009', N'Viên uống Vitamin B Complex', '2023-08-15', '2024-08-15', N'Công ty TNHH Dược Phẩm H', 150000.00, N'Vitamin B1, B2, B6, B12', N'Hỗ trợ chuyển hóa năng lượng', 'http://example.com/images/vitamin_b_complex.jpg', 'TPCN', 50, 700, N'Chai'),
+('SP23080500010', N'Viên uống Glucosamine', '2023-08-20', '2024-08-20', N'Công ty TNHH Dược Phẩm I', 200000.00, N'Glucosamine', N'Hỗ trợ khớp', 'http://example.com/images/glucosamine.jpg', 'TPCN', 35, 300, N'Viên'),
+
+('SP23090100011', N'Viên uống Magie', '2023-09-01', '2024-09-01', N'Công ty TNHH Dược Phẩm J', 190000.00, N'Magiê', N'Hỗ trợ giảm căng thẳng', 'http://example.com/images/magie.jpg', 'TPCN', 50, 500, N'Hộp'),
+('SP23090200012', N'Viên uống Kẽm', '2023-09-05', '2024-09-05', N'Công ty TNHH Dược Phẩm K', 210000.00, N'Kẽm', N'Hỗ trợ miễn dịch', 'http://example.com/images/kezm.jpg', 'TPCN', 40, 200, N'Chai'),
+('SP23090300013', N'Viên uống Selen', '2023-09-10', '2024-09-10', N'Công ty TNHH Dược Phẩm L', 250000.00, N'Selen', N'Chống oxi hóa', 'http://example.com/images/selen.jpg', 'TPCN', 60, 700, N'Viên'),
+('SP23090400014', N'Viên uống Ashwagandha', '2023-09-15', '2024-09-15', N'Công ty TNHH Dược Phẩm M', 260000.00, N'Ashwagandha', N'Hỗ trợ giảm căng thẳng', 'http://example.com/images/ashwagandha.jpg', 'TPCN', 30, 500, N'Viên'),
+('SP23090500015', N'Viên uống Nhân sâm', '2023-09-20', '2024-09-20', N'Công ty TNHH Dược Phẩm N', 240000.00, N'Nhân sâm', N'Tăng cường sức khỏe', 'http://example.com/images/nhansam.jpg', 'TPCN', 25, 300, N'Hộp'),
+
+('SP23100100016', N'Viên uống L-carnitine', '2023-10-01', '2024-10-01', N'Công ty TNHH Dược Phẩm O', 220000.00, N'L-carnitine', N'Hỗ trợ giảm cân', 'http://example.com/images/l-carnitine.jpg', 'TPCN', 60, 700, N'Chai'),
+('SP23100200017', N'Viên uống Acid folic', '2023-10-05', '2024-10-05', N'Công ty TNHH Dược Phẩm P', 150000.00, N'Acid folic', N'Hỗ trợ thai kỳ', 'http://example.com/images/acid_folic.jpg', 'TPCN', 50, 500, N'Viên'),
+('SP23100300018', N'Viên uống Vitamin A', '2023-10-10', '2024-10-10', N'Công ty TNHH Dược Phẩm Q', 200000.00, N'Vitamin A', N'Hỗ trợ thị lực', 'http://example.com/images/vitamin_a.jpg', 'TPCN', 35, 300, N'Hộp'),
+('SP23100400019', N'Viên uống Beta-carotene', '2023-10-15', '2024-10-15', N'Công ty TNHH Dược Phẩm R', 190000.00, N'Beta-carotene', N'Hỗ trợ miễn dịch', 'http://example.com/images/beta_carotene.jpg', 'TPCN', 40, 700, N'Chai');
+
+
+INSERT INTO SanPham (maSP, tenSP, ngaySanXuat, ngayHetHan, nhaCungCap, gia, thanhPhan, congDung, hinhAnhSP, maLoaiSP, soLuong, khoiLuong, donViTinh)
+VALUES
+('SP23100500020', N'Máy đo huyết áp', '2023-10-20', '2025-10-20', N'Công ty TNHH Thiết Bị Y Tế A', 750000.00, N'Nhựa, Kim loại', N'Theo dõi huyết áp', 'http://example.com/images/may_do_huyet_ap.jpg', 'TBYT', 100, 1000, N'Cái'),
+('SP23100600021', N'Máy đo đường huyết', '2023-10-21', '2025-10-21', N'Công ty TNHH Thiết Bị Y Tế B', 500000.00, N'Nhựa, Kim loại', N'Theo dõi đường huyết', 'http://example.com/images/may_do_duong_huyet.jpg', 'TBYT', 150, 500, N'Cái'),
+('SP23100700022', N'Đèn chiếu hồng ngoại', '2023-10-22', '2025-10-22', N'Công ty TNHH Thiết Bị Y Tế C', 300000.00, N'Nhựa, Thủy tinh', N'Điều trị đau nhức', 'http://example.com/images/den_chieu_hong_ngoai.jpg', 'TBYT', 80, 2000, N'Cái'),
+('SP23100800023', N'Thiết bị xông mũi', '2023-10-23', '2025-10-23', N'Công ty TNHH Thiết Bị Y Tế D', 600000.00, N'Nhựa, Kim loại', N'Hỗ trợ điều trị hô hấp', 'http://example.com/images/thiet_bi_xong_mui.jpg', 'TBYT', 90, 1000, N'Cái'),
+('SP23100900024', N'Máy đo nhiệt độ', '2023-10-24', '2025-10-24', N'Công ty TNHH Thiết Bị Y Tế E', 250000.00, N'Nhựa, Kim loại', N'Theo dõi nhiệt độ cơ thể', 'http://example.com/images/may_do_nhiet_do.jpg', 'TBYT', 120, 300, N'Cái'),
+
+('SP23101000025', N'Máy massage', '2023-10-25', '2025-10-25', N'Công ty TNHH Thiết Bị Y Tế F', 850000.00, N'Nhựa, Kim loại', N'Thư giãn và giảm đau', 'http://example.com/images/may_massage.jpg', 'TBYT', 70, 1500, N'Cái'),
+('SP23101100026', N'Máy xông khí dung', '2023-10-26', '2025-10-26', N'Công ty TNHH Thiết Bị Y Tế G', 400000.00, N'Nhựa, Kim loại', N'Hỗ trợ điều trị hô hấp', 'http://example.com/images/may_xong_khi_dung.jpg', 'TBYT', 110, 900, N'Cái'),
+('SP23101200027', N'Kính áp tròng', '2023-10-27', '2025-10-27', N'Công ty TNHH Thiết Bị Y Tế H', 200000.00, N'Nhựa', N'Hỗ trợ thị lực', 'http://example.com/images/kinh_ap_trong.jpg', 'TBYT', 150, 50, N'Cái'),
+('SP23101300028', N'Thiết bị đo SpO2', '2023-10-28', '2025-10-28', N'Công ty TNHH Thiết Bị Y Tế I', 350000.00, N'Nhựa, Kim loại', N'Theo dõi mức độ oxy trong máu', 'http://example.com/images/thiet_bi_do_spo2.jpg', 'TBYT', 100, 200, N'Cái'),
+('SP23101400029', N'Máy tập phục hồi chức năng', '2023-10-29', '2025-10-29', N'Công ty TNHH Thiết Bị Y Tế J', 950000.00, N'Nhựa, Kim loại', N'Thúc đẩy phục hồi sức khỏe', 'http://example.com/images/may_tap_phuc_hoi_chuc_nang.jpg', 'TBYT', 60, 2000, N'Cái');
+
+INSERT INTO SanPham (maSP, tenSP, ngaySanXuat, ngayHetHan, nhaCungCap, gia, thanhPhan, congDung, hinhAnhSP, maLoaiSP, soLuong, khoiLuong, donViTinh)
+VALUES
+('SP23101500030', N'Paracetamol', '2023-10-30', '2025-10-30', N'Công ty TNHH Dược Phẩm A', 50000.00, N'Paracetamol', N'Giảm đau và hạ sốt', 'http://example.com/images/paracetamol.jpg', 'Thuoc', 200, 100, N'Viên'),
+('SP23101600031', N'Amoxicillin', '2023-11-01', '2025-11-01', N'Công ty TNHH Dược Phẩm B', 80000.00, N'Amoxicillin', N'Kháng sinh phổ rộng', 'http://example.com/images/amoxicillin.jpg', 'Thuoc', 150, 300, N'Viên'),
+('SP23101700032', N'Ciprofloxacin', '2023-11-02', '2025-11-02', N'Công ty TNHH Dược Phẩm C', 90000.00, N'Ciprofloxacin', N'Điều trị nhiễm khuẩn', 'http://example.com/images/ciprofloxacin.jpg', 'Thuoc', 120, 250, N'Viên'),
+('SP23101800033', N'Ibuprofen', '2023-11-03', '2025-11-03', N'Công ty TNHH Dược Phẩm D', 60000.00, N'Ibuprofen', N'Giảm đau và kháng viêm', 'http://example.com/images/ibuprofen.jpg', 'Thuoc', 180, 150, N'Viên'),
+('SP23101900034', N'Siphen', '2023-11-04', '2025-11-04', N'Công ty TNHH Dược Phẩm E', 70000.00, N'Siphen', N'Giảm đau đầu', 'http://example.com/images/siphen.jpg', 'Thuoc', 170, 100, N'Viên'),
+
+('SP23102000035', N'Acetaminophen', '2023-11-05', '2025-11-05', N'Công ty TNHH Dược Phẩm F', 55000.00, N'Acetaminophen', N'Hỗ trợ giảm đau', 'http://example.com/images/acetaminophen.jpg', 'Thuoc', 160, 100, N'Viên'),
+('SP23102100036', N'Cetirizine', '2023-11-06', '2025-11-06', N'Công ty TNHH Dược Phẩm G', 60000.00, N'Cetirizine', N'Triệu chứng dị ứng', 'http://example.com/images/cetirizine.jpg', 'Thuoc', 140, 200, N'Viên'),
+('SP23102200037', N'Dexamethasone', '2023-11-07', '2025-11-07', N'Công ty TNHH Dược Phẩm H', 120000.00, N'Dexamethasone', N'Kháng viêm', 'http://example.com/images/dexamethasone.jpg', 'Thuoc', 100, 250, N'Viên'),
+('SP23102300038', N'Loratadine', '2023-11-08', '2025-11-08', N'Công ty TNHH Dược Phẩm I', 75000.00, N'Loratadine', N'Triệu chứng dị ứng', 'http://example.com/images/loratadine.jpg', 'Thuoc', 130, 200, N'Viên'),
+('SP23102400039', N'Simvastatin', '2023-11-09', '2025-11-09', N'Công ty TNHH Dược Phẩm J', 140000.00, N'Simvastatin', N'Hỗ trợ kiểm soát cholesterol', 'http://example.com/images/simvastatin.jpg', 'Thuoc', 110, 300, N'Viên');
+
+
+
 -- Them du lieu vao bang ChiTietHoaDon
-INSERT INTO ChiTietHoaDon (maCTHD, soLuongSanPham, tongTien, maHD, maSP)
-VALUES 
-('CTHD24101900001', 3, 100000.00, 'HD24101912345', 'SP24101900001')
+INSERT INTO ChiTietHoaDon (maCTHD, soLuongSanPham, thanhTien, maHD, maSP) 
+VALUES
+-- Tháng 7 năm trước
+    ('CTHD23071400001', 1, 150000.00, 'HD24092112345', 'SP23070100001'),
+    ('CTHD23070900002', 1, 200000.00, 'HD24092112345', 'SP23070200002'),
+    ('CTHD23071100003', 1, 175000.00, 'HD24092112345', 'SP23070300003'),
+    ('CTHD23070800004', 1, 100000.00, 'HD24092112345', 'SP23070400004'),
+    ('CTHD23071500005', 1, 300000.00, 'HD24092112345', 'SP23070500005'),
+
+    -- Tháng 8 năm trước
+    ('CTHD23081400006', 1, 150000.00, 'HD24030967890', 'SP23080100006'),
+    ('CTHD23080900007', 1, 200000.00, 'HD24030967890', 'SP23080200007'),
+    ('CTHD23081100008', 1, 175000.00, 'HD24030967890', 'SP23080300008'),
+    ('CTHD23080800009', 1, 100000.00, 'HD24030967890', 'SP23080400009'),
+    ('CTHD23081500010', 1, 300000.00, 'HD24030967890', 'SP23080500010')
+
+
+SELECT DATEPART(MONTH, ngayLapHD) AS Month, SUM(tongTien) AS TotalAmount         
+FROM HoaDon
+WHERE DATEPART(YEAR, ngayLapHD) = 2024     
+GROUP BY DATEPART(MONTH, ngayLapHD)        
+ORDER BY  Month ASC;               
+
+
+SELECT DATEPART(MONTH, ngayLapHD) AS Month, 
+       SUM(tongTien - tienGiam) AS TotalAmount         
+FROM HoaDon
+WHERE DATEPART(YEAR, ngayLapHD) = 2024     
+GROUP BY DATEPART(MONTH, ngayLapHD)        
+ORDER BY Month ASC;
+
+
+
+SELECT COUNT(*) AS TongSanPhamSapHetHang
+FROM SanPham
+WHERE soLuong < 50;
+
+SELECT SUM([tongTien]) AS TongDoanhThu
+FROM HoaDon
+WHERE MONTH([ngayLapHD]) = MONTH(GETDATE()) AND YEAR([ngayLapHD]) = YEAR(GETDATE());
+
 
