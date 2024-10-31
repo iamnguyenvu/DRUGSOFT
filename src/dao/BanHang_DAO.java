@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -19,6 +21,8 @@ import java.util.ArrayList;
  * @author HP
  */
 public class BanHang_DAO {
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    
     public ArrayList<SanPham_entity> searchSanPham(String key) {
         Connection con = connectDB.accessDataBase();
         if(con == null) return null;
@@ -60,7 +64,7 @@ public class BanHang_DAO {
             ps.setString(1, sdt + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
-                KhachHang_entity kh = new KhachHang_entity(rs.getString("tenKH"), rs.getString("sdtKH"), rs.getInt("diemThuong"), rs.getString("gioiTinh")); 
+                KhachHang_entity kh = new KhachHang_entity(rs.getString("sdtKH"), rs.getString("tenKH"), rs.getInt("diemThuong"), rs.getString("gioiTinh")); 
                 listKH.add(kh);
             }
         } catch (SQLException e) {
@@ -107,34 +111,33 @@ public class BanHang_DAO {
         return null;
     }
     
-//    public boolean insertHD(HoaDon_entity hd) {
-//        Connection con = connectDB.accessDataBase();
-//        PreparedStatement stmt = null;
-//        int n = 0;
-//        try {
-//                stmt = con.prepareStatement("INSERT INTO HoaDon VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setTimestamp(2, hd.getNgayLapHD());
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setString(1, hd.getMaHD());
-//                n = stmt.executeUpdate();
-//        } catch (SQLException e) {
-//                // TODO: handle exception
-//                e.printStackTrace();
-//        } finally {
-//                 try {
-//             stmt.close();
-//         } catch (SQLException e) {
-//              e.printStackTrace();
-//         }
-//        }
-//        return n>0;
-//    }
-//    
+    public boolean createHD(HoaDon_entity hd) {
+        Connection con = connectDB.accessDataBase();
+        PreparedStatement stmt = null;
+        int n = 0;
+        try {
+                stmt = con.prepareStatement("INSERT INTO HoaDon VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                stmt.setString(1, hd.getMaHD());
+                stmt.setTimestamp(2, Timestamp.valueOf(hd.getNgayLapHD()));
+                stmt.setDouble(3, hd.getTongTien());
+                stmt.setDouble(4, hd.getTienGiam());
+                stmt.setString(5, hd.getHinhThucThanhToan());
+                stmt.setBoolean(6, hd.isTrangThai());
+                stmt.setString(7, hd.getMaHD());
+                stmt.setString(8, hd.getMaNV());
+                stmt.setString(9, hd.getMaLoaiHoaDon());
+                n = stmt.executeUpdate();
+        } catch (SQLException e) {
+                // TODO: handle exception
+                e.printStackTrace();
+        } finally {
+                 try {
+             stmt.close();
+         } catch (SQLException e) {
+              e.printStackTrace();
+         }
+        }
+        return n>0;
+    }
+    
 }
