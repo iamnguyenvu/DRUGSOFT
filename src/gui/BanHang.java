@@ -35,6 +35,8 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -149,7 +151,7 @@ public class BanHang extends SimpleForm {
             @Override
             public void onCustomerSeclect(KhachHang_entity customer) {
                 kh = customer;
-                txtCustomer.setText(customer.getTenKH() + " - " + customer.getSdtKH());
+                txtCustomer.setText(kh.getTenKH() + " - " + kh.getSdtKH());
                 menuCustomer.setVisible(false);
                 updateLblSoLuongSP();
                 cbbPhuongThucThanhToan.requestFocusInWindow();
@@ -299,6 +301,8 @@ public class BanHang extends SimpleForm {
         pnContent.setPreferredSize(new java.awt.Dimension(1100, 800));
 
         pnRightContent.setPreferredSize(new java.awt.Dimension(400, 700));
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin hóa đơn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(11, 101, 136))); // NOI18N
 
         pnInputCustomer.setPreferredSize(new java.awt.Dimension(100, 40));
         pnInputCustomer.setLayout(new java.awt.BorderLayout());
@@ -634,21 +638,22 @@ public class BanHang extends SimpleForm {
             .addGroup(pnRightContentLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         pnRightContentLayout.setVerticalGroup(
             pnRightContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnRightContentLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jPanel2.putClientProperty(FlatClientProperties.STYLE, ""
-            + "border:5,5,5,5,$Component.borderColor,,20");
+        //jPanel2.putClientProperty(FlatClientProperties.STYLE, ""
+            //                + "border:5,5,5,5,$Component.borderColor,,20");
 
         pnLeftContent.setPreferredSize(new java.awt.Dimension(1085, 700));
 
+        pnFunc.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chức năng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(11, 101, 136))); // NOI18N
         pnFunc.setPreferredSize(new java.awt.Dimension(100, 200));
 
         btnDeleteAllSP.setBackground(new java.awt.Color(183, 218, 246));
@@ -692,7 +697,7 @@ public class BanHang extends SimpleForm {
                 .addComponent(btnNote, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65)
                 .addComponent(btnTempOrderProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
@@ -705,7 +710,7 @@ public class BanHang extends SimpleForm {
                     .addComponent(btnNote, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTempOrderProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         addStyleBtn(btnDeleteAllSP);
@@ -774,9 +779,9 @@ public class BanHang extends SimpleForm {
                     for(int i = 0; i < table.getRowCount(); ++i) {
                         table.setValueAt(i+1, i, 0);
                     }
-                    ((DefaultTableModel) table.getModel()).fireTableDataChanged();
+                    //            ((DefaultTableModel) table.getModel()).fireTableDataChanged();
+                    updateLblSoLuongSP();
                 }
-                updateLblSoLuongSP();
             }
         }));
 
@@ -805,8 +810,8 @@ public class BanHang extends SimpleForm {
                 .addGap(32, 32, 32))
         );
 
-        pnFunc.putClientProperty(FlatClientProperties.STYLE, ""
-            + "border:5,5,5,5,$Component.borderColor,,20");
+        //pnFunc.putClientProperty(FlatClientProperties.STYLE, ""
+            //                + "border:5,5,5,5,$Component.borderColor,,20");
         //jScrollPane2.putClientProperty(FlatClientProperties.STYLE, ""
             //                + "border:5,5,5,5,$Component.borderColor,,20");
 
@@ -826,7 +831,7 @@ public class BanHang extends SimpleForm {
                 .addComponent(pnRightContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(pnContentLayout.createSequentialGroup()
-                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
+                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -898,10 +903,18 @@ public class BanHang extends SimpleForm {
 
             BillManeger.getInstance().printBill(billData);
             
-            String ghiChu = txtNote.getText();
             String ptThanhToan = (String) cbbPhuongThucThanhToan.getSelectedItem();
             
-//            HoaDon_entity hd = new HoaDon_entity(billID, getCurrentDate(), thanhToan, discount, ptThanhToan, true, customerPhone, employeeId, "BanSanPham");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+            LocalDateTime issueDate = LocalDateTime.parse(getCurrentDate(), formatter);
+            
+            HoaDon_entity hd = new HoaDon_entity(billID, issueDate, thanhToan, discount, "TienMat", true, customerPhone, employeeId, "BanSanPham");
+            if(!dao.createHD(hd)) {
+                MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);
+                refresh();
+                return;
+            }
             
             refresh();
         } catch (Exception e){
@@ -1148,7 +1161,7 @@ public class BanHang extends SimpleForm {
     }
 
     private String getCurrentDate() {
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         return sdf.format(new java.util.Date());
     }
     
