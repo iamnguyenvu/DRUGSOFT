@@ -17,8 +17,15 @@ public class HoaDon_entity {
     // Constructor mặc định
     public HoaDon_entity() {
     }
+    
 
-    // Constructor với đầy đủ tham số
+    public HoaDon_entity(String maHD) {
+		super();
+		this.maHD = maHD;
+	}
+
+
+	// Constructor với đầy đủ tham số
     public HoaDon_entity(String maHD, LocalDate ngayLapHD, double tongTien,
                   double tienKhachTra, String hinhThucThanhToan,
                   boolean trangThai, KhachHang_entity khachHang,

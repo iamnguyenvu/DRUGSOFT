@@ -1,33 +1,28 @@
 package entity;
 
 public class KhachHang_entity {
-    private String maKH; // Mã khách hàng
     private String tenKH; // Tên khách hàng
-    private String SDT; // Số điện thoại
+    private String sdtKH; // Số điện thoại
     private int diemThuong; // Điểm thưởng
     private String gioiTinh; // Giới tính
 
     // Constructor mặc định
-    public KhachHang_entity() {
-    }
-
     // Constructor với đầy đủ tham số
-    public KhachHang_entity(String maKH, String tenKH, String SDT, int diemThuong, String gioiTinh) {
-        this.maKH = maKH;
+    public KhachHang_entity( String tenKH, String sdtKH, int diemThuong, String gioiTinh) {
         this.tenKH = tenKH;
-        this.SDT = SDT;
+        this.sdtKH = sdtKH;
         this.diemThuong = diemThuong;
-        this.gioiTinh = gioiTinh;
+        setGioiTinh(gioiTinh);
     }
+    
 
-    // Getter và Setter cho maKH
-    public String getMaKH() {
-        return maKH;
-    }
+    public KhachHang_entity(String sdt) {
+		super();
+		this.sdtKH = sdtKH;
+	}
 
-    public void setMaKH(String maKH) {
-        this.maKH = maKH;
-    }
+	// Getter và Setter cho maKH
+    
 
     // Getter và Setter cho tenKH
     public String getTenKH() {
@@ -39,12 +34,12 @@ public class KhachHang_entity {
     }
 
     // Getter và Setter cho SDT
-    public String getSDT() {
-        return SDT;
+    public String getsdtKH() {
+        return sdtKH;
     }
 
     public void setSDT(String SDT) {
-        this.SDT = SDT;
+        this.sdtKH = SDT;
     }
 
     // Getter và Setter cho diemThuong
@@ -62,15 +57,19 @@ public class KhachHang_entity {
     }
 
     public void setGioiTinh(String gioiTinh) {
-        this.gioiTinh = gioiTinh;
+        if ("Nam".equalsIgnoreCase(gioiTinh) || "Nữ".equalsIgnoreCase(gioiTinh)) {
+            this.gioiTinh = gioiTinh;
+        } else {
+            throw new IllegalArgumentException("Giới tính phải là 'Nam' hoặc 'Nữ'");
+        }
     }
 
     @Override
     public String toString() {
         return "KhachHang{" +
-                "maKH='" + maKH + '\'' +
+                
                 ", tenKH='" + tenKH + '\'' +
-                ", SDT='" + SDT + '\'' +
+                ", SDT='" + sdtKH + '\'' +
                 ", diemThuong=" + diemThuong +
                 ", gioiTinh='" + gioiTinh + '\'' +
                 '}';

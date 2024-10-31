@@ -421,6 +421,7 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCustomerActionPerformed"/>
+                        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCustomerKeyReleased"/>
                       </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="txtCustomer.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, &quot; [F3] Th&#xea;m kh&#xe1;ch h&#xe0;ng&quot;);&#xa;//txtCustomer.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;//                + &quot;border:5,0,0,5,$Component.borderColor,,20&quot;);&#xa;txtCustomer.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon(&quot;gui/icon/search.svg&quot;));&#xa;txtCustomer.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_COMPONENT, btnAddCustomer);"/>

@@ -1,21 +1,22 @@
 package nguyenvu.menu;
 
-import com.formdev.flatlaf.FlatClientProperties;
-
-import com.formdev.flatlaf.extras.FlatSVGIcon;
-
-import gui.BanHang;
-import gui.DoiTraSanPham;
-import gui.KhachHang;
-import gui.TaiKhoan_GUI;
-import gui.TraSanPham;
-
 import java.awt.Color;
 import java.awt.Component;
+
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+
+import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+
+import gui.BanHang;
+import gui.DoiTraSanPham;
+import nguyenvu.forms.DashboardForm;
+import nguyenvu.forms.ReadForm;
+import nguyenvu.forms.StatisticalForm;
+import nguyenvu.model.ModelUser;
 import raven.drawer.component.DrawerPanel;
 import raven.drawer.component.SimpleDrawerBuilder;
 import raven.drawer.component.footer.SimpleFooterData;
@@ -28,11 +29,6 @@ import raven.drawer.component.menu.SimpleMenuOption;
 import raven.drawer.component.menu.SimpleMenuStyle;
 import raven.drawer.component.menu.data.Item;
 import raven.drawer.component.menu.data.MenuItem;
-import nguyenvu.forms.StatisticalForm;
-import nguyenvu.forms.InboxForm;
-import nguyenvu.forms.ReadForm;
-import nguyenvu.forms.DashboardForm;
-import nguyenvu.model.ModelUser;
 import raven.swing.AvatarIcon;
 
 /**
@@ -40,7 +36,6 @@ import raven.swing.AvatarIcon;
  * @author nguyenvu
  */
 public class MyDrawerBuilder extends SimpleDrawerBuilder {
-
     private ModelUser user;
     private final ThemesChange themesChange;
     private String avatarPath;
@@ -140,11 +135,11 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item("Khách hàng", "ui.svg"),
             new Item("Nhân viên", "icon.svg"),        
             new Item("Tài khoản", "key.svg"),
-            new Item("Thống kê", "chart.svg")
-            .subMenu("Sản phẩm sắp hết hạn")
-            .subMenu("Sản phẩm sắp hết hàng")
-            .subMenu("Doanh số nhân viên")
-            .subMenu("Doanh số tổng quan"),
+            new Item("Thống kê", "chart.svg"),
+//            .subMenu("Sản phẩm sắp hết hạn")
+//            .subMenu("Sản phẩm sắp hết hàng")
+//            .subMenu("Doanh số nhân viên")
+//            .subMenu("Doanh số tổng quan"),
             new Item("Báo cáo", "page.svg"),
             new Item.Label("KHÁC"),
             new Item("Đăng xuất", "logout.svg")
@@ -184,8 +179,8 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     // non user admin going to hide
                     boolean act
                             = 
-//                            checkMenu(index, new int[]{6}) && 
-                            checkMenu(index, new int[]{7, 4});
+                            checkMenu(index, new int[]{6}) && 
+                            checkMenu(index, new int[]{7});
                     return act;
                 }
                 return true;
@@ -218,7 +213,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             public void selected(MenuAction action, int[] index) {
                 if (index.length == 1) {
                     if (index[0] == 0) {
-                        FormManager.showForm(new DashboardForm());
+                    	FormManager.showForm(new gui.ManHinhNen());
                     }
                     if (index[0] == 1) {
                         FormManager.showForm(new BanHang());
@@ -229,26 +224,33 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     if (index[0] == 3) {
                     	FormManager.showForm(new gui.SanPham());
                     }
+                    if (index[0] == 4) {
+                    	FormManager.showForm(new gui.HoaDon());
+                    }
                     if (index[0] == 5) {
-                    	FormManager.showForm(new KhachHang());
+                    	FormManager.showForm(new gui.KhachHang_GUI());
                     }
                     if (index[0] == 7) {
-                    	FormManager.showForm(new TaiKhoan_GUI());
+                    	FormManager.showForm(new gui.TaiKhoan_GUI());
+                    }
+                    if (index[0] == 8) {
+                    	FormManager.showForm(new StatisticalForm());
                     }
                     if (index[0] == 10) {
                         // logout
                         FormManager.logout();
                     }
-                } else if (index.length == 2) {
-                    if (index[0] == 7) {
-                        if (index[1] == 0) {
-                            FormManager.showForm(new StatisticalForm());
-                        }
-                        if (index[1] == 1) {
-                            FormManager.showForm(new ReadForm());
-                        }
-                    }
-                }
+                } 
+//                else if (index.length == 2) {
+//                    if (index[0] == 7) {
+//                        if (index[1] == 0) {
+//                            FormManager.showForm(new StatisticalForm());
+//                        }
+//                        if (index[1] == 1) {
+//                            FormManager.showForm(new ReadForm());
+//                        }
+//                    }
+//                }
             }
         });
 
@@ -269,4 +271,5 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     public int getDrawerWidth() {
         return 270;
     }
+
 }

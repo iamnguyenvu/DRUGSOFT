@@ -144,6 +144,11 @@ public class TaiKhoan_GUI extends SimpleForm {
 
         btnHuyEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
         btnHuyEdit.setText("Hủy");
+        btnHuyEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHuyEditActionPerformed(evt);
+            }
+        });
 
         btnLuuEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
         btnLuuEdit.setText("Lưu");
@@ -616,6 +621,10 @@ public class TaiKhoan_GUI extends SimpleForm {
             JOptionPane.showMessageDialog(this, "Cập nhật tài khoản thất bại. Vui lòng thử lại.");
         }
     }//GEN-LAST:event_btnLuuEditActionPerformed
+
+    private void btnHuyEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyEditActionPerformed
+        dialogEdit.setVisible(false);
+    }//GEN-LAST:event_btnHuyEditActionPerformed
 
     private void clearInputFields() {
         tfTenTaiKhoan.setText("");

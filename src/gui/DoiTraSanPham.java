@@ -124,13 +124,11 @@ public class DoiTraSanPham extends SimpleForm {
         pnSearch.setBackground(new java.awt.Color(11, 101, 136));
         pnSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         pnSearch.setPreferredSize(new java.awt.Dimension(100, 50));
-        pnSearch.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnFilter.setBackground(new java.awt.Color(11, 101, 136));
         btnFilter.setBorderPainted(false);
         btnFilter.setFocusPainted(false);
         btnFilter.setPreferredSize(new java.awt.Dimension(75, 40));
-        pnSearch.add(btnFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 5, 60, 40));
 
         txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
         txtSearch.setPreferredSize(new java.awt.Dimension(85, 40));
@@ -145,12 +143,6 @@ public class DoiTraSanPham extends SimpleForm {
                 txtSearchKeyReleased(evt);
             }
         });
-        pnSearch.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, 730, 40));
-        //txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-
-        txtSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon("gui/icon/search.svg"));
-        //txtSearch.putClientProperty(FlatClientProperties.STYLE, ""
-            //                + "border:5,5,5,5,$Component.borderColor,,20");
 
         jScrollPane1.setViewportView(listSanPham);
 
@@ -167,7 +159,34 @@ public class DoiTraSanPham extends SimpleForm {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
         );
 
-        pnSearch.add(layer, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 45, 730, 230));
+        javax.swing.GroupLayout pnSearchLayout = new javax.swing.GroupLayout(pnSearch);
+        pnSearch.setLayout(pnSearchLayout);
+        pnSearchLayout.setHorizontalGroup(
+            pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnSearchLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnSearchLayout.createSequentialGroup()
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(layer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        pnSearchLayout.setVerticalGroup(
+            pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnSearchLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(layer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        //txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+
+        txtSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon("gui/icon/search.svg"));
+        //txtSearch.putClientProperty(FlatClientProperties.STYLE, ""
+            //                + "border:5,5,5,5,$Component.borderColor,,20");
         layer.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:5,5,5,5,$Component.borderColor,,20");
 
@@ -179,7 +198,6 @@ public class DoiTraSanPham extends SimpleForm {
         pnContent.setPreferredSize(new java.awt.Dimension(1100, 800));
 
         pnRightContent.setPreferredSize(new java.awt.Dimension(400, 700));
-        pnRightContent.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnInputCustomer.setPreferredSize(new java.awt.Dimension(100, 40));
         pnInputCustomer.setLayout(new java.awt.BorderLayout());
@@ -348,7 +366,7 @@ public class DoiTraSanPham extends SimpleForm {
                             .addGap(16, 16, 16)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jButton14, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
-                                .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)))
+                                .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                             .addComponent(lblKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -427,7 +445,21 @@ public class DoiTraSanPham extends SimpleForm {
         txtTienKhachDua.putClientProperty(FlatClientProperties.STYLE, ""
             + "font:bold +3");
 
-        pnRightContent.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 380, 660));
+        javax.swing.GroupLayout pnRightContentLayout = new javax.swing.GroupLayout(pnRightContent);
+        pnRightContent.setLayout(pnRightContentLayout);
+        pnRightContentLayout.setHorizontalGroup(
+            pnRightContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnRightContentLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        pnRightContentLayout.setVerticalGroup(
+            pnRightContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnRightContentLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         jPanel2.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:5,5,5,5,$Component.borderColor,,20");
 
@@ -503,7 +535,7 @@ public class DoiTraSanPham extends SimpleForm {
             table.getColumnModel().getColumn(8).setResizable(false);
             table.getColumnModel().getColumn(8).setPreferredWidth(30);
         }
-        table.getColumnModel().getColumn(8).setCellRenderer(new TableDeleteCellRenderer());
+        table.getColumnModel().getColumn(8).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());
         table.getColumnModel().getColumn(8).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {
             @Override
             public void onDelete(int row) {
