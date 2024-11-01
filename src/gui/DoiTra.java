@@ -725,7 +725,7 @@ public class DoiTra extends SimpleForm {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
             LocalDateTime issueDate = LocalDateTime.parse(date, formatter);
             
-            HoaDon_entity hd = new HoaDon_entity(billCode, issueDate, totalAmount, 0, ptThanhToan, true, kh.getSdtKH(), employeeId, loaiDT);
+            HoaDon_entity hd = new HoaDon_entity(billCode, issueDate, totalAmount, 0, ptThanhToan, true, kh.getSdtKH(), employeeId, loaiDT, lyDo);
             
             if(!dao.createHD(hd)) {
                 MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);

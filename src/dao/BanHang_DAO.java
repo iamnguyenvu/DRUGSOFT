@@ -116,16 +116,17 @@ public class BanHang_DAO {
         PreparedStatement stmt = null;
         int n = 0;
         try {
-                stmt = con.prepareStatement("INSERT INTO HoaDon VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                stmt = con.prepareStatement("INSERT INTO HoaDon VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 stmt.setString(1, hd.getMaHD());
                 stmt.setTimestamp(2, Timestamp.valueOf(hd.getNgayLapHD()));
                 stmt.setDouble(3, hd.getTongTien());
                 stmt.setDouble(4, hd.getTienGiam());
                 stmt.setString(5, hd.getHinhThucThanhToan());
-                stmt.setBoolean(6, hd.isTrangThai());
-                stmt.setString(7, hd.getMaHD());
-                stmt.setString(8, hd.getMaNV());
-                stmt.setString(9, hd.getMaLoaiHoaDon());
+                stmt.setBoolean(6, true);
+                stmt.setString(7, hd.getGhiChu());
+                stmt.setString(8, hd.getMaHD());
+                stmt.setString(9, hd.getMaNV());
+                stmt.setString(10, hd.getMaLoaiHoaDon());
                 n = stmt.executeUpdate();
         } catch (SQLException e) {
                 // TODO: handle exception
