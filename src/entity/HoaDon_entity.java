@@ -109,8 +109,9 @@ public class HoaDon_entity {
         return "HoaDon_entity{" + "maHD=" + maHD + ", ngayLapHD=" + ngayLapHD + ", tongTien=" + tongTien + ", tienGiam=" + tienGiam + ", hinhThucThanhToan=" + hinhThucThanhToan + ", trangThai=" + trangThai + ", maKH=" + maKH + ", maNV=" + maNV + ", maLoaiHoaDon=" + maLoaiHoaDon + '}';
     }
 
-    public HoaDon_entity(String maHD, LocalDateTime ngayLapHD) {
+    public HoaDon_entity(String maHD, LocalDateTime ngayLapHD, String hinhThucThanhToan) {
         this.maHD = maHD;
         this.ngayLapHD = ngayLapHD;
+        this.hinhThucThanhToan = hinhThucThanhToan;
     }
 }

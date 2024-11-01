@@ -179,7 +179,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Component id="pnRightContent" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="225" max="32767" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
                   <Component id="pnLeftContent" pref="919" max="32767" attributes="0"/>
@@ -214,7 +214,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="18" max="32767" attributes="0"/>
+                      <EmptySpace pref="35" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -333,7 +333,7 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="pnInputCustomer" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -390,11 +390,10 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="pnNote" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="btnThanhToan" alignment="3" min="-2" pref="100" max="-2" attributes="0"/>
-                              <Component id="btnLuuTam" alignment="3" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="btnLuuTam" pref="87" max="32767" attributes="0"/>
+                              <Component id="btnThanhToan" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="4" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -933,21 +932,18 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="9" rowCount="0">
-                        <Column editable="false" title="STT" type="java.lang.Integer"/>
-                        <Column editable="false" title="hinhAnh" type="java.lang.String"/>
-                        <Column editable="false" title="maSP" type="java.lang.String"/>
-                        <Column editable="false" title="tenSP" type="java.lang.String"/>
-                        <Column editable="false" title="donVi" type="java.lang.String"/>
+                        <Column editable="false" title="STT" type="java.lang.Object"/>
+                        <Column editable="false" title="hinhAnh" type="java.lang.Object"/>
+                        <Column editable="false" title="maSP" type="java.lang.Object"/>
+                        <Column editable="false" title="tenSP" type="java.lang.Object"/>
+                        <Column editable="false" title="donVi" type="java.lang.Object"/>
                         <Column editable="true" title="soLuong" type="java.lang.Object"/>
-                        <Column editable="false" title="donGia" type="java.lang.Double"/>
-                        <Column editable="false" title="thanhTien" type="java.lang.Double"/>
-                        <Column editable="true" title="btnDelete" type="java.lang.String"/>
+                        <Column editable="false" title="donGia" type="java.lang.Object"/>
+                        <Column editable="false" title="thanhTien" type="java.lang.Object"/>
+                        <Column editable="true" title="btnDelete" type="java.lang.Object"/>
                       </Table>
                     </Property>
-                    <Property name="cellSelectionEnabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="false" type="code"/>
-                    </Property>
-                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="table.getColumnModel().getColumn(8).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());&#xa;table.getColumnModel().getColumn(8).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {&#xa;    @Override&#xa;    public void onDelete(int row) {&#xa;        if (row &gt;= 0 &amp;&amp; row &lt; table.getRowCount()) {&#xa;            ((DefaultTableModel) table.getModel()).removeRow(row);&#xa;            for(int i = 0; i &lt; table.getRowCount(); ++i) {&#xa;                table.setValueAt(i+1, i, 0);&#xa;            }&#xa;//            ((DefaultTableModel) table.getModel()).fireTableDataChanged();&#xa;            updateLblSoLuongSP();&#xa;        }&#xa;    }&#xa;}));&#xa;&#xa;table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(this));&#xa;table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());&#xa;table.setTableHeader(null);">
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="table.getColumnModel().getColumn(8).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());&#xa;table.getColumnModel().getColumn(8).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {&#xa;    @Override&#xa;    public void onDelete(int row) {&#xa;        if (row &gt;= 0 &amp;&amp; row &lt; table.getRowCount()) {&#xa;            ((DefaultTableModel) table.getModel()).removeRow(row);&#xa;            ((DefaultTableModel) table.getModel()).fireTableDataChanged();&#xa;        }&#xa;        for(int i = 0; i &lt; table.getRowCount(); ++i) {&#xa;            table.setValueAt(i+1, i, 0);&#xa;        }&#xa;        updateLblSoLuongSP();&#xa;    }&#xa;}));&#xa;&#xa;table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(this));&#xa;table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());&#xa;table.setTableHeader(null);">
                       <TableColumnModel selectionModel="0">
                         <Column maxWidth="-1" minWidth="-1" prefWidth="30" resizable="false">
                           <Title/>
