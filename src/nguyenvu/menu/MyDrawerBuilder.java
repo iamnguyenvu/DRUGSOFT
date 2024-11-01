@@ -139,11 +139,11 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item("Tài khoản", "key.svg"),
             new Item("Thống kê", "chart.svg")
             .subMenu("Thống kê doanh thu")
-            .subMenu("Thống kê sản phẩm"),
+            .subMenu("Thống kê sản phẩm")
+            .subMenu("Thống kê tổng quan"),
             new Item("Báo cáo", "page.svg")
-            .subMenu("Sản phẩm")
-            .subMenu("Khách hàng")
-            .subMenu("Nhân viên"),
+            .subMenu("Báo cáo doanh thu")
+            .subMenu("Báo cáo sản phẩm"),
             new Item.Label("KHÁC"),
             new Item("Đăng xuất", "logout.svg")
         };
@@ -233,31 +233,19 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     if (index[0] == 5) {
                     	
                     }
-                    if (index[0] == 8) {
-                    	FormManager.showForm(new ThongKe_GUI());
-                    }
                     if (index[0] == 10) {
                         // logout
                         FormManager.logout();
                     }
                 } 
                 else if (index.length == 2) {
-                    
-                    if (index[0] == 7) {
+                    if (index[0] == 8) {
                         if (index[1] == 0) {
+                            FormManager.showForm(new ThongKe_GUI());
+                        }
+                        if (index[1] == 2) {
                             FormManager.showForm(new StatisticalForm());
                         }
-//                        if (index[1] == 1) {
-//                            FormManager.showForm(new ReadForm());
-//                        }
-                    }
-                    if (index[0] == 7) {
-                        if (index[1] == 0) {
-                            FormManager.showForm(new StatisticalForm());
-                        }
-//                        if (index[1] == 1) {
-//                            FormManager.showForm(new ReadForm());
-//                        }
                     }
                 }
             }

@@ -550,7 +550,7 @@ public class BanHang extends SimpleForm {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pnInputCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -597,10 +597,9 @@ public class BanHang extends SimpleForm {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnNote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLuuTam, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnLuuTam, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                    .addComponent(btnThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         lblSoLuongSP.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -645,7 +644,7 @@ public class BanHang extends SimpleForm {
             .addGroup(pnRightContentLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         //jPanel2.putClientProperty(FlatClientProperties.STYLE, ""
@@ -728,22 +727,14 @@ public class BanHang extends SimpleForm {
                 "STT", "hinhAnh", "maSP", "tenSP", "donVi", "soLuong", "donGia", "thanhTien", "btnDelete"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, true, false, false, true
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        table.setCellSelectionEnabled(false);
         table.setPreferredSize(new java.awt.Dimension(675, 500));
         table.setRowHeight(60);
         table.setRowSelectionAllowed(false);
@@ -776,12 +767,12 @@ public class BanHang extends SimpleForm {
             public void onDelete(int row) {
                 if (row >= 0 && row < table.getRowCount()) {
                     ((DefaultTableModel) table.getModel()).removeRow(row);
-                    for(int i = 0; i < table.getRowCount(); ++i) {
-                        table.setValueAt(i+1, i, 0);
-                    }
-                    //            ((DefaultTableModel) table.getModel()).fireTableDataChanged();
-                    updateLblSoLuongSP();
+                    ((DefaultTableModel) table.getModel()).fireTableDataChanged();
                 }
+                for(int i = 0; i < table.getRowCount(); ++i) {
+                    table.setValueAt(i+1, i, 0);
+                }
+                updateLblSoLuongSP();
             }
         }));
 
@@ -829,7 +820,7 @@ public class BanHang extends SimpleForm {
             pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnContentLayout.createSequentialGroup()
                 .addComponent(pnRightContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 225, Short.MAX_VALUE))
             .addGroup(pnContentLayout.createSequentialGroup()
                 .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE)
                 .addContainerGap())
@@ -1034,8 +1025,7 @@ public class BanHang extends SimpleForm {
             sp.getDonViTinh(), // donVi
             1, // soLuong (mặc định là 1)
             sp.getGia(), // donGia
-            sp.getGia(), // thanhTien (1 * donGia)
-            "Delete" // btnDelete
+            sp.getGia()
         };
         model.addRow(rowData);
         updateLblSoLuongSP();
