@@ -895,12 +895,13 @@ public class BanHang extends SimpleForm {
             BillManeger.getInstance().printBill(billData);
             
             String ptThanhToan = (String) cbbPhuongThucThanhToan.getSelectedItem();
+            String ghiChu = txtNote.getText();
             
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
             LocalDateTime issueDate = LocalDateTime.parse(getCurrentDate(), formatter);
             
-            HoaDon_entity hd = new HoaDon_entity(billID, issueDate, thanhToan, discount, "TienMat", true, customerPhone, employeeId, "BanSanPham");
+            HoaDon_entity hd = new HoaDon_entity(billID, issueDate, thanhToan, discount, ptThanhToan, true, customerPhone, employeeId, "BanSanPham", ghiChu);
             if(!dao.createHD(hd)) {
                 MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);
                 refresh();

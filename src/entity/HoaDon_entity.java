@@ -15,11 +15,12 @@ public class HoaDon_entity {
     private String maKH;             // Khách hàng
     private String maNV;               // Nhân viên
     private String maLoaiHoaDon;           // Loại hóa đơn
+    private String ghiChu;
 
     public HoaDon_entity() {
     }
 
-    public HoaDon_entity(String maHD, LocalDateTime ngayLapHD, double tongTien, double tienGiam, String hinhThucThanhToan, boolean trangThai, String maKH, String maNV, String maLoaiHoaDon) {
+    public HoaDon_entity(String maHD, LocalDateTime ngayLapHD, double tongTien, double tienGiam, String hinhThucThanhToan, boolean trangThai, String maKH, String maNV, String maLoaiHoaDon, String ghiChu) {
         this.maHD = maHD;
         this.ngayLapHD = ngayLapHD;
         this.tongTien = tongTien;
@@ -29,6 +30,7 @@ public class HoaDon_entity {
         this.maKH = maKH;
         this.maNV = maNV;
         this.maLoaiHoaDon = maLoaiHoaDon;
+        this.ghiChu = ghiChu;
     }
 
     public String getMaHD() {
@@ -40,7 +42,6 @@ public class HoaDon_entity {
     }
 
     public LocalDateTime getNgayLapHD() {
-//        return ngayLapHD.format(formatter);
         return ngayLapHD;
     }
 
@@ -104,11 +105,22 @@ public class HoaDon_entity {
         this.maLoaiHoaDon = maLoaiHoaDon;
     }
 
-    @Override
-    public String toString() {
-        return "HoaDon_entity{" + "maHD=" + maHD + ", ngayLapHD=" + ngayLapHD + ", tongTien=" + tongTien + ", tienGiam=" + tienGiam + ", hinhThucThanhToan=" + hinhThucThanhToan + ", trangThai=" + trangThai + ", maKH=" + maKH + ", maNV=" + maNV + ", maLoaiHoaDon=" + maLoaiHoaDon + '}';
+    public String getGhiChu() {
+        return ghiChu;
     }
 
+    public void setGhiChu(String ghiChu) {
+        this.ghiChu = ghiChu;
+    }
+
+    @Override
+    public String toString() {
+        return "HoaDon_entity{" + "maHD=" + maHD + ", ngayLapHD=" + ngayLapHD + ", tongTien=" + tongTien + ", tienGiam=" + tienGiam + ", hinhThucThanhToan=" + hinhThucThanhToan + ", trangThai=" + trangThai + ", maKH=" + maKH + ", maNV=" + maNV + ", maLoaiHoaDon=" + maLoaiHoaDon + ", ghiChu=" + ghiChu + '}';
+    }
+
+    
+    
+    
     public HoaDon_entity(String maHD, LocalDateTime ngayLapHD, String hinhThucThanhToan) {
         this.maHD = maHD;
         this.ngayLapHD = ngayLapHD;
