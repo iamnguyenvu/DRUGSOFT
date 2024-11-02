@@ -90,7 +90,7 @@ public class BanHang_DAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("SELECT * FROM KhachHang WHERE SDT LIKE ?");
+            ps = con.prepareStatement("SELECT * FROM KhachHang WHERE sdtKH LIKE ?");
             ps.setString(1, sdt);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -124,7 +124,7 @@ public class BanHang_DAO {
                 stmt.setString(5, hd.getHinhThucThanhToan());
                 stmt.setBoolean(6, true);
                 stmt.setString(7, hd.getGhiChu());
-                stmt.setString(8, hd.getMaHD());
+                stmt.setString(8, hd.getSdtKH());
                 stmt.setString(9, hd.getMaNV());
                 stmt.setString(10, hd.getMaLoaiHoaDon());
                 n = stmt.executeUpdate();
@@ -139,6 +139,33 @@ public class BanHang_DAO {
          }
         }
         return n>0;
+    }
+    
+    public SanPham_entity getSP(String maSP) {
+        Connection con = connectDB.accessDataBase();
+        if(con == null) return null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement("SELECT * FROM SanPham WHERE maSP LIKE ?");
+            ps.setString(1, maSP);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new SanPham_entity(rs.getString("maSP"), rs.getString("tenSP"), 
+                        rs.getString("donViTinh"), rs.getDouble("gia"), rs.getString("hinhAnhSP")); 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
     
 }
