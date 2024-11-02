@@ -16,7 +16,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,3,-39,0,0,5,-35"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,3,-39,0,0,5,-40"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -91,7 +91,7 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
-                <EmptyBorder bottom="1" left="10" right="1" top="1"/>
+                <EmptyBorder bottom="1" left="10" right="10" top="1"/>
               </Border>
             </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -103,7 +103,7 @@
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtProductSearchKeyReleased"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="//txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder());&#xa;&#xa;txtProductSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon(&quot;gui/icon/search.svg&quot;));&#xa;//txtSearch.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;//                + &quot;border:5,5,5,5,$Component.borderColor,,20&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="//txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder());&#xa;&#xa;txtProductSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon(&quot;gui/icon/search.svg&quot;));&#xa;//txtSearch.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;//                + &quot;border:5,5,5,5,$Component.borderColor,,20&quot;);&#xa;txtProductSearch.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa; + &quot;showClearButton: true&quot;);"/>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new RoundedTextField(40)"/>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtProductSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, &quot;[F2] Th&#xea;m s&#x1ea3;n ph&#x1ea9;m v&#xe0;o &#x111;&#x1a1;n&quot;);"/>
           </AuxValues>
@@ -167,9 +167,10 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Component id="pnLeftContent" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnLeftContent" min="-2" pref="1079" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="pnRightContent" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnRightContent" min="-2" pref="395" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -177,10 +178,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Component id="pnRightContent" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="235" max="32767" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
-                  <Component id="pnLeftContent" pref="919" max="32767" attributes="0"/>
+                  <Component id="pnLeftContent" pref="929" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -201,16 +202,18 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="11" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="41" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -225,87 +228,102 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                          <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="btnLuuTam" max="32767" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="btnThanhToan" min="-2" pref="199" max="-2" attributes="0"/>
+                                  <Component id="lblKhachDua" min="-2" pref="168" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="txtTienKhachDua" max="32767" attributes="0"/>
                               </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblTienThua" min="-2" pref="174" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel1" min="-2" pref="184" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lbl1" min="-2" pref="174" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="lblSoLuongSP" min="-2" pref="180" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lbl5" min="-2" pref="172" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                  <Component id="lblKhachPhaiTra" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="lbl1" min="-2" pref="174" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="lblSoLuongSP" min="-2" pref="180" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="lbl2" min="-2" pref="174" max="-2" attributes="0"/>
+                                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                                  <Component id="lblTongTien" min="-2" pref="180" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="lbl3" min="-2" pref="174" max="-2" attributes="0"/>
+                                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                                  <Component id="lblVAT" min="-2" pref="180" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                                                  <Component id="lbl4" min="-2" pref="174" max="-2" attributes="0"/>
+                                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                                  <Component id="lblDiemThuong" min="-2" pref="180" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="pnInputCustomer" alignment="0" min="-2" pref="360" max="-2" attributes="0"/>
                                           </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lbl2" min="-2" pref="174" max="-2" attributes="0"/>
-                                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                              <Component id="lblTongTien" min="-2" pref="180" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lbl3" min="-2" pref="174" max="-2" attributes="0"/>
-                                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                              <Component id="lblVAT" min="-2" pref="180" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lbl5" min="-2" pref="172" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="lblKhachPhaiTra" min="-2" pref="183" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                                              <Component id="lbl4" min="-2" pref="174" max="-2" attributes="0"/>
-                                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                              <Component id="lblSuDungDiemThuong" min="-2" pref="180" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="pnInputCustomer" alignment="0" min="-2" pref="360" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="lblPhuongThucThanhToan" min="-2" pref="174" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="cbbPhuongThucThanhToan" min="-2" pref="178" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="btnSuggest1" min="-2" pref="110" max="-2" attributes="0"/>
-                                          <Component id="btnSuggest4" min="-2" pref="110" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="btnSuggest2" min="-2" pref="110" max="-2" attributes="0"/>
-                                          <Component id="btnSuggest5" min="-2" pref="110" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="btnSuggest6" pref="110" max="32767" attributes="0"/>
-                                          <Component id="btnSuggest3" max="32767" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="lblPhuongThucThanhToan" min="-2" pref="174" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="cbbPhuongThucThanhToan" min="-2" pref="178" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="lblKhachDua" min="-2" pref="174" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="txtTienKhachDua" min="-2" pref="178" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="btnSuggest1" min="-2" pref="110" max="-2" attributes="0"/>
+                                              <Component id="btnSuggest4" min="-2" pref="110" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="btnSuggest2" min="-2" pref="110" max="-2" attributes="0"/>
+                                              <Component id="btnSuggest5" min="-2" pref="110" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="btnSuggest6" pref="110" max="32767" attributes="0"/>
+                                              <Component id="btnSuggest3" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="btnLuuTam" min="-2" pref="148" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="btnThanhToan" min="-2" pref="202" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="8" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lbl7" min="-2" pref="162" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="lblTienThua" min="-2" pref="190" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="pnNote" alignment="0" min="-2" pref="364" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="pnInputCustomer" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -325,7 +343,7 @@
                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lbl4" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="lblSuDungDiemThuong" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="lblDiemThuong" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -342,7 +360,7 @@
                               <Component id="lblPhuongThucThanhToan" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="cbbPhuongThucThanhToan" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnSuggest2" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="btnSuggest1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
@@ -354,17 +372,19 @@
                               <Component id="btnSuggest4" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="btnSuggest6" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lbl7" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="lblTienThua" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="jLabel1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="46" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="pnNote" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnThanhToan" alignment="3" min="-2" pref="100" max="-2" attributes="0"/>
                               <Component id="btnLuuTam" alignment="3" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="4" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -402,14 +422,14 @@
                     <Component class="javax.swing.JTextField" name="txtCustomer">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="pnRightContent.getBackground()" type="code"/>
+                          <Connection code="new Color(0, 0, 0, 0)" type="code"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="66" green="66" red="66" type="rgb"/>
                         </Property>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
-                            <EmptyBorder bottom="1" left="10" right="1" top="1"/>
+                            <EmptyBorder bottom="1" left="10" right="10" top="1"/>
                           </Border>
                         </Property>
                         <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -424,7 +444,7 @@
                         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCustomerKeyReleased"/>
                       </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="txtCustomer.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, &quot; [F3] Th&#xea;m kh&#xe1;ch h&#xe0;ng&quot;);&#xa;//txtCustomer.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;//                + &quot;border:5,0,0,5,$Component.borderColor,,20&quot;);&#xa;txtCustomer.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon(&quot;gui/icon/search.svg&quot;));&#xa;txtCustomer.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_COMPONENT, btnAddCustomer);"/>
+                        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="txtCustomer.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, &quot; [F3] Th&#xea;m kh&#xe1;ch h&#xe0;ng&quot;);&#xa;//txtCustomer.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;//                + &quot;border:5,0,0,5,$Component.borderColor,,20&quot;);&#xa;txtCustomer.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon(&quot;gui/icon/search.svg&quot;));&#xa;txtCustomer.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_COMPONENT, btnAddCustomer);&#xa;txtCustomer.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa; + &quot;showClearButton: true&quot;);"/>
                       </AuxValues>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -448,6 +468,9 @@
                       <Dimension value="[0, 30]"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lblSoLuongSP.setHorizontalAlignment(SwingConstants.RIGHT);"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbl2">
                   <Properties>
@@ -463,6 +486,9 @@
                       <Dimension value="[0, 30]"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lblTongTien.setHorizontalAlignment(SwingConstants.RIGHT);"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbl3">
                   <Properties>
@@ -478,6 +504,9 @@
                       <Dimension value="[0, 30]"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lblVAT.setHorizontalAlignment(SwingConstants.RIGHT);"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbl4">
                   <Properties>
@@ -487,12 +516,15 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblSuDungDiemThuong">
+                <Component class="javax.swing.JLabel" name="lblDiemThuong">
                   <Properties>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[0, 30]"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lblDiemThuong.setHorizontalAlignment(SwingConstants.RIGHT);"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbl5">
                   <Properties>
@@ -512,7 +544,7 @@
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lblKhachPhaiTra.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +3&quot;);"/>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lblKhachPhaiTra.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +3&quot;);&#xa;lblKhachPhaiTra.setHorizontalAlignment(SwingConstants.RIGHT);"/>
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblKhachDua">
@@ -553,6 +585,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="[F7] L&#x1b0;u t&#x1ea1;m"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLuuTamActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="btnLuuTam.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +4&quot;);"/>
                   </AuxValues>
@@ -560,24 +595,26 @@
                 <Component class="javax.swing.JButton" name="btnSuggest1">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="[1]"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblTienThua">
+                <Component class="javax.swing.JLabel" name="lbl7">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Ti&#x1ec1;n th&#x1eeb;a"/>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lblTienThua.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +3&quot;);"/>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lbl7.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +3&quot;);"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel1">
+                <Component class="javax.swing.JLabel" name="lblTienThua">
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jLabel1.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +3&quot;);"/>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lblTienThua.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +3&quot;);&#xa;lblTienThua.setHorizontalAlignment(SwingConstants.RIGHT);"/>
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSuggest2">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="[2]"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuggest2ActionPerformed"/>
@@ -586,6 +623,7 @@
                 <Component class="javax.swing.JButton" name="btnSuggest3">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="[3]"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuggest3ActionPerformed"/>
@@ -605,9 +643,6 @@
                         <StringItem index="2" value="Th&#x1ebb;"/>
                       </StringArray>
                     </Property>
-                    <Property name="alignmentX" type="float" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="RIGHT_ALIGNMENT" type="code"/>
-                    </Property>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -616,29 +651,101 @@
                 <Component class="javax.swing.JButton" name="btnSuggest4">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="[4]"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSuggest5">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="[5]"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSuggest6">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="[6]"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuggest6ActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtTienKhachDua">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="new Color(0, 0, 0, 0)&#xa;    " type="code"/>
+                    </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+                        <MatteColorBorder bottom="2" left="0" right="0" top="0">
+                          <Color PropertyName="color" blue="99" green="99" red="99" type="rgb"/>
+                        </MatteColorBorder>
+                      </Border>
+                    </Property>
+                  </Properties>
                   <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTienKhachDuaFocusGained"/>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTienKhachDuaFocusLost"/>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTienKhachDuaActionPerformed"/>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTienKhachDuaKeyReleased"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="txtTienKhachDua.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +3&quot;);"/>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="txtTienKhachDua.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +3&quot;);&#xa;txtTienKhachDua.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa; + &quot;showClearButton: true&quot;);&#xa;txtTienKhachDua.setHorizontalAlignment(SwingConstants.RIGHT);"/>
                   </AuxValues>
                 </Component>
+                <Container class="javax.swing.JPanel" name="pnNote">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="//pnNote.setVisible(false);"/>
+                  </AuxValues>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel1" min="-2" pref="87" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="txtNote" min="-2" pref="269" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtNote" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="jLabel1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="jLabel1">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Ghi ch&#xfa;"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JLabel(new FlatSVGIcon(&quot;gui/icon/edit.svg&quot;, 0.3f))"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtNote">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new Color(0, 0, 0, 0)&#xa;    " type="code"/>
+                        </Property>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+                            <MatteColorBorder bottom="1" left="0" right="0" top="0">
+                              <Color PropertyName="color" blue="99" green="99" red="99" type="rgb"/>
+                            </MatteColorBorder>
+                          </Border>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -653,13 +760,13 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="14" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="pnFunc" pref="1057" max="32767" attributes="0"/>
-                          <Component id="jScrollPane2" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace pref="16" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane2" alignment="1" min="-2" pref="1057" max="-2" attributes="0"/>
+                          <Component id="pnFunc" alignment="1" min="-2" pref="1057" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -667,10 +774,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="pnFunc" min="-2" pref="178" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="pnFunc" min="-2" pref="118" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -689,57 +796,30 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jButton3" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="btnDeleteAllSP" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="btnDeleteAllSP" min="-2" pref="200" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jButton5" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="btnNote" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="btnNote" min="-2" pref="200" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jButton7" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="btnTempProcess" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="btnTempProcess" min="-2" pref="200" max="-2" attributes="0"/>
                           <EmptySpace pref="65" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jButton9" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="jButton8" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jButton8" min="-2" pref="200" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="btnDeleteAllSP" min="-2" pref="80" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton3" min="-2" pref="80" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="btnNote" min="-2" pref="80" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton5" min="-2" pref="80" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="btnTempProcess" min="-2" pref="80" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton7" min="-2" pref="80" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jButton8" min="-2" pref="80" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton9" min="-2" pref="80" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="btnDeleteAllSP" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="btnNote" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="btnTempProcess" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="jButton8" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
+                          <EmptySpace pref="24" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -765,23 +845,6 @@
                     <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="addStyleBtn(btnDeleteAllSP);"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton3">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="f6" green="da" red="b7" type="rgb"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="jButton1"/>
-                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[80, 40]"/>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JButton" name="btnNote">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -790,28 +853,17 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="[F9] Ghi ch&#xfa; &#x111;&#x1a1;n"/>
+                    <Property name="text" type="java.lang.String" value="[F9] Ghi ch&#xfa; &#x111;&#x1a1;n h&#xe0;ng"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[80, 40]"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNoteActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="addStyleBtn(btnNote);"/>
                   </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="jButton5">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="f6" green="da" red="b7" type="rgb"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="jButton1"/>
-                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[80, 40]"/>
-                    </Property>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnTempProcess">
                   <Properties>
@@ -830,20 +882,6 @@
                     <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="addStyleBtn(btnTempProcess);"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton7">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="f6" green="da" red="b7" type="rgb"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="jButton1"/>
-                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[80, 40]"/>
-                    </Property>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JButton" name="jButton8">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -852,25 +890,14 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jButton1"/>
+                    <Property name="text" type="java.lang.String" value="Xem danh s&#xe1;ch s&#x1ea3;n ph&#x1ea9;m"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[80, 40]"/>
                     </Property>
                   </Properties>
-                </Component>
-                <Component class="javax.swing.JButton" name="jButton9">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="f6" green="da" red="b7" type="rgb"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="jButton1"/>
-                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[80, 40]"/>
-                    </Property>
-                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="addStyleBtn(jButton8);"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -896,7 +923,7 @@
                         <Column editable="false" title="maSP" type="java.lang.String"/>
                         <Column editable="false" title="tenSP" type="java.lang.String"/>
                         <Column editable="false" title="donVi" type="java.lang.String"/>
-                        <Column editable="true" title="soLuong" type="java.lang.Integer"/>
+                        <Column editable="true" title="soLuong" type="java.lang.Object"/>
                         <Column editable="false" title="donGia" type="java.lang.Double"/>
                         <Column editable="false" title="thanhTien" type="java.lang.Double"/>
                         <Column editable="true" title="btnDelete" type="java.lang.String"/>
@@ -905,8 +932,9 @@
                     <Property name="cellSelectionEnabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="false" type="code"/>
                     </Property>
-                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="table.getColumnModel().getColumn(8).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());&#xa;table.getColumnModel().getColumn(8).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {&#xa;    @Override&#xa;    public void onDelete(int row) {&#xa;        if (row &gt;= 0 &amp;&amp; row &lt; table.getRowCount()) {&#xa;            ((DefaultTableModel) table.getModel()).removeRow(row);&#xa;            ((DefaultTableModel) table.getModel()).fireTableDataChanged();&#xa;        }&#xa;        updateLblSoLuongSP();&#xa;    }&#xa;}));&#xa;&#xa;table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(this));&#xa;table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());&#xa;//table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());&#xa;//table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(new QuantityCellEvent() {&#xa;//    @Override&#xa;//    public void onIncrease(int row) {&#xa;//        int currentQuantity = (int) table.getValueAt(row, 5);&#xa;//        table.setValueAt(currentQuantity + 1, row, 5);&#xa;//        updateThanhTien(row, currentQuantity + 1);&#xa;//    }&#xa;//    &#xa;//    @Override&#xa;//    public void onDecrease(int row) {&#xa;//        int currentQuantity = (int) table.getValueAt(row, 5);&#xa;//        if (currentQuantity &gt; 1) {&#xa;//            table.setValueAt(currentQuantity - 1, row, 5);&#xa;//            updateThanhTien(row, currentQuantity - 1);&#xa;//        }&#xa;//    }&#xa;//&#xa;//    @Override&#xa;//    public void onUpdateQuantity(int row) {&#xa;//        int newQuantity = Integer.parseInt(table.getValueAt(row, 5).toString());&#xa;//        if (newQuantity &lt; 1) {&#xa;//            newQuantity = 1; // Gi&#x1eef; s&#x1ed1; l&#x1b0;&#x1ee3;ng t&#x1ed1;i thi&#x1ec3;u l&#xe0; 1&#xa;//        }&#xa;//        table.setValueAt(newQuantity, row, 5);&#xa;//        updateThanhTien(row, newQuantity);&#xa;//    }&#xa;//}));">
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="table.getColumnModel().getColumn(8).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());&#xa;table.getColumnModel().getColumn(8).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {&#xa;    @Override&#xa;    public void onDelete(int row) {&#xa;        if (row &gt;= 0 &amp;&amp; row &lt; table.getRowCount()) {&#xa;            ((DefaultTableModel) table.getModel()).removeRow(row);&#xa;            for(int i = 0; i &lt; table.getRowCount(); ++i) {&#xa;                table.setValueAt((int)table.getValueAt(i, 0) - 1, i, 0);&#xa;            }&#xa;            ((DefaultTableModel) table.getModel()).fireTableDataChanged();&#xa;        }&#xa;        updateLblSoLuongSP();&#xa;    }&#xa;}));&#xa;&#xa;table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(this));&#xa;table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());&#xa;table.setTableHeader(null);">
                       <TableColumnModel selectionModel="0">
+<<<<<<< HEAD
                         <Column maxWidth="-1" minWidth="-1" prefWidth="20" resizable="false">
                           <Title/>
                           <Editor/>
@@ -925,6 +953,9 @@
                           <Renderer/>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="200" resizable="false">
+=======
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="30" resizable="false">
+>>>>>>> 0ee568a102cedaeb3911f8b093f2fa0a4f4b1803
                           <Title/>
                           <Editor/>
                           <Renderer/>
@@ -936,7 +967,22 @@
                             <ComponentRef name="null"/>
                           </Renderer>
                         </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="120" resizable="false">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="280" resizable="false">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="100" resizable="false">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="50" resizable="false">
                           <Title/>
                           <Editor/>
                           <Renderer/>
@@ -951,7 +997,7 @@
                           <Editor/>
                           <Renderer/>
                         </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="30" resizable="false">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="60" resizable="false">
                           <Title/>
                           <Editor/>
                           <Renderer/>

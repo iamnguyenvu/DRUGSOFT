@@ -12,7 +12,7 @@ public class KhachHang_entity {
         this.tenKH = tenKH;
         this.sdtKH = sdtKH;
         this.diemThuong = diemThuong;
-        setGioiTinh(gioiTinh);
+        this.gioiTinh = gioiTinh;
     }
     
 
@@ -57,11 +57,7 @@ public class KhachHang_entity {
     }
 
     public void setGioiTinh(String gioiTinh) {
-        if ("Nam".equalsIgnoreCase(gioiTinh) || "Nữ".equalsIgnoreCase(gioiTinh)) {
-            this.gioiTinh = gioiTinh;
-        } else {
-            throw new IllegalArgumentException("Giới tính phải là 'Nam' hoặc 'Nữ'");
-        }
+        this.gioiTinh = gioiTinh;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -157,35 +158,126 @@ public class SanPham_DAO {
 	    return dssp;
 	}
 
+	public boolean themSanPham(SanPham_entity sp) {
+	    Connection con = connectDB.accessDataBase();
+
+	    String sql = "INSERT INTO SanPham (maSP, tenSP, ngaySanXuat, ngayHetHan, nhaCungCap, gia, thanhPhan, congDung, hinhAnhSP, maLoaiSP, soLuong, khoiLuong, donViTinh) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+	    try {
+	        PreparedStatement pst = con.prepareStatement(sql);
+	        pst.setString(1, sp.getMaSP());
+	        pst.setString(2, sp.getTenSP());
+	        pst.setDate(3, java.sql.Date.valueOf(sp.getNgaySanXuat())); // Chuyển đổi LocalDate sang sql.Date
+	        pst.setDate(4, java.sql.Date.valueOf(sp.getNgayHetHan()));
+	        pst.setString(5, sp.getNhaCungCap());
+	        pst.setDouble(6, sp.getGia());
+	        pst.setString(7, sp.getThanhPhan());
+	        pst.setString(8, sp.getCongDung());
+	        pst.setString(9, sp.getHinhAnhSP());
+	        pst.setString(10, sp.getLoaiSanPham().getMaLoaiSP());
+	        pst.setInt(11, sp.getSoLuong());
+	        pst.setDouble(12, sp.getKhoiLuong());
+	        pst.setString(13, sp.getDonViTinh());
+
+	        int rowInserted = pst.executeUpdate();
+
+	        pst.close();
+	        con.close();
+
+	        return rowInserted > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+ 
+	public boolean xoaSanPham(String maSP) {
+	    Connection con = connectDB.accessDataBase();
+	    String sql = "DELETE FROM SanPham WHERE maSP = ?";
+	    try {
+	        PreparedStatement pst = con.prepareStatement(sql);
+	        pst.setString(1, maSP);
+	        int rowDelete = pst.executeUpdate();
+	        
+	        pst.close();
+	        con.close();
+	        
+	        // Trả về true nếu có ít nhất một dòng bị xóa
+	        return rowDelete > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+
+
+	// Phương thức cập nhật sản phẩm
+	public boolean capNhatSanPham(SanPham_entity sp) {
+	    Connection con = connectDB.accessDataBase();
+
+	    String sql = "UPDATE SanPham SET tenSP = ?, soLuong = ?, ngaySanXuat = ?, ngayHetHan = ?, khoiLuong = ?, donViTinh = ?, nhaCungCap = ?, gia = ?, thanhPhan = ?, congDung = ?, hinhAnhSP = ?, maLoaiSP = ? WHERE maSP = ?";
+	    
+	    try (PreparedStatement stmt = con.prepareStatement(sql)) {
+	        stmt.setString(1, sp.getTenSP());
+	        stmt.setInt(2, sp.getSoLuong());
+	        
+	        // Chuyển đổi LocalDate sang java.sql.Date
+	        stmt.setDate(3, Date.valueOf(sp.getNgaySanXuat())); // Ngày sản xuất
+	        stmt.setDate(4, Date.valueOf(sp.getNgayHetHan())); // Ngày hết hạn
+
+	        stmt.setDouble(5, sp.getKhoiLuong());
+	        stmt.setString(6, sp.getDonViTinh());
+	        stmt.setString(7, sp.getNhaCungCap());
+	        stmt.setDouble(8, sp.getGia());
+	        stmt.setString(9, sp.getThanhPhan());
+	        stmt.setString(10, sp.getCongDung());
+	        stmt.setString(11, sp.getHinhAnhSP());
+	        stmt.setString(12, sp.getLoaiSanPham().getMaLoaiSP());
+	        stmt.setString(13, sp.getMaSP()); // Điều kiện WHERE
+
+	        int rowUpdated = stmt.executeUpdate();
+	        return rowUpdated > 0; // Trả về true nếu có dòng được cập nhật
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false; // Trả về false nếu có lỗi xảy ra
+	    } finally {
+	        try {
+	            if (con != null && !con.isClosed()) {
+	                con.close(); // Đóng kết nối nếu nó không null
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
 
 
     // Get product price by maSP
     public double getGia(String maSP) {
-//        Connection con = connectDB.accessDataBase();
-//        if (con == null) return 0;
-//        PreparedStatement ps = null;
-//        ResultSet rs = null;
-//        double gia = 0;
-//        try {
-//            ps = con.prepareStatement("SELECT gia FROM SanPham WHERE maSP = ?");
-//            ps.setString(1, maSP);
-//            rs = ps.executeQuery();
-//            if (rs.next()) {
-//                gia = rs.getDouble("gia");
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (rs != null) rs.close();
-//                if (ps != null) ps.close();
-//                if (con != null) con.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return gia;
-        return 100000.0; // Hardcoded example
+        Connection con = connectDB.accessDataBase();
+        if (con == null) return 0;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        double gia = 0;
+        try {
+            ps = con.prepareStatement("SELECT gia FROM SanPham WHERE maSP = ?");
+            ps.setString(1, maSP);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                gia = rs.getDouble("gia");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return gia;
     }
 
     // Get product supplier by maSP

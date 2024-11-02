@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -241,7 +243,7 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 
 		cb_DonViTinh = new JComboBox();
 		cb_DonViTinh.setBounds(419, 103, 249, 34);
-		cb_DonViTinh.addItem("Vĩ");
+		cb_DonViTinh.addItem("Vỉ");
 		cb_DonViTinh.addItem("Viên");
 		cb_DonViTinh.addItem("Chai");
 
@@ -343,6 +345,21 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		btnXacNhan.addActionListener(this);
 
 	}
+	public static String generateMovieCode(String key) {
+	    Calendar now = Calendar.getInstance();
+	    int currentYear = now.get(Calendar.YEAR) % 100; // Lấy 2 chữ số cuối của năm
+	    int currentMonth = now.get(Calendar.MONTH) + 1;
+	    int currentDay = now.get(Calendar.DAY_OF_MONTH);
+	    
+	    Random random = new Random();
+	    int randomDigits = 10000 + random.nextInt(90000); // Tạo 5 chữ số ngẫu nhiên
+
+	    // Tạo mã sản phẩm với định dạng yêu cầu
+	    String ma = key.toUpperCase() + String.format("%02d%02d%02d", currentYear, currentMonth, currentDay) + randomDigits;
+	    return ma;
+	}
+
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -350,7 +367,7 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		if (o.equals(btnXacNhan)) {
 			try {
 				// Kiểm tra thông tin đầu vào
-				String maSP = "sp1"; // Ví dụ mã sản phẩm tạm thời
+				String maSP = generateMovieCode("SP");
 				String tenSP = tf_Tensp.getText();
 				if (tenSP.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Tên sản phẩm không được để trống.", "Lỗi",

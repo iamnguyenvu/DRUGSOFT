@@ -3,6 +3,8 @@ package gui;
 import javax.swing.JPanel;
 
 import nguyenvu.components.SimpleForm;
+import nguyenvu.utils.RoundedPanel;
+
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -59,9 +61,9 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		add(pnContent, BorderLayout.CENTER);
 		pnContent.setLayout(null);
 		
-		JPanel pnHeader = new JPanel();
+		RoundedPanel pnHeader = new RoundedPanel(50);
 		pnHeader.setBounds(0, 0, 1500, 70);
-		pnHeader.setBackground(new Color(255, 255, 255));
+		pnHeader.setBackground(new Color(11,101,136));
 		pnHeader.setPreferredSize(new Dimension(1500, 70));
 		pnContent.add(pnHeader);
 		pnHeader.setLayout(null);
@@ -72,7 +74,9 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		pnHeader.add(lbmainTiTle);
 		
 		tf_TimKiem = new JTextField();
-		tf_TimKiem.setBounds(236, 10, 558, 37);
+		tf_TimKiem.setFont(new Font("Arial", Font.PLAIN, 15));
+		tf_TimKiem.setBounds(236, 10, 628, 37);
+		tf_TimKiem.setBackground(new Color(11, 101, 136));
 		pnHeader.add(tf_TimKiem);
 		tf_TimKiem.setColumns(10);
 		
@@ -103,7 +107,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 
         // Khởi tạo với placeholder
         tf_TimKiem.setText("Nhập Mã Hóa Đơn"); // Hiện placeholder
-        tf_TimKiem.setForeground(Color.GRAY); // Đặt màu xám cho văn bản placeholder
+        tf_TimKiem.setForeground(new Color(255, 255, 255)); // Đặt màu xám cho văn bản placeholder
 		
 		btnTimKiem = new JButton(new FlatSVGIcon("gui/icon/search_123.svg",0.6f));
 		btnTimKiem.addActionListener(new ActionListener() {
@@ -117,7 +121,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		        List<HoaDon_entity> filter = hd_Dao.timKiem(searchText); // Assume this method exists
 		        for (HoaDon_entity hd : filter) {
 		            df_HoaDon.addRow(new Object[]{
-		                hd.getMaHD(),hd.getNgayLapHD(),hd.getTongTien(),hd.getTienKhachTra(),hd.getHinhThucThanhToan(),hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành",hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getLoaiHoaDon().getMaLoaiHD(),hd.getGhiChu()
+		                hd.getMaHD(),hd.getNgayLapHD(),hd.getTongTien(),hd.getTienGiam(),hd.getHinhThucThanhToan(),hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành",hd.getKhachHang().getSdtKH(),hd.getNhanVien().getMaNV(),hd.getLoaiHoaDon().getMaLoaiHD()
 		                // Add actions for Update and Delete as necessary
 		            });
 		        }
@@ -125,7 +129,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		        
 		    }
 		});
-		btnTimKiem.setBounds(804, 10, 41, 38);
+		btnTimKiem.setBounds(874, 10, 41, 38);
 		pnHeader.add(btnTimKiem);
 		
 		JPanel pnCenter = new JPanel();
@@ -134,7 +138,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		pnContent.add(pnCenter);
 		pnCenter.setLayout(null);
 		
-		String []collName = {"Mã Hóa Đơn","Ngày Lập","Tổng Tiền","Tiền Khách Trả","Hình Thức Thanh Toán","Trạng Thái","Mã Khách Hàng","Mã Nhân Viên","Mã Loại HD","Ghi Chú"};
+		String []collName = {"Mã Hóa Đơn","Ngày Lập","Tổng Tiền","Tiền Giảm","Hình Thức Thanh Toán","Trạng Thái","Mã Khách Hàng","Mã Nhân Viên","Mã Loại HD"};
 				
 		df_HoaDon = new DefaultTableModel(collName, 0);
 		tb_HoaDon = new JTable(df_HoaDon);
@@ -226,7 +230,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 	private void docDuLieuVaoTable() {
 		List<HoaDon_entity> dshd = hd_Dao.getALLHoaDon();
 		for (HoaDon_entity hd : dshd) {
-			df_HoaDon.addRow(new Object[] {hd.getMaHD(),hd.getNgayLapHD(),hd.getTongTien(),hd.getTienKhachTra(),hd.getHinhThucThanhToan(),hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành",hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getLoaiHoaDon().getMaLoaiHD(),hd.getGhiChu()});
+			df_HoaDon.addRow(new Object[] {hd.getMaHD(),hd.getNgayLapHD(),hd.getTongTien(),hd.getTienGiam(),hd.getHinhThucThanhToan(),hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành",hd.getKhachHang().getSdtKH(),hd.getNhanVien().getMaNV(),hd.getLoaiHoaDon().getMaLoaiHD()});
 		}
 	}
 	private void locHoaDon() {
@@ -272,13 +276,12 @@ public class HoaDon extends SimpleForm implements ActionListener{
 	            hd.getMaHD(),
 	            hd.getNgayLapHD(),
 	            hd.getTongTien(),
-	            hd.getTienKhachTra(),
+	            hd.getTienGiam(),
 	            hd.getHinhThucThanhToan(),
 	            hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành", // Hiển thị trạng thái bằng chuỗi
-	            hd.getKhachHang().getMaKH(),
+	            hd.getKhachHang().getSdtKH(),
 	            hd.getNhanVien().getMaNV(),
-	            hd.getLoaiHoaDon().getMaLoaiHD(),
-	            hd.getGhiChu()
+	            hd.getLoaiHoaDon().getMaLoaiHD()
 	        });
 	    }
 	}

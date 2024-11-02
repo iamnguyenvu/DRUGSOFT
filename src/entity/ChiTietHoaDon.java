@@ -1,35 +1,38 @@
 package entity;
 
 public class ChiTietHoaDon {
-    private String maCTHD; // Mã chi tiết hóa đơn
+    private String maHD; // Mã chi tiết hóa đơn
+    private String maSP;
     private int soLuongSanPham; // Số lượng sản phẩm
-    private double tongTien; // Tổng tiền
-    private HoaDon_entity hoaDon; // Hóa đơn liên kết
-    private SanPham_entity sanPham; // Sản phẩm liên kết
+    private double thanhTien;
 
     // Constructor mặc định
     public ChiTietHoaDon() {
     }
 
-    // Constructor với đầy đủ tham số
-    public ChiTietHoaDon(String maCTHD, int soLuongSanPham, double tongTien, HoaDon_entity hoaDon, SanPham_entity sanPham) {
-        this.maCTHD = maCTHD;
+    public ChiTietHoaDon(String maHD, String maSP, int soLuongSanPham, double thanhTien) {
+        this.maHD = maHD;
+        this.maSP = maSP;
         this.soLuongSanPham = soLuongSanPham;
-        this.tongTien = tongTien;
-        this.hoaDon = hoaDon;
-        this.sanPham = sanPham;
+        this.thanhTien = thanhTien;
     }
 
-    // Getter và Setter cho maCTHD
-    public String getMaCTHD() {
-        return maCTHD;
+    public String getMaHD() {
+        return maHD;
     }
 
-    public void setMaCTHD(String maCTHD) {
-        this.maCTHD = maCTHD;
+    public void setMaHD(String maHD) {
+        this.maHD = maHD;
     }
 
-    // Getter và Setter cho soLuongSanPham
+    public String getMaSP() {
+        return maSP;
+    }
+
+    public void setMaSP(String maSP) {
+        this.maSP = maSP;
+    }
+
     public int getSoLuongSanPham() {
         return soLuongSanPham;
     }
@@ -38,41 +41,16 @@ public class ChiTietHoaDon {
         this.soLuongSanPham = soLuongSanPham;
     }
 
-    // Getter và Setter cho tongTien
-    public double getTongTien() {
-        return tongTien;
+    public double getThanhTien() {
+        return thanhTien;
     }
 
-    public void setTongTien(double tongTien) {
-        this.tongTien = tongTien;
-    }
-
-    // Getter và Setter cho hoaDon
-    public HoaDon_entity getHoaDon() {
-        return hoaDon;
-    }
-
-    public void setHoaDon(HoaDon_entity hoaDon) {
-        this.hoaDon = hoaDon;
-    }
-
-    // Getter và Setter cho sanPham
-    public SanPham_entity getSanPham() {
-        return sanPham;
-    }
-
-    public void setSanPham(SanPham_entity sanPham) {
-        this.sanPham = sanPham;
+    public void setThanhTien(double thanhTien) {
+        this.thanhTien = thanhTien;
     }
 
     @Override
     public String toString() {
-        return "ChiTietHoaDon{" +
-                "maCTHD='" + maCTHD + '\'' +
-                ", soLuongSanPham=" + soLuongSanPham +
-                ", tongTien=" + tongTien +
-                ", hoaDon=" + (hoaDon != null ? hoaDon.getMaHD() : "null") +
-                ", sanPham=" + (sanPham != null ? sanPham.getTenSP() : "null") +
-                '}';
+        return "ChiTietHoaDon{" + "maHD=" + maHD + ", maSP=" + maSP + ", soLuongSanPham=" + soLuongSanPham + ", thanhTien=" + thanhTien + '}';
     }
 }

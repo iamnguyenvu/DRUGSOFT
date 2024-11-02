@@ -12,7 +12,9 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import gui.BanHang;
+import gui.DoiTra;
 import gui.DoiTraSanPham;
+import gui.ThongKe_GUI;
 import nguyenvu.forms.DashboardForm;
 import nguyenvu.forms.ReadForm;
 import nguyenvu.forms.StatisticalForm;
@@ -135,12 +137,13 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item("Khách hàng", "ui.svg"),
             new Item("Nhân viên", "icon.svg"),        
             new Item("Tài khoản", "key.svg"),
-            new Item("Thống kê", "chart.svg"),
-//            .subMenu("Sản phẩm sắp hết hạn")
-//            .subMenu("Sản phẩm sắp hết hàng")
-//            .subMenu("Doanh số nhân viên")
-//            .subMenu("Doanh số tổng quan"),
-            new Item("Báo cáo", "page.svg"),
+            new Item("Thống kê", "chart.svg")
+            .subMenu("Thống kê doanh thu")
+            .subMenu("Thống kê sản phẩm"),
+            new Item("Báo cáo", "page.svg")
+            .subMenu("Sản phẩm")
+            .subMenu("Khách hàng")
+            .subMenu("Nhân viên"),
             new Item.Label("KHÁC"),
             new Item("Đăng xuất", "logout.svg")
         };
@@ -216,10 +219,10 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     	FormManager.showForm(new gui.ManHinhNen());
                     }
                     if (index[0] == 1) {
-                        FormManager.showForm(new BanHang());
+                        FormManager.showForm(new BanHang(user));
                     }
                     if (index[0] == 2) {
-                        FormManager.showForm(new DoiTraSanPham());
+                        FormManager.showForm(new DoiTra(user));
                     }
                     if (index[0] == 3) {
                     	FormManager.showForm(new gui.SanPham());
@@ -228,29 +231,42 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     	FormManager.showForm(new gui.HoaDon());
                     }
                     if (index[0] == 5) {
+<<<<<<< HEAD
                     	FormManager.showForm(new gui.KhachHang_GUI());
                     }
                     if (index[0] == 7) {
                     	FormManager.showForm(new gui.TaiKhoan_GUI());
+=======
+                    	
+>>>>>>> 0ee568a102cedaeb3911f8b093f2fa0a4f4b1803
                     }
                     if (index[0] == 8) {
-                    	FormManager.showForm(new StatisticalForm());
+                    	FormManager.showForm(new ThongKe_GUI());
                     }
                     if (index[0] == 10) {
                         // logout
                         FormManager.logout();
                     }
                 } 
-//                else if (index.length == 2) {
-//                    if (index[0] == 7) {
-//                        if (index[1] == 0) {
-//                            FormManager.showForm(new StatisticalForm());
-//                        }
+                else if (index.length == 2) {
+                    
+                    if (index[0] == 7) {
+                        if (index[1] == 0) {
+                            FormManager.showForm(new StatisticalForm());
+                        }
 //                        if (index[1] == 1) {
 //                            FormManager.showForm(new ReadForm());
 //                        }
-//                    }
-//                }
+                    }
+                    if (index[0] == 7) {
+                        if (index[1] == 0) {
+                            FormManager.showForm(new StatisticalForm());
+                        }
+//                        if (index[1] == 1) {
+//                            FormManager.showForm(new ReadForm());
+//                        }
+                    }
+                }
             }
         });
 

@@ -42,11 +42,11 @@ public class TaiKhoan_GUI extends SimpleForm {
         radioLoc();
         setDefaultState();
         loadDataToTable(); 
-}
+    }
     
     private void initializeDatabase() {
         connectDB.connectDB.accessDataBase();
-}
+    }
 
     private void setDefaultState() {
         radioHoatDong.setSelected(true);  // Thiết lập trạng thái mặc định là 'Hoạt động'
