@@ -175,7 +175,7 @@ public class DoiTra_DAO {
                 stmt.setString(5, hd.getHinhThucThanhToan());
                 stmt.setBoolean(6, true);
                 stmt.setString(7, hd.getGhiChu());
-                stmt.setString(8, hd.getMaHD());
+                stmt.setString(8, hd.getSdtKH());
                 stmt.setString(9, hd.getMaNV());
                 stmt.setString(10, hd.getMaLoaiHoaDon());
                 n = stmt.executeUpdate();
