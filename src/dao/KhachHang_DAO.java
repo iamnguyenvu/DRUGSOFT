@@ -160,7 +160,7 @@ public class KhachHang_DAO {
             // Giới hạn độ dài các trường trước khi gán vào PreparedStatement
             stmt.setString(1, kh.getTenKH().trim().substring(0, Math.min(kh.getTenKH().length(), 50))); // tối đa 50 ký tự
             stmt.setString(2, kh.getGioiTinh().trim());  // giới tính đã được giới hạn là "Nam" hoặc "Nữ"
-            stmt.setString(3, kh.getsdtKH().trim().substring(0, Math.min(kh.getsdtKH().length(), 10))); // tối đa 10 ký tự
+            stmt.setString(3, kh.getSdtKH().trim().substring(0, Math.min(kh.getSdtKH().length(), 10))); // tối đa 10 ký tự
             stmt.setString(4, soDTGoc);  // Điều kiện WHERE
 
             return stmt.executeUpdate() > 0;
@@ -186,7 +186,7 @@ public class KhachHang_DAO {
 
             // Đặt các giá trị cho các tham số truy vấn
             stmt.setString(1, kh.getTenKH().trim().substring(0, Math.min(kh.getTenKH().length(), 50))); // Tên KH, tối đa 50 ký tự
-            stmt.setString(2, kh.getsdtKH().trim().substring(0, Math.min(kh.getsdtKH().length(), 10))); // Số điện thoại, tối đa 10 ký tự
+            stmt.setString(2, kh.getSdtKH().trim().substring(0, Math.min(kh.getSdtKH().length(), 10))); // Số điện thoại, tối đa 10 ký tự
             stmt.setInt(3, 0);  // Điểm thưởng mặc định là 0 cho khách hàng mới
             stmt.setString(4, kh.getGioiTinh().trim()); // Giới tính, chỉ "Nam" hoặc "Nữ"
 

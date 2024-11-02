@@ -460,7 +460,7 @@ public class KhachHang_GUI extends SimpleForm {
             KhachHang_entity kh = khachHangDAO.timKhachHangTheoSDT(keyword);
             if (kh != null) {
                 // Thêm khách hàng vào bảng nếu tìm thấy
-                model.addRow(new Object[]{1, kh.getTenKH(), kh.getsdtKH(), kh.getDiemThuong(), kh.getGioiTinh()});
+                model.addRow(new Object[]{1, kh.getTenKH(), kh.getSdtKH(), kh.getDiemThuong(), kh.getGioiTinh()});
             } else {
                 JOptionPane.showMessageDialog(this, "Không tìm thấy khách hàng với số điện thoại: " + keyword);
             }
@@ -472,7 +472,7 @@ public class KhachHang_GUI extends SimpleForm {
                 int stt = 1;
                 // Thêm tất cả khách hàng tìm thấy vào bảng
                 for (KhachHang_entity kh : danhSachKhachHang) {
-                    model.addRow(new Object[]{stt++, kh.getTenKH(), kh.getsdtKH(), kh.getDiemThuong(), kh.getGioiTinh()});
+                    model.addRow(new Object[]{stt++, kh.getTenKH(), kh.getSdtKH(), kh.getDiemThuong(), kh.getGioiTinh()});
                 }
             }
         }
@@ -536,7 +536,7 @@ public class KhachHang_GUI extends SimpleForm {
                 model.addRow(new Object[]{
                     stt++,
                     kh.getTenKH(),
-                    kh.getsdtKH(),
+                    kh.getSdtKH(),
                     kh.getDiemThuong(),
                     kh.getGioiTinh()
                 });
@@ -704,7 +704,7 @@ public class KhachHang_GUI extends SimpleForm {
         // Hiển thị dữ liệu đã lọc lên bảng
         int stt = 1;
         for (KhachHang_entity kh : danhSachKhachHang) {
-            model.addRow(new Object[]{stt++, kh.getTenKH(), kh.getsdtKH(), kh.getDiemThuong(), kh.getGioiTinh()});
+            model.addRow(new Object[]{stt++, kh.getTenKH(), kh.getSdtKH(), kh.getDiemThuong(), kh.getGioiTinh()});
         }
 
         // Hiển thị thông báo nếu không tìm thấy kết quả nào

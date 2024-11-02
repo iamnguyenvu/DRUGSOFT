@@ -18,13 +18,17 @@
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/entity/LoaiNhanVien_entity.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/vi/ButtonRenderer.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/entity/ChiTietHoaDon.java</file>
+            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/LoaiNhanVien_DAO.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/vi/ButtonEditorKhachHang.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/vi/ButtonEditor.java</file>
+            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/LoaiHoaDon_DAO.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/entity/NhanVien_entity.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/HoaDon_DAO.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/BanHang_DAO.java</file>
+            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/LoaiSanPham_DAO.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/DoiTra.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/HoaDon.java</file>
+            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/NhanVien_DAO.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/KhachHang_GUI.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/ChiTietHoaDon_DAO.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/nguyenvu/application/Application.java</file>

@@ -34,7 +34,7 @@ public class KhachHang_entity {
     }
 
     // Getter và Setter cho SDT
-    public String getsdtKH() {
+    public String getSdtKH() {
         return sdtKH;
     }
 

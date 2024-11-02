@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -144,7 +145,7 @@ public class DoiTra_DAO {
             ps.setString(1, maHD);
             rs = ps.executeQuery();
             if (rs.next()) {
-                return new HoaDon_entity(rs.getString("maHD"), rs.getTimestamp("ngayLapHD").toLocalDateTime());
+                return new HoaDon_entity(rs.getString("maHD"), rs.getTimestamp("ngayLapHD").toLocalDateTime(), rs.getString("hinhThucThanhToan"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -161,7 +162,33 @@ public class DoiTra_DAO {
         return null;
     }
     
-    public boolean createHDDT(HoaDon_entity hddt) {
-        return false;
+    public boolean createHD(HoaDon_entity hd) {
+        Connection con = connectDB.accessDataBase();
+        PreparedStatement stmt = null;
+        int n = 0;
+        try {
+                stmt = con.prepareStatement("INSERT INTO HoaDon VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                stmt.setString(1, hd.getMaHD());
+                stmt.setTimestamp(2, Timestamp.valueOf(hd.getNgayLapHD()));
+                stmt.setDouble(3, hd.getTongTien());
+                stmt.setDouble(4, hd.getTienGiam());
+                stmt.setString(5, hd.getHinhThucThanhToan());
+                stmt.setBoolean(6, true);
+                stmt.setString(7, hd.getGhiChu());
+                stmt.setString(8, hd.getMaHD());
+                stmt.setString(9, hd.getMaNV());
+                stmt.setString(10, hd.getMaLoaiHoaDon());
+                n = stmt.executeUpdate();
+        } catch (SQLException e) {
+                // TODO: handle exception
+                e.printStackTrace();
+        } finally {
+                 try {
+             stmt.close();
+         } catch (SQLException e) {
+              e.printStackTrace();
+         }
+        }
+        return n>0;
     }
 }
