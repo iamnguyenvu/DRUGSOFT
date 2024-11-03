@@ -17,18 +17,18 @@ public class MoneySuggestion {
 
         suggestions.add(tongTien);
 
-        int nearestRounded = (tongTien % 10000 == 0) ? tongTien : ((tongTien / 10000) + 1) * 10000;
+        int nearestRounded = (tongTien % 1000 == 0) ? tongTien : ((tongTien / 1000) + 1) * 1000;
         if (nearestRounded != tongTien) {
             suggestions.add(nearestRounded);
         }
 
         int[] increments;
         if (tongTien <= 500000) {
-            increments = new int[]{10000, 20000, 50000, 100000, 200000, 500000};
+            increments = new int[]{1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000};
         } else if (tongTien <= 1000000) {
-            increments = new int[]{10000, 20000, 50000, 100000, 200000, 500000, 1000000};
+            increments = new int[]{1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000};
         } else {
-            increments = new int[]{10000, 20000, 50000, 100000, 200000, 500000, 1000000, 2000000};
+            increments = new int[]{1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000, 2000000};
         }
 
         for (int increment : increments) {

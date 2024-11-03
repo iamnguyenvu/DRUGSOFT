@@ -68,6 +68,7 @@ import nguyenvu.menu.FormManager;
 import nguyenvu.model.ModelItemSell;
 import nguyenvu.model.ModelUser;
 import nguyenvu.utils.CustomerSelectListener;
+import nguyenvu.utils.ImageRenderer;
 import nguyenvu.utils.LayerSearchList;
 import nguyenvu.utils.ListCustomerPanel;
 import nguyenvu.utils.ListProductSearchPanel;
@@ -795,6 +796,8 @@ public class BanHang extends SimpleForm {
         table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());
         table.setTableHeader(null);
 
+        table.getColumnModel().getColumn(1).setCellRenderer(new ImageRenderer());
+
         javax.swing.GroupLayout pnLeftContentLayout = new javax.swing.GroupLayout(pnLeftContent);
         pnLeftContent.setLayout(pnLeftContentLayout);
         pnLeftContentLayout.setHorizontalGroup(
@@ -837,7 +840,7 @@ public class BanHang extends SimpleForm {
                 .addComponent(pnRightContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(pnContentLayout.createSequentialGroup()
-                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
+                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
