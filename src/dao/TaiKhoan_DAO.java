@@ -1,58 +1,40 @@
 package dao;
 
-import java.sql.Connection;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import connectDB.connectDB;
+import java.sql.*;
 import entity.TaiKhoan_entity;
-
+import connectDB.connectDB;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class TaiKhoan_DAO {
 
     // Get TaiKhoan by tenDangNhap
     public String getTaiKhoanInfo(String tenDangNhap) {
-        Connection con = connectDB.accessDataBase();
-        if (con == null) return null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String info = null;
-        try {
-            ps = con.prepareStatement("SELECT * FROM TaiKhoan WHERE tenDangNhap = ?");
+        String sql = "SELECT * FROM TaiKhoan WHERE tenDangNhap = ?";
+        try (Connection con = connectDB.accessDataBase();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
             ps.setString(1, tenDangNhap);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                info = "Tên Đăng Nhập: " + tenDangNhap + 
-                       ", Mật Khẩu: " + rs.getString("matKhau");
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return "Tên Đăng Nhập: " + tenDangNhap + 
+                           ", Mật Khẩu: " + rs.getString("matKhau");
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (con != null) con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
-        return info;
+        return null;
     }
 
     // Get all TaiKhoan
-    // Get all TaiKhoan
     public ArrayList<TaiKhoan_entity> getAllTaiKhoan() {
         ArrayList<TaiKhoan_entity> dsTaiKhoan = new ArrayList<>();
-        Connection con = connectDB.accessDataBase();  // Kết nối tới SQL Server
-        if (con == null) return null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        String sql = "SELECT * FROM TaiKhoan";
 
-        try {
-            ps = con.prepareStatement("SELECT * FROM TaiKhoan");  // Truy vấn SQL
-            rs = ps.executeQuery();
+        try (Connection con = connectDB.accessDataBase();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 String tenTK = rs.getString("tenDangNhap");
@@ -60,101 +42,93 @@ public class TaiKhoan_DAO {
                 boolean pQ = rs.getBoolean("phanQuyen");
                 boolean tt = rs.getBoolean("trangThai");
 
-                // Khởi tạo đối tượng TaiKhoan và thêm vào danh sách
-                TaiKhoan_entity tk = new TaiKhoan_entity(tenTK, mK, pQ, tt);
-                dsTaiKhoan.add(tk);
+                dsTaiKhoan.add(new TaiKhoan_entity(tenTK, mK, pQ, tt));
             }
         } catch (SQLException e) {
-            e.printStackTrace();  // Hiển thị lỗi nếu có
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (con != null) con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
-
-        return dsTaiKhoan;  // Trả về danh sách tài khoản
+        return dsTaiKhoan;
     }
 
-
-
-
-    
-    // Thêm tài khoản với đầy đủ thông tin
+    // Thêm tài khoản
     public boolean addTaiKhoan(String tenDangNhap, String matKhau, boolean phanQuyen, boolean trangThai) {
-        Connection con = connectDB.accessDataBase();
-        if (con == null) return false;
-        PreparedStatement ps = null;
-        try {
-            // Thêm phanQuyen và trangThai vào câu lệnh SQL
-            ps = con.prepareStatement(
-                "INSERT INTO TaiKhoan (tenDangNhap, matKhau, phanQuyen, trangThai) VALUES (?, ?, ?, ?)");
+        if (isTaiKhoanExists(tenDangNhap)) {
+            JOptionPane.showMessageDialog(null, "Tài khoản đã tồn tại!");
+            return false;
+        }
+
+        String sql = "INSERT INTO TaiKhoan (tenDangNhap, matKhau, phanQuyen, trangThai) VALUES (?, ?, ?, ?)";
+        try (Connection con = connectDB.accessDataBase();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
             ps.setString(1, tenDangNhap);
             ps.setString(2, matKhau);
             ps.setBoolean(3, phanQuyen);
             ps.setBoolean(4, trangThai);
-            int result = ps.executeUpdate();
-            return result > 0;
+
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (con != null) con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            return false;
         }
-        return false;
     }
 
+    // Cập nhật tài khoản
+    public boolean updateTaiKhoan(String tenTaiKhoan, String matKhau, boolean phanQuyen, boolean trangThai) {
+        if (matKhau.length() < 8 || matKhau.length() > 16 ||
+            !matKhau.matches(".*[0-9].*") || !matKhau.matches(".*[A-Z].*") ||
+            !matKhau.matches(".*[a-z].*") || !matKhau.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
 
-    // Update TaiKhoan by tenDangNhap
-    public boolean updateTaiKhoan(String tenDangNhap, String matKhau) {
-        Connection con = connectDB.accessDataBase();
-        if (con == null) return false;
-        PreparedStatement ps = null;
-        try {
-            ps = con.prepareStatement("UPDATE TaiKhoan SET matKhau = ? WHERE tenDangNhap = ?");
+            JOptionPane.showMessageDialog(null, "Mật khẩu không hợp lệ!");
+            return false;
+        }
+
+        String sql = "UPDATE TaiKhoan SET matKhau = ?, phanQuyen = ?, trangThai = ? WHERE tenDangNhap = ?";
+        try (Connection con = connectDB.accessDataBase();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
             ps.setString(1, matKhau);
-            ps.setString(2, tenDangNhap);
-            int result = ps.executeUpdate();
-            return result > 0;
+            ps.setBoolean(2, phanQuyen);
+            ps.setBoolean(3, trangThai);
+            ps.setString(4, tenTaiKhoan);
+
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (con != null) con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            return false;
         }
-        return false;
     }
 
-    // Delete TaiKhoan by tenDangNhap
-    public boolean deleteTaiKhoan(String tenDangNhap) {
-        Connection con = connectDB.accessDataBase();
-        if (con == null) return false;
-        PreparedStatement ps = null;
-        try {
-            ps = con.prepareStatement("DELETE FROM TaiKhoan WHERE tenDangNhap = ?");
-            ps.setString(1, tenDangNhap);
-            int result = ps.executeUpdate();
-            return result > 0;
+    // Xóa tài khoản
+    public boolean deleteTaiKhoan(String tenTaiKhoan) {
+        String sql = "DELETE FROM TaiKhoan WHERE tenDangNhap = ?";
+        try (Connection conn = connectDB.accessDataBase(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, tenTaiKhoan);
+            int affectedRows = stmt.executeUpdate();  // Thực hiện lệnh DELETE.
+
+            return affectedRows > 0;  // Trả về true nếu xóa thành công.
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (con != null) con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            return false;  // Trả về false nếu có lỗi xảy ra.
+        }
+    }
+
+    // Kiểm tra tài khoản đã tồn tại chưa
+    private boolean isTaiKhoanExists(String tenDangNhap) {
+        String sql = "SELECT COUNT(*) FROM TaiKhoan WHERE tenDangNhap = ?";
+        try (Connection con = connectDB.accessDataBase();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, tenDangNhap);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return false;
     }
