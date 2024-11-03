@@ -798,6 +798,8 @@ public class BanHang extends SimpleForm {
         table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());
         //table.setTableHeader(null);
         table.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        table.getTableHeader().setBackground(new Color(11,101,136));
+        table.getTableHeader().setForeground(Color.WHITE);
         table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));
         table.getColumnModel().getColumn(1).setCellRenderer(new ImageRenderer());
 
@@ -946,7 +948,9 @@ public class BanHang extends SimpleForm {
 
     private void btnAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustomerActionPerformed
         // TODO add your handling code here:
-        FormManager.showForm(new StatisticalForm());
+        KhachHang_GUI gui = new KhachHang_GUI();
+        FormManager.showForm(gui);
+        gui.hienThiDialogThem();
     }//GEN-LAST:event_btnAddCustomerActionPerformed
 
     private void txtTienKhachDuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTienKhachDuaActionPerformed

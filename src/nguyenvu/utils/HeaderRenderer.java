@@ -18,6 +18,7 @@ public class HeaderRenderer extends DefaultTableCellRenderer {
 
     public HeaderRenderer() {
         setBackground(new Color(11,101,136));
+        setForeground(Color.WHITE);
         setHorizontalAlignment(SwingConstants.CENTER);
     }
 

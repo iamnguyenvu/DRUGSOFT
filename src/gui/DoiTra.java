@@ -524,6 +524,8 @@ cbbLyDo.addActionListener(new java.awt.event.ActionListener() {
     }));
 
     tableExchange.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+    tableExchange.getTableHeader().setBackground(new Color(11,101,136));
+    tableExchange.getTableHeader().setForeground(Color.WHITE);
     tableExchange.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));
 
     //DefaultTableModel model1 = (DefaultTableModel) table.getModel();
@@ -624,6 +626,8 @@ pnTableExchangeLayout.setHorizontalGroup(
     table.getColumnModel().getColumn(6).setCellRenderer(new AddButtonRenderer());
     table.getTableHeader().setDefaultRenderer(new HeaderRenderer());
     table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));
+    table.getTableHeader().setBackground(new Color(11,101,136));
+    table.getTableHeader().setForeground(Color.WHITE);
 
     javax.swing.GroupLayout pnLeftContentLayout = new javax.swing.GroupLayout(pnLeftContent);
     pnLeftContent.setLayout(pnLeftContentLayout);
