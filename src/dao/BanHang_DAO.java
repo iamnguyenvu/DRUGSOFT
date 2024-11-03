@@ -65,7 +65,7 @@ public class BanHang_DAO {
             ps.setString(1, sdt + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
-                KhachHang_entity kh = new KhachHang_entity(rs.getString("sdtKH"), rs.getString("tenKH"), rs.getInt("diemThuong"), rs.getString("gioiTinh")); 
+                KhachHang_entity kh = new KhachHang_entity(rs.getString("tenKH"), rs.getString("sdtKH"), rs.getInt("diemThuong"), rs.getString("gioiTinh")); 
                 listKH.add(kh);
             }
         } catch (SQLException e) {
@@ -95,7 +95,8 @@ public class BanHang_DAO {
             ps.setString(1, sdt);
             rs = ps.executeQuery();
             if (rs.next()) {
-                KhachHang_entity kh = new KhachHang_entity(rs.getString("tenKH"), rs.getString("sdtKH"), rs.getInt("diemThuong"), rs.getString("gioiTinh")); 
+                KhachHang_entity kh = new KhachHang_entity(rs.getString("tenKH"), rs.getString("sdtKH"), 
+                        rs.getInt("diemThuong"), rs.getString("gioiTinh")); 
                 return kh;
             }
         } catch (SQLException e) {

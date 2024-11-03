@@ -4,7 +4,7 @@
   <Properties>
     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
       <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
-        <MatteColorBorder bottom="2" left="0" right="0" top="0">
+        <MatteColorBorder bottom="1" left="0" right="0" top="0">
           <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
         </MatteColorBorder>
       </Border>
@@ -34,7 +34,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="lblTenKH" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-              <Component id="lblSDT" pref="22" max="32767" attributes="0"/>
+              <Component id="lblSDT" pref="23" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

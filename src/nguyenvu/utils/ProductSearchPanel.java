@@ -6,6 +6,7 @@ package nguyenvu.utils;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import entity.SanPham_entity;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
@@ -19,6 +20,7 @@ import javax.swing.ImageIcon;
 public class ProductSearchPanel extends javax.swing.JPanel{
     private ProductSelectListener listener;
     private SanPham_entity sp;
+    private Image imgSP;
     
     // Setter cho listener
     public void addProductSelectListener(ProductSelectListener listener) {
@@ -33,6 +35,9 @@ public class ProductSearchPanel extends javax.swing.JPanel{
     
     public ProductSearchPanel(SanPham_entity sp) {
         this.sp = sp;
+        ImageIcon iiSP = new ImageIcon(getClass().getResource(sp.getHinhAnhSP()));
+	Image imgSP = iiSP.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+        this.imgSP = imgSP;
         initComponents();
         setProductData(sp);
         addListeners();
@@ -58,7 +63,16 @@ public class ProductSearchPanel extends javax.swing.JPanel{
     private void setProductData(SanPham_entity sp) {
         NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
         String giaVaDonVi = numberFormat.format(sp.getGia()) + "đ/" + sp.getDonViTinh();
-//        lblImgSP.setIcon(new ImageIcon(getClass().getResource(sp.getHinhAnhSP())));
+        
+        ImageIcon iiSP = new ImageIcon(getClass().getResource(sp.getHinhAnhSP()));
+    
+        if (iiSP.getIconWidth() > 0 && iiSP.getIconHeight() > 0) {
+            Image imgSP = iiSP.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+            lblImgSP.setIcon(new ImageIcon(imgSP));
+        } else {
+//            lblImgSP.setIcon(new ImageIcon("path/to/default/image.png"));
+        }
+        
         lblTenSP.setText(sp.getTenSP());
         lblTenSP.putClientProperty(FlatClientProperties.STYLE, ""
             + "font:bold +3");
