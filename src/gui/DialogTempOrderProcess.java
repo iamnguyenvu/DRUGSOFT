@@ -151,7 +151,7 @@ public class DialogTempOrderProcess extends SimpleForm{
 
     public void capNhatBangTemp() {
         DefaultTableModel model = (DefaultTableModel) tableTemp.getModel();
-//        model.setRowCount(0);
+        model.setRowCount(0);
         for (DonTam_entity donTam : listDonTam) {
             model.addRow(new Object[]{
                 donTam.getSdtKH(),

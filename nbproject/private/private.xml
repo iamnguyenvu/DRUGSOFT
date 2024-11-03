@@ -3,45 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/entity/KhachHang_entity.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/TaiKhoan_GUI.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/DangNhap_DAO.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/entity/LoaiHoaDon_entity.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/KhachHang_DAO.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/entity/HoaDon_entity.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/entity/LoaiSanPham_entity.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/entity/SanPham_entity.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/entity/TaiKhoan_entity.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/entity/ModelData.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/DoiTra_DAO.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/BanHang.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/entity/LoaiNhanVien_entity.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/vi/ButtonRenderer.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/entity/ChiTietHoaDon.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/LoaiNhanVien_DAO.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/vi/ButtonEditorKhachHang.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/vi/ButtonEditor.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/LoaiHoaDon_DAO.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/entity/NhanVien_entity.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/HoaDon_DAO.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/BanHang_DAO.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/LoaiSanPham_DAO.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/DoiTra.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/HoaDon.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/NhanVien_DAO.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/KhachHang_GUI.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/ChiTietHoaDon_DAO.java</file>
-            <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/nguyenvu/application/Application.java</file>
-=======
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/DoiTra.java</file>
             <file>file:/D:/Download/PTUD/DRUGSOFT/src/dao/BanHang_DAO.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/entity/HoaDon_entity.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/bill/FieldBillDT.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/menu/MyDrawerBuilder.java</file>
             <file>file:/D:/Download/PTUD/DRUGSOFT/src/dao/DoiTra_DAO.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/MoneySuggestion.java</file>
             <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/BanHang.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/bill/ParameterBill.java</file>
->>>>>>> fa65c6933d8405716b0f1328e9cc5ecedc996242
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/ImageRenderer.java</file>
         </group>
     </open-files>
 </project-private>

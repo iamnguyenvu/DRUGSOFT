@@ -24,6 +24,7 @@ import entity.NhanVien_entity;
 import entity.SanPham_entity;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -68,6 +69,7 @@ import nguyenvu.menu.FormManager;
 import nguyenvu.model.ModelItemSell;
 import nguyenvu.model.ModelUser;
 import nguyenvu.utils.CustomerSelectListener;
+import nguyenvu.utils.HeaderRenderer;
 import nguyenvu.utils.ImageRenderer;
 import nguyenvu.utils.LayerSearchList;
 import nguyenvu.utils.ListCustomerPanel;
@@ -156,7 +158,7 @@ public class BanHang extends SimpleForm {
             @Override
             public void onCustomerSeclect(KhachHang_entity customer) {
                 kh = customer;
-                txtCustomer.setText(kh.getTenKH() + " - " + kh.getSdtKH());
+                txtCustomer.setText(kh.getSdtKH() + " - " + kh.getTenKH());
                 menuCustomer.setVisible(false);
                 updateLblSoLuongSP();
                 cbbPhuongThucThanhToan.requestFocusInWindow();
@@ -740,7 +742,7 @@ public class BanHang extends SimpleForm {
 
             },
             new String [] {
-                "STT", "hinhAnh", "maSP", "tenSP", "donVi", "soLuong", "donGia", "thanhTien", "btnDelete"
+                "STT", "Hình ảnh", "Mã sản phẩm", "Tên sản phẩm", "Đơn vị", "Số lương", "Đơn giá", "Thành tiền", "Xóa"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -794,8 +796,9 @@ public class BanHang extends SimpleForm {
 
         table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(this));
         table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());
-        table.setTableHeader(null);
-
+        //table.setTableHeader(null);
+        table.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));
         table.getColumnModel().getColumn(1).setCellRenderer(new ImageRenderer());
 
         javax.swing.GroupLayout pnLeftContentLayout = new javax.swing.GroupLayout(pnLeftContent);
@@ -897,8 +900,9 @@ public class BanHang extends SimpleForm {
 
             String employeeName = user != null ? user.getName() : "Nhân viên";  // Replace with actual employee data if available
             String employeeId = user != null ? user.getUserName() : "";
+            
             String customerName = kh != null ? kh.getTenKH() : "Khách vãng lai"; // Default customer name if kh is null
-            String customerPhone = kh != null ? kh.getSdtKH() : "";
+            String customerPhone = kh != null ? kh.getSdtKH().trim() : "";
             double totalAmount = calculateTotalAmount();
             int discount = kh != null ? giamTru : 0;                       // Adjust if discounts apply
 
@@ -1049,9 +1053,11 @@ public class BanHang extends SimpleForm {
  
     private void addProductToTable(SanPham_entity sp) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
+        ImageIcon iiSP = new ImageIcon(getClass().getResource(sp.getHinhAnhSP()));
+	Image imgSP = iiSP.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         Object[] rowData = new Object[] {
             model.getRowCount() + 1, // STT
-            sp.getHinhAnhSP(), // hinhAnh
+            new ImageIcon(imgSP), // hinhAnh
             sp.getMaSP(), // maSP
             sp.getTenSP(), // tenSP
             sp.getDonViTinh(), // donVi
@@ -1200,8 +1206,10 @@ public class BanHang extends SimpleForm {
     }
     
     private static String generateBillCode() {
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMdd");
-        String billCode = "HD" + sdf.format(new java.util.Date());
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyMMdd");
+        Random random = new Random();
+        int rdDigit = 1000 + random.nextInt(90000);
+        String billCode = "HD" + sdf.format(new java.util.Date()) + rdDigit;
         return billCode;
     }
     
@@ -1287,9 +1295,11 @@ public class BanHang extends SimpleForm {
         
         for (SanPham_entity sp : donTam.getListSP()) {
             SanPham_entity temp = dao.getSP(sp.getMaSP());
+            ImageIcon iiSP = new ImageIcon(getClass().getResource(temp.getHinhAnhSP()));
+            Image imgSP = iiSP.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
             Object[] rowData = new Object[] {
                 model.getRowCount() + 1, // STT
-                temp.getHinhAnhSP(), // hinhAnh
+                new ImageIcon(imgSP), // hinhAnh
                 sp.getMaSP(), // maSP
                 sp.getTenSP(), // tenSP
                 temp.getDonViTinh(), // donVi
