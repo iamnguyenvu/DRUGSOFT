@@ -12,9 +12,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import gui.BanHang;
-import gui.DoiTra;
 import gui.DoiTraSanPham;
-import gui.ThongKe_GUI;
 import nguyenvu.forms.DashboardForm;
 import nguyenvu.forms.ReadForm;
 import nguyenvu.forms.StatisticalForm;
@@ -137,13 +135,12 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item("Khách hàng", "ui.svg"),
             new Item("Nhân viên", "icon.svg"),        
             new Item("Tài khoản", "key.svg"),
-            new Item("Thống kê", "chart.svg")
-            .subMenu("Thống kê doanh thu")
-            .subMenu("Thống kê sản phẩm"),
-            new Item("Báo cáo", "page.svg")
-            .subMenu("Sản phẩm")
-            .subMenu("Khách hàng")
-            .subMenu("Nhân viên"),
+            new Item("Thống kê", "chart.svg"),
+//            .subMenu("Sản phẩm sắp hết hạn")
+//            .subMenu("Sản phẩm sắp hết hàng")
+//            .subMenu("Doanh số nhân viên")
+//            .subMenu("Doanh số tổng quan"),
+            new Item("Báo cáo", "page.svg"),
             new Item.Label("KHÁC"),
             new Item("Đăng xuất", "logout.svg")
         };
@@ -216,13 +213,13 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             public void selected(MenuAction action, int[] index) {
                 if (index.length == 1) {
                     if (index[0] == 0) {
-                    	FormManager.showForm(new gui.ManHinhNen());
+                        FormManager.showForm(new DashboardForm());
                     }
-                    if (index[0] == 1) {
-                        FormManager.showForm(new BanHang(user));
-                    }
+//                    if (index[0] == 1) {
+//                        FormManager.showForm(new BanHang());
+//                    }
                     if (index[0] == 2) {
-                        FormManager.showForm(new DoiTra(user));
+                        FormManager.showForm(new DoiTraSanPham());
                     }
                     if (index[0] == 3) {
                     	FormManager.showForm(new gui.SanPham());
@@ -231,35 +228,29 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     	FormManager.showForm(new gui.HoaDon());
                     }
                     if (index[0] == 5) {
-                    	
+                    	FormManager.showForm(new gui.ManHinhNen());
                     }
                     if (index[0] == 8) {
-                    	FormManager.showForm(new ThongKe_GUI());
+                    	FormManager.showForm(new StatisticalForm());
+                    }
+                    if (index[0] == 6) {
+                    	FormManager.showForm(new gui.NhanVien());
                     }
                     if (index[0] == 10) {
                         // logout
                         FormManager.logout();
                     }
                 } 
-                else if (index.length == 2) {
-                    
-                    if (index[0] == 7) {
-                        if (index[1] == 0) {
-                            FormManager.showForm(new StatisticalForm());
-                        }
+//                else if (index.length == 2) {
+//                    if (index[0] == 7) {
+//                        if (index[1] == 0) {
+//                            FormManager.showForm(new StatisticalForm());
+//                        }
 //                        if (index[1] == 1) {
 //                            FormManager.showForm(new ReadForm());
 //                        }
-                    }
-                    if (index[0] == 7) {
-                        if (index[1] == 0) {
-                            FormManager.showForm(new StatisticalForm());
-                        }
-//                        if (index[1] == 1) {
-//                            FormManager.showForm(new ReadForm());
-//                        }
-                    }
-                }
+//                    }
+//                }
             }
         });
 
