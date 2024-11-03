@@ -1,5 +1,6 @@
 package entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -12,14 +13,16 @@ public class HoaDon_entity {
     private double tienGiam;             // Tiền khách trả
     private String hinhThucThanhToan;        // Hình thức thanh toán
     private boolean trangThai;                // Trạng thái hóa đơn
-    private String maKH;             // Khách hàng
+    private String sdtKH;             // Khách hàng
     private String maNV;               // Nhân viên
     private String maLoaiHoaDon;           // Loại hóa đơn
     private String ghiChu;
 
-    public HoaDon_entity() {
+    public HoaDon_entity(String mahd, LocalDate lcNgayLapHD, double tongTien1, double tienGiam1, String hinhThucThanhToan1, boolean trangThai1, String sdtKH1, String maNV1, String maLoaiHD) {
     }
-
+    
+    
+    
     public HoaDon_entity(String maHD, LocalDateTime ngayLapHD, double tongTien, double tienGiam, String hinhThucThanhToan, boolean trangThai, String maKH, String maNV, String maLoaiHoaDon, String ghiChu) {
         this.maHD = maHD;
         this.ngayLapHD = ngayLapHD;
@@ -27,7 +30,7 @@ public class HoaDon_entity {
         this.tienGiam = tienGiam;
         this.hinhThucThanhToan = hinhThucThanhToan;
         this.trangThai = trangThai;
-        this.maKH = maKH;
+        this.sdtKH = maKH;
         this.maNV = maNV;
         this.maLoaiHoaDon = maLoaiHoaDon;
         this.ghiChu = ghiChu;
@@ -82,11 +85,11 @@ public class HoaDon_entity {
     }
 
     public String getMaKH() {
-        return maKH;
+        return sdtKH;
     }
 
     public void setMaKH(String maKH) {
-        this.maKH = maKH;
+        this.sdtKH = maKH;
     }
 
     public String getMaNV() {
@@ -113,10 +116,22 @@ public class HoaDon_entity {
         this.ghiChu = ghiChu;
     }
 
+    public String getSdtKH() {
+        return sdtKH;
+    }
+
+    public void setSdtKH(String sdtKH) {
+        this.sdtKH = sdtKH;
+    }
+    
+    
+
     @Override
     public String toString() {
-        return "HoaDon_entity{" + "maHD=" + maHD + ", ngayLapHD=" + ngayLapHD + ", tongTien=" + tongTien + ", tienGiam=" + tienGiam + ", hinhThucThanhToan=" + hinhThucThanhToan + ", trangThai=" + trangThai + ", maKH=" + maKH + ", maNV=" + maNV + ", maLoaiHoaDon=" + maLoaiHoaDon + ", ghiChu=" + ghiChu + '}';
+        return "HoaDon_entity{" + "maHD=" + maHD + ", ngayLapHD=" + ngayLapHD + ", tongTien=" + tongTien + ", tienGiam=" + tienGiam + ", hinhThucThanhToan=" + hinhThucThanhToan + ", trangThai=" + trangThai + ", sdtKH=" + sdtKH + ", maNV=" + maNV + ", maLoaiHoaDon=" + maLoaiHoaDon + ", ghiChu=" + ghiChu + '}';
     }
+
+    
 
     
     

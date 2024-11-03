@@ -14,8 +14,14 @@ public class KhachHang_entity {
         this.diemThuong = diemThuong;
         this.gioiTinh = gioiTinh;
     }
-    
 
+    public KhachHang_entity(String tenKH, String sdtKH) {
+        this.tenKH = tenKH;
+        this.sdtKH = sdtKH;
+    }
+    
+    
+    
     public KhachHang_entity(String sdt) {
 		super();
 		this.sdtKH = sdtKH;

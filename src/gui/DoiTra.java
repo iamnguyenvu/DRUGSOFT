@@ -217,7 +217,7 @@ public class DoiTra extends SimpleForm {
 
         pnRightContent.setPreferredSize(new java.awt.Dimension(400, 700));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin đổi trả", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(11, 101, 136))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin đổi trả", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(11, 101, 136))); // NOI18N
 
         btnDoiTra.setBackground(new java.awt.Color(1, 201, 16));
         btnDoiTra.setForeground(new java.awt.Color(255, 255, 255));
@@ -334,16 +334,10 @@ public class DoiTra extends SimpleForm {
                 .addGap(8, 8, 8)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rbtnDoi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-<<<<<<< HEAD
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(rbtnTra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-=======
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(rbtnTra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
->>>>>>> 81f065aac6495d71b2f1863fc7c7da92d7e54e65
                 .addGap(8, 8, 8)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbbLyDo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -474,7 +468,7 @@ public class DoiTra extends SimpleForm {
                 .addComponent(pnCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         //jPanel2.putClientProperty(FlatClientProperties.STYLE, ""
@@ -484,7 +478,7 @@ public class DoiTra extends SimpleForm {
 
         pnLeftContent.setPreferredSize(new java.awt.Dimension(1085, 700));
 
-        pnTableExchange.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sản phẩm đổi trả", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(11, 101, 136))); // NOI18N
+        pnTableExchange.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sản phẩm đổi trả", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(11, 101, 136))); // NOI18N
         pnTableExchange.setPreferredSize(new java.awt.Dimension(100, 200));
 
         tableExchange.setModel(new javax.swing.table.DefaultTableModel(
@@ -566,10 +560,10 @@ public class DoiTra extends SimpleForm {
     );
     pnTableExchangeLayout.setVerticalGroup(
         pnTableExchangeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
     );
 
-    jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sản phẩm trong hóa đơn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(11, 101, 136))); // NOI18N
+    jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sản phẩm trong hóa đơn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(11, 101, 136))); // NOI18N
     jScrollPane2.setPreferredSize(new java.awt.Dimension(452, 500));
 
     table.setModel(new javax.swing.table.DefaultTableModel(
@@ -689,21 +683,12 @@ public class DoiTra extends SimpleForm {
 
             String employeeName = user != null ? user.getName() : "Nhân viên";  // Replace with actual employee data if available
             String employeeId = user != null ? user.getUserName() : "";
-
-            String customerName = kh != null ? kh.getTenKH() : "Khách vãng lai"; // Default customer name if kh is null
-            String customerPhone = kh != null ? kh.getsdtKH(): "";
-            double totalAmount = calculateTotalAmount();
-
-
-            String ghiChu = txtLyDo.getText();
-
              
             String lyDo = txtLyDo.getText();
             String loaiDT;
             String billCode = generateBillCode();
             String date = getCurrentDate();
             double totalAmount = 0;
-
             
             if (rbtnDoi.isSelected()) {
                 loaiDT = "DoiSanPham";
@@ -815,7 +800,7 @@ public class DoiTra extends SimpleForm {
         
         if(kh != null) {
             lblTenKH.setText(kh.getTenKH());
-            lblSDT.setText(kh.getsdtKH());
+            lblSDT.setText(kh.getSdtKH());
         }
         else {
             MessageAlerts.getInstance().showMessage("Không thỏa điều kiện đổi trả", "Khách hàng không thỏa điều kiện đổi trả!", MessageAlerts.MessageType.ERROR);

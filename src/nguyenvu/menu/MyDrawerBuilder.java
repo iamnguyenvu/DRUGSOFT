@@ -231,14 +231,14 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     	FormManager.showForm(new gui.HoaDon());
                     }
                     if (index[0] == 5) {
-<<<<<<< HEAD
+
                     	FormManager.showForm(new gui.KhachHang_GUI());
                     }
                     if (index[0] == 7) {
                     	FormManager.showForm(new gui.TaiKhoan_GUI());
-=======
+
                     	
->>>>>>> 0ee568a102cedaeb3911f8b093f2fa0a4f4b1803
+
                     }
                     if (index[0] == 10) {
                         // logout

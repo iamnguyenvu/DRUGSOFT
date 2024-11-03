@@ -121,7 +121,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		        List<HoaDon_entity> filter = hd_Dao.timKiem(searchText); // Assume this method exists
 		        for (HoaDon_entity hd : filter) {
 		            df_HoaDon.addRow(new Object[]{
-		                hd.getMaHD(),hd.getNgayLapHD(),hd.getTongTien(),hd.getTienGiam(),hd.getHinhThucThanhToan(),hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành",hd.getKhachHang().getSdtKH(),hd.getNhanVien().getMaNV(),hd.getLoaiHoaDon().getMaLoaiHD()
+		                hd.getMaHD(),hd.getNgayLapHD(),hd.getTongTien(),hd.getTienGiam(),hd.getHinhThucThanhToan(),hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành",hd.getSdtKH(),hd.getMaNV(),hd.getMaLoaiHoaDon()
 		                // Add actions for Update and Delete as necessary
 		            });
 		        }
@@ -138,7 +138,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		pnContent.add(pnCenter);
 		pnCenter.setLayout(null);
 		
-		String []collName = {"Mã Hóa Đơn","Ngày Lập","Tổng Tiền","Tiền Giảm","Hình Thức Thanh Toán","Trạng Thái","Mã Khách Hàng","Mã Nhân Viên","Mã Loại HD"};
+		String []collName = {"Mã Hóa Đơn","Ngày Lập","Tổng Tiền","Tiền Giảm","Hình Thức Thanh Toán","Trạng Thái","Mã Khách Hàng","Mã Nhân Viên","Mã Loại HD","Ghi Chú"};
 				
 		df_HoaDon = new DefaultTableModel(collName, 0);
 		tb_HoaDon = new JTable(df_HoaDon);
@@ -230,7 +230,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 	private void docDuLieuVaoTable() {
 		List<HoaDon_entity> dshd = hd_Dao.getALLHoaDon();
 		for (HoaDon_entity hd : dshd) {
-			df_HoaDon.addRow(new Object[] {hd.getMaHD(),hd.getNgayLapHD(),hd.getTongTien(),hd.getTienGiam(),hd.getHinhThucThanhToan(),hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành",hd.getKhachHang().getSdtKH(),hd.getNhanVien().getMaNV(),hd.getLoaiHoaDon().getMaLoaiHD()});
+			df_HoaDon.addRow(new Object[] {hd.getMaHD(),hd.getNgayLapHD(),hd.getTongTien(),hd.getTienGiam(),hd.getHinhThucThanhToan(),hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành",hd.getSdtKH(),hd.getMaNV(),hd.getMaLoaiHoaDon()});
 		}
 	}
 	private void locHoaDon() {

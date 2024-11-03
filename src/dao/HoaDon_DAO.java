@@ -42,7 +42,7 @@ public class HoaDon_DAO {
 	            NhanVien_entity nv = new NhanVien_entity(maNV);
 	            LoaiHoaDon_entity lhd = new LoaiHoaDon_entity(maLoaiHD);
 	            
-	            HoaDon_entity hd = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, kh, nv, lhd);
+	            HoaDon_entity hd = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, kh.getSdtKH(), nv.getMaNV(), lhd.getMaLoaiHD());
 	            dshd.add(hd);
 	        }
 	    } catch (SQLException e) {
