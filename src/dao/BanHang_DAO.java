@@ -4,6 +4,7 @@
  */
 package dao;
 
+//import java.security.Timestamp;
 import connectDB.connectDB;
 import entity.HoaDon_entity;
 import entity.KhachHang_entity;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
+import java.sql.Timestamp;
 /**
  *
  * @author HP

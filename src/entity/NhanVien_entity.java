@@ -7,13 +7,15 @@ public class NhanVien_entity {
     private String hotenNV; 
     private String gioiTinh;			// Gioi Tính
     private String sdt;                 // Số điện thoại
-    private String cccd;
+    private String cccd;                // CCCD
+
     private String diaChi;              // Địa chỉ
     private LocalDate ngaySinh;         // Ngày sinh
     private boolean trangThai;          // Trạng thái
     private LocalDate ngayVaoLam;       // Ngày vào làm
     private String maLoaiNhanVien;  // Loại nhân viên
     private String hinhAnhNV;           // Hình ảnh nhân viên
+
 
     public NhanVien_entity() {
     }
