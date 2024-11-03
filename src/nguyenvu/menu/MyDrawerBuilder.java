@@ -139,12 +139,13 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item("Khách hàng", "ui.svg"),
             new Item("Nhân viên", "icon.svg"),        
             new Item("Tài khoản", "key.svg"),
-            new Item("Thống kê", "chart.svg"),
-//            .subMenu("Sản phẩm sắp hết hạn")
-//            .subMenu("Sản phẩm sắp hết hàng")
-//            .subMenu("Doanh số nhân viên")
-//            .subMenu("Doanh số tổng quan"),
-            new Item("Báo cáo", "page.svg"),
+            new Item("Thống kê", "chart.svg")
+            .subMenu("Thống kê doanh thu")
+            .subMenu("Thống kê sản phẩm")
+            .subMenu("Thống kê tổng quan"),
+            new Item("Báo cáo", "page.svg")
+            .subMenu("Báo cáo doanh thu")
+            .subMenu("Báo cáo sản phẩm"),
             new Item.Label("KHÁC"),
             new Item("Đăng xuất", "logout.svg")
         };
@@ -234,25 +235,19 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     if (index[0] == 5) {
                     	
                     }
-                    if (index[0] == 8) {
-                    	FormManager.showForm(new ThongKeSanPham_GUI());
-                    }
-                    if (index[0] == 9) {
-                    	FormManager.showForm(new ThongKeDoanhThu_GUI());
-                    }
                     if (index[0] == 10) {
                         // logout
                         FormManager.logout();
                     }
                 } 
                 else if (index.length == 2) {
-                    if (index[0] == 7) {
-                        if (index[1] == 0) {
-                            FormManager.showForm(new StatisticalForm());
+                    if (index[0] == 8) {
+                        if (index[1] == 1) {
+                            FormManager.showForm(new ThongKeSanPham_GUI());
                         }
-//                        if (index[1] == 1) {
-//                            FormManager.showForm(new ReadForm());
-//                        }
+                        if (index[1] == 0) {
+                            FormManager.showForm(new ThongKeDoanhThu_GUI());
+                        }
                     }
                 }
             }

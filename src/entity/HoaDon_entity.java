@@ -1,130 +1,310 @@
 package entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import java.time.format.DateTimeFormatter;
 
 public class HoaDon_entity {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    
     private String maHD;                     // Mã hóa đơn
-    private LocalDate ngayLapHD;              // Ngày lập hóa đơn
+    private LocalDateTime ngayLapHD;              // Ngày lập hóa đơn
     private double tongTien;                  // Tổng tiền
     private double tienGiam;             // Tiền khách trả
     private String hinhThucThanhToan;        // Hình thức thanh toán
     private boolean trangThai;                // Trạng thái hóa đơn
-    private KhachHang_entity khachHang;             // Khách hàng
-    private NhanVien_entity nhanVien;               // Nhân viên
-    private LoaiHoaDon_entity loaiHoaDon;           // Loại hóa đơn
+    private String sdtKH;             // Khách hàng
+    private String maNV;               // Nhân viên
+    private String maLoaiHoaDon;           // Loại hóa đơn
     private String ghiChu;
 
-    // Constructor mặc định
     public HoaDon_entity() {
     }
 
-	public HoaDon_entity(String maHD) {
-		super();
-		this.maHD = maHD;
+
+
+    
+
+    
+    
+    
+    public DateTimeFormatter getFormatter() {
+		return formatter;
 	}
 
-	public HoaDon_entity(String maHD, LocalDate ngayLapHD, double tongTien, double tienGiam, String hinhThucThanhToan,
-			boolean trangThai, KhachHang_entity khachHang, NhanVien_entity nhanVien, LoaiHoaDon_entity loaiHoaDon,String ghiChu) {
-		super();
-		this.maHD = maHD;
-		this.ngayLapHD = ngayLapHD;
-		this.tongTien = tongTien;
-		this.tienGiam = tienGiam;
-		this.hinhThucThanhToan = hinhThucThanhToan;
-		this.trangThai = trangThai;
-		this.khachHang = khachHang;
-		this.nhanVien = nhanVien;
-		this.loaiHoaDon = loaiHoaDon;
-		this.ghiChu = ghiChu;
+
+
+
+
+
+
+
+	public void setFormatter(DateTimeFormatter formatter) {
+		this.formatter = formatter;
 	}
+
+
+
+
+
+
+
 
 	public String getMaHD() {
 		return maHD;
 	}
 
+
+
+
+
+
+
+
 	public void setMaHD(String maHD) {
 		this.maHD = maHD;
 	}
 
-	public String getGhiChu() {
-		return ghiChu;
-	}
 
-	public void setGhiChu(String ghiChu) {
-		this.ghiChu = ghiChu;
-	}
 
-	public LocalDate getNgayLapHD() {
+
+
+
+
+
+	public LocalDateTime getNgayLapHD() {
 		return ngayLapHD;
 	}
 
-	public void setNgayLapHD(LocalDate ngayLapHD) {
+
+
+
+
+
+
+
+	public void setNgayLapHD(LocalDateTime ngayLapHD) {
 		this.ngayLapHD = ngayLapHD;
 	}
+
+
+
+
+
+
+
 
 	public double getTongTien() {
 		return tongTien;
 	}
 
+
+
+
+
+
+
+
 	public void setTongTien(double tongTien) {
 		this.tongTien = tongTien;
 	}
+
+
+
+
+
+
+
 
 	public double getTienGiam() {
 		return tienGiam;
 	}
 
+
+
+
+
+
+
+
 	public void setTienGiam(double tienGiam) {
 		this.tienGiam = tienGiam;
 	}
+
+
+
+
+
+
+
 
 	public String getHinhThucThanhToan() {
 		return hinhThucThanhToan;
 	}
 
+
+
+
+
+
+
+
 	public void setHinhThucThanhToan(String hinhThucThanhToan) {
 		this.hinhThucThanhToan = hinhThucThanhToan;
 	}
+
+
+
+
+
+
+
 
 	public boolean isTrangThai() {
 		return trangThai;
 	}
 
+
+
+
+
+
+
+
 	public void setTrangThai(boolean trangThai) {
 		this.trangThai = trangThai;
 	}
 
-	public KhachHang_entity getKhachHang() {
-		return khachHang;
+
+
+
+
+
+
+
+	public String getSdtKH() {
+		return sdtKH;
 	}
 
-	public void setKhachHang(KhachHang_entity khachHang) {
-		this.khachHang = khachHang;
+
+
+
+
+
+
+
+	public void setSdtKH(String sdtKH) {
+		this.sdtKH = sdtKH;
 	}
 
-	public NhanVien_entity getNhanVien() {
-		return nhanVien;
+
+
+
+
+
+
+
+	public String getMaNV() {
+		return maNV;
 	}
 
-	public void setNhanVien(NhanVien_entity nhanVien) {
-		this.nhanVien = nhanVien;
+
+
+
+
+
+
+
+	public void setMaNV(String maNV) {
+		this.maNV = maNV;
 	}
 
-	public LoaiHoaDon_entity getLoaiHoaDon() {
-		return loaiHoaDon;
+
+
+
+
+
+
+
+	public String getMaLoaiHoaDon() {
+		return maLoaiHoaDon;
 	}
 
-	public void setLoaiHoaDon(LoaiHoaDon_entity loaiHoaDon) {
-		this.loaiHoaDon = loaiHoaDon;
+
+
+
+
+
+
+
+	public void setMaLoaiHoaDon(String maLoaiHoaDon) {
+		this.maLoaiHoaDon = maLoaiHoaDon;
 	}
 
-	@Override
-	public String toString() {
-		return "HoaDon_entity [maHD=" + maHD + ", ngayLapHD=" + ngayLapHD + ", tongTien=" + tongTien + ", tienGiam="
-				+ tienGiam + ", hinhThucThanhToan=" + hinhThucThanhToan + ", trangThai=" + trangThai + ", khachHang="
-				+ khachHang + ", nhanVien=" + nhanVien + ", loaiHoaDon=" + loaiHoaDon + "]";
-	}
-    
 
-    
+
+
+
+
+
+
+	public String getGhiChu() {
+		return ghiChu;
+	}
+
+
+
+
+
+
+
+
+	public void setGhiChu(String ghiChu) {
+		this.ghiChu = ghiChu;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public HoaDon_entity(String maHD, LocalDateTime ngayLapHD, double tongTien, double tienGiam,
+			String hinhThucThanhToan, boolean trangThai, String sdtKH, String maNV, String maLoaiHoaDon,
+			String ghiChu) {
+		super();
+		this.maHD = maHD;
+		this.ngayLapHD = ngayLapHD;
+		this.tongTien = tongTien;
+		this.tienGiam = tienGiam;
+		this.hinhThucThanhToan = hinhThucThanhToan;
+		this.trangThai = trangThai;
+		this.sdtKH = sdtKH;
+		this.maNV = maNV;
+		this.maLoaiHoaDon = maLoaiHoaDon;
+		this.ghiChu = ghiChu;
+	}
+
+
+
+
+
+
+
+
+	public HoaDon_entity(String maHD, LocalDateTime ngayLapHD, String hinhThucThanhToan) {
+        this.maHD = maHD;
+        this.ngayLapHD = ngayLapHD;
+        this.hinhThucThanhToan = hinhThucThanhToan;
+    }
 }

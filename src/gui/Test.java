@@ -139,12 +139,7 @@ public class Test extends JPanel {
 				return; // Dừng nếu không kết nối được
 			}
 
-			String sql = "SELECT DATEPART(MONTH, ngayLapHD) AS Month, \r\n"
-					+ "       SUM(tongTien - tienGiam) AS TotalAmount         \r\n"
-					+ "FROM HoaDon\r\n"
-					+ "WHERE DATEPART(YEAR, ngayLapHD) = 2024     \r\n"
-					+ "GROUP BY DATEPART(MONTH, ngayLapHD)        \r\n"
-					+ "ORDER BY Month ASC;";
+			String sql = "SELECT DATEPART(MONTH, ngayLapHD) AS Month,SUM(tongTien - tienGiam) AS TotalAmount FROM HoaDon WHERE DATEPART(YEAR, ngayLapHD) = 2024 GROUP BY DATEPART(MONTH, ngayLapHD) ORDER BY Month ASC;";
 
 			PreparedStatement p = connection.prepareStatement(sql);
 			ResultSet r = p.executeQuery();

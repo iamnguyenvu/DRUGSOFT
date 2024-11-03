@@ -60,6 +60,11 @@ public class KhachHang_entity {
 		return "KhachHang_entity [sdtKH=" + sdtKH + ", tenKH=" + tenKH + ", diemThuong=" + diemThuong + ", gioiTinh="
 				+ gioiTinh + "]";
 	}
+
+    public KhachHang_entity(String sdtKH, String tenKH) {
+        this.sdtKH = sdtKH;
+        this.tenKH = tenKH;
+    }
 	
     
 }

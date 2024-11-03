@@ -5,7 +5,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 import connectDB.connectDB;
@@ -28,8 +31,8 @@ public class HoaDon_DAO {
 	        ResultSet rs = st.executeQuery(sql);
 	        while (rs.next()) {
 	            String mahd = rs.getString("maHD");
-	            Date ngayLapHD  = rs.getDate("ngayLapHD");
-	            LocalDate lcNgayLapHD = (ngayLapHD != null) ? ngayLapHD.toLocalDate() : null; // Sử dụng toLocalDate()
+	            Timestamp ngayLapHD = rs.getTimestamp("ngayLapHD");
+	            LocalDateTime lcNgayLapHD = (ngayLapHD != null) ? ngayLapHD.toLocalDateTime() : null;
 	            double tongTien = rs.getDouble("tongTien");
 	            double tienGiam = rs.getDouble("tienGiam");
 	            String hinhThucThanhToan = rs.getString("hinhThucThanhToan");
@@ -42,7 +45,7 @@ public class HoaDon_DAO {
 	            NhanVien_entity nv = new NhanVien_entity(maNV);
 	            LoaiHoaDon_entity lhd = new LoaiHoaDon_entity(maLoaiHD);
 	            
-	            HoaDon_entity hd = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, kh, nv, lhd,ghiChu);
+	            HoaDon_entity hd = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, maKH, maNV, maLoaiHD, ghiChu);
 	            dshd.add(hd);
 	        }
 	    } catch (SQLException e) {
@@ -65,8 +68,8 @@ public class HoaDon_DAO {
 		        ResultSet rs = ps.executeQuery();
 		        while (rs.next()) {
 		        	 String mahd = rs.getString("maHD");
-			            Date ngayLapHD  = rs.getDate("ngayLapHD");
-			            LocalDate lcNgayLapHD = (ngayLapHD != null) ? ngayLapHD.toLocalDate() : null; // Sử dụng toLocalDate()
+		        	 Timestamp ngayLapHD = rs.getTimestamp("ngayLapHD");
+			            LocalDateTime lcNgayLapHD = (ngayLapHD != null) ? ngayLapHD.toLocalDateTime() : null;
 			            double tongTien = rs.getDouble("tongTien");
 			            double tienGiam = rs.getDouble("tienGiam");
 			            String hinhThucThanhToan = rs.getString("hinhThucThanhToan");
@@ -79,7 +82,7 @@ public class HoaDon_DAO {
 			            NhanVien_entity nv = new NhanVien_entity(maNV);
 			            LoaiHoaDon_entity lhd = new LoaiHoaDon_entity(maLoaiHD);
 			            
-			            HoaDon_entity hd = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, kh, nv, lhd,ghiChu);
+			            HoaDon_entity hd = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, maKH, maNV, maLoaiHD, ghiChu);
 			            dssp.add(hd);
 		        }
 		    } catch (SQLException e) {

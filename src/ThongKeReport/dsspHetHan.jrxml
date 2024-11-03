@@ -1,0 +1,198 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="dsspHetHan" language="java" columnCount="1" pageWidth="1109" pageHeight="612" columnWidth="1069" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="673f36de-8863-47d2-9f82-7acc49e4e87e">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<dataset name="Dataset1" uuid="e424175a-1199-443d-a775-ea060a4478c2">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<query language="sql"><![CDATA[]]></query>
+	</dataset>
+	<parameter name="ngaySanXuat" class="java.sql.Date"/>
+	<parameter name="soLuong" class="java.lang.String"/>
+	<parameter name="tenSP" class="java.lang.String"/>
+	<parameter name="maSP" class="java.lang.String"/>
+	<parameter name="ngayHetHan" class="java.sql.Date"/>
+	<parameter name="khoiLuong" class="java.lang.Double"/>
+	<parameter name="donViTinh" class="java.lang.String"/>
+	<parameter name="gia" class="java.lang.Double"/>
+	<parameter name="nhaCungCap" class="java.lang.String"/>
+	<parameter name="thanhPhan" class="java.lang.String"/>
+	<parameter name="maLoaiSP" class="java.lang.String"/>
+	<parameter name="hinhAnhSP" class="java.lang.String"/>
+	<parameter name="congDung" class="java.lang.String"/>
+	<query language="sql"><![CDATA[]]></query>
+	<background splitType="Stretch"/>
+	<title height="74" splitType="Stretch">
+		<element kind="staticText" uuid="9bd00ba1-c255-4200-a28e-5d387aa76c7a" x="280" y="20" width="370" height="46" fontName="&#xd;&#xa;Serif" fontSize="20.0" hTextAlign="Center">
+			<text><![CDATA[Danh Sách Sản Phẩm Hết Hạn]]></text>
+		</element>
+	</title>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<element kind="staticText" uuid="fc3bf404-f9e2-4dcb-8076-2de0754e7e9e" x="0" y="0" width="81" height="29" bold="true" hTextAlign="Center">
+				<text><![CDATA[Mã Sản Phẩm]]></text>
+				<box padding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="55f948c0-98af-46b6-8e95-6a400ae45c87" x="81" y="0" width="99" height="29" bold="true" hTextAlign="Center">
+				<text><![CDATA[Tên Sản Phẩm]]></text>
+				<box padding="5" topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="66c2e841-5754-4860-97ad-6d1ce6af3cf8" x="180" y="0" width="70" height="29" bold="true" hTextAlign="Center">
+				<text><![CDATA[Số Lượng]]></text>
+				<box padding="5" topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="a77d6b7c-7f73-4ebf-9998-0335d783c6e3" x="250" y="0" width="99" height="29" bold="true" hTextAlign="Center">
+				<text><![CDATA[Ngày Sản Xuất]]></text>
+				<box padding="5" topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="715cc285-bf18-4b87-85cd-13acfcb84870" x="350" y="0" width="99" height="29" bold="true" hTextAlign="Center">
+				<text><![CDATA[Ngày Hết Hạn]]></text>
+				<box padding="5" topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="9302cb91-1342-4b58-97d7-f1f827c20cb2" x="450" y="0" width="59" height="29" bold="true" hTextAlign="Center">
+				<text><![CDATA[Khối Lượng]]></text>
+				<box padding="5" topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="15b89bd4-abe1-415f-a226-13bbf857f443" x="509" y="0" width="71" height="29" bold="true" hTextAlign="Center">
+				<text><![CDATA[Đơn Vị Tính]]></text>
+				<box padding="5" topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="f28f4f8b-27b0-4d03-8e5c-0a071ad95fc1" x="580" y="0" width="99" height="29" bold="true" hTextAlign="Center">
+				<text><![CDATA[Nhà Cung Cấp]]></text>
+				<box padding="5" topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="0d77d58b-0d55-49b4-9e5d-e53530739dbb" x="679" y="0" width="79" height="29" bold="true" hTextAlign="Center">
+				<text><![CDATA[Gía]]></text>
+				<box padding="5" topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="9f8dce30-9299-483a-b5e5-c2b8495c3db0" x="758" y="0" width="79" height="29" bold="true" hTextAlign="Center">
+				<text><![CDATA[Thành Phần]]></text>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="907840ab-5d55-44a4-9ac0-6e09615fb759" x="837" y="0" width="79" height="29" bold="true" hTextAlign="Center">
+				<text><![CDATA[Công Dụng]]></text>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="24dacb90-24b2-44f2-b9a7-95ce07f58d18" x="916" y="0" width="79" height="29" bold="true" hTextAlign="Center">
+				<text><![CDATA[Hình Ảnh]]></text>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="staticText" uuid="d2266f0e-9876-41e0-9b89-3901505933a1" x="995" y="0" width="75" height="29" bold="true" hTextAlign="Center">
+				<text><![CDATA[Mã Loại]]></text>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+		</band>
+	</detail>
+	<summary height="182" splitType="Stretch">
+		<element kind="textField" uuid="388e615d-34b7-4da0-bdcb-b97894f4e302" x="0" y="0" width="80" height="30" hTextAlign="Center">
+			<expression><![CDATA[$P{maSP}]]></expression>
+		</element>
+		<element kind="textField" uuid="5ea3de8a-5849-4907-a7c2-11c52add0c5e" x="80" y="0" width="100" height="30" hTextAlign="Center">
+			<expression><![CDATA[$P{tenSP}]]></expression>
+		</element>
+		<element kind="textField" uuid="08f613b5-6d9e-4dfb-8e92-6262f67a1b5c" x="180" y="0" width="70" height="30" hTextAlign="Center">
+			<expression><![CDATA[$P{soLuong}]]></expression>
+		</element>
+		<element kind="textField" uuid="c37a7fe0-7580-4bd5-aaad-27765c68bb44" x="250" y="0" width="100" height="30" hTextAlign="Center">
+			<expression><![CDATA[$P{ngaySanXuat}]]></expression>
+		</element>
+		<element kind="textField" uuid="beab4a42-7343-4d08-a0f3-a5e7e8e024d4" x="350" y="0" width="100" height="30" hTextAlign="Center">
+			<expression><![CDATA[$P{ngayHetHan}]]></expression>
+		</element>
+		<element kind="textField" uuid="fb12ad07-4e67-4678-a529-02488a54067d" x="449" y="0" width="60" height="30" hTextAlign="Center">
+			<expression><![CDATA[$P{khoiLuong}]]></expression>
+		</element>
+		<element kind="textField" uuid="af77bcd1-6c8b-465a-9d90-1675316ef6e2" x="510" y="0" width="70" height="30" hTextAlign="Center">
+			<expression><![CDATA[$P{donViTinh}]]></expression>
+		</element>
+		<element kind="textField" uuid="bd77d37d-f77d-49e4-98ef-53117f08f556" x="579" y="0" width="100" height="30" hTextAlign="Center">
+			<expression><![CDATA[$P{nhaCungCap}]]></expression>
+		</element>
+		<element kind="textField" uuid="5f33d700-38c0-44cf-a9d0-017d005c2d97" x="679" y="0" width="79" height="30" hTextAlign="Center">
+			<expression><![CDATA[$P{gia}]]></expression>
+		</element>
+		<element kind="textField" uuid="96366562-2dc2-4891-bc26-18b15ebd41f3" x="758" y="0" width="79" height="30" hTextAlign="Center">
+			<expression><![CDATA[$P{thanhPhan}]]></expression>
+		</element>
+		<element kind="textField" uuid="4eb403d3-1074-457b-a41e-c2e216040047" x="837" y="0" width="79" height="30" hTextAlign="Center">
+			<expression><![CDATA[$P{congDung}]]></expression>
+		</element>
+		<element kind="textField" uuid="63711271-90b6-4127-ad5d-0f22531c39be" x="916" y="0" width="79" height="30" hTextAlign="Center">
+			<expression><![CDATA[$P{hinhAnhSP}]]></expression>
+		</element>
+		<element kind="textField" uuid="05c311d3-624a-4f16-9615-ad6a6ea218ad" x="995" y="0" width="75" height="30" hTextAlign="Center">
+			<expression><![CDATA[$P{maLoaiSP}]]></expression>
+		</element>
+	</summary>
+</jasperReport>

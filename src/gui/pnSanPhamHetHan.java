@@ -28,6 +28,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
@@ -42,11 +44,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.toedter.calendar.JDateChooser;
 
+import ThongKeReport.ReportManager;
 import connectDB.connectDB;
 import dao.ThongKe_DAO;
 import entity.ModelData;
 import entity.ModelDataSP;
 import entity.SanPham_entity;
+import net.sf.jasperreports.engine.JRException;
 
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -80,6 +84,12 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
      */
     public pnSanPhamHetHan() {
     	tk_Dao = new ThongKe_DAO();
+    	try {
+			ReportManager.getInstance().compileReport();
+		} catch (JRException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setPreferredSize(new Dimension(1500, 660));
         initComponents();
         setBackground(new Color(240, 240, 240,0));
@@ -139,7 +149,7 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
 
 		JScrollPane scp_SanPham = new JScrollPane(tb_SanPham);
 		scp_SanPham.setBackground(new Color(255, 255, 255));
-		scp_SanPham.setBounds(10, 80, 1480, 464);
+		scp_SanPham.setBounds(10, 78, 1470, 464);
 		pnCenter.add(scp_SanPham);
         
         btnXuatFile = new JButton("Xuất File Excel");
@@ -170,7 +180,7 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
         
         pnCenter = new JPanel();
         pnCenter.setBackground(new Color(255, 255, 255));
-        pnCenter.setBounds(-264, 10, 1490, 640);
+        pnCenter.setBounds(10, 10, 1490, 640);
         pnCenter.setLayout(null);
     }
     public void docDataVaoTable() {
@@ -199,7 +209,12 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
 		}
 		
 	}
-	
+	public void printReportProduct(SanPham_entity data) {
+		Map para = new HashMap();
+		para.put("Mã Sản Phẩm",data.getMaSP());
+		para.put("Tên Sản Phẩm",data.getTenSP());
+		
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
