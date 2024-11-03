@@ -12,6 +12,7 @@ public class HoaDon_entity {
     private KhachHang_entity khachHang;             // Khách hàng
     private NhanVien_entity nhanVien;               // Nhân viên
     private LoaiHoaDon_entity loaiHoaDon;           // Loại hóa đơn
+    private String ghiChu;
 
     // Constructor mặc định
     public HoaDon_entity() {
@@ -23,7 +24,7 @@ public class HoaDon_entity {
 	}
 
 	public HoaDon_entity(String maHD, LocalDate ngayLapHD, double tongTien, double tienGiam, String hinhThucThanhToan,
-			boolean trangThai, KhachHang_entity khachHang, NhanVien_entity nhanVien, LoaiHoaDon_entity loaiHoaDon) {
+			boolean trangThai, KhachHang_entity khachHang, NhanVien_entity nhanVien, LoaiHoaDon_entity loaiHoaDon,String ghiChu) {
 		super();
 		this.maHD = maHD;
 		this.ngayLapHD = ngayLapHD;
@@ -34,6 +35,7 @@ public class HoaDon_entity {
 		this.khachHang = khachHang;
 		this.nhanVien = nhanVien;
 		this.loaiHoaDon = loaiHoaDon;
+		this.ghiChu = ghiChu;
 	}
 
 	public String getMaHD() {
@@ -42,6 +44,14 @@ public class HoaDon_entity {
 
 	public void setMaHD(String maHD) {
 		this.maHD = maHD;
+	}
+
+	public String getGhiChu() {
+		return ghiChu;
+	}
+
+	public void setGhiChu(String ghiChu) {
+		this.ghiChu = ghiChu;
 	}
 
 	public LocalDate getNgayLapHD() {

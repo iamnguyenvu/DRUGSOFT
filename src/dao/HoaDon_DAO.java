@@ -37,12 +37,12 @@ public class HoaDon_DAO {
 	            String maKH = rs.getString("sdtKH");
 	            String maNV = rs.getString("maNV");
 	            String maLoaiHD = rs.getString("maLoaiHD");
-	            
+	            String ghiChu = rs.getString("ghiChu");
 	            KhachHang_entity kh = new KhachHang_entity(maKH);
 	            NhanVien_entity nv = new NhanVien_entity(maNV);
 	            LoaiHoaDon_entity lhd = new LoaiHoaDon_entity(maLoaiHD);
 	            
-	            HoaDon_entity hd = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, kh, nv, lhd);
+	            HoaDon_entity hd = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, kh, nv, lhd,ghiChu);
 	            dshd.add(hd);
 	        }
 	    } catch (SQLException e) {
@@ -74,12 +74,12 @@ public class HoaDon_DAO {
 			            String maKH = rs.getString("sdtKH");
 			            String maNV = rs.getString("maNV");
 			            String maLoaiHD = rs.getString("maLoaiHD");
-			            
+			            String ghiChu = rs.getString("ghiChu");
 			            KhachHang_entity kh = new KhachHang_entity(maKH);
 			            NhanVien_entity nv = new NhanVien_entity(maNV);
 			            LoaiHoaDon_entity lhd = new LoaiHoaDon_entity(maLoaiHD);
 			            
-			            HoaDon_entity hd = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, kh, nv, lhd);
+			            HoaDon_entity hd = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, kh, nv, lhd,ghiChu);
 			            dssp.add(hd);
 		        }
 		    } catch (SQLException e) {

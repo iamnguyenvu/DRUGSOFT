@@ -4,6 +4,7 @@
  */
 package dao;
 
+//import java.security.Timestamp;
 import connectDB.connectDB;
 import entity.HoaDon_entity;
 import entity.KhachHang_entity;
@@ -13,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+import java.sql.Timestamp;
 /**
  *
  * @author HP
@@ -107,34 +108,34 @@ public class BanHang_DAO {
         return null;
     }
     
-//    public boolean insertHD(HoaDon_entity hd) {
-//        Connection con = connectDB.accessDataBase();
-//        PreparedStatement stmt = null;
-//        int n = 0;
-//        try {
-//                stmt = con.prepareStatement("INSERT INTO HoaDon VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setTimestamp(2, hd.getNgayLapHD());
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setString(1, hd.getMaHD());
-//                n = stmt.executeUpdate();
-//        } catch (SQLException e) {
-//                // TODO: handle exception
-//                e.printStackTrace();
-//        } finally {
-//                 try {
-//             stmt.close();
-//         } catch (SQLException e) {
-//              e.printStackTrace();
-//         }
-//        }
-//        return n>0;
-//    }
+    public boolean insertHD(HoaDon_entity hd) {
+        Connection con = connectDB.accessDataBase();
+        PreparedStatement stmt = null;
+        int n = 0;
+        try {
+                stmt = con.prepareStatement("INSERT INTO HoaDon VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
+                stmt.setString(1, hd.getMaHD());
+                stmt.setTimestamp(2, Timestamp.valueOf(hd.getNgayLapHD().atStartOfDay()));
+                stmt.setDouble(3, hd.getTongTien());
+                stmt.setDouble(4, hd.getTienGiam());
+                stmt.setString(5, hd.getHinhThucThanhToan());
+                stmt.setBoolean(6, true);
+                stmt.setString(7, hd.getGhiChu());
+                stmt.setString(8, hd.getKhachHang().getSdtKH());
+                stmt.setString(9, hd.getNhanVien().getMaNV());
+                stmt.setString(10, hd.getLoaiHoaDon().getMaLoaiHD());
+                n = stmt.executeUpdate();
+        } catch (SQLException e) {
+                // TODO: handle exception
+                e.printStackTrace();
+        } finally {
+                 try {
+             stmt.close();
+         } catch (SQLException e) {
+              e.printStackTrace();
+         }
+        }
+        return n>0;
+    }
 //    
 }

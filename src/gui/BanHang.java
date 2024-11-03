@@ -902,7 +902,6 @@ public class BanHang extends SimpleForm {
             String ptThanhToan = (String) cbbPhuongThucThanhToan.getSelectedItem();
             
 //            HoaDon_entity hd = new HoaDon_entity(billID, getCurrentDate(), thanhToan, discount, ptThanhToan, true, customerPhone, employeeId, "BanSanPham");
-            
             refresh();
         } catch (Exception e){
             e.printStackTrace();

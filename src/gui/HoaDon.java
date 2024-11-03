@@ -138,7 +138,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		pnContent.add(pnCenter);
 		pnCenter.setLayout(null);
 		
-		String []collName = {"Mã Hóa Đơn","Ngày Lập","Tổng Tiền","Tiền Giảm","Hình Thức Thanh Toán","Trạng Thái","Mã Khách Hàng","Mã Nhân Viên","Mã Loại HD"};
+		String []collName = {"Mã Hóa Đơn","Ngày Lập","Tổng Tiền","Tiền Giảm","Hình Thức Thanh Toán","Trạng Thái","Mã Khách Hàng","Mã Nhân Viên","Mã Loại HD","Ghi Chú"};
 				
 		df_HoaDon = new DefaultTableModel(collName, 0);
 		tb_HoaDon = new JTable(df_HoaDon);

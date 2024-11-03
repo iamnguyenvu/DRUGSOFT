@@ -9,7 +9,6 @@ public class NhanVien_entity {
     private String gioiTinh;			// Gioi Tính
     private String sdt;                 // Số điện thoại
     private String cccd;                // CCCD
-    private String chucVu;              // Chức vụ
     private String diaChi;              // Địa chỉ
     private LocalDate ngaySinh;         // Ngày sinh
     private boolean trangThai;          // Trạng thái
@@ -27,7 +26,7 @@ public class NhanVien_entity {
 		this.maNV = maNV;
 	}
 
-	public NhanVien_entity(String maNV, String hoNV, String tenNV, String gioiTinh, String sdt, String cccd, String chucVu,
+	public NhanVien_entity(String maNV, String hoNV, String tenNV, String gioiTinh, String sdt, String cccd,
 			String diaChi, LocalDate ngaySinh, boolean trangThai, LocalDate ngayVaoLam, TaiKhoan_entity taiKhoan,
 			LoaiNhanVien_entity loaiNhanVien, String hinhAnhNV) {
 		super();
@@ -37,7 +36,6 @@ public class NhanVien_entity {
 		this.gioiTinh = gioiTinh;
 		this.sdt = sdt;
 		this.cccd = cccd;
-		this.chucVu = chucVu;
 		this.diaChi = diaChi;
 		this.ngaySinh = ngaySinh;
 		this.trangThai = trangThai;
@@ -81,12 +79,6 @@ public class NhanVien_entity {
 	}
 	public void setCccd(String cccd) {
 		this.cccd = cccd;
-	}
-	public String getChucVu() {
-		return chucVu;
-	}
-	public void setChucVu(String chucVu) {
-		this.chucVu = chucVu;
 	}
 	public String getDiaChi() {
 		return diaChi;
@@ -133,7 +125,7 @@ public class NhanVien_entity {
 	@Override
 	public String toString() {
 		return "NhanVien [maNV=" + maNV + ", hoNV=" + hoNV + ", tenNV=" + tenNV + ", gioiTinh=" + gioiTinh + ", sdt="
-				+ sdt + ", cccd=" + cccd + ", chucVu=" + chucVu + ", diaChi=" + diaChi + ", ngaySinh=" + ngaySinh
+				+ sdt + ", cccd=" + cccd + ", diaChi=" + diaChi + ", ngaySinh=" + ngaySinh
 				+ ", trangThai=" + trangThai + ", ngayVaoLam=" + ngayVaoLam + ", taiKhoan=" + taiKhoan
 				+ ", loaiNhanVien=" + loaiNhanVien + ", hinhAnhNV=" + hinhAnhNV + "]";
 	}

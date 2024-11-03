@@ -14,7 +14,9 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import gui.BanHang;
 import gui.DoiTra;
 import gui.DoiTraSanPham;
-import gui.ThongKe_GUI;
+import gui.ThongKeDoanhThu_GUI;
+import gui.ThongKeSanPham_GUI;
+import gui.barChar_ThongKe;
 import nguyenvu.forms.DashboardForm;
 import nguyenvu.forms.ReadForm;
 import nguyenvu.forms.StatisticalForm;
@@ -233,7 +235,10 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     	
                     }
                     if (index[0] == 8) {
-                    	FormManager.showForm(new ThongKe_GUI());
+                    	FormManager.showForm(new ThongKeSanPham_GUI());
+                    }
+                    if (index[0] == 9) {
+                    	FormManager.showForm(new ThongKeDoanhThu_GUI());
                     }
                     if (index[0] == 10) {
                         // logout
