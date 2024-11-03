@@ -91,7 +91,7 @@ public class DoiTra_DAO {
             ps.setString(1, maHD);
             rs = ps.executeQuery();
             if (rs.next()) {
-                return new NhanVien_entity(rs.getString("maNV"), rs.getString("hotenNV"));
+                return new NhanVien_entity(rs.getString("maNV"), rs.getString("hotenNV"), maHD, maHD, maHD, maHD, null, false, null, null, null, maHD, maHD);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -145,6 +145,7 @@ public class DoiTra_DAO {
             ps.setString(1, maHD);
             rs = ps.executeQuery();
             if (rs.next()) {
+
                 return new HoaDon_entity(rs.getString("maHD"), rs.getTimestamp("ngayLapHD").toLocalDateTime(), rs.getString("hinhThucThanhToan"));
             }
         } catch (SQLException e) {

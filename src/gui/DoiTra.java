@@ -793,7 +793,7 @@ public class DoiTra extends SimpleForm {
         hd = dao.getHoaDon(maHD);
         
         lblMaNV.setText(nv.getMaNV());
-        lblTenNV.setText(nv.getHotenNV());
+        lblTenNV.setText(nv.getHoTenNV());
         
         lblMaHD.setText(hd.getMaHD());
         lblNgayLapHD.setText(String.valueOf(hd.getNgayLapHD()));
