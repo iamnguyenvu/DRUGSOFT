@@ -147,9 +147,8 @@ public class SanPham extends SimpleForm implements ActionListener {
 				if (searchText.equals("") || searchText.equals("Nhập Tên Hoặc Mã Sản Phẩm")) {
 					docDuLieuVaoTable();
 				} else {
-					dftb_SanPham.setRowCount(0); // Clear the current table model
-					List<SanPham_entity> filteredProducts = sp_dao.timKiemSanPham(searchText); // Assume this method
-																								// exists
+					dftb_SanPham.setRowCount(0);
+					List<SanPham_entity> filteredProducts = sp_dao.timKiemSanPham(searchText);
 					for (SanPham_entity product : filteredProducts) {
 						dftb_SanPham.addRow(new Object[] { product.getMaSP(), product.getTenSP(), product.getSoLuong(),
 								product.getNgaySanXuat(), product.getNgayHetHan(), product.getKhoiLuong(),
@@ -546,7 +545,8 @@ public class SanPham extends SimpleForm implements ActionListener {
 		dftb_SanPham.addRow(new Object[] { sp.getMaSP(), sp.getTenSP(), sp.getSoLuong(), sp.getNgaySanXuat(),
 				sp.getNgayHetHan(), sp.getKhoiLuong(), sp.getDonViTinh(), sp.getNhaCungCap(), sp.getGia(),
 				sp.getThanhPhan(), sp.getCongDung(), sp.getHinhAnhSP(), sp.getLoaiSanPham().getMaLoaiSP() });
-		sp_dao.themSanPham(sp);
+				sp_dao.themSanPham(sp);
+				
 	}
 	//Phương thức cập nhật sản phẩm
 	public void updateRowTable(SanPham_entity sp) {

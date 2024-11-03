@@ -102,6 +102,8 @@ public class DoanhSoBanHang extends SimpleForm{
         panel_1.add(lblNewLabel_2);
         
         dcNgayBatDau = new JDateChooser();
+        dcNgayBatDau.setForeground(new Color(0, 0, 0));
+        dcNgayBatDau.setBackground(new Color(255, 255, 255));
         dcNgayBatDau.setBounds(227, 72, 296, 34);
         panel_1.add(dcNgayBatDau);
         
@@ -113,6 +115,8 @@ public class DoanhSoBanHang extends SimpleForm{
         panel_1.add(lblNewLabel_2_1);
         
         dcNgayKetThuc = new JDateChooser();
+        dcNgayKetThuc.setForeground(new Color(0, 0, 0));
+        dcNgayKetThuc.setBackground(new Color(255, 255, 255));
         dcNgayKetThuc.setBounds(659, 72, 296, 34);
         panel_1.add(dcNgayKetThuc);
         btnTruyVan = new javax.swing.JButton();

@@ -180,6 +180,8 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		pn_Ngay.setLayout(null);
 
 		dcNgayHetHan = new JDateChooser();
+		dcNgayHetHan.setDateFormatString("dd-MM-yyyy");
+		dcNgayHetHan.setBackground(new Color(255, 255, 255));
 		dcNgayHetHan.setBounds(414, 101, 254, 34);
 		pn_Ngay.add(dcNgayHetHan);
 
@@ -189,6 +191,8 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		lbNgayHetHan.setFont(new Font("Times New Roman", Font.PLAIN, 17));
 
 		dcNgaySanXuat = new JDateChooser();
+		dcNgaySanXuat.setDateFormatString("dd-MM-yyyy");
+		dcNgaySanXuat.setBackground(new Color(255, 255, 255));
 		dcNgaySanXuat.setBounds(24, 101, 287, 34);
 		pn_Ngay.add(dcNgaySanXuat);
 

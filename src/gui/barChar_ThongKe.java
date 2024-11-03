@@ -100,6 +100,9 @@ public class barChar_ThongKe extends SimpleForm{
         panel_1.add(lblNewLabel_2);
         
         dcNgayBatDau = new JDateChooser();
+        dcNgayBatDau.setDateFormatString("dd-MM-yyyy");
+        dcNgayBatDau.setForeground(new Color(0, 0, 0));
+        dcNgayBatDau.setBackground(new Color(255, 255, 255));
         dcNgayBatDau.setBounds(120, 72, 244, 34);
         panel_1.add(dcNgayBatDau);
         
@@ -111,6 +114,9 @@ public class barChar_ThongKe extends SimpleForm{
         panel_1.add(lblNewLabel_2_1);
         
         dcNgayKetThuc = new JDateChooser();
+        dcNgayKetThuc.setDateFormatString("dd-MM-yyyy");
+        dcNgayKetThuc.setForeground(new Color(0, 0, 0));
+        dcNgayKetThuc.setBackground(new Color(255, 255, 255));
         dcNgayKetThuc.setBounds(507, 72, 244, 34);
         panel_1.add(dcNgayKetThuc);
         btnTruyVan = new javax.swing.JButton();

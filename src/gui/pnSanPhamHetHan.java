@@ -6,6 +6,7 @@ import com.raven.chart.Chart;
 import com.raven.chart.ModelChart;
 
 import nguyenvu.components.SimpleForm;
+import nguyenvu.model.ModelItemSell;
 
 import java.awt.Color;
 import java.awt.Desktop;
@@ -45,12 +46,16 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.toedter.calendar.JDateChooser;
 
 import ThongKeReport.ReportManager;
+import ThongKeReport.SPHetHanReport;
 import connectDB.connectDB;
 import dao.ThongKe_DAO;
 import entity.ModelData;
 import entity.ModelDataSP;
 import entity.SanPham_entity;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -163,10 +168,22 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
         btnXuatFile.addActionListener(this);
         
         btnBaoCao = new JButton("In Báo Cáo");
-        btnBaoCao.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
+//        btnBaoCao.addActionListener(new ActionListener() {
+//        	public void actionPerformed(ActionEvent e) {
+//        		java.util.List<SanPham_entity> list = new ArrayList<SanPham_entity>();
+//        		for(int i = 0; i<tb_SanPham.getRowCount();i++) {
+//        			SanPham_entity data =  (SanPham_entity) tb_SanPham.getValueAt(i, 0);
+//        			list.add(new SanPham_entity(data.getMaSP(),data.getTenSP(), data.getNgaySanXuat(),data.getNgayHetHan(), data.getKhoiLuong(), data.getDonViTinh(), data.getNhaCungCap(), data.getGia(), data.getThanhPhan(),data.getCongDung(), data.getHinhAnhSP(), data.getLoaiSanPham(), data.getSoLuong()));
+//        		}
+//        		SPHetHanReport SP = new SPHetHanReport();
+//        		try {
+//					ReportManager.getInstance().printReportProduct(SP);
+//				} catch (JRException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//        	}
+//        });
         btnBaoCao.setForeground(Color.BLACK);
         btnBaoCao.setFont(new Font("Arial", Font.BOLD, 15));
         btnBaoCao.setBackground(Color.WHITE);
@@ -209,12 +226,7 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
 		}
 		
 	}
-	public void printReportProduct(SanPham_entity data) {
-		Map para = new HashMap();
-		para.put("Mã Sản Phẩm",data.getMaSP());
-		para.put("Tên Sản Phẩm",data.getTenSP());
-		
-	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

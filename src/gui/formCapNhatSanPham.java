@@ -207,6 +207,8 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		pn_Ngay.setLayout(null);
 
 		dcNgayHetHan = new JDateChooser();
+		dcNgayHetHan.setDateFormatString("dd-MM-yyyy");
+		dcNgayHetHan.setBackground(new Color(255, 255, 255));
 		dcNgayHetHan.setForeground(new Color(0, 0, 0));
 		dcNgayHetHan.getDateEditor().getUiComponent().setBackground(Color.WHITE);
 		dcNgayHetHan.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -222,7 +224,9 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		lbNgayHetHan.setFont(new Font("Times New Roman", Font.PLAIN, 17));
 
 		dcNgaySanXuat = new JDateChooser();
-		dcNgaySanXuat.setForeground(new Color(255, 255, 255));
+		dcNgaySanXuat.setDateFormatString("dd-MM-yyyy");
+		dcNgaySanXuat.setBackground(new Color(255, 255, 255));
+		dcNgaySanXuat.setForeground(new Color(0, 0, 0));
 		dcNgaySanXuat.getDateEditor().getUiComponent().setBackground(Color.WHITE);
 		dcNgaySanXuat.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		dcNgaySanXuat.setBounds(24, 101, 287, 34);
