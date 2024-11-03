@@ -4,9 +4,12 @@
  */
 package gui;
 
+import bill.BillDTManeger;
 import bill.BillManeger;
 import bill.FieldBill;
+import bill.FieldBillDT;
 import bill.ParameterBill;
+import bill.ParameterBillDT;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.components.FlatPopupMenu;
@@ -37,6 +40,8 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -126,7 +131,7 @@ public class DoiTra extends SimpleForm {
         btnDoiTra = new javax.swing.JButton();
         btnChonTatCa = new javax.swing.JButton();
         lbl7 = new javax.swing.JLabel();
-        lblTienThua = new javax.swing.JLabel();
+        lblTienHoan = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         rbtnDoi = new javax.swing.JRadioButton();
         rbtnTra = new javax.swing.JRadioButton();
@@ -212,7 +217,7 @@ public class DoiTra extends SimpleForm {
 
         pnRightContent.setPreferredSize(new java.awt.Dimension(400, 700));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin đổi trả", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(11, 101, 136))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin đổi trả", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(11, 101, 136))); // NOI18N
 
         btnDoiTra.setBackground(new java.awt.Color(1, 201, 16));
         btnDoiTra.setForeground(new java.awt.Color(255, 255, 255));
@@ -225,7 +230,7 @@ public class DoiTra extends SimpleForm {
 
         btnChonTatCa.setBackground(new java.awt.Color(183, 218, 246));
         btnChonTatCa.setForeground(new java.awt.Color(255, 255, 255));
-        btnChonTatCa.setText("Chọn tất cả (F8)");
+        btnChonTatCa.setText("Chọn tất cả (F3)");
         btnChonTatCa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnChonTatCaActionPerformed(evt);
@@ -236,6 +241,7 @@ public class DoiTra extends SimpleForm {
 
         jLabel6.setText("Loại:");
 
+        rbtnDoi.setSelected(true);
         rbtnDoi.setText("Đổi sản phẩm");
         rbtnDoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -269,7 +275,7 @@ public class DoiTra extends SimpleForm {
 
         btnLamMoi.setBackground(new java.awt.Color(183, 218, 246));
         btnLamMoi.setForeground(new java.awt.Color(255, 255, 255));
-        btnLamMoi.setText("Làm mới (F8)");
+        btnLamMoi.setText("Làm mới (F4)");
         btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLamMoiActionPerformed(evt);
@@ -287,7 +293,7 @@ public class DoiTra extends SimpleForm {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(lbl7, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblTienThua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblTienHoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -326,9 +332,11 @@ public class DoiTra extends SimpleForm {
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                     .addComponent(lblNgayLapHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(8, 8, 8)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbtnDoi, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbtnDoi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(rbtnTra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(8, 8, 8)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -339,7 +347,7 @@ public class DoiTra extends SimpleForm {
                 .addGap(8, 8, 8)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTienHoan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(53, 53, 53)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -355,9 +363,9 @@ public class DoiTra extends SimpleForm {
             + "font:bold +2");
         lbl7.putClientProperty(FlatClientProperties.STYLE, ""
             + "font:bold +3");
-        lblTienThua.putClientProperty(FlatClientProperties.STYLE, ""
+        lblTienHoan.putClientProperty(FlatClientProperties.STYLE, ""
             + "font:bold +3");
-        lblTienThua.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblTienHoan.setHorizontalAlignment(SwingConstants.RIGHT);
         jLabel6.putClientProperty(FlatClientProperties.STYLE, ""
             + "font:normal +1");
         addStyleBtn(jLabel6);
@@ -460,7 +468,7 @@ public class DoiTra extends SimpleForm {
                 .addComponent(pnCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         //jPanel2.putClientProperty(FlatClientProperties.STYLE, ""
@@ -470,7 +478,7 @@ public class DoiTra extends SimpleForm {
 
         pnLeftContent.setPreferredSize(new java.awt.Dimension(1085, 700));
 
-        pnTableExchange.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sản phẩm đổi trả", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(11, 101, 136))); // NOI18N
+        pnTableExchange.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sản phẩm đổi trả", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(11, 101, 136))); // NOI18N
         pnTableExchange.setPreferredSize(new java.awt.Dimension(100, 200));
 
         tableExchange.setModel(new javax.swing.table.DefaultTableModel(
@@ -478,11 +486,11 @@ public class DoiTra extends SimpleForm {
 
             },
             new String [] {
-                "maSP", "TenSP", "soLuong"
+                "maSP", "TenSP", "soLuong", "btnDelete"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -498,7 +506,21 @@ public class DoiTra extends SimpleForm {
             tableExchange.getColumnModel().getColumn(1).setPreferredWidth(200);
             tableExchange.getColumnModel().getColumn(2).setResizable(false);
             tableExchange.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tableExchange.getColumnModel().getColumn(3).setResizable(false);
+            tableExchange.getColumnModel().getColumn(3).setPreferredWidth(60);
         }
+        tableExchange.getColumnModel().getColumn(3).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());
+        tableExchange.getColumnModel().getColumn(3).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {
+            @Override
+            public void onDelete(int row) {
+                if (row >= 0) {
+                    ((DefaultTableModel) tableExchange.getModel()).removeRow(row);
+                    ((DefaultTableModel) tableExchange.getModel()).fireTableDataChanged();
+                    //            updateLblSoLuongSP();
+                }
+            }
+        }));
+
         //DefaultTableModel model1 = (DefaultTableModel) table.getModel();
         //DefaultTableModel model2 = (DefaultTableModel) tableExchange.getModel();
 
@@ -538,10 +560,10 @@ public class DoiTra extends SimpleForm {
     );
     pnTableExchangeLayout.setVerticalGroup(
         pnTableExchangeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
     );
 
-    jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sản phẩm trong hóa đơn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(11, 101, 136))); // NOI18N
+    jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sản phẩm trong hóa đơn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(11, 101, 136))); // NOI18N
     jScrollPane2.setPreferredSize(new java.awt.Dimension(452, 500));
 
     table.setModel(new javax.swing.table.DefaultTableModel(
@@ -650,35 +672,66 @@ public class DoiTra extends SimpleForm {
 
     private void btnDoiTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiTraActionPerformed
         // TODO add your handling code here:
-        if(table.getRowCount() < 1) {
+        if(table.getRowCount() < 1 || tableExchange.getRowCount() < 1) {
             MessageAlerts.getInstance().showMessage("Lỗi", "Chưa thêm sản phẩm vào đơn!", MessageAlerts.MessageType.ERROR);
             return;
         }
         
-        try {
-            List<FieldBill> fields = new ArrayList<>();
+//        if(txtLyDo.getText().isEmpty() || cbbLyDo.get)
         
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            for (int i = 0; i < model.getRowCount(); i++) {
-                String productName = (String) model.getValueAt(i, 3); // tenSP
-                int quantity = (int) model.getValueAt(i, 5);           // soLuong
-                double unitPrice = (double) model.getValueAt(i, 6);    // donGia
-                double totalPrice = (double) model.getValueAt(i, 7);   // thanhTien
-
-                fields.add(new FieldBill(productName, quantity, unitPrice, totalPrice));
-            }
+        try {
 
             String employeeName = user != null ? user.getName() : "Nhân viên";  // Replace with actual employee data if available
             String employeeId = user != null ? user.getUserName() : "";
-            String customerName = kh != null ? kh.getTenKH() : "Khách vãng lai"; // Default customer name if kh is null
-            String customerPhone = kh != null ? kh.getSdtKH() : "";
-            double totalAmount = calculateTotalAmount();
-
-
-            String ghiChu = txtLyDo.getText();
+             
+            String lyDo = txtLyDo.getText();
+            String loaiDT;
+            String billCode = generateBillCode();
+            String date = getCurrentDate();
+            double totalAmount = 0;
             
-//            HoaDon_entity hd = new HoaDon_entity(billID, getCurrentDate(), thanhToan, discount, ptThanhToan, true, customerPhone, employeeId, "BanSanPham");
+            if (rbtnDoi.isSelected()) {
+                loaiDT = "DoiSanPham";
+                totalAmount = 0;
+            } else if(rbtnTra.isSelected()) {
+                loaiDT = "TraSanPham";
+                totalAmount = calculateTotalAmount();
+            } else {
+                MessageAlerts.getInstance().showMessage("LỖI", "Chưa chọn loại đổi trả!", MessageAlerts.MessageType.ERROR);
+                return;
+            }
             
+            String loai = loaiDT.equals("DoiSanPham") ? "Đổi sản phẩm" : "Trả sản phẩm";
+            
+            List<FieldBillDT> fields = new ArrayList<>();
+        
+            DefaultTableModel model = (DefaultTableModel) tableExchange.getModel();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                String productName = (String) model.getValueAt(i, 1); // tenSP
+                int quantity = (int) model.getValueAt(i, 2);           // soLuong
+                double unitPrice = dao.getSP((String) model.getValueAt(i, 0)).getGia();    // donGia
+                double totalPrice = quantity * unitPrice;   // thanhTien
+
+                fields.add(new FieldBillDT(productName, quantity, unitPrice, totalPrice));
+            }
+            
+            ParameterBillDT billData = new ParameterBillDT(date, employeeName, kh.getTenKH(), 
+                    kh.getSdtKH(), totalAmount, loai, lyDo, billCode, generateQrcode(), fields);
+            
+            BillDTManeger.getInstance().printBill(billData);
+            
+            String ptThanhToan = (String) hd.getHinhThucThanhToan();
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            LocalDateTime issueDate = LocalDateTime.parse(date, formatter);
+            
+            HoaDon_entity hd = new HoaDon_entity(billCode, issueDate, totalAmount, 0, ptThanhToan, true, kh.getSdtKH(), employeeId, loaiDT, lyDo);
+            
+            if(!dao.createHD(hd)) {
+                MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);
+                refresh();
+                return;
+            }
             refresh();
         } catch (Exception e){
             e.printStackTrace();
@@ -707,10 +760,16 @@ public class DoiTra extends SimpleForm {
 
     private void rbtnDoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnDoiActionPerformed
         // TODO add your handling code here:
+        rbtnDoi.setSelected(true);
+        rbtnTra.setSelected(false);
+        updateInfor();
     }//GEN-LAST:event_rbtnDoiActionPerformed
 
     private void rbtnTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnTraActionPerformed
         // TODO add your handling code here:
+        rbtnDoi.setSelected(false);
+        rbtnTra.setSelected(true);
+        updateInfor();
     }//GEN-LAST:event_rbtnTraActionPerformed
 
     private void cbbLyDoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLyDoActionPerformed
@@ -719,6 +778,8 @@ public class DoiTra extends SimpleForm {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
+        refresh();
+        
         if(txtHoaDonSearch.getText().isEmpty()) {
             MessageAlerts.getInstance().showMessage("Tìm hóa đơn", "Chưa nhập mã hóa đơn!", MessageAlerts.MessageType.ERROR);
             return;
@@ -732,7 +793,7 @@ public class DoiTra extends SimpleForm {
         hd = dao.getHoaDon(maHD);
         
         lblMaNV.setText(nv.getMaNV());
-        lblTenNV.setText(nv.getHotenNV());
+        lblTenNV.setText(nv.getHoTenNV());
         
         lblMaHD.setText(hd.getMaHD());
         lblNgayLapHD.setText(String.valueOf(hd.getNgayLapHD()));
@@ -788,16 +849,18 @@ public class DoiTra extends SimpleForm {
         hd = null;
         lblMaNV.setText("");
         lblTenNV.setText("");
-        lblTienThua.setText("");
+        lblTienHoan.setText("");
         cbbLyDo.setSelectedIndex(0);
         txtLyDo.setText("");
     }
 
     private double calculateTotalAmount() {
         double sum = 0;
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        DefaultTableModel model = (DefaultTableModel) tableExchange.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
-            Object totalValue = model.getValueAt(i, 7); // Get thanhTien from column 7
+            double gia = dao.getSP((String) model.getValueAt(i, 0)).getGia();
+            int quantity = (int) model.getValueAt(i, 2); 
+            Object totalValue = gia * quantity;
             if (totalValue instanceof Double) {
                 sum += (Double) totalValue; // Add to sum if it's a Double
             } else if (totalValue != null && !totalValue.toString().isEmpty()) {
@@ -846,7 +909,8 @@ public class DoiTra extends SimpleForm {
     private void addKeyBindings() {
         bindKeyToFocus(txtHoaDonSearch, KeyEvent.VK_F2);
         bindButtonKey(btnDoiTra, KeyEvent.VK_F1);
-        bindButtonKey(btnChonTatCa, KeyEvent.VK_F7);
+        bindButtonKey(btnChonTatCa, KeyEvent.VK_F3);
+        bindButtonKey(btnLamMoi, KeyEvent.VK_F4);
     }
      
     private void bindKeyToFocus(JComponent component, int key) {
@@ -877,6 +941,16 @@ public class DoiTra extends SimpleForm {
         btn.putClientProperty(FlatClientProperties.STYLE, ""
             + "font: bold +1");
     }
+    
+    private void updateInfor() {
+        DefaultTableModel model = (DefaultTableModel) tableExchange.getModel();
+        if(rbtnTra.isSelected()) {
+            lblTienHoan.setText(df.format(calculateTotalAmount()));
+        }
+        else {
+            lblTienHoan.setText("");
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChonTatCa;
@@ -903,7 +977,7 @@ public class DoiTra extends SimpleForm {
     private javax.swing.JLabel lblSDT;
     private javax.swing.JLabel lblTenKH;
     private javax.swing.JLabel lblTenNV;
-    private javax.swing.JLabel lblTienThua;
+    private javax.swing.JLabel lblTienHoan;
     private javax.swing.JPanel pnContent;
     private javax.swing.JPanel pnCustomer;
     private javax.swing.JPanel pnLeftContent;

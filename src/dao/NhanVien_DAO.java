@@ -60,7 +60,7 @@ public class NhanVien_DAO {
     // (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     // return executeInsert(nhanVien, sql);
     // }
-
+    
     // Cập nhật thông tin nhân viên
 //    public boolean updateNhanVien(NhanVien_entity nhanVien) {
 //        String sql = "UPDATE NhanVien SET " +

@@ -19,6 +19,7 @@ public class SanPham_entity {
 	public SanPham_entity() {
 		super();
 	}
+	
 	public SanPham_entity(String maSP, String tenSP, LocalDate ngaySanXuat, LocalDate ngayHetHan, double khoiLuong,
 			String donViTinh, String nhaCungCap, double gia, String thanhPhan, String congDung, String hinhAnhSP,
 			LoaiSanPham_entity loaiSanPham, int soLuong) {
@@ -147,12 +148,28 @@ public class SanPham_entity {
         this.soLuong = soLuong;
     }
     
-//    Constructor for DoiTra, seems not essential
-
     public SanPham_entity(String maSP, String tenSP, double gia) {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.gia = gia;
     }
+
+    public SanPham_entity(String maSP, String tenSP, double gia, int soLuong) {
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.gia = gia;
+        this.soLuong = soLuong;
+    }
+
+    public SanPham_entity(String maSP, String tenSP, String donViTinh, double gia, String hinhAnhSP) {
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.donViTinh = donViTinh;
+        this.gia = gia;
+        this.hinhAnhSP = hinhAnhSP;
+    }
+
+    
        
+    
 }

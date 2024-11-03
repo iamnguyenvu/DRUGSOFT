@@ -324,7 +324,7 @@
 		</band>
 	</columnFooter>
 	<lastPageFooter>
-		<band height="160">
+		<band height="180">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
@@ -338,7 +338,7 @@
 Mã hóa đơn: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="48" y="66" width="138" height="10" uuid="ecd7f7a0-e106-4539-8ea5-a578a23a0c52">
+				<reportElement x="0" y="80" width="185" height="10" uuid="ecd7f7a0-e106-4539-8ea5-a578a23a0c52">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
@@ -357,7 +357,7 @@ Mã hóa đơn: ]]></text>
 				<text><![CDATA[Giá thanh toán đã bao gồm thuế VAT]]></text>
 			</staticText>
 			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="0" y="80" width="186" height="80" uuid="01e09420-b383-451d-9dd9-26389ca16ea5"/>
+				<reportElement x="0" y="100" width="186" height="80" uuid="01e09420-b383-451d-9dd9-26389ca16ea5"/>
 				<imageExpression><![CDATA[$P{qrcode}]]></imageExpression>
 			</image>
 		</band>

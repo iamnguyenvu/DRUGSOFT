@@ -64,7 +64,7 @@ public class Login extends JPanel {
         description.putClientProperty(FlatClientProperties.STYLE, ""
                 + "[light]foreground:lighten(@foreground,30%);"
                 + "[dark]foreground:darken(@foreground,30%)");
-        
+
         panel.add(lbTitle);
         panel.add(description);
         panel.add(new JLabel("Tên đăng nhập"), "gapy 8");
@@ -105,7 +105,7 @@ public class Login extends JPanel {
             MessageAlerts.getInstance().showMessage("Đăng nhập thất bại", "Tên đăng nhập hoặc mật khẩu không được để trống!", MessageAlerts.MessageType.ERROR);
             return;
         }
-        
+
         DangNhap_DAO dao = new DangNhap_DAO();
         Integer role = dao.getRole(username, password);
 

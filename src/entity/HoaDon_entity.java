@@ -309,15 +309,4 @@ public class HoaDon_entity {
         this.hinhThucThanhToan = hinhThucThanhToan;
     }
 
-
-
-
-
-
-
-
-	public HoaDon_entity getKhachHang() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

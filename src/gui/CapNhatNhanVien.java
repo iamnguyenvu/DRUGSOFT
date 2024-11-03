@@ -54,7 +54,7 @@ public class CapNhatNhanVien extends JFrame {
 
     public static void main(String[] args) {
         new CapNhatNhanVien("NV24119212", "dfdfhfdhfdjf", "01/01/1990", "123 Đường ABC", "0935201508", "123456789012",
-                "01/01/2020", true, "Nam", "D:\\lang-tu.jpg", "NV");
+                "01/01/2020", true, "Nam", "D:\\Anh1.jpg", "NV");
     }
 
     public CapNhatNhanVien(String maNV, String hoTenNV, String ngaySinh, String diaChi, String sdt, String cccd,
