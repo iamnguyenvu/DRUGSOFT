@@ -19,6 +19,7 @@ public class SanPham_entity {
 	public SanPham_entity() {
 		super();
 	}
+	
 	public SanPham_entity(String maSP, String tenSP, LocalDate ngaySanXuat, LocalDate ngayHetHan, double khoiLuong,
 			String donViTinh, String nhaCungCap, double gia, String thanhPhan, String congDung, String hinhAnhSP,
 			LoaiSanPham_entity loaiSanPham, int soLuong) {

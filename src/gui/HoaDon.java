@@ -142,6 +142,9 @@ public class HoaDon extends SimpleForm implements ActionListener{
 				
 		df_HoaDon = new DefaultTableModel(collName, 0);
 		tb_HoaDon = new JTable(df_HoaDon);
+		tb_HoaDon.setBackground(new Color(255, 255, 255));
+		tb_HoaDon.setForeground(new Color(0, 0, 0));
+		tb_HoaDon.setFont(new Font("Arial", Font.PLAIN, 12));
 		tb_HoaDon.setBounds(33, 29, 1186, 669);
 		
 		sp_HoaDon = new JScrollPane(tb_HoaDon);
@@ -151,6 +154,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		docDuLieuVaoTable();
 		
 		JPanel panel = new JPanel();
+		panel.setForeground(new Color(0, 0, 0));
 		panel.setBackground(new Color(255, 255, 255));
 		panel.setBorder(new TitledBorder(null, "L\u1ECDc H\u00F3a \u0110\u01A1n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(1140, 24, 333, 453);
@@ -158,31 +162,40 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Hình Thức Thanh Toán");
-		lblNewLabel.setFont(new Font("Serif", Font.PLAIN, 14));
-		lblNewLabel.setBounds(10, 46, 146, 49);
+		lblNewLabel.setForeground(new Color(0, 0, 0));
+		lblNewLabel.setBackground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+		lblNewLabel.setBounds(10, 46, 157, 49);
 		panel.add(lblNewLabel);
 		
 		cb_HTTT = new JComboBox();
-		cb_HTTT.setBounds(166, 46, 146, 37);
+		cb_HTTT.setBackground(new Color(255, 255, 255));
+		cb_HTTT.setForeground(new Color(0, 0, 0));
+		cb_HTTT.setBounds(177, 53, 146, 37);
 		panel.add(cb_HTTT);
 		cb_HTTT.addItem("Tất Cả");
-		cb_HTTT.addItem("TienMat");
-		cb_HTTT.addItem("ChuyenKhoan");
-		cb_HTTT.addItem("TheTinDung");
+		cb_HTTT.addItem("Tiền Mặt");
+		cb_HTTT.addItem("Chuyển Khoản");
+		cb_HTTT.addItem("Thẻ Tín Dụng");
 		
 		
 		JLabel lblTrngThi = new JLabel("Trạng Thái");
-		lblTrngThi.setFont(new Font("Serif", Font.PLAIN, 14));
-		lblTrngThi.setBounds(10, 152, 146, 49);
+		lblTrngThi.setForeground(new Color(0, 0, 0));
+		lblTrngThi.setBackground(new Color(255, 255, 255));
+		lblTrngThi.setFont(new Font("Arial", Font.PLAIN, 14));
+		lblTrngThi.setBounds(21, 145, 146, 49);
 		panel.add(lblTrngThi);
 		
 		cb_TrangThai = new JComboBox();
-		cb_TrangThai.setBounds(166, 152, 146, 37);
+		cb_TrangThai.setBackground(new Color(255, 255, 255));
+		cb_TrangThai.setForeground(new Color(0, 0, 0));
+		cb_TrangThai.setBounds(177, 152, 146, 37);
 		panel.add(cb_TrangThai);
 		cb_TrangThai.addItem("Hoàn Thành");
 		cb_TrangThai.addItem("Chưa Hoàn Thành");
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setForeground(new Color(0, 0, 0));
 		panel_1.setBorder(new TitledBorder(null, "T\u1ED5ng Ti\u1EC1n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_1.setBackground(new Color(255, 255, 255));
 		panel_1.setBounds(22, 252, 290, 175);
@@ -190,14 +203,16 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		panel_1.setLayout(null);
 		
 		rdo_TTTD = new JRadioButton("Tăng Dần");
+		rdo_TTTD.setForeground(new Color(0, 0, 0));
 		rdo_TTTD.setBackground(new Color(255, 255, 255));
 		rdo_TTTD.setFont(new Font("Serif", Font.PLAIN, 12));
 		rdo_TTTD.setBounds(25, 47, 219, 21);
 		panel_1.add(rdo_TTTD);
 		
 		rdo_TTGD = new JRadioButton("Giảm Dần");
+		rdo_TTGD.setForeground(new Color(0, 0, 0));
 		rdo_TTGD.setFont(new Font("Serif", Font.PLAIN, 12));
-		rdo_TTGD.setBackground(Color.WHITE);
+		rdo_TTGD.setBackground(new Color(255, 255, 255));
 		rdo_TTGD.setBounds(25, 95, 219, 21);
 		panel_1.add(rdo_TTGD);
 		
@@ -279,9 +294,9 @@ public class HoaDon extends SimpleForm implements ActionListener{
 	            hd.getTienGiam(),
 	            hd.getHinhThucThanhToan(),
 	            hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành", // Hiển thị trạng thái bằng chuỗi
-	            hd.getKhachHang().getSdtKH(),
-	            hd.getNhanVien().getMaNV(),
-	            hd.getLoaiHoaDon().getMaLoaiHD()
+	            hd.getSdtKH(),
+	            hd.getMaNV(),
+	            hd.getMaLoaiHoaDon()
 	        });
 	    }
 	}
