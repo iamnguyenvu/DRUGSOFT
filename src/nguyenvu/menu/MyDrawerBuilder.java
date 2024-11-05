@@ -46,9 +46,14 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     private String des;
     private String name;
     private Integer role;
+    
+    private BanHang banHang;
+    private DoiTra doiTra;
 
     public void setUser(ModelUser user) {
         this.user = user;
+        banHang = new BanHang(user);
+        doiTra = new DoiTra(user);
         SimpleHeaderData headerData = header.getSimpleHeaderData();
         headerData.setTitle(user.getName());
         AvatarIcon icon = new AvatarIcon(getClass().getResource(user.getAvatarPath()), 60, 60, 999);
@@ -185,7 +190,10 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     boolean act
                             = 
                             checkMenu(index, new int[]{6}) && 
-                            checkMenu(index, new int[]{7});
+                            checkMenu(index, new int[]{7}) &&
+                            checkMenu(index, new int[]{8, 0})&&
+                            checkMenu(index, new int[]{8, 2})&&
+                            checkMenu(index, new int[]{9, 0});
                     return act;
                 }
                 return true;
@@ -221,10 +229,10 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     	FormManager.showForm(new gui.ManHinhNen());
                     }
                     if (index[0] == 1) {
-                        FormManager.showForm(new BanHang(user));
+                        FormManager.showForm(banHang);
                     }
                     if (index[0] == 2) {
-                        FormManager.showForm(new DoiTra(user));
+                        FormManager.showForm(doiTra);
                     }
                     if (index[0] == 3) {
                     	FormManager.showForm(new gui.SanPham());
@@ -233,14 +241,13 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     	FormManager.showForm(new gui.HoaDon());
                     }
                     if (index[0] == 5) {
-
                     	FormManager.showForm(new gui.KhachHang_GUI());
+                    }
+                    if (index[0] == 6) {
+                    	FormManager.showForm(new gui.NhanVien());
                     }
                     if (index[0] == 7) {
                     	FormManager.showForm(new gui.TaiKhoan_GUI());
-
-                    	
-
                     }
                     if (index[0] == 10) {
                         // logout

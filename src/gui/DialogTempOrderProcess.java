@@ -126,7 +126,6 @@ public class DialogTempOrderProcess extends SimpleForm{
         if(popupMenu != null) {
             popupMenu.setVisible(false);
             this.setVisible(false);
-            System.out.println("gui.DialogTempOrderProcess.jButton1ActionPerformed()");
         }
     }//GEN-LAST:event_btnCancelActionPerformed
 

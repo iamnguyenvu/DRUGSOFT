@@ -264,7 +264,7 @@ BEGIN
     SET NOCOUNT ON;
 
     DECLARE @maHD CHAR(13),
-            @sdtKH CHAR(13),
+            @sdtKH CHAR(10),
             @maNV CHAR(10),
             @maLoaiHD NVARCHAR(20),
             @ngayLapHD DATE,
@@ -460,28 +460,29 @@ ADD CONSTRAINT FK_SP_CTHD FOREIGN KEY (maSP) REFERENCES SanPham(maSP);  -- Thi�
 
 ALTER TABLE ChiTietHoaDon
 ADD CONSTRAINT PK_TCTHD PRIMARY KEY (maHD, maSP);
+
+
 -- Thêm dữ liệu vào bảng LoaiNhanVien
 INSERT INTO LoaiNhanVien (maLoaiNV, tenLoaiNV) VALUES
 ('NV', 'Nhân viên'),
 ('QL', 'Quản lý');
 
-
 -- Thêm dữ liệu vào bảng NhanVien
 INSERT INTO NhanVien ([maNV],[hotenNV],[gioiTinh],[sdt],[cccd],[diaChi],[ngaySinh],[trangThai],[ngayVaoLam],[hinhAnhNV],[maLoaiNV])
 VALUES 
-	('NV24011234', N'Nguyễn Văn Anh',N'Nam', '0312345678', '032345678924', 'TP.HCM', '1999-05-09', 0, '2024-01-03', N'vandat.jpg', 'QL'),
-	('NV24011367', N'Lê Anh Thư',N'Nữ', '0948976223', '055999720718', 'TP.HCM', '1997-09-17', 0, '2024-01-25', N'anhthu.jpg', 'NV'),
-	('NV24021864', N'Đặng Lê An',N'Nam', '0319870627', '075376892083', 'TP.HCM', '1998-03-28', 0, '2024-02-10', N'lean.jpg', 'NV'),
-	('NV24031897', N'Nguyễn Chí Dũng',N'Nam', '0776793848', '087383949842', 'TP.HCM', '1999-07-09', 0, '2024-03-05', N'chidung.jpg', 'NV'),
-	('NV24041765', N'Lê Hoài Thu',N'Nữ', '0987357828', '037906523688', 'TP.HCM', '2000-08-25', 0, '2024-04-10', N'hoaithu.jpg', 'NV'),
-	('NV24051823', N'Phạm Hoàng Huy',N'Nam', '0368236574', '043456789102', 'TP.HCM', '2001-01-15', 0, '2024-05-12', N'hoanghuy.jpg', 'NV'),
-	('NV24061952', N'Trần Thanh Phong',N'Nữ', '0923456789', '094856789101', 'TP.HCM', '1997-10-23', 0, '2024-06-18', N'thanhphong.jpg', 'NV'),
-	('NV24071324', N'Vũ Minh Thư',N'Nam', '0303456789', '047456789105', 'TP.HCM', '1998-11-11', 0, '2024-07-20', N'minhthu.jpg', 'NV'),
-	('NV24081476', N'Nguyễn Văn Toàn',N'Nữ', '0987456234', '093456728901', 'TP.HCM', '2002-04-05', 0, '2024-08-22', N'vantoan.jpg', 'NV'),
-	('NV24091365', N'Đoàn Thị Minh',N'Nữ', '0982345671', '094376282901', 'TP.HCM', '1999-02-07', 0, '2024-09-30', N'ĐoànThịMinh.jpg', 'NV'),
-	('NV24101987', N'Đỗ Quốc Anh',N'Nam', '0934678912', '041234578901', 'TP.HCM', '1995-07-25', 0, '2024-10-03', N'ĐỗQuốcAnh.jpg', 'NV'),
-	('NV24112432', N'Trần Thị Mai',N'Nữ', '0987567891', '021578902345', 'TP.HCM', '2000-04-17', 0, '2024-10-01', N'TrầnThịMai.jpg', 'NV'),
-	('NV24122567', N'Lê Văn Phúc',N'Nam', '0309782345', '068123457689', 'TP.HCM', '1999-06-10', 0, '2024-09-20', N'LêVănPhúc.jpg', 'NV');
+	('NV24011234', N'Nguyễn Văn Anh',N'Nam', '0312345678', '032345678924', 'TP.HCM', '1999-05-09', 0, '2024-01-03', N'/img/imgNhanVien/nam1.jpg', 'QL'),
+	('NV24011367', N'Lê Anh Thư',N'Nữ', '0948976223', '055999720718', 'TP.HCM', '1997-09-17', 0, '2024-01-25', N'/img/imgNhanVien/nu1.jpg', 'NV'),
+	('NV24021864', N'Đặng Lê An',N'Nam', '0319870627', '075376892083', 'TP.HCM', '1998-03-28', 0, '2024-02-10', N'/img/imgNhanVien/nam2.jpg', 'NV'),
+	('NV24031897', N'Nguyễn Chí Dũng',N'Nam', '0776793848', '087383949842', 'TP.HCM', '1999-07-09', 0, '2024-03-05', N'/img/imgNhanVien/nam3.jpg', 'NV'),
+	('NV24041765', N'Lê Hoài Thu',N'Nữ', '0987357828', '037906523688', 'TP.HCM', '2000-08-25', 0, '2024-04-10', N'/img/imgNhanVien/nu2.jpg', 'NV'),
+	('NV24051823', N'Phạm Hoàng Huy',N'Nam', '0368236574', '043456789102', 'TP.HCM', '2001-01-15', 0, '2024-05-12', N'/img/imgNhanVien/nam4.jpg', 'NV'),
+	('NV24061952', N'Trần Thanh Phong',N'Nữ', '0923456789', '094856789101', 'TP.HCM', '1997-10-23', 0, '2024-06-18', N'/img/imgNhanVien/nu3.jpg', 'NV'),
+	('NV24071324', N'Vũ Minh Thư',N'Nam', '0303456789', '047456789105', 'TP.HCM', '1998-11-11', 0, '2024-07-20', N'/img/imgNhanVien/nam5.jpg', 'NV'),
+	('NV24081476', N'Nguyễn Văn Toàn',N'Nữ', '0987456234', '093456728901', 'TP.HCM', '2002-04-05', 0, '2024-08-22', N'/img/imgNhanVien/nu4.jpg', 'NV'),
+	('NV24091365', N'Đoàn Thị Minh',N'Nữ', '0982345671', '094376282901', 'TP.HCM', '1999-02-07', 0, '2024-09-30', N'/img/imgNhanVien/nu5.jpg', 'NV'),
+	('NV24101987', N'Đỗ Quốc Anh',N'Nam', '0934678912', '041234578901', 'TP.HCM', '1995-07-25', 0, '2024-10-03', N'/img/imgNhanVien/nam6.jpg', 'NV'),
+	('NV24112432', N'Trần Thị Mai',N'Nữ', '0987567891', '021578902345', 'TP.HCM', '2000-04-17', 0, '2024-10-01', N'/img/imgNhanVien/nu6.jpg', 'NV'),
+	('NV24122567', N'Lê Văn Phúc',N'Nam', '0309782345', '068123457689', 'TP.HCM', '1999-06-10', 0, '2024-09-20', N'/img/imgNhanVien/nam7.jpg','NV');
 -- Thêm dữ liệu vào bảng NhanVien
 	INSERT INTO TaiKhoan (tenDangNhap, matKhau, phanQuyen, trangThai) VALUES
 ('NV24011234', 'Admin@2024', 1, 1),
@@ -541,6 +542,18 @@ VALUES
 
 -- Thêm dữ liệu vào bảng HoaDon
 
+
+INSERT INTO HoaDon (maHD, ngayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, sdtKH, maNV, maLoaiHD)
+VALUES 
+    -- Tháng 1
+
+	('HD24110100004', '2024-11-01 09:30:00', 150000.00, 1500, N'Tiền Mặt', 1, null, 'NV24122567', 'BanSanPham')
+INSERT INTO ChiTietHoaDon ( soLuongSanPham, thanhTien, maHD, maSP) 
+VALUES
+
+
+    ( 5, 15000.00, 'HD24110100004', 'SP23070100001'),
+    ( 2, 20000.00, 'HD24110100004', 'SP23070200002')
 
 INSERT INTO HoaDon (maHD, ngayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, sdtKH, maNV, maLoaiHD)
 VALUES 
@@ -623,83 +636,121 @@ VALUES
 
 INSERT INTO SanPham (maSP, tenSP, ngaySanXuat, ngayHetHan, nhaCungCap, gia, thanhPhan, congDung, hinhAnhSP, maLoaiSP, soLuong, khoiLuong, donViTinh)
 VALUES
-('SP23070100001', N'Viên uống Omega-3', '2023-07-01', '2024-07-01', N'Công ty TNHH Dược Phẩm ABC', 150000.00, N'Omega-3, Vitamin E', N'Hỗ trợ sức khỏe tim mạch', 'http://example.com/images/omega3.jpg', 'TPCN', 50, 200, N'Viên'),
-('SP23070200002', N'Viên uống Biotin', '2023-07-15', '2024-07-15', N'Công ty TNHH Dược Phẩm A', 120000.00, N'Biotin, Vitamin B7', N'Tăng cường sức khỏe tóc và da', 'http://example.com/images/biotin.jpg', 'TPCN', 30, 500, N'Viên'),
-('SP23070300003', N'Viên uống Probiotics', '2023-07-20', '2024-07-20', N'Công ty TNHH Dược Phẩm B', 130000.00, N'Probiotics, Lactobacillus', N'Hỗ trợ tiêu hóa', 'http://example.com/images/probiotics.jpg', 'TPCN', 60, 300, N'Viên'),
-('SP23070400004', N'Viên uống Vitamin C', '2023-07-25', '2024-07-25', N'Công ty TNHH Dược Phẩm C', 140000.00, N'Vitamin C, Acid Ascorbic', N'Tăng cường hệ miễn dịch', 'http://example.com/images/vitamin_c.jpg', 'TPCN', 40, 700, N'Viên'),
-('SP23070500005', N'Viên uống Vitamin D', '2023-07-30', '2024-07-30', N'Công ty TNHH Dược Phẩm D', 150000.00, N'Vitamin D3', N'Hỗ trợ xương', 'http://example.com/images/vitamin_d.jpg', 'TPCN', 25, 500, N'Viên'),
+('SP23070100001', N'Viên uống Omega-3', '2023-07-01', '2024-07-01', N'Công ty TNHH Dược Phẩm ABC', 15000.00, N'Omega-3, Vitamin E', N'Hỗ trợ sức khỏe tim mạch', '/img/imgSanPham/omega3.jpg', 'TPCN', 50, 200, N'Viên'),
+('SP23070200002', N'Viên uống Biotin', '2023-07-15', '2024-07-15', N'Công ty TNHH Dược Phẩm A', 12000.00, N'Biotin, Vitamin B7', N'Tăng cường sức khỏe tóc và da', '/img/imgSanPham/biotin.jpg', 'TPCN', 30, 500, N'Viên'),
+('SP23070300003', N'Viên uống Probiotics', '2023-07-20', '2024-07-20', N'Công ty TNHH Dược Phẩm B', 13000.00, N'Probiotics, Lactobacillus', N'Hỗ trợ tiêu hóa', '/img/imgSanPham/probiotic.jpg', 'TPCN', 60, 300, N'Viên'),
+('SP23070400004', N'Viên uống Vitamin C', '2023-07-25', '2024-07-25', N'Công ty TNHH Dược Phẩm C', 14000.00, N'Vitamin C, Acid Ascorbic', N'Tăng cường hệ miễn dịch','/img/imgSanPham/vitaminc.jpg', 'TPCN', 40, 700, N'Viên'),
+('SP23070500005', N'Viên uống Vitamin D', '2023-07-30', '2024-07-30', N'Công ty TNHH Dược Phẩm D', 15000.00, N'Vitamin D3', N'Hỗ trợ xương', '/img/imgSanPham/vitamind.jpg', 'TPCN', 25, 500, N'Viên'),
 
-('SP23080100006', N'Viên uống Chitosan', '2023-08-01', '2024-08-01', N'Công ty TNHH Dược Phẩm E', 160000.00, N'Chitosan', N'Hỗ trợ giảm cân', 'http://example.com/images/chitosan.jpg', 'TPCN', 30, 300, N'Viên'),
-('SP23080200007', N'Viên uống Sữa ong chúa', '2023-08-05', '2024-08-05', N'Công ty TNHH Dược Phẩm F', 170000.00, N'Sữa ong chúa, Vitamin A', N'Tăng cường sức khỏe', 'http://example.com/images/suadongchua.jpg', 'TPCN', 60, 500, N'Chai'),
-('SP23080300008', N'Viên uống Dầu cá', '2023-08-10', '2024-08-10', N'Công ty TNHH Dược Phẩm G', 180000.00, N'Dầu cá, Omega-3', N'Hỗ trợ sức khỏe tim mạch', 'http://example.com/images/daucap.jpg', 'TPCN', 40, 200, N'Viên'),
-('SP23080400009', N'Viên uống Vitamin B Complex', '2023-08-15', '2024-08-15', N'Công ty TNHH Dược Phẩm H', 150000.00, N'Vitamin B1, B2, B6, B12', N'Hỗ trợ chuyển hóa năng lượng', 'http://example.com/images/vitamin_b_complex.jpg', 'TPCN', 50, 700, N'Chai'),
-('SP23080500010', N'Viên uống Glucosamine', '2023-08-20', '2024-08-20', N'Công ty TNHH Dược Phẩm I', 200000.00, N'Glucosamine', N'Hỗ trợ khớp', 'http://example.com/images/glucosamine.jpg', 'TPCN', 35, 300, N'Viên'),
+('SP23080100006', N'Viên uống Chitosan', '2023-08-01', '2024-08-01', N'Công ty TNHH Dược Phẩm E', 16000.00, N'Chitosan', N'Hỗ trợ giảm cân', '/img/imgSanPham/chitosan.jpg', 'TPCN', 30, 300, N'Viên'),
+('SP23080200007', N'Viên uống Sữa ong chúa', '2023-08-05', '2024-08-05', N'Công ty TNHH Dược Phẩm F', 17000.00, N'Sữa ong chúa, Vitamin A', N'Tăng cường sức khỏe', '/img/imgSanPham/suaongchua.jpg', 'TPCN', 60, 500, N'Chai'),
+('SP23080300008', N'Viên uống Dầu cá', '2023-08-10', '2024-08-10', N'Công ty TNHH Dược Phẩm G', 18000.00, N'Dầu cá, Omega-3', N'Hỗ trợ sức khỏe tim mạch', '/img/imgSanPham/dauca.jpg', 'TPCN', 40, 200, N'Viên'),
+('SP23080400009', N'Viên uống Vitamin B Complex', '2023-08-15', '2024-08-15', N'Công ty TNHH Dược Phẩm H', 15000.00, N'Vitamin B1, B2, B6, B12', N'Hỗ trợ chuyển hóa năng lượng', '/img/imgSanPham/vitaminbcomplex.jpg', 'TPCN', 50, 700, N'Chai'),
+('SP23080500010', N'Viên uống Glucosamine', '2023-08-20', '2024-08-20', N'Công ty TNHH Dược Phẩm I', 20000.00, N'Glucosamine', N'Hỗ trợ khớp', '/img/imgSanPham/glucosamine.jpg', 'TPCN', 35, 300, N'Viên'),
 
-('SP23090100011', N'Viên uống Magie', '2023-09-01', '2024-09-01', N'Công ty TNHH Dược Phẩm J', 190000.00, N'Magiê', N'Hỗ trợ giảm căng thẳng', 'http://example.com/images/magie.jpg', 'TPCN', 50, 500, N'Hộp'),
-('SP23090200012', N'Viên uống Kẽm', '2023-09-05', '2024-09-05', N'Công ty TNHH Dược Phẩm K', 210000.00, N'Kẽm', N'Hỗ trợ miễn dịch', 'http://example.com/images/kezm.jpg', 'TPCN', 40, 200, N'Chai'),
-('SP23090300013', N'Viên uống Selen', '2023-09-10', '2024-09-10', N'Công ty TNHH Dược Phẩm L', 250000.00, N'Selen', N'Chống oxi hóa', 'http://example.com/images/selen.jpg', 'TPCN', 60, 700, N'Viên'),
-('SP23090400014', N'Viên uống Ashwagandha', '2023-09-15', '2024-09-15', N'Công ty TNHH Dược Phẩm M', 260000.00, N'Ashwagandha', N'Hỗ trợ giảm căng thẳng', 'http://example.com/images/ashwagandha.jpg', 'TPCN', 30, 500, N'Viên'),
-('SP23090500015', N'Viên uống Nhân sâm', '2023-09-20', '2024-09-20', N'Công ty TNHH Dược Phẩm N', 240000.00, N'Nhân sâm', N'Tăng cường sức khỏe', 'http://example.com/images/nhansam.jpg', 'TPCN', 25, 300, N'Hộp'),
+('SP23090100011', N'Viên uống Magie', '2023-09-01', '2024-09-01', N'Công ty TNHH Dược Phẩm J', 19000.00, N'Magiê', N'Hỗ trợ giảm căng thẳng','/img/imgSanPham/magie.jpg', 'TPCN', 50, 500, N'Hộp'),
+('SP23090200012', N'Viên uống Kẽm', '2023-09-05', '2024-09-05', N'Công ty TNHH Dược Phẩm K', 21000.00, N'Kẽm', N'Hỗ trợ miễn dịch', '/img/imgSanPham/kem.jpg', 'TPCN', 40, 200, N'Chai'),
+('SP23090300013', N'Viên uống Selen', '2023-09-10', '2024-09-10', N'Công ty TNHH Dược Phẩm L', 25000.00, N'Selen', N'Chống oxi hóa', '/img/imgSanPham/selen.jpg', 'TPCN', 60, 700, N'Viên'),
+('SP23090400014', N'Viên uống Ashwagandha', '2023-09-15', '2024-09-15', N'Công ty TNHH Dược Phẩm M', 26000.00, N'Ashwagandha', N'Hỗ trợ giảm căng thẳng', '/img/imgSanPham/ash.jpg', 'TPCN', 30, 500, N'Viên'),
+('SP23090500015', N'Viên uống Nhân sâm', '2023-09-20', '2024-09-20', N'Công ty TNHH Dược Phẩm N', 24000.00, N'Nhân sâm', N'Tăng cường sức khỏe', '/img/imgSanPham/nhansan.jpg', 'TPCN', 25, 300, N'Hộp'),
 
-('SP23100100016', N'Viên uống L-carnitine', '2023-10-01', '2024-10-01', N'Công ty TNHH Dược Phẩm O', 220000.00, N'L-carnitine', N'Hỗ trợ giảm cân', 'http://example.com/images/l-carnitine.jpg', 'TPCN', 60, 700, N'Chai'),
-('SP23100200017', N'Viên uống Acid folic', '2023-10-05', '2024-10-05', N'Công ty TNHH Dược Phẩm P', 150000.00, N'Acid folic', N'Hỗ trợ thai kỳ', 'http://example.com/images/acid_folic.jpg', 'TPCN', 50, 500, N'Viên'),
-('SP23100300018', N'Viên uống Vitamin A', '2023-10-10', '2024-10-10', N'Công ty TNHH Dược Phẩm Q', 200000.00, N'Vitamin A', N'Hỗ trợ thị lực', 'http://example.com/images/vitamin_a.jpg', 'TPCN', 35, 300, N'Hộp'),
-('SP23100400019', N'Viên uống Beta-carotene', '2023-10-15', '2024-10-15', N'Công ty TNHH Dược Phẩm R', 190000.00, N'Beta-carotene', N'Hỗ trợ miễn dịch', 'http://example.com/images/beta_carotene.jpg', 'TPCN', 40, 700, N'Chai');
+('SP23100100016', N'Viên uống L-carnitine', '2023-10-01', '2024-10-01', N'Công ty TNHH Dược Phẩm O', 22000.00, N'L-carnitine', N'Hỗ trợ giảm cân', '/img/imgSanPham/l-carnitine.jpg', 'TPCN', 60, 700, N'Chai'),
+('SP23100200017', N'Viên uống Acid folic', '2023-10-05', '2024-10-05', N'Công ty TNHH Dược Phẩm P', 15000.00, N'Acid folic', N'Hỗ trợ thai kỳ', '/img/imgSanPham/axidfolic.jpg', 'TPCN', 50, 500, N'Viên'),
+('SP23100300018', N'Viên uống Vitamin A', '2023-10-10', '2024-10-10', N'Công ty TNHH Dược Phẩm Q', 20000.00, N'Vitamin A', N'Hỗ trợ thị lực', '/img/imgSanPham/vitamina.jpg', 'TPCN', 35, 300, N'Hộp'),
+('SP23100400019', N'Viên uống Beta-carotene', '2023-10-15', '2024-10-15', N'Công ty TNHH Dược Phẩm R', 19000.00, N'Beta-carotene', N'Hỗ trợ miễn dịch', '/img/imgSanPham/beta-carotene.jpg', 'TPCN', 40, 700, N'Chai');
 
-
-INSERT INTO SanPham (maSP, tenSP, ngaySanXuat, ngayHetHan, nhaCungCap, gia, thanhPhan, congDung, hinhAnhSP, maLoaiSP, soLuong, khoiLuong, donViTinh)
-VALUES
-('SP23100500020', N'Máy đo huyết áp', '2023-10-20', '2025-10-20', N'Công ty TNHH Thiết Bị Y Tế A', 750000.00, N'Nhựa, Kim loại', N'Theo dõi huyết áp', 'http://example.com/images/may_do_huyet_ap.jpg', 'TBYT', 100, 1000, N'Cái'),
-('SP23100600021', N'Máy đo đường huyết', '2023-10-21', '2025-10-21', N'Công ty TNHH Thiết Bị Y Tế B', 500000.00, N'Nhựa, Kim loại', N'Theo dõi đường huyết', 'http://example.com/images/may_do_duong_huyet.jpg', 'TBYT', 150, 500, N'Cái'),
-('SP23100700022', N'Đèn chiếu hồng ngoại', '2023-10-22', '2025-10-22', N'Công ty TNHH Thiết Bị Y Tế C', 300000.00, N'Nhựa, Thủy tinh', N'Điều trị đau nhức', 'http://example.com/images/den_chieu_hong_ngoai.jpg', 'TBYT', 80, 2000, N'Cái'),
-('SP23100800023', N'Thiết bị xông mũi', '2023-10-23', '2025-10-23', N'Công ty TNHH Thiết Bị Y Tế D', 600000.00, N'Nhựa, Kim loại', N'Hỗ trợ điều trị hô hấp', 'http://example.com/images/thiet_bi_xong_mui.jpg', 'TBYT', 90, 1000, N'Cái'),
-('SP23100900024', N'Máy đo nhiệt độ', '2023-10-24', '2025-10-24', N'Công ty TNHH Thiết Bị Y Tế E', 250000.00, N'Nhựa, Kim loại', N'Theo dõi nhiệt độ cơ thể', 'http://example.com/images/may_do_nhiet_do.jpg', 'TBYT', 120, 300, N'Cái'),
-
-('SP23101000025', N'Máy massage', '2023-10-25', '2025-10-25', N'Công ty TNHH Thiết Bị Y Tế F', 850000.00, N'Nhựa, Kim loại', N'Thư giãn và giảm đau', 'http://example.com/images/may_massage.jpg', 'TBYT', 70, 1500, N'Cái'),
-('SP23101100026', N'Máy xông khí dung', '2023-10-26', '2025-10-26', N'Công ty TNHH Thiết Bị Y Tế G', 400000.00, N'Nhựa, Kim loại', N'Hỗ trợ điều trị hô hấp', 'http://example.com/images/may_xong_khi_dung.jpg', 'TBYT', 110, 900, N'Cái'),
-('SP23101200027', N'Kính áp tròng', '2023-10-27', '2025-10-27', N'Công ty TNHH Thiết Bị Y Tế H', 200000.00, N'Nhựa', N'Hỗ trợ thị lực', 'http://example.com/images/kinh_ap_trong.jpg', 'TBYT', 150, 50, N'Cái'),
-('SP23101300028', N'Thiết bị đo SpO2', '2023-10-28', '2025-10-28', N'Công ty TNHH Thiết Bị Y Tế I', 350000.00, N'Nhựa, Kim loại', N'Theo dõi mức độ oxy trong máu', 'http://example.com/images/thiet_bi_do_spo2.jpg', 'TBYT', 100, 200, N'Cái'),
-('SP23101400029', N'Máy tập phục hồi chức năng', '2023-10-29', '2025-10-29', N'Công ty TNHH Thiết Bị Y Tế J', 950000.00, N'Nhựa, Kim loại', N'Thúc đẩy phục hồi sức khỏe', 'http://example.com/images/may_tap_phuc_hoi_chuc_nang.jpg', 'TBYT', 60, 2000, N'Cái');
 
 INSERT INTO SanPham (maSP, tenSP, ngaySanXuat, ngayHetHan, nhaCungCap, gia, thanhPhan, congDung, hinhAnhSP, maLoaiSP, soLuong, khoiLuong, donViTinh)
 VALUES
-('SP23101500030', N'Paracetamol', '2023-10-30', '2025-10-30', N'Công ty TNHH Dược Phẩm A', 50000.00, N'Paracetamol', N'Giảm đau và hạ sốt', 'http://example.com/images/paracetamol.jpg', 'Thuoc', 200, 100, N'Viên'),
-('SP23101600031', N'Amoxicillin', '2023-11-01', '2025-11-01', N'Công ty TNHH Dược Phẩm B', 80000.00, N'Amoxicillin', N'Kháng sinh phổ rộng', 'http://example.com/images/amoxicillin.jpg', 'Thuoc', 150, 300, N'Viên'),
-('SP23101700032', N'Ciprofloxacin', '2023-11-02', '2025-11-02', N'Công ty TNHH Dược Phẩm C', 90000.00, N'Ciprofloxacin', N'Điều trị nhiễm khuẩn', 'http://example.com/images/ciprofloxacin.jpg', 'Thuoc', 120, 250, N'Viên'),
-('SP23101800033', N'Ibuprofen', '2023-11-03', '2025-11-03', N'Công ty TNHH Dược Phẩm D', 60000.00, N'Ibuprofen', N'Giảm đau và kháng viêm', 'http://example.com/images/ibuprofen.jpg', 'Thuoc', 180, 150, N'Viên'),
-('SP23101900034', N'Siphen', '2023-11-04', '2025-11-04', N'Công ty TNHH Dược Phẩm E', 70000.00, N'Siphen', N'Giảm đau đầu', 'http://example.com/images/siphen.jpg', 'Thuoc', 170, 100, N'Viên'),
+('SP23100500020', N'Máy đo huyết áp', '2023-10-20', '2025-10-20', N'Công ty TNHH Thiết Bị Y Tế A', 750000.00, N'Nhựa, Kim loại', N'Theo dõi huyết áp','/img/imgSanPham/maydohuyetap.jpg', 'TBYT', 100, 1000, N'Cái'),
+('SP23100600021', N'Máy đo đường huyết', '2023-10-21', '2025-10-21', N'Công ty TNHH Thiết Bị Y Tế B', 500000.00, N'Nhựa, Kim loại', N'Theo dõi đường huyết', '/img/imgSanPham/maydoduonghuyet.jpg', 'TBYT', 150, 500, N'Cái'),
+('SP23100700022', N'Đèn chiếu hồng ngoại', '2023-10-22', '2025-10-22', N'Công ty TNHH Thiết Bị Y Tế C', 300000.00, N'Nhựa, Thủy tinh', N'Điều trị đau nhức', '/img/imgSanPham/denchieuhongngoai.jpg', 'TBYT', 80, 2000, N'Cái'),
+('SP23100800023', N'Thiết bị xông mũi', '2023-10-23', '2025-10-23', N'Công ty TNHH Thiết Bị Y Tế D', 600000.00, N'Nhựa, Kim loại', N'Hỗ trợ điều trị hô hấp', '/img/imgSanPham/thietbixongmui.jpg', 'TBYT', 90, 1000, N'Cái'),
+('SP23100900024', N'Máy đo nhiệt độ', '2023-10-24', '2025-10-24', N'Công ty TNHH Thiết Bị Y Tế E', 250000.00, N'Nhựa, Kim loại', N'Theo dõi nhiệt độ cơ thể', '/img/imgSanPham/maydonhietdo.jpg', 'TBYT', 120, 300, N'Cái'),
 
-('SP23102000035', N'Acetaminophen', '2023-11-05', '2025-11-05', N'Công ty TNHH Dược Phẩm F', 55000.00, N'Acetaminophen', N'Hỗ trợ giảm đau', 'http://example.com/images/acetaminophen.jpg', 'Thuoc', 160, 100, N'Viên'),
-('SP23102100036', N'Cetirizine', '2023-11-06', '2025-11-06', N'Công ty TNHH Dược Phẩm G', 60000.00, N'Cetirizine', N'Triệu chứng dị ứng', 'http://example.com/images/cetirizine.jpg', 'Thuoc', 140, 200, N'Viên'),
-('SP23102200037', N'Dexamethasone', '2023-11-07', '2025-11-07', N'Công ty TNHH Dược Phẩm H', 120000.00, N'Dexamethasone', N'Kháng viêm', 'http://example.com/images/dexamethasone.jpg', 'Thuoc', 100, 250, N'Viên'),
-('SP23102300038', N'Loratadine', '2023-11-08', '2025-11-08', N'Công ty TNHH Dược Phẩm I', 75000.00, N'Loratadine', N'Triệu chứng dị ứng', 'http://example.com/images/loratadine.jpg', 'Thuoc', 130, 200, N'Viên'),
-('SP23102400039', N'Simvastatin', '2023-11-09', '2025-11-09', N'Công ty TNHH Dược Phẩm J', 140000.00, N'Simvastatin', N'Hỗ trợ kiểm soát cholesterol', 'http://example.com/images/simvastatin.jpg', 'Thuoc', 110, 300, N'Viên');
+('SP23101000025', N'Máy massage', '2023-10-25', '2025-10-25', N'Công ty TNHH Thiết Bị Y Tế F', 850000.00, N'Nhựa, Kim loại', N'Thư giãn và giảm đau', '/img/imgSanPham/maymassage.jpg', 'TBYT', 70, 1500, N'Cái'),
+('SP23101100026', N'Máy xông khí dung', '2023-10-26', '2025-10-26', N'Công ty TNHH Thiết Bị Y Tế G', 400000.00, N'Nhựa, Kim loại', N'Hỗ trợ điều trị hô hấp', '/img/imgSanPham/mayxongkhidung.jpg', 'TBYT', 110, 900, N'Cái'),
+('SP23101200027', N'Kính áp tròng', '2023-10-27', '2025-10-27', N'Công ty TNHH Thiết Bị Y Tế H', 200000.00, N'Nhựa', N'Hỗ trợ thị lực', '/img/imgSanPham/kinhaptrong.jpg', 'TBYT', 150, 50, N'Cái'),
+('SP23101300028', N'Thiết bị đo SpO2', '2023-10-28', '2025-10-28', N'Công ty TNHH Thiết Bị Y Tế I', 350000.00, N'Nhựa, Kim loại', N'Theo dõi mức độ oxy trong máu', '/img/imgSanPham/thietbidospo2.jpg', 'TBYT', 100, 200, N'Cái'),
+('SP23101400029', N'Máy tập phục hồi chức năng', '2023-10-29', '2025-10-29', N'Công ty TNHH Thiết Bị Y Tế J', 950000.00, N'Nhựa, Kim loại', N'Thúc đẩy phục hồi sức khỏe', '/img/imgSanPham/maytapphuchoichucnang.jpg', 'TBYT', 60, 2000, N'Cái');
 
 INSERT INTO SanPham (maSP, tenSP, ngaySanXuat, ngayHetHan, nhaCungCap, gia, thanhPhan, congDung, hinhAnhSP, maLoaiSP, soLuong, khoiLuong, donViTinh)
 VALUES
-('SP24103100030', N'Thuốc Grandaxin', '2023-10-15', '2025-10-30', N'Công ty TNHH Dược Phẩm A', 50000.00, N'Grandaxin', N'Giảm đau và hạ sốt', 'http://example.com/images/paracetamol.jpg', 'Thuoc', 0, 100, N'Viên'),
-('SP24103100031', N'Thuốc Savi Olanzapine', '2023-07-15', '2025-01-01', N'Công ty TNHH Dược Phẩm b', 50000.00, N'Olanzapine', N'Giảm đau và hạ sốt', 'http://example.com/images/paracetamol.jpg', 'Thuoc', 0, 100, N'Viên'),
-('SP24103100032', N'Thuốc Zopistad 7.5 Stella', '2023-09-15', '2025-10-01', N'Công ty TNHH Dược Phẩm Dat', 50000.00, N'Stella', N'Giảm đau và hạ sốt', 'http://example.com/images/paracetamol.jpg', 'Thuoc', 0, 100, N'Viên'),
-('SP24103100033', N'Thuốc Zapnex-10 DaviPharm', '2023-10-15', '2025-05-03', N'Công ty TNHH Dược Phẩm HZ', 50000.00, N'DaviPharm', N'Giảm đau và hạ sốt', 'http://example.com/images/paracetamol.jpg', 'Thuoc', 0, 100, N'Viên'),
-('SP24103100034', N'Thuốc Trileptal 300 Novartis', '2023-11-15', '2025-06-10', N'Công ty TNHH Dược Phẩm AA', 50000.00, N'Novartis', N'Giảm đau và hạ sốt', 'http://example.com/images/paracetamol.jpg', 'Thuoc', 0, 100, N'Viên'),
-('SP24103100035', N'Thuốc Methicowel 500 Akums', '2023-12-15', '2025-03-02', N'Công ty TNHH Dược Phẩm ĐAA', 50000.00, N'Methicowel', N'Giảm đau và hạ sốt', 'http://example.com/images/paracetamol.jpg', 'Thuoc', 0, 100, N'Viên');
+('SP23101500030', N'Paracetamol', '2023-10-30', '2025-10-30', N'Công ty TNHH Dược Phẩm A', 5000.00, N'Paracetamol', N'Giảm đau và hạ sốt', '/img/imgSanPham/paracetamol.jpg', 'Thuoc', 200, 100, N'Viên'),
+('SP23101600031', N'Amoxicillin', '2023-11-01', '2025-11-01', N'Công ty TNHH Dược Phẩm B', 8000.00, N'Amoxicillin', N'Kháng sinh phổ rộng', '/img/imgSanPham/amoxicillin.jpg', 'Thuoc', 150, 300, N'Viên'),
+('SP23101700032', N'Ciprofloxacin', '2023-11-02', '2025-11-02', N'Công ty TNHH Dược Phẩm C', 9000.00, N'Ciprofloxacin', N'Điều trị nhiễm khuẩn', '/img/imgSanPham/ciprofloxacin.jpg', 'Thuoc', 120, 250, N'Viên'),
+('SP23101800033', N'Ibuprofen', '2023-11-03', '2025-11-03', N'Công ty TNHH Dược Phẩm D', 6000.00, N'Ibuprofen', N'Giảm đau và kháng viêm', '/img/imgSanPham/ibuprofen.jpg', 'Thuoc', 180, 150, N'Viên'),
+('SP23101900034', N'Siphen', '2023-11-04', '2025-11-04', N'Công ty TNHH Dược Phẩm E', 7000.00, N'Siphen', N'Giảm đau đầu','/img/imgSanPham/ciphen.jpg', 'Thuoc', 170, 100, N'Viên'),
+
+('SP23102000035', N'Acetaminophen', '2023-11-05', '2025-11-05', N'Công ty TNHH Dược Phẩm F', 5500.00, N'Acetaminophen', N'Hỗ trợ giảm đau', '/img/imgSanPham/acetaminophen.jpg', 'Thuoc', 160, 100, N'Viên'),
+('SP23102100036', N'Cetirizine', '2023-11-06', '2025-11-06', N'Công ty TNHH Dược Phẩm G', 6000.00, N'Cetirizine', N'Triệu chứng dị ứng', '/img/imgSanPham/cetirizine.jpg', 'Thuoc', 140, 200, N'Viên'),
+('SP23102200037', N'Dexamethasone', '2023-11-07', '2025-11-07', N'Công ty TNHH Dược Phẩm H', 12000.00, N'Dexamethasone', N'Kháng viêm', '/img/imgSanPham/dexamethasone.jpg', 'Thuoc', 100, 250, N'Viên'),
+('SP23102300038', N'Loratadine', '2023-11-08', '2025-11-08', N'Công ty TNHH Dược Phẩm I', 7500.00, N'Loratadine', N'Triệu chứng dị ứng', '/img/imgSanPham/loratadine.jpg', 'Thuoc', 130, 200, N'Viên'),
+('SP23102400039', N'Simvastatin', '2023-11-09', '2025-11-09', N'Công ty TNHH Dược Phẩm J', 14000.00, N'Simvastatin', N'Hỗ trợ kiểm soát cholesterol', '/img/imgSanPham/simvastatin.jpg', 'Thuoc', 110, 300, N'Viên');
+
+INSERT INTO SanPham (maSP, tenSP, ngaySanXuat, ngayHetHan, nhaCungCap, gia, thanhPhan, congDung, hinhAnhSP, maLoaiSP, soLuong, khoiLuong, donViTinh)
+VALUES
+('SP24103100030', N'Thuốc Grandaxin', '2023-10-15', '2025-10-30', N'Công ty TNHH Dược Phẩm A', 5000.00, N'Grandaxin', N'Giảm đau và hạ sốt', '/img/imgSanPham/grandaxin.jpg', 'Thuoc', 0, 100, N'Viên'),
+('SP24103100031', N'Thuốc Savi Olanzapine', '2023-07-15', '2025-01-01', N'Công ty TNHH Dược Phẩm b', 5000.00, N'Olanzapine', N'Giảm đau và hạ sốt', '/img/imgSanPham/savi-olanzapine.jpg', 'Thuoc', 0, 100, N'Viên'),
+('SP24103100032', N'Thuốc Zopistad 7.5 Stella', '2023-09-15', '2025-10-01', N'Công ty TNHH Dược Phẩm Dat', 5000.00, N'Stella', N'Giảm đau và hạ sốt', '/img/imgSanPham/zopistad.jpg', 'Thuoc', 0, 100, N'Viên'),
+('SP24103100033', N'Thuốc Zapnex-10 DaviPharm', '2023-10-15', '2025-05-03', N'Công ty TNHH Dược Phẩm HZ', 5000.00, N'DaviPharm', N'Giảm đau và hạ sốt', '/img/imgSanPham/zapnex.jpg', 'Thuoc', 0, 100, N'Viên'),
+('SP24103100034', N'Thuốc Trileptal 300 Novartis', '2023-11-15', '2025-06-10', N'Công ty TNHH Dược Phẩm AA', 5000.00, N'Novartis', N'Giảm đau và hạ sốt', '/img/imgSanPham/novartis.jpg', 'Thuoc', 0, 100, N'Viên'),
+('SP24103100035', N'Thuốc Methicowel 500 Akums', '2023-12-15', '2025-03-02', N'Công ty TNHH Dược Phẩm ĐAA', 5000.00, N'Methicowel', N'Giảm đau và hạ sốt', '/img/imgSanPham/methicowel.jpg', 'Thuoc', 0, 100, N'Viên');
 
 -- Them du lieu vao bang ChiTietHoaDon
 INSERT INTO ChiTietHoaDon ( soLuongSanPham, thanhTien, maHD, maSP) 
 VALUES
+
+
 -- Tháng 7 năm trước
-    ( 1, 150000.00, 'HD24092112345', 'SP23070100001'),
-    ( 2, 200000.00, 'HD24092112345', 'SP23070200002'),
-    ( 3, 175000.00, 'HD24092112345', 'SP23070300003'),
-    ( 4, 100000.00, 'HD24092112345', 'SP23070400004'),
-    ( 5, 300000.00, 'HD24092112345', 'SP23070500005'),
+    ( 1, 15000.00, 'HD24092112345', 'SP23070100001'),
+    ( 2, 20000.00, 'HD24092112345', 'SP23070200002'),
+    ( 3, 17500.00, 'HD24092112345', 'SP23070300003'),
+    ( 4, 10000.00, 'HD24092112345', 'SP23070400004'),
+    ( 5, 30000.00, 'HD24092112345', 'SP23070500005'),
 
     -- Tháng 8 năm trước
-    ( 2, 150000.00, 'HD24030967890', 'SP23080100006'),
-    ( 3, 200000.00, 'HD24030967890', 'SP23080200007'),
-    ( 5, 175000.00, 'HD24030967890', 'SP23080300008'),
-    ( 4, 100000.00, 'HD24030967890', 'SP23080400009'),
-    ( 8, 300000.00, 'HD24030967890', 'SP23080500010')
+    ( 2, 15000.00, 'HD24030967890', 'SP23080100006'),
+    ( 3, 20000.00, 'HD24030967890', 'SP23080200007'),
+    ( 5, 17500.00, 'HD24030967890', 'SP23080300008'),
+    ( 4, 10000.00, 'HD24030967890', 'SP23080400009'),
+    ( 8, 30000.00, 'HD24030967890', 'SP23080500010')
+-- Sử dụng vòng lặp để thêm ngẫu nhiên 2 đến 4 chi tiết cho mỗi hóa đơn
+DECLARE @maHD char(13), @count INT;
+
+-- Duyệt qua từng hóa đơn
+DECLARE invoiceCursor CURSOR FOR 
+SELECT maHD FROM HoaDon;
+
+OPEN invoiceCursor;
+FETCH NEXT FROM invoiceCursor INTO @maHD;
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    -- Xác định số lượng chi tiết sản phẩm cần thêm cho hóa đơn này (từ 2 đến 4)
+    SET @count = 2 + FLOOR(RAND() * 3); 
+
+    -- Thêm các chi tiết sản phẩm cho hóa đơn hiện tại
+    INSERT INTO ChiTietHoaDon (maHD, maSP, soLuongSanPham, thanhTien)
+    SELECT TOP (@count)
+        @maHD AS maHD,
+        p.maSP,
+        ROUND(1 + (RAND() * 3), 0) AS soLuongSanPham, -- Số lượng sản phẩm ngẫu nhiên từ 1 đến 4
+        ROUND(1 + (RAND() * 3), 0) * p.gia AS thanhTien -- Tính thành tiền dựa trên số lượng và giá
+    FROM 
+        SanPham AS p
+    ORDER BY 
+        NEWID(); -- Chọn sản phẩm ngẫu nhiên
+
+    -- Tiếp tục với hóa đơn tiếp theo
+    FETCH NEXT FROM invoiceCursor INTO @maHD;
+END
+
+-- Đóng và giải phóng con trỏ
+CLOSE invoiceCursor;
+DEALLOCATE invoiceCursor;
+
+
 
 
 SELECT DATEPART(MONTH, ngayLapHD) AS Month, SUM(tongTien) AS TotalAmount         
@@ -782,15 +833,49 @@ SELECT * FROM SanPham
 WHERE [soLuong] = 0
 ORDER BY tenSP
 
-SELECT TOP 10 
-    hd.maNV, 
-    nv.hotenNV, 
-    COUNT(hd.maHD) AS soLuongGiaoDich
-FROM 
-    HoaDon hd
-JOIN 
-    NhanVien nv ON hd.maNV = nv.maNV
-GROUP BY 
-    hd.maNV, nv.hotenNV
-ORDER BY 
-    soLuongGiaoDich DESC;
+SELECT hd.maNV, nv.hotenNV, COUNT(hd.maHD) AS soLuongGiaoDich
+FROM HoaDon hd JOIN NhanVien nv ON hd.maNV = nv.maNV
+where ngayLapHD BETWEEN ? AND ?
+GROUP BY hd.maNV, nv.hotenNV
+ORDER BY soLuongGiaoDich DESC;
+
+
+SELECT MONTH(ngayLapHD) AS Thang,SUM(tongTien - tienGiam) AS DoanhSo
+FROM HoaDon
+WHERE YEAR(ngayLapHD) = YEAR(GETDATE()) AND trangThai = 1
+GROUP BY MONTH(ngayLapHD)
+ORDER BY Thang;
+
+SELECT MONTH(ngayLapHD) AS Thang, COUNT(*) AS TongSoGiaoDich
+FROM HoaDon
+WHERE YEAR(ngayLapHD) = YEAR(GETDATE()) AND trangThai = 1
+GROUP BY MONTH(ngayLapHD)
+ORDER BY Thang;
+
+SELECT hd.maNV, hotenNV, SUM(tongTien) AS DoanhSo
+FROM HoaDon hd join NhanVien nv on hd.maNV = nv.maNV
+WHERE YEAR(ngayLapHD) = YEAR(getdate())
+GROUP BY hd.maNV, hotenNV
+ORDER BY hotenNV;
+
+SELECT nv.maNV, hotenNV, ngayLapHD, hinhThucThanhToan,hd.trangThai,ghiChu, SUM(tongTien) AS DoanhSo
+FROM HoaDon hd JOIN NhanVien nv ON hd.maNV = nv.maNV
+WHERE YEAR(ngayLapHD) = YEAR(getdate())
+GROUP BY nv.maNV, hotenNV,ngayLapHD, hinhThucThanhToan,hd.trangThai,ghiChu
+ORDER BY hotenNV;
+
+SELECT DATEPART(MONTH, ngayLapHD) AS Month,SUM(tongTien - tienGiam) AS TotalAmount FROM HoaDon WHERE DATEPART(YEAR, ngayLapHD) = 2024 GROUP BY DATEPART(MONTH, ngayLapHD) ORDER BY Month ASC
+
+SELECT SUM([tongTien]) AS TongDoanhThu FROM HoaDon WHERE MONTH([ngayLapHD]) = 10 AND YEAR([ngayLapHD]) = YEAR(GETDATE())
+
+UPDATE HoaDon
+SET tongTien = (
+    SELECT SUM(thanhTien)
+    FROM chiTietHoaDon
+    WHERE chiTietHoaDon.maHD = HoaDon.maHD
+)
+WHERE maHD IN (
+    SELECT DISTINCT maHD
+    FROM chiTietHoaDon
+);
+
