@@ -17,6 +17,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import dao.BanHang_DAO;
+import dao.SanPham_DAO;
 import entity.DonTam_entity;
 import entity.HoaDon_entity;
 import entity.KhachHang_entity;
@@ -44,6 +45,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -68,7 +71,9 @@ import nguyenvu.forms.StatisticalForm;
 import nguyenvu.menu.FormManager;
 import nguyenvu.model.ModelItemSell;
 import nguyenvu.model.ModelUser;
+import nguyenvu.utils.BarcodeGenerator;
 import nguyenvu.utils.CustomerSelectListener;
+import nguyenvu.utils.FilterProductSearchPanel;
 import nguyenvu.utils.HeaderRenderer;
 import nguyenvu.utils.ImageRenderer;
 import nguyenvu.utils.LayerSearchList;
@@ -113,6 +118,9 @@ public class BanHang extends SimpleForm {
     
     private DialogTempOrderProcess tempOrder;
     private JPopupMenu menuTempOrder;
+    
+    private JPopupMenu menuFilter;
+    private FilterProductSearchPanel filterSearch;
 
     public BanHang(ModelUser user) {
         this.user = user;
@@ -127,19 +135,6 @@ public class BanHang extends SimpleForm {
         listProductSearch.addProductSelectListener(new ProductSelectListener() {
             @Override
             public void onProductSelected(SanPham_entity sp) {
-                for (int i = 0; i < table.getRowCount(); i++) {
-                    String existingMaSP = (String) table.getValueAt(i, 2);
-                    if (existingMaSP.equals(sp.getMaSP())) {
-                        int existingQuantity = (int) table.getValueAt(i, 5);
-                        table.setValueAt(existingQuantity + 1, i, 5);
-                        double price = (double) table.getValueAt(i, 6);
-                        table.setValueAt(price * (existingQuantity + 1), i, 7);
-                        menuProduct.setVisible(false);
-                        txtProductSearch.requestFocusInWindow();
-                        updateLblSoLuongSP();
-                        return;
-                    }
-                }
                 addProductToTable(sp);
                 menuProduct.setVisible(false);
                 txtProductSearch.requestFocusInWindow();
@@ -171,6 +166,20 @@ public class BanHang extends SimpleForm {
         tempOrder = new DialogTempOrderProcess(menuTempOrder, this);
         menuTempOrder.add(tempOrder);
         menuTempOrder.setFocusable(false);
+        
+        menuFilter = new JPopupMenu();
+        filterSearch = new FilterProductSearchPanel(menuFilter, this);
+        menuFilter.add(filterSearch);
+        menuFilter.setFocusable(false);
+        
+        ArrayList<SanPham_entity> listSP = new SanPham_DAO().getAllSanPham();
+        for (SanPham_entity sp : listSP) {
+            try {
+                BarcodeGenerator.createBarcode(sp.getMaSP());
+            } catch (Exception ex) {
+                Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -182,6 +191,7 @@ public class BanHang extends SimpleForm {
         layer = new LayerSearchList();
         jScrollPane1 = new javax.swing.JScrollPane();
         listSanPham = new javax.swing.JList<>();
+        jPanel1 = new javax.swing.JPanel();
         pnContent = new javax.swing.JPanel();
         pnRightContent = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -235,6 +245,11 @@ public class BanHang extends SimpleForm {
         btnFilter.setBorderPainted(false);
         btnFilter.setFocusPainted(false);
         btnFilter.setPreferredSize(new java.awt.Dimension(75, 40));
+        btnFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFilterActionPerformed(evt);
+            }
+        });
 
         txtProductSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         txtProductSearch.setPreferredSize(new java.awt.Dimension(85, 40));
@@ -272,6 +287,17 @@ public class BanHang extends SimpleForm {
                 .addGap(0, 230, Short.MAX_VALUE))
         );
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 210, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout pnSearchLayout = new javax.swing.GroupLayout(pnSearch);
         pnSearch.setLayout(pnSearchLayout);
         pnSearchLayout.setHorizontalGroup(
@@ -279,20 +305,31 @@ public class BanHang extends SimpleForm {
             .addGroup(pnSearchLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(layer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnSearchLayout.createSequentialGroup()
-                        .addComponent(txtProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(layer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(565, Short.MAX_VALUE))
         );
         pnSearchLayout.setVerticalGroup(
             pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnSearchLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(layer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnSearchLayout.createSequentialGroup()
+                        .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnSearchLayout.createSequentialGroup()
+                                .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(layer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnSearchLayout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         //txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder());
@@ -701,6 +738,11 @@ public class BanHang extends SimpleForm {
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
         jButton8.setText("Xem danh sách sản phẩm");
         jButton8.setPreferredSize(new java.awt.Dimension(80, 40));
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnFuncLayout = new javax.swing.GroupLayout(pnFunc);
         pnFunc.setLayout(pnFuncLayout);
@@ -845,7 +887,7 @@ public class BanHang extends SimpleForm {
                 .addComponent(pnRightContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(pnContentLayout.createSequentialGroup()
-                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE)
+                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -909,14 +951,8 @@ public class BanHang extends SimpleForm {
             int discount = kh != null ? giamTru : 0;                       // Adjust if discounts apply
 
             int rewardPoints = (int) (kh != null ? thanhToan * 0.01 : 0);
-            String billID = generateBillCode();
+            String invoiceCode = dao.generateInvoiceCode();
 
-            ParameterBill billData = new ParameterBill(
-                    getCurrentDate(), employeeName, customerName, customerPhone, 
-                    totalAmount, discount, thanhToan, rewardPoints, 
-                    billID, generateQrcode(), fields);
-
-            BillManeger.getInstance().printBill(billData);
             
             String ptThanhToan = (String) cbbPhuongThucThanhToan.getSelectedItem();
             String ghiChu = txtNote.getText();
@@ -925,11 +961,18 @@ public class BanHang extends SimpleForm {
 
             LocalDateTime issueDate = LocalDateTime.parse(getCurrentDate(), formatter);
             
-            HoaDon_entity hd = new HoaDon_entity(billID, issueDate, thanhToan, discount, ptThanhToan, true, customerPhone, employeeId, "BanSanPham", ghiChu);
+            HoaDon_entity hd = new HoaDon_entity(invoiceCode, issueDate, thanhToan, discount, ptThanhToan, true, customerPhone, employeeId, "BanSanPham", ghiChu);
             if(!dao.createHD(hd)) {
                 MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);
                 refresh();
                 return;
+            } else {
+                ParameterBill billData = new ParameterBill(
+                    getCurrentDate(), employeeName, customerName, customerPhone, 
+                    totalAmount, discount, thanhToan, rewardPoints, 
+                    invoiceCode, GenerateCode.generateQrcode(invoiceCode), fields);
+            
+                BillManeger.getInstance().printBill(billData);
             }
             
             refresh();
@@ -1054,8 +1097,34 @@ public class BanHang extends SimpleForm {
         tempOrder.setVisible(true);
         menuTempOrder.show(this, 100, 100);
     }//GEN-LAST:event_btnTempOrderProcessActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        FormManager.showForm(new SanPham());
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
+        // TODO add your handling code here:
+        menuFilter.setVisible(true);
+        filterSearch.setVisible(true);
+        menuFilter.show(btnFilter, 0, btnFilter.getHeight());
+    }//GEN-LAST:event_btnFilterActionPerformed
  
-    private void addProductToTable(SanPham_entity sp) {
+    public void addProductToTable(SanPham_entity sp) {
+        for (int i = 0; i < table.getRowCount(); i++) {
+            String existingMaSP = (String) table.getValueAt(i, 2);
+            if (existingMaSP.equals(sp.getMaSP())) {
+                int existingQuantity = (int) table.getValueAt(i, 5);
+                table.setValueAt(existingQuantity + 1, i, 5);
+                double price = (double) table.getValueAt(i, 6);
+                table.setValueAt(price * (existingQuantity + 1), i, 7);
+                menuProduct.setVisible(false);
+                txtProductSearch.requestFocusInWindow();
+                updateLblSoLuongSP();
+                return;
+            }
+        }
+        
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         ImageIcon iiSP = new ImageIcon(getClass().getResource(sp.getHinhAnhSP()));
 	Image imgSP = iiSP.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
@@ -1333,6 +1402,7 @@ public class BanHang extends SimpleForm {
     private javax.swing.JComboBox<String> cbbPhuongThucThanhToan;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

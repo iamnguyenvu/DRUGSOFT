@@ -19,8 +19,6 @@ import nguyenvu.menu.FormManager;
 import nguyenvu.model.ModelUser;
 import raven.alerts.MessageAlerts;
 
-// Phần còn lại của các import không thay đổi
-
 public class Login extends JPanel {
 
     private JTextField txtUsername;
