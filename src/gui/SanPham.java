@@ -156,7 +156,7 @@ public class SanPham extends SimpleForm implements ActionListener {
 
 								product.getThanhPhan(),
 
-								product.getCongDung(), product.getHinhAnhSP(), product.getLoaiSanPham().getMaLoaiSP(),
+								product.getCongDung(), product.getHinhAnhSP(), product.getLoaiSanPham().getMaLoaiSP(),product.getThue()
 								// Add actions for Update and Delete as necessary
 						});
 					}
@@ -209,12 +209,12 @@ public class SanPham extends SimpleForm implements ActionListener {
 
 		String[] columnNames = { "Mã Sản Phẩm", "Tên Sản Phẩm", "Số Lượng", "Ngày Sản Xuất", "Ngày Hết Hạn",
 				"Khối Lượng", "Đơn Vị Tính", "Nhà Cung Cấp", "Giá", "Thành Phần", "Công Dụng", "Hình Ảnh",
-				"Loại Sản Phẩm", "Cập Nhật", "Xóa" };
+				"Loại Sản Phẩm","Thuế", "Cập Nhật", "Xóa" };
 
 		dftb_SanPham = new DefaultTableModel(columnNames, 0); // columnNames là mảng chứa tên cột
 		tb_SanPham = new JTable(dftb_SanPham);
 		tb_SanPham.setForeground(new Color(0, 0, 0));
-		tb_SanPham.setFont(new Font("Arial", Font.PLAIN, 10));
+		tb_SanPham.setFont(new Font("Arial", Font.PLAIN, 12));
 		tb_SanPham.setModel(dftb_SanPham);
 
 		tb_SanPham.setBackground(new Color(255, 255, 255));
@@ -255,6 +255,8 @@ public class SanPham extends SimpleForm implements ActionListener {
 			tb_SanPham.getColumnModel().getColumn(13).setPreferredWidth(40);
 			tb_SanPham.getColumnModel().getColumn(14).setResizable(false);
 			tb_SanPham.getColumnModel().getColumn(14).setPreferredWidth(40);
+			tb_SanPham.getColumnModel().getColumn(15).setResizable(false);
+			tb_SanPham.getColumnModel().getColumn(15).setPreferredWidth(40);
 		}
 
 		
@@ -269,67 +271,60 @@ public class SanPham extends SimpleForm implements ActionListener {
 		            int row = Integer.parseInt(command.split("_")[1]);
 		            System.out.println("Cập Nhật cho dòng: " + row);
 		            // Thực hiện logic cập nhật tại đây
-		            String maSP = (String) dftb_SanPham.getValueAt(row, 0);
-		            String tenSP = (String) dftb_SanPham.getValueAt(row, 1);
-		            int soLuong = (int) dftb_SanPham.getValueAt(row, 2);
-		            LocalDate ngaySX = (LocalDate) dftb_SanPham.getValueAt(row, 3);
-		            LocalDate ngayHH = (LocalDate) dftb_SanPham.getValueAt(row, 4);
-		            double khoiLuong = (double) dftb_SanPham.getValueAt(row, 5);
-		            String donViTinh = (String) dftb_SanPham.getValueAt(row, 6);
-		            String nhaCC = (String) dftb_SanPham.getValueAt(row, 7);
-		            double gia = (double) dftb_SanPham.getValueAt(row, 8);
-		            String thanhPham = (String) dftb_SanPham.getValueAt(row, 9);
-		            String congDung = (String) dftb_SanPham.getValueAt(row, 10);
-		            String hinhAnh = (String) dftb_SanPham.getValueAt(row, 11);
-		            String maLoaiSP = (String) dftb_SanPham.getValueAt(row, 12);
-		            LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(maLoaiSP);
-		            SanPham_entity sp = new SanPham_entity(maSP, tenSP, ngaySX, ngayHH, khoiLuong, donViTinh, nhaCC, gia, thanhPham, congDung, hinhAnh, loaiSP, soLuong);
-		            
-		            formCapNhatSanPham updateForm = new formCapNhatSanPham();
-		            
-		         // Đưa thông tin sản phẩm vào các trường trong formCapNhatSanPham
-		    	    updateForm.tf_Tensp.setText(tenSP);
-		    	    updateForm.tf_soLuong.setText(soLuong+"");
-		    	    updateForm.tf_Gia.setText(String.valueOf(gia));
-		    	    updateForm.tf_HinhAnh.setText(hinhAnh);
-		    	    updateForm.tf_KhoiLuong.setText(String.valueOf(khoiLuong));
-		    	    updateForm.tf_NhaCungCap.setText(nhaCC);
-		    	    updateForm.ta_CongDung.setText(congDung);
-		    	    updateForm.ta_ThanhPhan.setText(thanhPham);
-		    	    updateForm.cb_LoaiSP.setSelectedItem(loaiSP);
 
-		    	    // Thiết lập ngày sản xuất và ngày hết hạn
-		    	    if (ngaySX != null) {
-		    	        updateForm.dcNgaySanXuat.setDate(Date.valueOf(ngaySX));
-		    	    }
-		    	    if (ngayHH != null) {
-		    	        updateForm.dcNgayHetHan.setDate(Date.valueOf(ngayHH));
-		    	    }
+		            try {
+		                String maSP = (String) dftb_SanPham.getValueAt(row, 0);
+		                String tenSP = (String) dftb_SanPham.getValueAt(row, 1);
+		                int soLuong = (int) dftb_SanPham.getValueAt(row, 2);
+		                LocalDate ngaySX = (LocalDate) dftb_SanPham.getValueAt(row, 3);
+		                LocalDate ngayHH = (LocalDate) dftb_SanPham.getValueAt(row, 4);
+		                double khoiLuong = (dftb_SanPham.getValueAt(row, 5) != null) ? Double.parseDouble(dftb_SanPham.getValueAt(row, 5).toString()) : 0;
+		                String donViTinh = (String) dftb_SanPham.getValueAt(row, 6);
+		                String nhaCC = (String) dftb_SanPham.getValueAt(row, 7);
+		                double gia = (dftb_SanPham.getValueAt(row, 8) != null) ? Double.parseDouble(dftb_SanPham.getValueAt(row, 8).toString()) : 0;
+		                String thanhPham = (String) dftb_SanPham.getValueAt(row, 9);
+		                String congDung = (String) dftb_SanPham.getValueAt(row, 10);
+		                String hinhAnh = (String) dftb_SanPham.getValueAt(row, 11);
+		                String maLoaiSP = (String) dftb_SanPham.getValueAt(row, 12);
+		                double thue = (dftb_SanPham.getValueAt(row, 13) != null) ? Double.parseDouble(dftb_SanPham.getValueAt(row, 13).toString()) : 0;
 
-		    	    // Thiết lập đơn vị tính
-		    	    updateForm.cb_DonViTinh.setSelectedItem(donViTinh);
-		            
-					// Tạo JDialog chứa formThemSanPham
-					JDialog dialog = new JDialog();
+		                LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(maLoaiSP);
+		                SanPham_entity sp = new SanPham_entity(maSP, tenSP, ngaySX, ngayHH, khoiLuong, donViTinh, nhaCC, gia, thanhPham, congDung, hinhAnh, loaiSP, soLuong, thue);
 
-					// Thêm formThemSanPham vào dialog
-					
-					dialog.getContentPane().add(updateForm);
+		                
+		                formCapNhatSanPham updateForm = new formCapNhatSanPham();
+		                updateForm.CN(sp);
 
-					// Đặt kích thước cho dialog (phù hợp với formThemSanPham)
-					dialog.setSize(1150, 800);
+		                // Tạo JDialog chứa formCapNhatSanPham
+		                JDialog dialog = new JDialog();
 
-					// Căn giữa màn hình
-					dialog.setLocationRelativeTo(null);
+		                // Thêm formCapNhatSanPham vào dialog
+		                dialog.getContentPane().add(updateForm);
 
-					// Thiết lập đóng form khi nhấn nút "X"
-					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		                // Đặt kích thước cho dialog (phù hợp với formCapNhatSanPham)
+		                dialog.setSize(1150, 800);
 
-					// Hiển thị dialog
-					dialog.setVisible(true);
+		                // Căn giữa màn hình
+		                dialog.setLocationRelativeTo(null);
+
+		                // Thiết lập đóng form khi nhấn nút "X"
+		                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+		                // Hiển thị dialog
+		                dialog.setVisible(true);
+
+		            } catch (NumberFormatException ex) {
+		                System.err.println("Lỗi định dạng số: " + ex.getMessage());
+		                JOptionPane.showMessageDialog(null, "Lỗi định dạng số. Vui lòng kiểm tra dữ liệu.");
+		            } catch (Exception ex) {
+		                System.err.println("Lỗi xảy ra: " + ex.getMessage());
+		                JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi trong quá trình cập nhật. Vui lòng thử lại.");
+		            }
 		        }
 		    }
 		}));
+
+		
 
 		tb_SanPham.getColumn("Xóa").setCellRenderer(new ButtonRenderer("Xóa"));
 		tb_SanPham.getColumn("Xóa").setCellEditor(new ButtonEditor("Xóa", new ActionListener() {
@@ -500,42 +495,6 @@ public class SanPham extends SimpleForm implements ActionListener {
 		docDuLieuVaoTable();
 
 	}
-	public void showUpdateForm(SanPham_entity sanPham) {
-	    // Khởi tạo form cập nhật
-	    formCapNhatSanPham updateForm = new formCapNhatSanPham();
-
-	    // Đưa thông tin sản phẩm vào các trường trong formCapNhatSanPham
-	    updateForm.tf_Tensp.setText(sanPham.getTenSP());
-	    updateForm.tf_soLuong.setText(String.valueOf(sanPham.getSoLuong()));
-	    updateForm.tf_Gia.setText(String.valueOf(sanPham.getGia()));
-	    updateForm.tf_HinhAnh.setText(sanPham.getHinhAnhSP());
-	    updateForm.tf_KhoiLuong.setText(String.valueOf(sanPham.getKhoiLuong()));
-	    updateForm.tf_NhaCungCap.setText(sanPham.getNhaCungCap());
-	    updateForm.ta_CongDung.setText(sanPham.getCongDung());
-	    updateForm.ta_ThanhPhan.setText(sanPham.getThanhPhan());
-	    updateForm.cb_LoaiSP.setSelectedItem(sanPham.getLoaiSanPham());
-
-	    // Thiết lập ngày sản xuất và ngày hết hạn
-	    if (sanPham.getNgaySanXuat() != null) {
-	        updateForm.dcNgaySanXuat.setDate(Date.valueOf(sanPham.getNgaySanXuat()));
-	    }
-	    if (sanPham.getNgayHetHan() != null) {
-	        updateForm.dcNgayHetHan.setDate(Date.valueOf(sanPham.getNgayHetHan()));
-	    }
-
-	    // Thiết lập đơn vị tính
-	    updateForm.cb_DonViTinh.setSelectedItem(sanPham.getDonViTinh());
-
-	    // Hiển thị form cập nhật sản phẩm
-	    JFrame frame = new JFrame("Cập Nhật Sản Phẩm");
-	    frame.setContentPane(updateForm);
-	    frame.pack();
-	    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Để đóng cửa sổ
-	    frame.setLocationRelativeTo(null); // Đặt vị trí ở giữa màn hình
-	    frame.setVisible(true);
-	}
-
-
 
 	// Phương thức thêm dòng vào bảng
 	public void addRowTable(SanPham_entity sp) {
@@ -544,7 +503,7 @@ public class SanPham extends SimpleForm implements ActionListener {
 
 		dftb_SanPham.addRow(new Object[] { sp.getMaSP(), sp.getTenSP(), sp.getSoLuong(), sp.getNgaySanXuat(),
 				sp.getNgayHetHan(), sp.getKhoiLuong(), sp.getDonViTinh(), sp.getNhaCungCap(), sp.getGia(),
-				sp.getThanhPhan(), sp.getCongDung(), sp.getHinhAnhSP(), sp.getLoaiSanPham().getMaLoaiSP() });
+				sp.getThanhPhan(), sp.getCongDung(), sp.getHinhAnhSP(), sp.getLoaiSanPham().getMaLoaiSP(),sp.getThue() });
 				sp_dao.themSanPham(sp);
 				
 	}
@@ -552,7 +511,6 @@ public class SanPham extends SimpleForm implements ActionListener {
 	public void updateRowTable(SanPham_entity sp) {
 		
 	}
-	// Phương thức thêm tất cả dữ liệu vào bảng
 
 	private void docDuLieuVaoTable() {
 		dftb_SanPham.setRowCount(0); // Clear the current table model
@@ -604,7 +562,7 @@ public class SanPham extends SimpleForm implements ActionListener {
 			dftb_SanPham.addRow(new Object[] { product.getMaSP(), product.getTenSP(), product.getSoLuong(),
 					product.getNgaySanXuat(), product.getNgayHetHan(), product.getKhoiLuong(), product.getDonViTinh(),
 					product.getNhaCungCap(), product.getGia(), product.getThanhPhan(), product.getCongDung(),
-					product.getHinhAnhSP(), product.getLoaiSanPham().getMaLoaiSP(),
+					product.getHinhAnhSP(), product.getLoaiSanPham().getMaLoaiSP(),product.getThue(),
 					// Add actions for Update and Delete as necessary
 			});
 		}

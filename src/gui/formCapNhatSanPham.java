@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -56,6 +57,8 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 	public JComboBox cb_LoaiSP;
 	private SanPham sanPham;
 	public JTextArea ta_ThanhPhan;
+	public JTextField tf_thue;
+	private SanPham_entity sp;
 
 	/**
 	 * Create the panel.
@@ -284,14 +287,14 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		tf_KhoiLuong.setBackground(new Color(255, 255, 255));
 		tf_KhoiLuong.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		tf_KhoiLuong.setColumns(10);
-		tf_KhoiLuong.setBounds(24, 104, 286, 34);
+		tf_KhoiLuong.setBounds(24, 104, 144, 34);
 		pn_KhoHang.add(tf_KhoiLuong);
 
 		JLabel lb_DonViTinh = new JLabel("Đơn Vị Tính");
 		lb_DonViTinh.setForeground(new Color(0, 0, 0));
 		lb_DonViTinh.setBackground(new Color(0, 0, 0));
 		lb_DonViTinh.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_DonViTinh.setBounds(421, 48, 105, 46);
+		lb_DonViTinh.setBounds(287, 48, 105, 46);
 		pn_KhoHang.add(lb_DonViTinh);
 
 		cb_DonViTinh = new JComboBox();
@@ -299,7 +302,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		cb_DonViTinh.setForeground(new Color(0, 0, 0));
 		cb_DonViTinh.setBackground(new Color(255, 255, 255));
 		cb_DonViTinh.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		cb_DonViTinh.setBounds(419, 103, 249, 34);
+		cb_DonViTinh.setBounds(287, 102, 127, 34);
 		cb_DonViTinh.addItem("Vĩ");
 		cb_DonViTinh.addItem("Viên");
 		cb_DonViTinh.addItem("Chai");
@@ -312,6 +315,21 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		lbCanhBaoKL.setFont(new Font("Serif", Font.ITALIC, 12));
 		lbCanhBaoKL.setBounds(112, 63, 198, 17);
 		pn_KhoHang.add(lbCanhBaoKL);
+		
+		JLabel lb_DonViTinh_1 = new JLabel("Thuế");
+		lb_DonViTinh_1.setForeground(Color.BLACK);
+		lb_DonViTinh_1.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+		lb_DonViTinh_1.setBackground(Color.BLACK);
+		lb_DonViTinh_1.setBounds(530, 48, 105, 46);
+		pn_KhoHang.add(lb_DonViTinh_1);
+		
+		tf_thue = new JTextField();
+		tf_thue.setForeground(Color.BLACK);
+		tf_thue.setColumns(10);
+		tf_thue.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		tf_thue.setBackground(Color.WHITE);
+		tf_thue.setBounds(529, 104, 144, 34);
+		pn_KhoHang.add(tf_thue);
 
 		JPanel pn_PhanLoai = new JPanel();
 		pn_PhanLoai.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -426,6 +444,23 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 
 	}
 
+	public void CN(SanPham_entity sp) {
+		// Đưa thông tin sản phẩm vào các trường trong formCapNhatSanPham
+        tf_Tensp.setText(sp.getTenSP());
+        tf_soLuong.setText(String.valueOf(sp.getSoLuong()));
+        tf_Gia.setText(String.valueOf(sp.getGia()));
+        tf_HinhAnh.setText(sp.getHinhAnhSP());
+        tf_KhoiLuong.setText(String.valueOf(sp.getKhoiLuong()));
+        tf_NhaCungCap.setText(sp.getNhaCungCap());
+        ta_CongDung.setText(sp.getCongDung());
+        ta_ThanhPhan.setText(sp.getThanhPhan());
+        tf_thue.setText(String.valueOf(sp.getThue()));
+        cb_LoaiSP.setSelectedItem(sp.getLoaiSanPham().getMaLoaiSP());
+
+        dcNgaySanXuat.setDate(Date.valueOf(sp.getNgaySanXuat()));
+        dcNgayHetHan.setDate(Date.valueOf(sp.getNgayHetHan()));
+        cb_DonViTinh.setSelectedItem(sp.getDonViTinh());
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -517,13 +552,11 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				// Tạo đối tượng SanPham
 				LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
 //
 //				SanPham_entity sp = new SanPham_entity(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh,
 //						nhaCungCap, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong);
 
-				// Thêm sản phẩm vào bảng (cần đối tượng `sanPham` để gọi phương thức
 				// `addRowTable`)
 //				sanPham.updateRowTable(sp);
 
@@ -677,5 +710,13 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public JTextField getTf_thue() {
+		return tf_thue;
+	}
+
+	public void setTf_thue(JTextField tf_thue) {
+		this.tf_thue = tf_thue;
 	}
 }

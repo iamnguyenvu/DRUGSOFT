@@ -16,13 +16,25 @@ public class SanPham_entity {
     private String hinhAnhSP;         // Hình ảnh sản phẩm
     private LoaiSanPham_entity loaiSanPham;  // Loại sản phẩm
     private int soLuong;
+    private double thue;
 	public SanPham_entity() {
 		super();
 	}
 	
+	
+	public double getThue() {
+		return thue;
+	}
+
+
+	public void setThue(double thue) {
+		this.thue = thue;
+	}
+
+
 	public SanPham_entity(String maSP, String tenSP, LocalDate ngaySanXuat, LocalDate ngayHetHan, double khoiLuong,
 			String donViTinh, String nhaCungCap, double gia, String thanhPhan, String congDung, String hinhAnhSP,
-			LoaiSanPham_entity loaiSanPham, int soLuong) {
+			LoaiSanPham_entity loaiSanPham, int soLuong, double thue) {
 		super();
 		this.maSP = maSP;
 		this.tenSP = tenSP;
@@ -37,7 +49,10 @@ public class SanPham_entity {
 		this.hinhAnhSP = hinhAnhSP;
 		this.loaiSanPham = loaiSanPham;
 		this.soLuong = soLuong;
+		this.thue = thue;
 	}
+
+
 	public SanPham_entity(String maSP) {
 		super();
 		this.maSP = maSP;

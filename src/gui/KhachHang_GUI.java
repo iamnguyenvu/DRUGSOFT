@@ -831,7 +831,7 @@ public class KhachHang_GUI extends SimpleForm {
         return tenParts[tenParts.length - 1];
     }
     
-    private void hienThiDialogThem() {
+    public void hienThiDialogThem() {
         // Đặt kích thước cho dialog
         dlThem.setSize(1000, 500);
         // Đặt vị trí ở giữa màn hình

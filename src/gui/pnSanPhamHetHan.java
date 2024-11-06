@@ -69,6 +69,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
@@ -83,6 +84,7 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
 	private JTable tb_SanPham;
 	private JButton btnBaoCao;
 	private JButton btnXuatFile;
+	private JTextField textField;
 
 	/**
      * Creates new form Main
@@ -101,7 +103,7 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
         setLayout(null);
         add(pnCenter);
         
-        lblNewLabel = new JLabel("Danh Sách Sản Phẩm Hết Hạn");
+        lblNewLabel = new JLabel("Danh Sách Sản Phẩm");
         lblNewLabel.setForeground(new Color(0, 0, 0));
         lblNewLabel.setBackground(new Color(255, 255, 255));
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -154,7 +156,7 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
 
 		JScrollPane scp_SanPham = new JScrollPane(tb_SanPham);
 		scp_SanPham.setBackground(new Color(255, 255, 255));
-		scp_SanPham.setBounds(10, 78, 1470, 464);
+		scp_SanPham.setBounds(10, 132, 1470, 410);
 		pnCenter.add(scp_SanPham);
         
         btnXuatFile = new JButton("Xuất File Excel");
@@ -189,6 +191,27 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
         btnBaoCao.setBackground(Color.WHITE);
         btnBaoCao.setBounds(1313, 568, 145, 40);
         pnCenter.add(btnBaoCao);
+        
+        JLabel lblSLng = new JLabel("Số Lượng :");
+        lblSLng.setForeground(Color.BLACK);
+        lblSLng.setFont(new Font("Arial", Font.PLAIN, 16));
+        lblSLng.setBackground(Color.WHITE);
+        lblSLng.setBounds(10, 82, 109, 40);
+        pnCenter.add(lblSLng);
+        
+        textField = new JTextField();
+        textField.setBounds(104, 82, 96, 32);
+        pnCenter.add(textField);
+        textField.setColumns(10);
+        
+        JLabel lblNewLabel_1 = new JLabel("Sản Phẩm :");
+        lblNewLabel_1.setFont(new Font("Serif", Font.PLAIN, 16));
+        lblNewLabel_1.setBounds(1158, 82, 109, 35);
+        pnCenter.add(lblNewLabel_1);
+        
+        JComboBox cb_sp = new JComboBox();
+        cb_sp.setBounds(1257, 83, 179, 32);
+        pnCenter.add(cb_sp);
         
         docDataVaoTable();
     }
@@ -278,6 +301,4 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
 		
 
 	}
-
-
 }

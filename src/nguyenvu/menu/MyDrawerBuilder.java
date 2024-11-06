@@ -14,6 +14,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import gui.BanHang;
 import gui.DoiTra;
 import gui.DoiTraSanPham;
+import gui.NhanVien;
 import gui.ThongKeDoanhThu_GUI;
 import gui.ThongKeSanPham_GUI;
 import gui.barChar_ThongKe;
@@ -185,7 +186,10 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     boolean act
                             = 
                             checkMenu(index, new int[]{6}) && 
-                            checkMenu(index, new int[]{7});
+                            checkMenu(index, new int[]{7}) &&
+                            checkMenu(index, new int[]{8, 0})&&
+                            checkMenu(index, new int[]{8, 2})&&
+                            checkMenu(index, new int[]{9, 0});
                     return act;
                 }
                 return true;
@@ -235,6 +239,10 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     if (index[0] == 5) {
 
                     	FormManager.showForm(new gui.KhachHang_GUI());
+                    }
+                    if (index[0] == 6) {
+
+                    	FormManager.showForm(new NhanVien());
                     }
                     if (index[0] == 7) {
                     	FormManager.showForm(new gui.TaiKhoan_GUI());

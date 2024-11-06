@@ -4,31 +4,54 @@ import java.time.LocalDate;
 
 public class NhanVien_entity {
     private String maNV;                // Mã nhân viên
-    private String hotenNV; 
-    private String gioiTinh;			// Gioi Tính
+    private String hoTenNV;             // Họ nhân viên
+    private String gioiTinh;            // Giới tính
     private String sdt;                 // Số điện thoại
     private String cccd;                // CCCD
-
     private String diaChi;              // Địa chỉ
     private LocalDate ngaySinh;         // Ngày sinh
     private boolean trangThai;          // Trạng thái
     private LocalDate ngayVaoLam;       // Ngày vào làm
-    private String maLoaiNhanVien;  // Loại nhân viên
+    private TaiKhoan_entity taiKhoan;   // Tài khoản
+    private LoaiNhanVien_entity loaiNhanVien; // Loại nhân viên
     private String hinhAnhNV;           // Hình ảnh nhân viên
-
+    private String maLoaiNV;            // Mã loại nhân viên
 
     public NhanVien_entity() {
+        super();
     }
 
     public NhanVien_entity(String maNV) {
+        super();
         this.maNV = maNV;
     }
     
-    
 
-    public NhanVien_entity(String maNV, String hotenNV, String gioiTinh, String sdt, String cccd, String diaChi, LocalDate ngaySinh, boolean trangThai, LocalDate ngayVaoLam, String maLoaiNhanVien, String hinhAnhNV) {
+    public NhanVien_entity(String maNV, String hoTenNV, String gioiTinh, String sdt, String cccd, String diaChi,
+			LocalDate ngaySinh, boolean trangThai, LocalDate ngayVaoLam, String hinhAnhNV, String maLoaiNV) {
+		super();
+		this.maNV = maNV;
+		this.hoTenNV = hoTenNV;
+		this.gioiTinh = gioiTinh;
+		this.sdt = sdt;
+		this.cccd = cccd;
+		this.diaChi = diaChi;
+		this.ngaySinh = ngaySinh;
+		this.trangThai = trangThai;
+		this.ngayVaoLam = ngayVaoLam;
+		this.hinhAnhNV = hinhAnhNV;
+		this.maLoaiNV = maLoaiNV;
+	}
+
+
+
+	public NhanVien_entity(String maNV, String hoTenNV, String gioiTinh, String sdt, String cccd,
+                           String diaChi, LocalDate ngaySinh, boolean trangThai, LocalDate ngayVaoLam,
+                           TaiKhoan_entity taiKhoan, LoaiNhanVien_entity loaiNhanVien, String hinhAnhNV,
+                           String maLoaiNV) {
+        super();
         this.maNV = maNV;
-        this.hotenNV = hotenNV;
+        this.hoTenNV = hoTenNV;
         this.gioiTinh = gioiTinh;
         this.sdt = sdt;
         this.cccd = cccd;
@@ -36,10 +59,13 @@ public class NhanVien_entity {
         this.ngaySinh = ngaySinh;
         this.trangThai = trangThai;
         this.ngayVaoLam = ngayVaoLam;
-        this.maLoaiNhanVien = maLoaiNhanVien;
+        this.taiKhoan = taiKhoan;
+        this.loaiNhanVien = loaiNhanVien;
         this.hinhAnhNV = hinhAnhNV;
+        this.maLoaiNV = maLoaiNV; // Khởi tạo mã loại nhân viên
     }
 
+    // Getter and Setter methods
     public String getMaNV() {
         return maNV;
     }
@@ -48,12 +74,12 @@ public class NhanVien_entity {
         this.maNV = maNV;
     }
 
-    public String getHotenNV() {
-        return hotenNV;
+    public String getHoTenNV() {
+        return hoTenNV;
     }
 
-    public void setHotenNV(String hotenNV) {
-        this.hotenNV = hotenNV;
+    public void setHoTenNV(String hoTenNV) {
+        this.hoTenNV = hoTenNV;
     }
 
     public String getGioiTinh() {
@@ -112,12 +138,20 @@ public class NhanVien_entity {
         this.ngayVaoLam = ngayVaoLam;
     }
 
-    public String getMaLoaiNhanVien() {
-        return maLoaiNhanVien;
+    public TaiKhoan_entity getTaiKhoan() {
+        return taiKhoan;
     }
 
-    public void setMaLoaiNhanVien(String maLoaiNhanVien) {
-        this.maLoaiNhanVien = maLoaiNhanVien;
+    public void setTaiKhoan(TaiKhoan_entity taiKhoan) {
+        this.taiKhoan = taiKhoan;
+    }
+
+    public LoaiNhanVien_entity getLoaiNhanVien() {
+        return loaiNhanVien;
+    }
+
+    public void setLoaiNhanVien(LoaiNhanVien_entity loaiNhanVien) {
+        this.loaiNhanVien = loaiNhanVien;
     }
 
     public String getHinhAnhNV() {
@@ -128,14 +162,19 @@ public class NhanVien_entity {
         this.hinhAnhNV = hinhAnhNV;
     }
 
+    public String getMaLoaiNV() {
+        return maLoaiNV; // Getter cho maLoaiNV
+    }
+
+    public void setMaLoaiNV(String maLoaiNV) {
+        this.maLoaiNV = maLoaiNV; // Setter cho maLoaiNV
+    }
+
     @Override
     public String toString() {
-        return "NhanVien_entity{" + "maNV=" + maNV + ", hotenNV=" + hotenNV + ", gioiTinh=" + gioiTinh + ", sdt=" + sdt + ", cccd=" + cccd + ", diaChi=" + diaChi + ", ngaySinh=" + ngaySinh + ", trangThai=" + trangThai + ", ngayVaoLam=" + ngayVaoLam + ", maLoaiNhanVien=" + maLoaiNhanVien + ", hinhAnhNV=" + hinhAnhNV + '}';
+        return "NhanVien [maNV=" + maNV + ", hoTenNV=" + hoTenNV + ", gioiTinh=" + gioiTinh +
+               ", sdt=" + sdt + ", cccd=" + cccd + ", diaChi=" + diaChi + ", ngaySinh=" + ngaySinh +
+               ", trangThai=" + trangThai + ", ngayVaoLam=" + ngayVaoLam + ", taiKhoan=" + taiKhoan +
+               ", loaiNhanVien=" + loaiNhanVien + ", hinhAnhNV=" + hinhAnhNV + ", maLoaiNV=" + maLoaiNV + "]";
     }
-
-    public NhanVien_entity(String maNV, String hotenNV) {
-        this.maNV = maNV;
-        this.hotenNV = hotenNV;
-    }
-
 }
