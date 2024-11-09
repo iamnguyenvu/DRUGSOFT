@@ -11,8 +11,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
-
-
+import java.util.List;
 
 import connectDB.connectDB;
 import entity.LoaiSanPham_entity;
@@ -50,9 +49,10 @@ public class SanPham_DAO {
 	            String thanhPhan = rs.getString("thanhPhan");
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
+	            double thue = rs.getDouble("thue");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -92,9 +92,10 @@ public class SanPham_DAO {
 	            String thanhPhan = rs.getString("thanhPhan");
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
+	            double thue = rs.getDouble("thue");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -146,9 +147,10 @@ public class SanPham_DAO {
 	            String thanhPhan = rs.getString("thanhPhan");
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
+	            double thue = rs.getDouble("thue");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -191,24 +193,7 @@ public class SanPham_DAO {
 	    }
 	}
  
-	public boolean xoaSanPham(String maSP) {
-	    Connection con = connectDB.accessDataBase();
-	    String sql = "DELETE FROM SanPham WHERE maSP = ?";
-	    try {
-	        PreparedStatement pst = con.prepareStatement(sql);
-	        pst.setString(1, maSP);
-	        int rowDelete = pst.executeUpdate();
-	        
-	        pst.close();
-	        con.close();
-	        
-	        // Trả về true nếu có ít nhất một dòng bị xóa
-	        return rowDelete > 0;
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return false;
-	}
+
 
 
 	// Phương thức cập nhật sản phẩm
@@ -366,4 +351,23 @@ public class SanPham_DAO {
 //        return hinhAnh;
         return "/images/spa.png"; // Hardcoded example
     }
+
+	public boolean xoaSanPham(String maSP) {
+		    Connection con = connectDB.accessDataBase();
+		    String sql = "DELETE FROM SanPham WHERE maSP = ?";
+		    try {
+		        PreparedStatement pst = con.prepareStatement(sql);
+		        pst.setString(1, maSP);
+		        int rowDelete = pst.executeUpdate();
+		        
+		        pst.close();
+		        con.close();
+		        
+		        // Trả về true nếu có ít nhất một dòng bị xóa
+		        return rowDelete > 0;
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return false;
+		}
 }

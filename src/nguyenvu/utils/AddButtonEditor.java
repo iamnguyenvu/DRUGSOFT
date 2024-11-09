@@ -5,6 +5,7 @@
 package nguyenvu.utils;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import gui.DoiTra;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,40 +26,44 @@ public class AddButtonEditor extends DefaultCellEditor{
     private DefaultTableModel model1;
     private DefaultTableModel model2;
     private JTable table;
+    private DoiTra doiTra;
 
-    public AddButtonEditor(JTable table, DefaultTableModel model1, DefaultTableModel model2) {
+    public AddButtonEditor(JTable table, DefaultTableModel model1, DefaultTableModel model2, DoiTra doiTra) {
         super(new JCheckBox());
         this.table = table;
         this.model1 = model1;
         this.model2 = model2;
+        this.doiTra = doiTra;
         button = new JButton(new FlatSVGIcon("gui/icon/add.svg", 0.05f));
         button.setOpaque(true);
         
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int row = table.getSelectedRow();
-                if (row >= 0) {
+                if (row >= 0 && row < model1.getRowCount()) {
                     String existingMaSP = (String) model1.getValueAt(row, 1);
+                    
                     for(int i = 0; i < model2.getRowCount(); ++i) {
                         if(existingMaSP.equals((String) model2.getValueAt(i, 0))) {
                             if((int) model2.getValueAt(i, 2) < (int) model1.getValueAt(row, 3)) {
-                                model2.setValueAt((int) model2.getValueAt(i, 2) + 1, i, 3);
-                                return;
+                                model2.setValueAt((int) model2.getValueAt(i, 2) + 1, i, 2);
+                                doiTra.updateInfor();
                             }
                             else {
                                 MessageAlerts.getInstance().showMessage("Lỗi", 
                                         "Số lượng đổi trả không được lớn hơn số lượng đã mua!", MessageAlerts.MessageType.ERROR);
-                                return;
                             }
+                            return;
                         }
                     }
                         
                     Object[] rowData = new Object[]{
                         model1.getValueAt(row, 1),
                         model1.getValueAt(row, 2),
-                        model1.getValueAt(row, 3),
+                        1
                     };
                     model2.addRow(rowData);
+                    doiTra.updateInfor();
                 }
                 fireEditingStopped();
             }

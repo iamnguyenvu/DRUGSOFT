@@ -43,7 +43,10 @@ CREATE TABLE NhanVien (
 	ngayVaoLam Date Not Null,
 	hinhAnhNV NVARCHAR(255) NOT NULL
 );
-
+ALTER TABLE NhanVien
+ADD email NVARCHAR(50);
+UPDATE NhanVien
+SET email = hotenNV + '@gmail.com'
 --set Khóa ngoại cho bảng TaiKhoan
 ALTER TABLE TaiKhoan
 ADD CONSTRAINT FK_NhanVien_TaiKhoan
@@ -348,7 +351,8 @@ CREATE TABLE SanPham (
     gia DECIMAL(18, 5) CHECK (gia > 0) NOT NULL,     -- Giá, phải lớn hơn 0
 	thanhPhan NVARCHAR(255) NOT NULL,				--Thành Phần 
     congDung NVARCHAR(255) NOT NULL,                  -- Công dụng
-    hinhAnhSP NVARCHAR(255) NOT NULL                  -- Đường dẫn hoặc URL của hình ảnh sản phẩm
+    hinhAnhSP NVARCHAR(255) NOT NULL,                  -- Đường dẫn hoặc URL của hình ảnh sản phẩm
+	thue DECIMAL(18, 5)
 );
 
 --THÊM MÃ LOẠI SP VÀO BẢNG SẢN PHẨM
@@ -427,8 +431,8 @@ BEGIN
     ELSE
     BEGIN
         -- Nếu đủ điều kiện, thêm bản ghi vào bảng
-        INSERT INTO SanPham (maSP, tenSP,soLuong, ngaySanXuat, ngayHetHan,khoiLuong,donViTinh, nhaCungCap, gia,thanhPhan, congDung, hinhAnhSP, maLoaiSP)
-        SELECT maSP, tenSP,soLuong, ngaySanXuat, ngayHetHan,khoiLuong,donViTinh, nhaCungCap, gia,thanhPhan, congDung, hinhAnhSP, maLoaiSP
+        INSERT INTO SanPham (maSP, tenSP,soLuong, ngaySanXuat, ngayHetHan,khoiLuong,donViTinh, nhaCungCap, gia,thanhPhan, congDung, hinhAnhSP, maLoaiSP,thue)
+        SELECT maSP, tenSP,soLuong, ngaySanXuat, ngayHetHan,khoiLuong,donViTinh, nhaCungCap, gia,thanhPhan, congDung, hinhAnhSP, maLoaiSP,thue
         FROM inserted;
     END
 END;
@@ -715,6 +719,16 @@ VALUES
     ( 5, 17500.00, 'HD24030967890', 'SP23080300008'),
     ( 4, 10000.00, 'HD24030967890', 'SP23080400009'),
     ( 8, 30000.00, 'HD24030967890', 'SP23080500010')
+
+
+	UPDATE SanPham
+SET thue = CASE 
+              WHEN maLoaiSP = 'Thuoc' OR maLoaiSP = 'TBYT' THEN 5
+              WHEN maLoaiSP = 'TPCN' THEN 10
+              ELSE NULL  -- Giá trị mặc định nếu không khớp với bất kỳ điều kiện nào
+           END;
+
+
 -- Sử dụng vòng lặp để thêm ngẫu nhiên 2 đến 4 chi tiết cho mỗi hóa đơn
 DECLARE @maHD char(13), @count INT;
 
