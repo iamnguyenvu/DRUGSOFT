@@ -213,9 +213,90 @@ public class ThongKe_DAO {
 	            String thanhPhan = rs.getString("thanhPhan");
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
+	            double thue = rs.getDouble("thue");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
+	            dssp.add(sp);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return dssp;
+	}
+	public ArrayList<SanPham_entity> getAllSanPhamSapHetHan() {
+	    ArrayList<SanPham_entity> dssp = new ArrayList<SanPham_entity>();
+	    Connection con = connectDB.accessDataBase();
+	    if (con == null) {
+	        return null;
+	    }
+	    String sql = "SELECT * FROM SanPham WHERE DATEDIFF(DAY, GETDATE(), ngayHetHan) < 30";
+	    try {
+	        java.sql.Statement st = con.createStatement();  
+	        ResultSet rs = st.executeQuery(sql);
+	        while (rs.next()) {
+	            String masp = rs.getString("maSP");
+	            String tensp = rs.getString("tenSP");
+	            int soLuong = rs.getInt("soLuong");
+	            Date ngaySX = rs.getDate("ngaySanXuat");
+	            Date ngayHH = rs.getDate("ngayHetHan");
+
+	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null;
+	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null;
+
+	            double khoiLuong = rs.getDouble("khoiLuong");
+	            String donViTinh = rs.getString("donViTinh");
+	            String Nhacc = rs.getString("nhaCungCap");
+	            double gia = rs.getDouble("gia");
+	            String congDung = rs.getString("congDung");
+	            String thanhPhan = rs.getString("thanhPhan");
+	            String hinhAnhsp = rs.getString("hinhAnhSP");
+	            String maLoaiSP = rs.getString("maLoaiSP");
+	            double thue = rs.getDouble("thue");
+	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
+
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
+	            dssp.add(sp);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return dssp;
+	}
+	public ArrayList<SanPham_entity> getAllSanPhamSapHetHang() {
+	    ArrayList<SanPham_entity> dssp = new ArrayList<SanPham_entity>();
+	    Connection con = connectDB.accessDataBase();
+	    if (con == null) {
+	        return null;
+	    }
+	    String sql = "SELECT * FROM SanPham WHERE soLuong < 50";
+	    try {
+	        java.sql.Statement st = con.createStatement();  
+	        ResultSet rs = st.executeQuery(sql);
+	        while (rs.next()) {
+	            String masp = rs.getString("maSP");
+	            String tensp = rs.getString("tenSP");
+	            int soLuong = rs.getInt("soLuong");
+	            Date ngaySX = rs.getDate("ngaySanXuat");
+	            Date ngayHH = rs.getDate("ngayHetHan");
+
+	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null;
+	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null;
+
+	            double khoiLuong = rs.getDouble("khoiLuong");
+	            String donViTinh = rs.getString("donViTinh");
+	            String Nhacc = rs.getString("nhaCungCap");
+	            double gia = rs.getDouble("gia");
+	            String congDung = rs.getString("congDung");
+	            String thanhPhan = rs.getString("thanhPhan");
+	            String hinhAnhsp = rs.getString("hinhAnhSP");
+	            String maLoaiSP = rs.getString("maLoaiSP");
+	            double thue = rs.getDouble("thue");
+	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
+
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -253,9 +334,10 @@ public class ThongKe_DAO {
 	            String thanhPhan = rs.getString("thanhPhan");
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
+	            double thue = rs.getDouble("thue");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -291,10 +373,11 @@ public class ThongKe_DAO {
 	            String congDung = rs.getString("congDung");
 	            String thanhPhan = rs.getString("thanhPhan");
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
+	            double thue = rs.getDouble("thue");
 	            String maLoaiSP = rs.getString("maLoaiSP");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {

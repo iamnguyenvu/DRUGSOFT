@@ -58,6 +58,7 @@ import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
@@ -76,6 +77,7 @@ import nguyenvu.model.ModelUser;
 import nguyenvu.utils.AddButtonEditor;
 import nguyenvu.utils.AddButtonRenderer;
 import nguyenvu.utils.CustomerSelectListener;
+import nguyenvu.utils.GenerateCode;
 import nguyenvu.utils.HeaderRenderer;
 import nguyenvu.utils.LayerSearchList;
 import nguyenvu.utils.ListCustomerPanel;
@@ -111,8 +113,8 @@ public class DoiTra extends SimpleForm {
     
     private ModelUser user;
     
-    private DefaultTableModel model1;
-    private DefaultTableModel model2;
+//    private DefaultTableModel model1;
+//    private DefaultTableModel model2;
 
     public DoiTra(ModelUser user) {
         this.user = user;
@@ -186,6 +188,11 @@ public class DoiTra extends SimpleForm {
         txtHoaDonSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         txtHoaDonSearch.setPreferredSize(new java.awt.Dimension(85, 40));
         txtHoaDonSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "[F2] Tìm hóa đơn");
+        txtHoaDonSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHoaDonSearchActionPerformed(evt);
+            }
+        });
 
         btnScanQrcode.setBackground(new java.awt.Color(11, 101, 136));
         btnScanQrcode.setForeground(new java.awt.Color(255, 255, 255));
@@ -202,7 +209,7 @@ public class DoiTra extends SimpleForm {
             pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnSearchLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(txtHoaDonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtHoaDonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -214,10 +221,10 @@ public class DoiTra extends SimpleForm {
             .addGroup(pnSearchLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtHoaDonSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtHoaDonSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnScanQrcode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(230, 230, 230))
+                .addContainerGap())
         );
 
         txtHoaDonSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon("gui/icon/search.svg"));
@@ -546,9 +553,6 @@ cbbLyDo.addActionListener(new java.awt.event.ActionListener() {
     tableExchange.getTableHeader().setForeground(Color.WHITE);
     tableExchange.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));
 
-    model1 = (DefaultTableModel) table.getModel();
-    model2 = (DefaultTableModel) tableExchange.getModel();
-
     //model2.addTableModelListener(new TableModelListener() {
         //    @Override
         //    public void tableChanged(TableModelEvent e) {
@@ -637,10 +641,10 @@ pnTableExchangeLayout.setHorizontalGroup(
         table.getColumnModel().getColumn(6).setPreferredWidth(60);
     }
     //table.setTableHeader(null);
-    //model1 = (DefaultTableModel) table.getModel();
-    //model2 = (DefaultTableModel) tableExchange.getModel();
+    DefaultTableModel model1 = (DefaultTableModel) table.getModel();
+    DefaultTableModel model2 = (DefaultTableModel) tableExchange.getModel();
 
-    table.getColumnModel().getColumn(6).setCellEditor(new AddButtonEditor(table, model1, model2));
+    table.getColumnModel().getColumn(6).setCellEditor(new AddButtonEditor(table, model1, model2, this));
     table.getColumnModel().getColumn(6).setCellRenderer(new AddButtonRenderer());
     table.getTableHeader().setDefaultRenderer(new HeaderRenderer());
     table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));
@@ -756,7 +760,7 @@ pnTableExchangeLayout.setHorizontalGroup(
                 return;
             } else {
                 ParameterBillDT billData = new ParameterBillDT(date, employeeName, kh.getTenKH(), 
-                    kh.getSdtKH(), totalAmount, loai, lyDo, billCode, generateQrcode(), fields); 
+                    kh.getSdtKH(), totalAmount, loai, lyDo, billCode, GenerateCode.generateQrcode(billCode), fields); 
                 BillDTManeger.getInstance().printBill(billData);
             }
             refresh();
@@ -809,32 +813,62 @@ pnTableExchangeLayout.setHorizontalGroup(
         refresh();
         
         if(txtHoaDonSearch.getText().isEmpty()) {
-            MessageAlerts.getInstance().showMessage("Tìm hóa đơn", "Chưa nhập mã hóa đơn!", MessageAlerts.MessageType.ERROR);
+            MessageAlerts.getInstance().showMessage("Lỗi tìm kiếm", "Chưa nhập mã hóa đơn!", MessageAlerts.MessageType.ERROR);
             return;
         }
         String maHD = txtHoaDonSearch.getText().trim();
+        
+        getInforFromInvoiceCode(maHD, table);
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
+        // TODO add your handling code here:
+        refresh();
+    }//GEN-LAST:event_btnLamMoiActionPerformed
+
+    private void btnScanQrcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScanQrcodeActionPerformed
+        // TODO add your handling code here:
+        refresh();
+        
+        String maHD = GenerateCode.startQrcodeScanner();
+//        System.out.println("maHD: " +  maHD);
+        if(maHD == null) {
+            MessageAlerts.getInstance().showMessage("Lỗi", "Không thể quét mã QR hoặc mã không hợp lệ.", MessageAlerts.MessageType.ERROR);
+            return;
+        }
+        
+        getInforFromInvoiceCode(maHD, table);
+    }//GEN-LAST:event_btnScanQrcodeActionPerformed
+
+    private void txtHoaDonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHoaDonSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHoaDonSearchActionPerformed
+ 
+    private void getInforFromInvoiceCode(String maHD, JTable table)  {
         ArrayList<ChiTietHoaDon> listCTHD = dao.searchCTHD(maHD);
         
+        if (listCTHD == null || listCTHD.isEmpty()) {
+            MessageAlerts.getInstance().showMessage("Lỗi mã đơn", "Mã hóa đơn không hợp lệ!", MessageAlerts.MessageType.ERROR);
+            refresh();
+            return;
+        }
         
         nv = dao.getNhanVien(maHD);
         kh = dao.getKhachHang(maHD);
         hd = dao.getHoaDon(maHD);
         
-        lblMaNV.setText(nv.getMaNV());
-        lblTenNV.setText(nv.getHoTenNV());
-        
-        lblMaHD.setText(hd.getMaHD());
-        lblNgayLapHD.setText(String.valueOf(hd.getNgayLapHD()));
-        
-        if(kh != null) {
-            lblTenKH.setText(kh.getTenKH());
-            lblSDT.setText(kh.getSdtKH());
-        }
-        else {
-            MessageAlerts.getInstance().showMessage("Không thỏa điều kiện đổi trả", "Khách hàng không thỏa điều kiện đổi trả!", MessageAlerts.MessageType.ERROR);
+        if(kh == null) {
+            MessageAlerts.getInstance().showMessage("Không thỏa điều kiện đổi trả", "Không có thông tin số điện thoại khách hàng!", MessageAlerts.MessageType.ERROR);
             refresh();
             return;
         }
+        
+        lblTenKH.setText(kh.getTenKH());
+        lblSDT.setText(kh.getSdtKH());
+        lblMaNV.setText(nv.getMaNV());
+        lblTenNV.setText(nv.getHoTenNV());
+        lblMaHD.setText(hd.getMaHD());
+        lblNgayLapHD.setText(String.valueOf(hd.getNgayLapHD()));
         
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
@@ -855,17 +889,7 @@ pnTableExchangeLayout.setHorizontalGroup(
                 model.addRow(rowData);
             }
         }
-    }//GEN-LAST:event_btnSearchActionPerformed
-
-    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
-        // TODO add your handling code here:
-        refresh();
-    }//GEN-LAST:event_btnLamMoiActionPerformed
-
-    private void btnScanQrcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScanQrcodeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnScanQrcodeActionPerformed
- 
+    }
     
     private void refresh() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -911,19 +935,6 @@ pnTableExchangeLayout.setHorizontalGroup(
         return sdf.format(new java.util.Date());
     }
     
-    private InputStream generateQrcode() throws WriterException, IOException {
-        NumberFormat nf = new DecimalFormat("00000000");
-        Random ran = new Random();
-        String invoice = nf.format(ran.nextInt(99999999) + 1);
-        Map<EncodeHintType, Object> hints = new HashMap<>();
-        hints.put(EncodeHintType.MARGIN, 0);
-        BitMatrix bitMat = new MultiFormatWriter().encode(invoice, BarcodeFormat.QR_CODE, 60, 60, hints);
-        BufferedImage img = MatrixToImageWriter.toBufferedImage(bitMat);
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        ImageIO.write(img, "png", output);
-        return new ByteArrayInputStream(output.toByteArray());
-    }
-    
     private void addKeyBindings() {
         bindKeyToFocus(txtHoaDonSearch, KeyEvent.VK_F2);
         bindButtonKey(btnDoiTra, KeyEvent.VK_F1);
@@ -960,8 +971,7 @@ pnTableExchangeLayout.setHorizontalGroup(
             + "font: bold +1");
     }
     
-    private void updateInfor() {
-        DefaultTableModel model = (DefaultTableModel) tableExchange.getModel();
+    public void updateInfor() {
         if(rbtnTra.isSelected()) {
             lblTienHoan.setText(df.format(calculateTotalAmount()));
         }
