@@ -213,11 +213,12 @@ public class ThongKeDoanhSoBanHangCuaNhanVien extends SimpleForm{
                 return; // Stop if the connection fails
             }
 
-            String sql = "SELECT TOP 10 hotenNV, SUM(tongTien) AS DoanhSo\r\n"
-                		+ "FROM HoaDon hd join NhanVien nv on hd.maNV = nv.maNV\r\n"
-                		+ "WHERE ngayLapHD BETWEEN ? AND ? "
-                		+ "GROUP BY MONTH(ngayLapHD), YEAR(ngayLapHD), hotenNV\r\n"
-                		+ "ORDER BY hotenNV;";
+            String sql = "SELECT TOP 10 nv.maNV, nv.hotenNV, SUM(tongTien) AS DoanhSo\r\n"
+            		+ "FROM HoaDon hd \r\n"
+            		+ "JOIN NhanVien nv ON hd.maNV = nv.maNV\r\n"
+            		+ "WHERE ngayLapHD BETWEEN ? AND ?\r\n"
+            		+ "GROUP BY nv.maNV, nv.hotenNV\r\n"
+            		+ "ORDER BY DoanhSo DESC";
 
             PreparedStatement p = connection.prepareStatement(sql);
             // Convert java.util.Date to java.sql.Date

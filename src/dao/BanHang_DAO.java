@@ -17,6 +17,8 @@ import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 /**
  *
  * @author HP
@@ -169,5 +171,48 @@ public class BanHang_DAO {
         }
         return null;
     }
+    
+    public static String generateInvoiceCode() throws SQLException {
+        Connection con = connectDB.accessDataBase();
+        if(con == null) return null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
+        String currentDate = dateFormat.format(new Date());
+        
+        String query = "SELECT MAX(maHD) FROM HoaDon WHERE maHD LIKE ?";
+        String invoicePrefix = "HD" + currentDate;
+        
+        try (
+             PreparedStatement stmt = con.prepareStatement(query)) {
+            
+            stmt.setString(1, invoicePrefix + "%");
+            ResultSet rs = stmt.executeQuery();
+            
+            // Lấy số thứ tự hóa đơn cao nhất
+            int counter = 0;
+            if (rs.next()) {
+                String maxInvoiceCode = rs.getString(1);
+                if (maxInvoiceCode != null) {
+                    // Trích xuất phần số thứ tự (xxxxx) từ mã hóa đơn
+                    String counterStr = maxInvoiceCode.substring(8);  // Từ vị trí 8 trở đi là số thứ tự
+                    try {
+                        counter = Integer.parseInt(counterStr);  // Chuyển sang kiểu số nguyên
+                    } catch (NumberFormatException e) {
+                        counter = 0;  // Nếu không parse được (không có mã hóa đơn nào), thì bắt đầu từ 0
+                    }
+                }
+            }
+            
+            // Tăng số thứ tự lên 1
+            counter++;
+            
+            // Đảm bảo số thứ tự có đủ 5 chữ số
+            String counterPart = String.format("%05d", counter);
+            
+            // Tạo mã hóa đơn mới
+            return invoicePrefix + counterPart;
+        }
+    }
+    
+    
     
 }

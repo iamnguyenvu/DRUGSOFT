@@ -23,9 +23,8 @@ public class KhachHang_entity {
     
     
     public KhachHang_entity(String sdt) {
-		super();
-		this.sdtKH = sdtKH;
-	}
+            this.sdtKH = sdtKH;
+    }
 
 	// Getter và Setter cho maKH
     

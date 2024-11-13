@@ -53,6 +53,36 @@ public class ThongKe_DAO {
 	    
 	    return soSanPham;
 	}
+	public int soSanPhamdaHetHan() {
+	    Connection con = connectDB.accessDataBase();
+	    if (con == null) return 0;
+	    
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    int soSanPham = 0;
+	    
+	    try {
+	        String sql = "SELECT COUNT(*) AS TongSanPhamSapHetHan FROM SanPham WHERE ngayHetHan < GETDATE()";
+	        ps = con.prepareStatement(sql);
+	        rs = ps.executeQuery();
+	        
+	        if (rs.next()) {
+	            soSanPham = rs.getInt("TongSanPhamSapHetHan");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+	            if (con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    return soSanPham;
+	}
 	public int soSanPhamSapHetHang() {
 	    Connection con = connectDB.accessDataBase();
 	    if (con == null) return 0;
@@ -65,6 +95,38 @@ public class ThongKe_DAO {
 	        String sql = "SELECT COUNT(*) AS TongSanPhamSapHetHang\r\n"
 	        		+ "FROM SanPham\r\n"
 	        		+ "WHERE soLuong < 50";
+	        ps = con.prepareStatement(sql);
+	        rs = ps.executeQuery();
+	        
+	        if (rs.next()) {
+	            soSanPham = rs.getInt("TongSanPhamSapHetHang");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+	            if (con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    return soSanPham;
+	}
+	public int soSanPhamDaHetHang() {
+	    Connection con = connectDB.accessDataBase();
+	    if (con == null) return 0;
+	    
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    int soSanPham = 0;
+	    
+	    try {
+	        String sql = "SELECT COUNT(*) AS TongSanPhamSapHetHang\r\n"
+	        		+ "FROM SanPham\r\n"
+	        		+ "WHERE soLuong = 0";
 	        ps = con.prepareStatement(sql);
 	        rs = ps.executeQuery();
 	        
@@ -192,6 +254,86 @@ public class ThongKe_DAO {
 	    String sql = "SELECT * FROM SanPham\r\n"
 	    		+ "WHERE [ngayHetHan] < GETDATE()\r\n"
 	    		+ "ORDER BY tenSP";
+	    try {
+	        java.sql.Statement st = con.createStatement();  
+	        ResultSet rs = st.executeQuery(sql);
+	        while (rs.next()) {
+	            String masp = rs.getString("maSP");
+	            String tensp = rs.getString("tenSP");
+	            int soLuong = rs.getInt("soLuong");
+	            Date ngaySX = rs.getDate("ngaySanXuat");
+	            Date ngayHH = rs.getDate("ngayHetHan");
+
+	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null;
+	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null;
+
+	            double khoiLuong = rs.getDouble("khoiLuong");
+	            String donViTinh = rs.getString("donViTinh");
+	            String Nhacc = rs.getString("nhaCungCap");
+	            double gia = rs.getDouble("gia");
+	            String congDung = rs.getString("congDung");
+	            String thanhPhan = rs.getString("thanhPhan");
+	            String hinhAnhsp = rs.getString("hinhAnhSP");
+	            String maLoaiSP = rs.getString("maLoaiSP");
+	            double thue = rs.getDouble("thue");
+	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
+
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
+	            dssp.add(sp);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return dssp;
+	}
+	public ArrayList<SanPham_entity> getAllSanPhamSapHetHan() {
+	    ArrayList<SanPham_entity> dssp = new ArrayList<SanPham_entity>();
+	    Connection con = connectDB.accessDataBase();
+	    if (con == null) {
+	        return null;
+	    }
+	    String sql = "SELECT * FROM SanPham WHERE DATEDIFF(DAY, GETDATE(), ngayHetHan) < 30";
+	    try {
+	        java.sql.Statement st = con.createStatement();  
+	        ResultSet rs = st.executeQuery(sql);
+	        while (rs.next()) {
+	            String masp = rs.getString("maSP");
+	            String tensp = rs.getString("tenSP");
+	            int soLuong = rs.getInt("soLuong");
+	            Date ngaySX = rs.getDate("ngaySanXuat");
+	            Date ngayHH = rs.getDate("ngayHetHan");
+
+	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null;
+	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null;
+
+	            double khoiLuong = rs.getDouble("khoiLuong");
+	            String donViTinh = rs.getString("donViTinh");
+	            String Nhacc = rs.getString("nhaCungCap");
+	            double gia = rs.getDouble("gia");
+	            String congDung = rs.getString("congDung");
+	            String thanhPhan = rs.getString("thanhPhan");
+	            String hinhAnhsp = rs.getString("hinhAnhSP");
+	            String maLoaiSP = rs.getString("maLoaiSP");
+	            double thue = rs.getDouble("thue");
+	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
+
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
+	            dssp.add(sp);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return dssp;
+	}
+	public ArrayList<SanPham_entity> getAllSanPhamSapHetHang() {
+	    ArrayList<SanPham_entity> dssp = new ArrayList<SanPham_entity>();
+	    Connection con = connectDB.accessDataBase();
+	    if (con == null) {
+	        return null;
+	    }
+	    String sql = "SELECT * FROM SanPham WHERE soLuong < 50";
 	    try {
 	        java.sql.Statement st = con.createStatement();  
 	        ResultSet rs = st.executeQuery(sql);

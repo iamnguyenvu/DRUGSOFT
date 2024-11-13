@@ -132,6 +132,7 @@ public class barChar_ThongKe extends SimpleForm{
         dcNgayKetThuc.setBorder(border);
         panel_1.add(dcNgayKetThuc);
         btnTruyVan = new javax.swing.JButton();
+        btnTruyVan.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.black, 1));
         btnTruyVan.setForeground(new Color(0, 0, 0));
         btnTruyVan.setBackground(new Color(255, 255, 255));
         btnTruyVan.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -155,7 +156,8 @@ public class barChar_ThongKe extends SimpleForm{
                 lblNewLabel_3.setBounds(787, 72, 87, 34);
                 panel_1.add(lblNewLabel_3);
                 
-                btnXuatExcel = new JButton("Xuất File");
+                btnXuatExcel = new JButton("Xuất File Excel");
+                btnXuatExcel.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.black, 1));
                 btnXuatExcel.addActionListener(new ActionListener() {
                 	public void actionPerformed(ActionEvent e) {
                 		xuatExcel();
@@ -164,7 +166,7 @@ public class barChar_ThongKe extends SimpleForm{
                 btnXuatExcel.setForeground(new Color(0, 0, 0));
                 btnXuatExcel.setBackground(new Color(255, 255, 255));
                 btnXuatExcel.setFont(new Font("Arial", Font.PLAIN, 15));
-                btnXuatExcel.setBounds(1325, 72, 100, 34);
+                btnXuatExcel.setBounds(1325, 72, 115, 34);
                 panel_1.add(btnXuatExcel);
                 btnTruyVan.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {

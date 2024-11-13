@@ -15,9 +15,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -118,7 +120,7 @@ public class DoiTra_DAO {
             ps.setString(1, maHD);
             rs = ps.executeQuery();
             if (rs.next()) {
-                return new KhachHang_entity(rs.getString("sdtKH"), rs.getString("tenKH"));
+                return new KhachHang_entity(rs.getString("tenKH"), rs.getString("sdtKH"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -191,5 +193,44 @@ public class DoiTra_DAO {
          }
         }
         return n>0;
+    }
+    
+    public static String generateInvoiceCode() throws SQLException {
+        Connection con = connectDB.accessDataBase();
+        if(con == null) return null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
+        String currentDate = dateFormat.format(new Date());
+        
+        // Truy vấn để tìm số thứ tự hóa đơn cao nhất trong ngày hiện tại
+        String query = "SELECT MAX(maHD) FROM HoaDon WHERE maHD LIKE ?";
+        String invoicePrefix = "HD" + currentDate;
+        
+        try (
+             PreparedStatement stmt = con.prepareStatement(query)) {
+            
+            // Đặt tham số để tìm các hóa đơn trong ngày hiện tại
+            stmt.setString(1, invoicePrefix + "%");
+            ResultSet rs = stmt.executeQuery();
+            
+            // Lấy số thứ tự hóa đơn cao nhất
+            int counter = 0;
+            if (rs.next()) {
+                String maxInvoiceCode = rs.getString(1);
+                if (maxInvoiceCode != null) {
+                    // Trích xuất phần số thứ tự (xxxxx) từ mã hóa đơn
+                    String counterStr = maxInvoiceCode.substring(8);  // Từ vị trí 8 trở đi là số thứ tự
+                    counter = Integer.parseInt(counterStr);
+                }
+            }
+            
+            // Tăng số thứ tự lên 1
+            counter++;
+            
+            // Đảm bảo số thứ tự có đủ 5 chữ số
+            String counterPart = String.format("%05d", counter);
+            
+            // Tạo mã hóa đơn mới
+            return invoicePrefix + counterPart;
+        }
     }
 }
