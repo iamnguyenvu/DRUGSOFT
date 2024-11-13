@@ -1,27 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-            <url>src/nguyenvu/utils/FilterProductSearchPanel.java</url>
-            <bookmark id="1">
-                <name/>
-                <line>108</line>
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/GenerateCode.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/DoiTra.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/AddButtonEditor.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/dao/BanHang_DAO.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/entity/SanPham_entity.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/dao/DoiTra_DAO.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/SanPhamDoiTra.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/FilterProductSearchPanel.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/BanHang.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/QuantityCellEditor.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/raven/chart/CurveLineChart.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/dao/SanPham_DAO.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/pnSanPhamHetHan.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/DialogTempOrderProcess.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/SanPham.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/CapNhatNhanVien.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/com/raven/chart/Chart.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/ThongKeSoLuongGiaoDichTongQuan.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/pnSanPhamHetHang.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/nguyenvu/application/Application.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/BanHang.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/ThongKeReport/ReportManager.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/nguyenvu/swing/slider/PanelSlider.java</file>
         </group>
     </open-files>
 </project-private>

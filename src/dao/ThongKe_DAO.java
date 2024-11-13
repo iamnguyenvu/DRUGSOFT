@@ -53,6 +53,36 @@ public class ThongKe_DAO {
 	    
 	    return soSanPham;
 	}
+	public int soSanPhamdaHetHan() {
+	    Connection con = connectDB.accessDataBase();
+	    if (con == null) return 0;
+	    
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    int soSanPham = 0;
+	    
+	    try {
+	        String sql = "SELECT COUNT(*) AS TongSanPhamSapHetHan FROM SanPham WHERE ngayHetHan < GETDATE()";
+	        ps = con.prepareStatement(sql);
+	        rs = ps.executeQuery();
+	        
+	        if (rs.next()) {
+	            soSanPham = rs.getInt("TongSanPhamSapHetHan");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+	            if (con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    return soSanPham;
+	}
 	public int soSanPhamSapHetHang() {
 	    Connection con = connectDB.accessDataBase();
 	    if (con == null) return 0;
@@ -65,6 +95,38 @@ public class ThongKe_DAO {
 	        String sql = "SELECT COUNT(*) AS TongSanPhamSapHetHang\r\n"
 	        		+ "FROM SanPham\r\n"
 	        		+ "WHERE soLuong < 50";
+	        ps = con.prepareStatement(sql);
+	        rs = ps.executeQuery();
+	        
+	        if (rs.next()) {
+	            soSanPham = rs.getInt("TongSanPhamSapHetHang");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+	            if (con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    return soSanPham;
+	}
+	public int soSanPhamDaHetHang() {
+	    Connection con = connectDB.accessDataBase();
+	    if (con == null) return 0;
+	    
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    int soSanPham = 0;
+	    
+	    try {
+	        String sql = "SELECT COUNT(*) AS TongSanPhamSapHetHang\r\n"
+	        		+ "FROM SanPham\r\n"
+	        		+ "WHERE soLuong = 0";
 	        ps = con.prepareStatement(sql);
 	        rs = ps.executeQuery();
 	        

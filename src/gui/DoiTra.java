@@ -28,6 +28,7 @@ import entity.NhanVien_entity;
 import entity.SanPham_entity;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -77,8 +78,10 @@ import nguyenvu.model.ModelUser;
 import nguyenvu.utils.AddButtonEditor;
 import nguyenvu.utils.AddButtonRenderer;
 import nguyenvu.utils.CustomerSelectListener;
+import nguyenvu.utils.DoiTraQuantityCellEditor;
 import nguyenvu.utils.GenerateCode;
 import nguyenvu.utils.HeaderRenderer;
+import nguyenvu.utils.ImageRenderer;
 import nguyenvu.utils.LayerSearchList;
 import nguyenvu.utils.ListCustomerPanel;
 import nguyenvu.utils.ListProductSearchPanel;
@@ -221,7 +224,7 @@ public class DoiTra extends SimpleForm {
             .addGroup(pnSearchLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtHoaDonSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHoaDonSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnScanQrcode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -513,11 +516,11 @@ cbbLyDo.addActionListener(new java.awt.event.ActionListener() {
 
         },
         new String [] {
-            "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Xóa"
+            "Hình ảnh", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Xóa"
         }
     ) {
         boolean[] canEdit = new boolean [] {
-            false, false, true, true
+            false, false, false, true, true
         };
 
         public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -525,19 +528,23 @@ cbbLyDo.addActionListener(new java.awt.event.ActionListener() {
         }
     });
     tableExchange.setRowHeight(60);
+    tableExchange.setRowSelectionAllowed(false);
+    tableExchange.getTableHeader().setReorderingAllowed(false);
     jScrollPane3.setViewportView(tableExchange);
     if (tableExchange.getColumnModel().getColumnCount() > 0) {
         tableExchange.getColumnModel().getColumn(0).setResizable(false);
         tableExchange.getColumnModel().getColumn(0).setPreferredWidth(100);
         tableExchange.getColumnModel().getColumn(1).setResizable(false);
-        tableExchange.getColumnModel().getColumn(1).setPreferredWidth(200);
+        tableExchange.getColumnModel().getColumn(1).setPreferredWidth(150);
         tableExchange.getColumnModel().getColumn(2).setResizable(false);
-        tableExchange.getColumnModel().getColumn(2).setPreferredWidth(80);
+        tableExchange.getColumnModel().getColumn(2).setPreferredWidth(300);
         tableExchange.getColumnModel().getColumn(3).setResizable(false);
-        tableExchange.getColumnModel().getColumn(3).setPreferredWidth(60);
+        tableExchange.getColumnModel().getColumn(3).setPreferredWidth(40);
+        tableExchange.getColumnModel().getColumn(4).setResizable(false);
+        tableExchange.getColumnModel().getColumn(4).setPreferredWidth(60);
     }
-    tableExchange.getColumnModel().getColumn(3).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());
-    tableExchange.getColumnModel().getColumn(3).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {
+    tableExchange.getColumnModel().getColumn(4).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());
+    tableExchange.getColumnModel().getColumn(4).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {
         @Override
         public void onDelete(int row) {
             if (row >= 0) {
@@ -553,39 +560,18 @@ cbbLyDo.addActionListener(new java.awt.event.ActionListener() {
     tableExchange.getTableHeader().setForeground(Color.WHITE);
     tableExchange.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));
 
-    //model2.addTableModelListener(new TableModelListener() {
-        //    @Override
-        //    public void tableChanged(TableModelEvent e) {
-            //        if (e.getType() == TableModelEvent.UPDATE) {
-                //            int row = e.getFirstRow();
-                //            int column = e.getColumn();
-                //
-                //            if (column == 2) {
-                    //                int newQuantity = (int) model2.getValueAt(row, column);
-                    //                String maSP = (String) model2.getValueAt(row, 0);
-                    //
-                    //                for (int i = 0; i < model1.getRowCount(); i++) {
-                        //                    String existingMaSP = (String) model1.getValueAt(i, 1);
-                        //                    int availableQuantity = (int) model1.getValueAt(i, 3);
-                        //                    if (maSP.equals(existingMaSP)) {
-                            //                        if (newQuantity > availableQuantity) {
-                                //                            MessageAlerts.getInstance().showMessage("Lỗi",
-                                    //                                "Số lượng không được lớn hơn số lượng tối đa!", MessageAlerts.MessageType.ERROR);
-                                //                            model2.setValueAt(availableQuantity, row, column);
-                                //                        }
-                            //                        break;
-                            //                    }
-                        //                }
-                    //            }
-                //        }
-            //    }
-        //});
+    tableExchange.getColumnModel().getColumn(3).setCellEditor(new DoiTraQuantityCellEditor(this, table, tableExchange));
+    tableExchange.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());
 
-javax.swing.GroupLayout pnTableExchangeLayout = new javax.swing.GroupLayout(pnTableExchange);
-pnTableExchange.setLayout(pnTableExchangeLayout);
-pnTableExchangeLayout.setHorizontalGroup(
-    pnTableExchangeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE)
+    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+    centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+    tableExchange.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+
+    javax.swing.GroupLayout pnTableExchangeLayout = new javax.swing.GroupLayout(pnTableExchange);
+    pnTableExchange.setLayout(pnTableExchangeLayout);
+    pnTableExchangeLayout.setHorizontalGroup(
+        pnTableExchangeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE)
     );
     pnTableExchangeLayout.setVerticalGroup(
         pnTableExchangeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -600,11 +586,11 @@ pnTableExchangeLayout.setHorizontalGroup(
 
         },
         new String [] {
-            "Mã hóa đơn", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá", "Thành tiền", "Chọn đổi trả"
+            "HÌnh ảnh", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá", "Thành tiền", "Chọn đổi trả"
         }
     ) {
         Class[] types = new Class [] {
-            java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class
+            java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Object.class
         };
         boolean[] canEdit = new boolean [] {
             false, false, false, false, false, false, true
@@ -646,10 +632,16 @@ pnTableExchangeLayout.setHorizontalGroup(
 
     table.getColumnModel().getColumn(6).setCellEditor(new AddButtonEditor(table, model1, model2, this));
     table.getColumnModel().getColumn(6).setCellRenderer(new AddButtonRenderer());
+    table.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());
+
     table.getTableHeader().setDefaultRenderer(new HeaderRenderer());
     table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));
     table.getTableHeader().setBackground(new Color(11,101,136));
     table.getTableHeader().setForeground(Color.WHITE);
+
+    table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+    table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+    table.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
 
     javax.swing.GroupLayout pnLeftContentLayout = new javax.swing.GroupLayout(pnLeftContent);
     pnLeftContent.setLayout(pnLeftContentLayout);
@@ -712,7 +704,7 @@ pnTableExchangeLayout.setHorizontalGroup(
         
         try {
 
-            String employeeName = user != null ? user.getName() : "Nhân viên";  // Replace with actual employee data if available
+            String employeeName = user != null ? user.getName() : "Nhân viên";
             String employeeId = user != null ? user.getUserName() : "";
              
             String lyDo = txtLyDo.getText().isEmpty() ? (String) cbbLyDo.getSelectedItem() : txtLyDo.getText();
@@ -739,9 +731,9 @@ pnTableExchangeLayout.setHorizontalGroup(
         
             DefaultTableModel model = (DefaultTableModel) tableExchange.getModel();
             for (int i = 0; i < model.getRowCount(); i++) {
-                String productName = (String) model.getValueAt(i, 1); // tenSP
-                int quantity = (int) model.getValueAt(i, 2);           // soLuong
-                double unitPrice = dao.getSP((String) model.getValueAt(i, 0)).getGia();    // donGia
+                String productName = (String) model.getValueAt(i, 2); // tenSP
+                int quantity = (int) model.getValueAt(i, 3);           // soLuong
+                double unitPrice = dao.getSP((String) model.getValueAt(i, 1)).getGia();    // donGia
                 double totalPrice = quantity * unitPrice;   // thanhTien
 
                 fields.add(new FieldBillDT(productName, quantity, unitPrice, totalPrice));
@@ -778,6 +770,7 @@ pnTableExchangeLayout.setHorizontalGroup(
             
             for(int i = 0; i < table.getRowCount(); ++i) {
                 Object[] rowData = new Object[]{
+                    table.getValueAt(i, 0),
                     table.getValueAt(i, 1),
                     table.getValueAt(i, 2),
                     table.getValueAt(i, 3),
@@ -877,13 +870,16 @@ pnTableExchangeLayout.setHorizontalGroup(
             SanPham_entity sp = dao.getSP(cthd.getMaSP());
             
             if(sp != null){
+                ImageIcon iiSP = new ImageIcon(getClass().getResource(sp.getHinhAnhSP()));
+                Image imgSP = iiSP.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+            
                 Object[] rowData = new Object[]{
-                    cthd.getMaHD(),    
+                    new ImageIcon(imgSP),    
                     cthd.getMaSP(),     
                     sp.getTenSP(),  
                     cthd.getSoLuongSanPham(),       
                     cthd.getThanhTien(),
-                    cthd.getSoLuongSanPham(),
+                    cthd.getThanhTien(),
                     "Add"
                 };
                 model.addRow(rowData);
@@ -914,8 +910,8 @@ pnTableExchangeLayout.setHorizontalGroup(
         double sum = 0;
         DefaultTableModel model = (DefaultTableModel) tableExchange.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
-            double gia = dao.getSP((String) model.getValueAt(i, 0)).getGia();
-            int quantity = (int) model.getValueAt(i, 2); 
+            double gia = dao.getSP((String) model.getValueAt(i, 1)).getGia();
+            int quantity = (int) model.getValueAt(i, 3); 
             Object totalValue = gia * quantity;
             if (totalValue instanceof Double) {
                 sum += (Double) totalValue; // Add to sum if it's a Double

@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.JPanel;
 import nguyenvu.components.SimpleForm;
+import nguyenvu.utils.RoundedPanel;
+
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -29,50 +31,49 @@ public class ThongKeSanPham_GUI extends SimpleForm {
         add(pnCenter, BorderLayout.CENTER);
         pnCenter.setLayout(null);
         
-        JPanel panel = new JPanel();
+        RoundedPanel panel = new RoundedPanel(50);
         panel.setLayout(null);
-        panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        panel.setBackground(Color.WHITE);
-        panel.setBounds(20, 10, 1480, 119);
+        panel.setBackground(new Color(11,101,136));
+        panel.setBounds(20, 10, 1480, 80);
         pnCenter.add(panel);
         
         JPanel panel_2 = new JPanel();
         panel_2.setLayout(null);
         panel_2.setBorder(null);
-        panel_2.setBackground(Color.WHITE);
-        panel_2.setBounds(570, 24, 900, 69);
+        panel_2.setBackground(new Color(11,101,136));
+        panel_2.setBounds(550, 7, 900, 73);
         panel.add(panel_2);
         
         JButton btnDoanhSoNV = new JButton("Sản Phẩm Bán Chạy,Bán Chậm");
         btnDoanhSoNV.setForeground(Color.BLACK);
         btnDoanhSoNV.setFont(new Font("Arial", Font.PLAIN, 14));
         btnDoanhSoNV.setBackground(Color.WHITE);
-        btnDoanhSoNV.setBounds(10, 10, 280, 49);
+        btnDoanhSoNV.setBounds(35, 11, 248, 46);
         panel_2.add(btnDoanhSoNV);
         
         JButton btnNhanVien = new JButton("Sản Phẩm Hết Hạn");
         btnNhanVien.setForeground(Color.BLACK);
         btnNhanVien.setFont(new Font("Arial", Font.PLAIN, 14));
         btnNhanVien.setBackground(Color.WHITE);
-        btnNhanVien.setBounds(323, 13, 268, 43);
+        btnNhanVien.setBounds(343, 11, 248, 45);
         panel_2.add(btnNhanVien);
         
         JButton btnSPHetHang = new JButton("Sản Phẩm Hết Hàng");
         btnSPHetHang.setForeground(Color.BLACK);
         btnSPHetHang.setFont(new Font("Arial", Font.PLAIN, 14));
         btnSPHetHang.setBackground(Color.WHITE);
-        btnSPHetHang.setBounds(622, 13, 268, 43);
+        btnSPHetHang.setBounds(642, 11, 248, 45);
         panel_2.add(btnSPHetHang);
         
         JLabel lblNewLabel = new JLabel("Thống Kê Sản Phẩm");
-        lblNewLabel.setForeground(Color.BLACK);
+        lblNewLabel.setForeground(new Color(255, 255, 255));
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
         lblNewLabel.setBackground(Color.WHITE);
-        lblNewLabel.setBounds(10, 37, 210, 56);
+        lblNewLabel.setBounds(10, 10, 210, 56);
         panel.add(lblNewLabel);
         
         pnContent = new JPanel();
-        pnContent.setBounds(10, 129, 1480, 671);
+        pnContent.setBounds(10, 100, 1480, 700);
         pnCenter.add(pnContent);
         pnContent.setLayout(new BorderLayout(0, 0));
         
