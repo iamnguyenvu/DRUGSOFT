@@ -1,6 +1,7 @@
 package nguyenvu.menu;
 
 import java.awt.Color;
+
 import java.awt.Component;
 
 import javax.swing.Icon;
@@ -48,14 +49,14 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     
     private BanHang banHang;
     private DoiTra doiTra;
-//    private DonDoiTra hoaDonDoiTra;
+    private DonDoiTra hoaDonDoiTra;
     private SanPhamDoiTra sanPhamDoiTra;
 
     public void setUser(ModelUser user) {
         this.user = user;
         banHang = new BanHang(user);
         doiTra = new DoiTra(user);
-//        hoaDonDoiTra = new DonDoiTra();
+        hoaDonDoiTra = new DonDoiTra();
         sanPhamDoiTra = new SanPhamDoiTra();
         SimpleHeaderData headerData = header.getSimpleHeaderData();
         headerData.setTitle(user.getName());
@@ -276,7 +277,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                             FormManager.showForm(new HoaDon());
                         }
                         if (index[1] == 1) {
-//                            FormManager.showForm(hoaDonDoiTra);
+                            FormManager.showForm(hoaDonDoiTra);
                         }
                     }
                     
