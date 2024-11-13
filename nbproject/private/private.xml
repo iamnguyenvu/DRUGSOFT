@@ -5,15 +5,17 @@
         <group>
             <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/raven/chart/CurveLineChart.java</file>
             <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/dao/SanPham_DAO.java</file>
-            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/SanPham.java</file>
             <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/pnSanPhamHetHan.java</file>
-            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/CapNhatNhanVien.java</file>
             <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/DialogTempOrderProcess.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/SanPham.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/CapNhatNhanVien.java</file>
             <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/com/raven/chart/Chart.java</file>
             <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/ThongKeSoLuongGiaoDichTongQuan.java</file>
             <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/pnSanPhamHetHang.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/nguyenvu/application/Application.java</file>
             <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/BanHang.java</file>
             <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/ThongKeReport/ReportManager.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/nguyenvu/swing/slider/PanelSlider.java</file>
         </group>
     </open-files>
 </project-private>
