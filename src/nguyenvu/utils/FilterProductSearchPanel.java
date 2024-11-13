@@ -12,6 +12,8 @@ import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import dao.BanHang_DAO;
+import entity.ChiTietHoaDon;
+import entity.SanPham_entity;
 import gui.BanHang;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -19,6 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -35,6 +38,8 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.videoio.VideoCapture;
 import raven.alerts.MessageAlerts;
 import javax.sound.sampled.*;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -43,10 +48,12 @@ import javax.sound.sampled.*;
 public class FilterProductSearchPanel extends SimpleForm {
     private BanHang banHang;
     private JPopupMenu menu;
+    private JTable table;
 
-    public FilterProductSearchPanel(JPopupMenu menu, BanHang banHang) {
+    public FilterProductSearchPanel(JPopupMenu menu, BanHang banHang, JTable table) {
         this.menu = menu;
         this.banHang = banHang;
+        this.table = table;
         initComponents();
     }
 
@@ -101,7 +108,6 @@ public class FilterProductSearchPanel extends SimpleForm {
     private void btnBarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBarcodeActionPerformed
         // TODO add your handling code here:
         if(menu != null) {
-//            menu.setVisible(false);
             this.setVisible(false);
         }
         
@@ -111,9 +117,49 @@ public class FilterProductSearchPanel extends SimpleForm {
     private void btnQrcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQrcodeActionPerformed
         // TODO add your handling code here:
         if(menu != null) {
-            menu.setVisible(false);
             this.setVisible(false);
         }
+        
+        String maHD = GenerateCode.startQrcodeScanner();
+        if(maHD.isEmpty()) {
+            MessageAlerts.getInstance().showMessage("Lỗi", "Mã hóa đơn không hợp lệ!", MessageAlerts.MessageType.ERROR);
+            return;
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        
+        ArrayList<ChiTietHoaDon> listCTHD = BanHang_DAO.getListCTHD(maHD);
+        if (listCTHD == null || listCTHD.isEmpty()) {
+            MessageAlerts.getInstance().showMessage("Lỗi", "Không tìm thấy chi tiết hóa đơn.", MessageAlerts.MessageType.ERROR);
+            return;
+        }
+        
+        System.out.println("listCTHD.size(): " + listCTHD.size());
+        
+        try {
+            for(ChiTietHoaDon cthd : listCTHD) {
+                SanPham_entity sp = new BanHang_DAO().getSP(cthd.getMaSP());
+                ImageIcon iiSP = new ImageIcon(getClass().getResource(sp.getHinhAnhSP()));
+                Image imgSP = iiSP.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                
+                Object[] rowData = new Object[] {
+                    model.getRowCount() + 1, // STT
+                    new ImageIcon(imgSP), // hinhAnh
+                    sp.getMaSP(), // maSP
+                    sp.getTenSP(), // tenSP
+                    sp.getDonViTinh(), // donVi
+                    cthd.getSoLuongSanPham(), // soLuong 
+
+                    sp.getGia(), // donGia
+                    cthd.getThanhTien()
+                };
+                model.addRow(rowData);
+            }
+        } catch (Exception e) {
+        }
+        
+        banHang.updateLblSoLuongSP();
     }//GEN-LAST:event_btnQrcodeActionPerformed
 
     private void startBarcodeScanner() {

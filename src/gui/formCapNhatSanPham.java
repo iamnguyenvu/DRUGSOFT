@@ -72,6 +72,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 	public void setMaSP(String maSP) {
 		this.maSP = maSP;
 	}
+	private SanPham_entity sp;
 
 	/**
 	 * Create the panel.
@@ -336,7 +337,13 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		lb_DonViTinh_1.setBounds(530, 48, 105, 46);
 		pn_KhoHang.add(lb_DonViTinh_1);
 		
-		
+		tf_thue = new JTextField();
+		tf_thue.setForeground(Color.BLACK);
+		tf_thue.setColumns(10);
+		tf_thue.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		tf_thue.setBackground(Color.WHITE);
+		tf_thue.setBounds(529, 104, 144, 34);
+		pn_KhoHang.add(tf_thue);
 
 		JPanel pn_PhanLoai = new JPanel();
 		pn_PhanLoai.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -455,7 +462,120 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		btnXacNhan = new JButton("Xác Nhận");
 		btnXacNhan.setFont(new Font("Serif", Font.PLAIN, 20));
 		btnXacNhan.setBounds(994, 703, 115, 42);
-		btnXacNhan.addActionListener(new ActionListener() {
+		pnContent.add(btnXacNhan);
+		btnXacNhan.addActionListener(this);
+
+	}
+
+//
+//	@Override
+//	public void actionPerformed(ActionEvent e) {
+//		Object o = e.getSource();
+//		if (o.equals(btnXacNhan)) {
+//			try {
+//				String tenSP = tf_Tensp.getText();
+//				if (tenSP.isEmpty()) {
+//					JOptionPane.showMessageDialog(null, "Tên sản phẩm không được để trống.", "Lỗi",
+//							JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//
+//				// Lấy ngày sản xuất và ngày hết hạn từ JDateChooser
+//				java.util.Date ngaySX = dcNgaySanXuat.getDate();
+//				LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+//						: null;
+//
+//				java.util.Date ngayHH = dcNgayHetHan.getDate();
+//				LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+//						: null;
+//
+//				LocalDate today = LocalDate.now(); // Lấy ngày hiện tại
+//
+//				// Kiểm tra điều kiện ngày sản xuất và ngày hết hạn
+//				if (lcNgaySX == null || lcNgaySX.isAfter(today)) {
+//					JOptionPane.showMessageDialog(null, "Ngày sản xuất không được sau ngày hiện tại.", "Lỗi",
+//							JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//
+//				if (lcNgayHH == null || !lcNgayHH.isAfter(today)) {
+//					JOptionPane.showMessageDialog(null, "Ngày hết hạn phải lớn hơn ngày hiện tại.", "Lỗi",
+//							JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//
+//				// Lấy các giá trị còn lại
+//				double khoiLuong = Double.parseDouble(tf_KhoiLuong.getText());
+//				if (khoiLuong <= 0) {
+//					JOptionPane.showMessageDialog(null, "Khối lượng phải > 0.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//				String donViTinh = (String) cb_DonViTinh.getSelectedItem();
+//				String nhaCungCap = tf_NhaCungCap.getText();
+//				if (nhaCungCap.isEmpty()) {
+//					JOptionPane.showMessageDialog(null, "Nhà cung cấp không được để trống.", "Lỗi",
+//							JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//				double gia = Double.parseDouble(tf_Gia.getText());
+//				if (gia <= 0) {
+//					JOptionPane.showMessageDialog(null, "Giá lượng phải > 0.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//				String congDung = ta_CongDung.getText();
+//				if (congDung.isEmpty()) {
+//					JOptionPane.showMessageDialog(null, "Công dụng không được để trống.", "Lỗi",
+//							JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//				String hinhAnh = tf_HinhAnh.getText().trim(); // Loại bỏ khoảng trắng ở đầu và cuối chuỗi
+//
+//				// Kiểm tra nếu chuỗi rỗng hoặc không có đuôi .png hoặc .svg
+//				if (hinhAnh.isEmpty() || !(hinhAnh.endsWith(".png") || hinhAnh.endsWith(".svg"))) {
+//					JOptionPane.showMessageDialog(null,
+//							"Hình ảnh phải có định dạng .png hoặc .svg và không được để trống.", "Lỗi",
+//							JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//
+//				String loaiSanPham = (String) cb_LoaiSP.getSelectedItem();
+//				int soLuong = Integer.parseInt(tf_soLuong.getText());
+//				if (soLuong <= 0) {
+//					JOptionPane.showMessageDialog(null, "Số lượng phải > 0.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//
+//				// Chuyển đổi loại sản phẩm
+//				if (loaiSanPham.equals("Thuốc")) {
+//					loaiSanPham = "Thuoc";
+//				} else if (loaiSanPham.equals("Thực Phẩm Chức Năng")) {
+//					loaiSanPham = "TPCN";
+//				} else if (loaiSanPham.equals("Thiết Bị Y Tế")) {
+//					loaiSanPham = "TBYT";
+//				}
+//				String thanhPhan = ta_ThanhPhan.getText();
+//				if (thanhPhan.isEmpty()) {
+//					JOptionPane.showMessageDialog(null, "Thành phần không được để trống.", "Lỗi",
+//							JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//				LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
+////
+////				SanPham_entity sp = new SanPham_entity(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh,
+////						nhaCungCap, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong);
+//
+//				// `addRowTable`)
+////				sanPham.updateRowTable(sp);
+//
+//				// Hiển thị thông báo thành công
+//				JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công!", "Thông báo",
+//						JOptionPane.INFORMATION_MESSAGE);
+//			} catch (Exception ex) {
+//				// Hiển thị thông báo lỗi nếu có bất kỳ ngoại lệ nào xảy ra
+//				JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi",
+//						JOptionPane.ERROR_MESSAGE);
+//			}
+//>>>>>>> c6b1f164876dc3df481535944ed6652f79813b7d
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -563,10 +683,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi",
 		                    JOptionPane.ERROR_MESSAGE);
 		        }
-				
-			}
-		});
-		pnContent.add(btnXacNhan);
+
 		
 		
 		cb_LoaiSP.addItemListener(new ItemListener() {
@@ -754,9 +871,4 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		this.tf_thue = tf_thue;
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 }

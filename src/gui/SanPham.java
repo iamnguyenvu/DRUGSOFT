@@ -273,6 +273,7 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 
 
 
+
 		tb_SanPham.setBackground(new Color(255, 255, 255));
 
 		tb_SanPham.getTableHeader().setReorderingAllowed(false);
@@ -302,64 +303,28 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 		// Gán renderer và editor cho các cột "Cập Nhật" và "Xóa"
 		tb_SanPham.getColumn("Cập Nhật").setCellRenderer(new ButtonRenderer("Cập Nhật"));
 		tb_SanPham.getColumn("Cập Nhật").setCellEditor(new ButtonEditor("Cập Nhật", new ActionListener() {
-		    
-
-			@Override
+		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		        String command = e.getActionCommand();
 		        if (command.startsWith("Cập Nhật")) {
 		            int row = Integer.parseInt(command.split("_")[1]);
 		            System.out.println("Cập Nhật cho dòng: " + row);
-		            // Thực hiện logic cập nhật tại đây
-		            
 
+		            // Xử lý cập nhật cho dòng tương ứng
 		            try {
 		                String maSP = (String) dftb_SanPham.getValueAt(row, 0);
-		                String tenSP = (String) dftb_SanPham.getValueAt(row, 1);
-		                double gia = (dftb_SanPham.getValueAt(row, 2) != null) ? Double.parseDouble(dftb_SanPham.getValueAt(row, 2).toString()) : 0;
-		                String maLoaiSP = (String) dftb_SanPham.getValueAt(row, 3);
-		                double thue = (dftb_SanPham.getValueAt(row, 4) != null) ? Double.parseDouble(dftb_SanPham.getValueAt(row, 4).toString()) : 0;
-		                
+		                // Lấy các thông tin khác và hiển thị form cập nhật
 		                SanPham_entity sp = sp_dao.getThongTinSP(maSP);
-		                int soLuong = sp.getSoLuong();
-		                LocalDate ngaySX = (LocalDate) sp.getNgaySanXuat();
-		                LocalDate ngayHH = (LocalDate) sp.getNgayHetHan();
-		                double khoiLuong = sp.getKhoiLuong();
-		                String donViTinh = sp.getDonViTinh();
-		                String nhaCC = sp.getNhaCungCap();
-		                String thanhPhan = sp.getThanhPhan();
-		                String congDung = sp.getCongDung();
-		                String hinhAnh = sp.getHinhAnhSP();
-		                LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(maLoaiSP);
-		                SanPham_entity ttsp = new SanPham_entity(maSP, tenSP, ngaySX, ngayHH, khoiLuong, donViTinh, nhaCC, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong, thue);
-		                
-		                updateForm = new formCapNhatSanPham();
-		                updateForm.CN(ttsp);
-		             
-		                // Tạo JDialog chứa formCapNhatSanPham
+		                formCapNhatSanPham updateForm = new formCapNhatSanPham();
+		                updateForm.CN(sp);
 		                JDialog dialog = new JDialog();
-
-		                // Thêm formCapNhatSanPham vào dialog
 		                dialog.getContentPane().add(updateForm);
-
-		                // Đặt kích thước cho dialog (phù hợp với formCapNhatSanPham)
 		                dialog.setSize(1150, 800);
-
-		                // Căn giữa màn hình
 		                dialog.setLocationRelativeTo(null);
-
-		                // Thiết lập đóng form khi nhấn nút "X"
 		                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
-		                // Hiển thị dialog
 		                dialog.setVisible(true);
-
-		            } catch (NumberFormatException ex) {
-		                System.err.println("Lỗi định dạng số: " + ex.getMessage());
-		                JOptionPane.showMessageDialog(null, "Lỗi định dạng số. Vui lòng kiểm tra dữ liệu.");
 		            } catch (Exception ex) {
-		                System.err.println("Lỗi xảy ra: " + ex.getMessage());
-		                JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi trong quá trình cập nhật. Vui lòng thử lại.");
+		                System.err.println("Lỗi: " + ex.getMessage());
 		            }
 		        }
 		    }
@@ -544,8 +509,6 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 
 	}
 
-
-
 	// Phương thức thêm dòng vào bảng
 	public void addRowTable(SanPham_entity sp) {
 
@@ -555,6 +518,7 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 				sp_dao.themSanPham(sp);
 				
 	}
+
 
 //	public void docDuLieuVaoTable() {
 //		dftb_SanPham.setRowCount(0); // Clear the current table model

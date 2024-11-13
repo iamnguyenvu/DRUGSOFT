@@ -5,13 +5,18 @@
             <url>src/nguyenvu/utils/FilterProductSearchPanel.java</url>
             <bookmark id="1">
                 <name/>
+<<<<<<< HEAD
                 <line>109</line>
+=======
+                <line>108</line>
+>>>>>>> c6b1f164876dc3df481535944ed6652f79813b7d
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/login/Login.java</file>
             <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/DoiTra.java</file>
             <file>file:/D:/Download/PTUD/DRUGSOFT/src/dao/BanHang_DAO.java</file>
@@ -20,6 +25,18 @@
             <file>file:/D:/Download/PTUD/DRUGSOFT/src/dao/DoiTra_DAO.java</file>
             <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/GenerateCode.java</file>
             <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/BanHang.java</file>
+=======
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/GenerateCode.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/DoiTra.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/AddButtonEditor.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/dao/BanHang_DAO.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/entity/SanPham_entity.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/dao/DoiTra_DAO.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/SanPhamDoiTra.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/FilterProductSearchPanel.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/BanHang.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/QuantityCellEditor.java</file>
+>>>>>>> c6b1f164876dc3df481535944ed6652f79813b7d
         </group>
     </open-files>
 </project-private>
