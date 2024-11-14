@@ -66,7 +66,8 @@ public class DoiTra_DAO {
             ps.setString(1, maSP);
             rs = ps.executeQuery();
             if (rs.next()) {
-                return new SanPham_entity(rs.getString("maSP"), rs.getString("tenSP"), rs.getDouble("gia"));
+                return new SanPham_entity(rs.getString("maSP"), rs.getString("tenSP"), 
+                        rs.getString("donViTinh"), rs.getDouble("gia"), rs.getString("hinhAnhSP"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

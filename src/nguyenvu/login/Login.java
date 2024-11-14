@@ -25,6 +25,7 @@ public class Login extends JPanel {
     private JPasswordField txtPassword;
     private JCheckBox chRememberMe;
     private JButton cmdLogin;
+    private JButton btnForgotPassword;
 
     public Login() {
         init();
@@ -36,6 +37,7 @@ public class Login extends JPanel {
         txtPassword = new JPasswordField();
         chRememberMe = new JCheckBox("Ghi nhớ đăng nhập");
         cmdLogin = new JButton("Đăng nhập");
+        btnForgotPassword = new JButton("Quên mật khẩu");
 
         JPanel panel = new JPanel(new MigLayout("wrap,fillx,insets 35 45 30 45", "fill,250:280"));
         panel.putClientProperty(FlatClientProperties.STYLE, ""
@@ -46,6 +48,12 @@ public class Login extends JPanel {
         txtPassword.putClientProperty(FlatClientProperties.STYLE, ""
                 + "showRevealButton:true");
         cmdLogin.putClientProperty(FlatClientProperties.STYLE, ""
+                + "[light]background:darken(@background,10%);"
+                + "[dark]background:lighten(@background,10%);"
+                + "borderWidth:0;"
+                + "focusWidth:0;"
+                + "innerFocusWidth:0");
+        btnForgotPassword.putClientProperty(FlatClientProperties.STYLE, ""
                 + "[light]background:darken(@background,10%);"
                 + "[dark]background:lighten(@background,10%);"
                 + "borderWidth:0;"
@@ -69,7 +77,8 @@ public class Login extends JPanel {
         panel.add(txtUsername);
         panel.add(new JLabel("Mật khẩu"), "gapy 8");
         panel.add(txtPassword);
-        panel.add(chRememberMe, "grow 0");
+        panel.add(chRememberMe);
+        panel.add(btnForgotPassword);
         panel.add(cmdLogin, "gapy 10");
         add(panel);
 

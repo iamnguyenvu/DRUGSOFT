@@ -61,8 +61,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="txtHoaDonSearch" max="-2" attributes="0"/>
-                      <Component id="btnSearch" max="32767" attributes="0"/>
+                      <Component id="txtHoaDonSearch" max="32767" attributes="0"/>
+                      <Component id="btnSearch" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnScanQrcode" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -667,26 +667,32 @@
                     <Component class="javax.swing.JTable" name="tableExchange">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="4" rowCount="0">
+                          <Table columnCount="5" rowCount="0">
+                            <Column editable="false" title="H&#xec;nh &#x1ea3;nh" type="java.lang.Object"/>
                             <Column editable="false" title="M&#xe3; s&#x1ea3;n ph&#x1ea9;m" type="java.lang.Object"/>
                             <Column editable="false" title="T&#xea;n s&#x1ea3;n ph&#x1ea9;m" type="java.lang.Object"/>
                             <Column editable="true" title="S&#x1ed1; l&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
                             <Column editable="true" title="X&#xf3;a" type="java.lang.Object"/>
                           </Table>
                         </Property>
-                        <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="tableExchange.getColumnModel().getColumn(3).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());&#xa;tableExchange.getColumnModel().getColumn(3).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {&#xa;    @Override&#xa;    public void onDelete(int row) {&#xa;        if (row &gt;= 0) {&#xa;            ((DefaultTableModel) tableExchange.getModel()).removeRow(row);&#xa;            ((DefaultTableModel) tableExchange.getModel()).fireTableDataChanged();&#xa;            updateInfor();&#xa;        }&#xa;    }&#xa;}));&#xa;&#xa;tableExchange.getTableHeader().setDefaultRenderer(new HeaderRenderer());&#xa;tableExchange.getTableHeader().setBackground(new Color(11,101,136));&#xa;tableExchange.getTableHeader().setForeground(Color.WHITE);&#xa;tableExchange.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));&#xa;&#xa;&#xa;//model2.addTableModelListener(new TableModelListener() {&#xa;//    @Override&#xa;//    public void tableChanged(TableModelEvent e) {&#xa;//        if (e.getType() == TableModelEvent.UPDATE) {&#xa;//            int row = e.getFirstRow();&#xa;//            int column = e.getColumn();&#xa;//&#xa;//            if (column == 2) {&#xa;//                int newQuantity = (int) model2.getValueAt(row, column);&#xa;//                String maSP = (String) model2.getValueAt(row, 0);&#xa;//                &#xa;//                for (int i = 0; i &lt; model1.getRowCount(); i++) {&#xa;//                    String existingMaSP = (String) model1.getValueAt(i, 1);&#xa;//                    int availableQuantity = (int) model1.getValueAt(i, 3);&#xa;//                    if (maSP.equals(existingMaSP)) {&#xa;//                        if (newQuantity &gt; availableQuantity) {&#xa;//                            MessageAlerts.getInstance().showMessage(&quot;L&#x1ed7;i&quot;,&#xa;//                                &quot;S&#x1ed1; l&#x1b0;&#x1ee3;ng kh&#xf4;ng &#x111;&#x1b0;&#x1ee3;c l&#x1edb;n h&#x1a1;n s&#x1ed1; l&#x1b0;&#x1ee3;ng t&#x1ed1;i &#x111;a!&quot;, MessageAlerts.MessageType.ERROR);&#xa;//                            model2.setValueAt(availableQuantity, row, column);&#xa;//                        }&#xa;//                        break;&#xa;//                    }&#xa;//                }&#xa;//            }&#xa;//        }&#xa;//    }&#xa;//});">
+                        <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="tableExchange.getColumnModel().getColumn(4).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());&#xa;tableExchange.getColumnModel().getColumn(4).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {&#xa;    @Override&#xa;    public void onDelete(int row) {&#xa;        if (row &gt;= 0) {&#xa;            ((DefaultTableModel) tableExchange.getModel()).removeRow(row);&#xa;            ((DefaultTableModel) tableExchange.getModel()).fireTableDataChanged();&#xa;            updateInfor();&#xa;        }&#xa;    }&#xa;}));&#xa;&#xa;tableExchange.getTableHeader().setDefaultRenderer(new HeaderRenderer());&#xa;tableExchange.getTableHeader().setBackground(new Color(11,101,136));&#xa;tableExchange.getTableHeader().setForeground(Color.WHITE);&#xa;tableExchange.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));&#xa;&#xa;tableExchange.getColumnModel().getColumn(3).setCellEditor(new DoiTraQuantityCellEditor(this, table, tableExchange));&#xa;tableExchange.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());&#xa;&#xa;DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();&#xa;centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);&#xa;tableExchange.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);">
                           <TableColumnModel selectionModel="0">
                             <Column maxWidth="-1" minWidth="-1" prefWidth="100" resizable="false">
                               <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="200" resizable="false">
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="150" resizable="false">
                               <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="80" resizable="false">
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="300" resizable="false">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="40" resizable="false">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -699,8 +705,9 @@
                           </TableColumnModel>
                         </Property>
                         <Property name="rowHeight" type="int" value="60"/>
+                        <Property name="rowSelectionAllowed" type="boolean" value="false"/>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                          <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                          <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                         </Property>
                       </Properties>
                     </Component>
@@ -733,19 +740,19 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="7" rowCount="0">
-                        <Column editable="false" title="M&#xe3; h&#xf3;a &#x111;&#x1a1;n" type="java.lang.String"/>
-                        <Column editable="false" title="M&#xe3; s&#x1ea3;n ph&#x1ea9;m" type="java.lang.String"/>
-                        <Column editable="false" title="T&#xea;n s&#x1ea3;n ph&#x1ea9;m" type="java.lang.String"/>
+                        <Column editable="false" title="H&#xcc;nh &#x1ea3;nh" type="java.lang.Object"/>
+                        <Column editable="false" title="M&#xe3; s&#x1ea3;n ph&#x1ea9;m" type="java.lang.Object"/>
+                        <Column editable="false" title="T&#xea;n s&#x1ea3;n ph&#x1ea9;m" type="java.lang.Object"/>
                         <Column editable="false" title="S&#x1ed1; l&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
                         <Column editable="false" title="&#x110;&#x1a1;n gi&#xe1;" type="java.lang.Double"/>
                         <Column editable="false" title="Th&#xe0;nh ti&#x1ec1;n" type="java.lang.Double"/>
-                        <Column editable="true" title="Ch&#x1ecd;n &#x111;&#x1ed5;i tr&#x1ea3;" type="java.lang.String"/>
+                        <Column editable="true" title="Ch&#x1ecd;n &#x111;&#x1ed5;i tr&#x1ea3;" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="cellSelectionEnabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="false" type="code"/>
                     </Property>
-                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="//table.setTableHeader(null);&#xa;DefaultTableModel model1 = (DefaultTableModel) table.getModel();&#xa;DefaultTableModel model2 = (DefaultTableModel) tableExchange.getModel();&#xa;&#xa;table.getColumnModel().getColumn(6).setCellEditor(new AddButtonEditor(table, model1, model2, this));&#xa;table.getColumnModel().getColumn(6).setCellRenderer(new AddButtonRenderer());&#xa;table.getTableHeader().setDefaultRenderer(new HeaderRenderer());&#xa;table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));&#xa;table.getTableHeader().setBackground(new Color(11,101,136));&#xa;table.getTableHeader().setForeground(Color.WHITE);">
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="//table.setTableHeader(null);&#xa;DefaultTableModel model1 = (DefaultTableModel) table.getModel();&#xa;DefaultTableModel model2 = (DefaultTableModel) tableExchange.getModel();&#xa;&#xa;table.getColumnModel().getColumn(6).setCellEditor(new AddButtonEditor(table, model1, model2, this));&#xa;table.getColumnModel().getColumn(6).setCellRenderer(new AddButtonRenderer());&#xa;table.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());&#xa;&#xa;table.getTableHeader().setDefaultRenderer(new HeaderRenderer());&#xa;table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));&#xa;table.getTableHeader().setBackground(new Color(11,101,136));&#xa;table.getTableHeader().setForeground(Color.WHITE);&#xa;&#xa;table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);">
                       <TableColumnModel selectionModel="0">
                         <Column maxWidth="-1" minWidth="-1" prefWidth="100" resizable="false">
                           <Title/>

@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Beans/Customizer.java to edit this template
  */
-package gui;
+package gui.components;
 
 import entity.DonTam_entity;
+import gui.BanHang;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

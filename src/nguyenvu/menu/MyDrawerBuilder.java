@@ -19,6 +19,7 @@ import gui.SanPham;
 import gui.SanPhamDoiTra;
 import gui.ThongKeDoanhThu_GUI;
 import gui.ThongKeSanPham_GUI;
+import gui.TrangChu;
 import nguyenvu.model.ModelUser;
 import raven.drawer.component.DrawerPanel;
 import raven.drawer.component.SimpleDrawerBuilder;
@@ -50,9 +51,11 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     private DoiTra doiTra;
     private DonDoiTra hoaDonDoiTra;
     private SanPhamDoiTra sanPhamDoiTra;
+    private TrangChu trangChu;
 
     public void setUser(ModelUser user) {
         this.user = user;
+        trangChu = new TrangChu(user);
         banHang = new BanHang(user);
         doiTra = new DoiTra(user);
         hoaDonDoiTra = new DonDoiTra();
@@ -233,7 +236,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             public void selected(MenuAction action, int[] index) {
                 if (index.length == 1) {
                     if (index[0] == 0) {
-                    	FormManager.showForm(new gui.ManHinhNen());
+                    	FormManager.showForm(trangChu);
                     }
                     
                     if (index[0] == 1) {

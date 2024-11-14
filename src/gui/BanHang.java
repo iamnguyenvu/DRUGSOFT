@@ -4,21 +4,14 @@
  */
 package gui;
 
+import gui.components.DialogTempOrderProcess;
 import nguyenvu.utils.GenerateCode;
 import bill.BillManeger;
 import bill.FieldBill;
 import bill.ParameterBill;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.formdev.flatlaf.extras.components.FlatPopupMenu;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
 import dao.BanHang_DAO;
-import dao.SanPham_DAO;
 import entity.ChiTietHoaDon;
 import entity.DonTam_entity;
 import entity.HoaDon_entity;
@@ -31,29 +24,14 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
@@ -62,18 +40,11 @@ import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import net.miginfocom.swing.MigLayout;
 import nguyenvu.components.SimpleForm;
-import nguyenvu.forms.StatisticalForm;
 import nguyenvu.menu.FormManager;
-import nguyenvu.model.ModelItemSell;
 import nguyenvu.model.ModelUser;
-import nguyenvu.utils.BarcodeGenerator;
 import nguyenvu.utils.CustomerSelectListener;
 import nguyenvu.utils.FilterProductSearchPanel;
 import nguyenvu.utils.HeaderRenderer;
@@ -82,18 +53,12 @@ import nguyenvu.utils.LayerSearchList;
 import nguyenvu.utils.ListCustomerPanel;
 import nguyenvu.utils.ListProductSearchPanel;
 import nguyenvu.utils.MoneySuggestion;
-import nguyenvu.utils.ProductSearchPanel;
 import nguyenvu.utils.ProductSelectListener;
 import nguyenvu.utils.QuantityCellEditor;
-import nguyenvu.utils.QuantityCellEvent;
 import nguyenvu.utils.QuantityCellRenderer;
 import nguyenvu.utils.RoundedTextField;
-import nguyenvu.utils.TableActionCellEditor;
-import nguyenvu.utils.TableActionEvent;
 import nguyenvu.utils.TableDeleteCellEditor;
-import nguyenvu.utils.TableDeleteCellRenderer;
 import nguyenvu.utils.TableDeleteEvent;
-import nguyenvu.utils.WindowsTabbed;
 import raven.alerts.MessageAlerts;
 
 /**
@@ -818,6 +783,14 @@ public class BanHang extends SimpleForm {
         table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));
         table.getColumnModel().getColumn(1).setCellRenderer(new ImageRenderer());
 
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
+
         javax.swing.GroupLayout pnLeftContentLayout = new javax.swing.GroupLayout(pnLeftContent);
         pnLeftContent.setLayout(pnLeftContentLayout);
         pnLeftContentLayout.setHorizontalGroup(
@@ -883,6 +856,11 @@ public class BanHang extends SimpleForm {
             return;
         }
         
+        if(kh == null) {
+            MessageAlerts.getInstance().showMessage("Lỗi", "Chưa nhập thông tin khách hàng!", MessageAlerts.MessageType.ERROR);
+            return;
+        }
+        
         if(txtTienKhachDua.getText().trim().replace(",", "").isEmpty()) {
             MessageAlerts.getInstance().showMessage("Lỗi", "Chưa nhập tiền khách đưa!", MessageAlerts.MessageType.ERROR);
             return;
@@ -933,7 +911,6 @@ public class BanHang extends SimpleForm {
             HoaDon_entity hd = new HoaDon_entity(invoiceCode, issueDate, thanhToan, discount, ptThanhToan, true, customerPhone, employeeId, "BanSanPham", ghiChu);
             if(!dao.createHD(hd)) {
                 MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);
-                refresh();
                 return;
             } else {
                 for (int i = 0; i < table.getRowCount(); ++i) {
