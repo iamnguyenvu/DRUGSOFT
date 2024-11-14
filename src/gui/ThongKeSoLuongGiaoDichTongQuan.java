@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.BorderLayout;
@@ -28,6 +29,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -102,6 +104,8 @@ public class ThongKeSoLuongGiaoDichTongQuan extends SimpleForm{
         panel_1.add(lblNewLabel_2);
         
         dcNgayBatDau = new JDateChooser();
+        dcNgayBatDau.setDateFormatString("dd-MM-yyyy");
+        dcNgayBatDau.setBackground(new Color(255, 255, 255));
         dcNgayBatDau.setBounds(227, 72, 296, 34);
         panel_1.add(dcNgayBatDau);
         
@@ -112,8 +116,20 @@ public class ThongKeSoLuongGiaoDichTongQuan extends SimpleForm{
         lblNewLabel_2_1.setBounds(549, 72, 100, 34);
         panel_1.add(lblNewLabel_2_1);
         
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+        
         dcNgayKetThuc = new JDateChooser();
+        dcNgayKetThuc.setDateFormatString("dd-MM-yyyy");
+        dcNgayKetThuc.setForeground(new Color(0, 0, 0));
+        dcNgayKetThuc.setBackground(new Color(255, 255, 255));
         dcNgayKetThuc.setBounds(659, 72, 296, 34);
+        dcNgayBatDau.setBackground(new Color(255, 255, 255));
+        dcNgayBatDau.getDateEditor().getUiComponent().setBackground(new Color(255, 255, 255));
+        dcNgayKetThuc.setBackground(new Color(255, 255, 255));
+        dcNgayKetThuc.getDateEditor().getUiComponent().setBackground(new Color(255, 255, 255));
+        
+        dcNgayBatDau.setBorder(border);
+        dcNgayKetThuc.setBorder(border);
         panel_1.add(dcNgayKetThuc);
         btnTruyVan = new javax.swing.JButton();
         btnTruyVan.setForeground(new Color(0, 0, 0));

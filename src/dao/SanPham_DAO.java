@@ -200,7 +200,7 @@ public class SanPham_DAO {
 	public boolean capNhatSanPham(SanPham_entity sp) {
 	    Connection con = connectDB.accessDataBase();
 
-	    String sql = "UPDATE SanPham SET tenSP = ?, soLuong = ?, ngaySanXuat = ?, ngayHetHan = ?, khoiLuong = ?, donViTinh = ?, nhaCungCap = ?, gia = ?, thanhPhan = ?, congDung = ?, hinhAnhSP = ?, maLoaiSP = ? WHERE maSP = ?";
+	    String sql = "UPDATE SanPham SET tenSP = ?, soLuong = ?, ngaySanXuat = ?, ngayHetHan = ?, khoiLuong = ?, donViTinh = ?, nhaCungCap = ?, gia = ?, thanhPhan = ?, congDung = ?, hinhAnhSP = ?, maLoaiSP = ?,thue = ? WHERE maSP = ?";
 	    
 	    try (PreparedStatement stmt = con.prepareStatement(sql)) {
 	        stmt.setString(1, sp.getTenSP());
@@ -218,7 +218,8 @@ public class SanPham_DAO {
 	        stmt.setString(10, sp.getCongDung());
 	        stmt.setString(11, sp.getHinhAnhSP());
 	        stmt.setString(12, sp.getLoaiSanPham().getMaLoaiSP());
-	        stmt.setString(13, sp.getMaSP()); // Điều kiện WHERE
+	        stmt.setDouble(13, sp.getThue());
+	        stmt.setString(14, sp.getMaSP()); // Điều kiện WHERE
 
 	        int rowUpdated = stmt.executeUpdate();
 	        return rowUpdated > 0; // Trả về true nếu có dòng được cập nhật
@@ -238,18 +239,38 @@ public class SanPham_DAO {
 
 
     // Get product price by maSP
-    public double getGia(String maSP) {
+    public SanPham_entity getThongTinSP(String maSP) {
         Connection con = connectDB.accessDataBase();
-        if (con == null) return 0;
+        if (con == null) return null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        double gia = 0;
+        SanPham_entity sp = null;
         try {
-            ps = con.prepareStatement("SELECT gia FROM SanPham WHERE maSP = ?");
+            ps = con.prepareStatement("SELECT * FROM SanPham WHERE maSP = ?");
             ps.setString(1, maSP);
             rs = ps.executeQuery();
             if (rs.next()) {
-                gia = rs.getDouble("gia");
+            	String masp = rs.getString("maSP");
+	            String tensp = rs.getString("tenSP");
+	            int soLuong = rs.getInt("soLuong");
+	            Date ngaySX = rs.getDate("ngaySanXuat");
+	            Date ngayHH = rs.getDate("ngayHetHan");
+
+	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null;
+	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null;
+
+	            double khoiLuong = rs.getDouble("khoiLuong");
+	            String donViTinh = rs.getString("donViTinh");
+	            String Nhacc = rs.getString("nhaCungCap");
+	            double gia = rs.getDouble("gia");
+	            String congDung = rs.getString("congDung");
+	            String thanhPhan = rs.getString("thanhPhan");
+	            String hinhAnhsp = rs.getString("hinhAnhSP");
+	            String maLoaiSP = rs.getString("maLoaiSP");
+	            double thue = rs.getDouble("thue");
+	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
+
+	            sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -262,7 +283,7 @@ public class SanPham_DAO {
                 e.printStackTrace();
             }
         }
-        return gia;
+        return sp;
     }
 
     // Get product supplier by maSP

@@ -7,6 +7,7 @@ package gui;
 import gui.components.DialogTempOrderProcess;
 import nguyenvu.utils.GenerateCode;
 import bill.BillManeger;
+
 import bill.FieldBill;
 import bill.ParameterBill;
 import com.formdev.flatlaf.FlatClientProperties;
@@ -46,7 +47,9 @@ import nguyenvu.components.SimpleForm;
 import nguyenvu.menu.FormManager;
 import nguyenvu.model.ModelUser;
 import nguyenvu.utils.CustomerSelectListener;
+
 import nguyenvu.utils.FilterProductSearchPanel;
+
 import nguyenvu.utils.HeaderRenderer;
 import nguyenvu.utils.ImageRenderer;
 import nguyenvu.utils.LayerSearchList;
@@ -833,6 +836,7 @@ public class BanHang extends SimpleForm {
                 .addComponent(pnRightContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(pnContentLayout.createSequentialGroup()
+                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE)
                 .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -1054,6 +1058,7 @@ public class BanHang extends SimpleForm {
         // TODO add your handling code here:
         FormManager.showForm(new SanPham());
     }//GEN-LAST:event_jButton8ActionPerformed
+
 
     private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
         // TODO add your handling code here:

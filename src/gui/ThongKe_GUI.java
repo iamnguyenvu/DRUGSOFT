@@ -64,6 +64,9 @@ public class ThongKe_GUI extends SimpleForm {
 		panel_1.add(lblNewLabel_2);
 		
 		JDateChooser dcNgayBatDau = new JDateChooser();
+		dcNgayBatDau.setDateFormatString("dd-MM-yyyy");
+		dcNgayBatDau.setForeground(new Color(0, 0, 0));
+		dcNgayBatDau.setBackground(new Color(255, 255, 255));
 		dcNgayBatDau.setBounds(120, 72, 196, 34);
 		panel_1.add(dcNgayBatDau);
 		
@@ -73,6 +76,8 @@ public class ThongKe_GUI extends SimpleForm {
 		panel_1.add(lblNewLabel_2_1);
 		
 		JDateChooser dcNgayKetThuc = new JDateChooser();
+		dcNgayKetThuc.setDateFormatString("dd-MM-yyyy");
+		dcNgayKetThuc.setBackground(new Color(255, 255, 255));
 		dcNgayKetThuc.setBounds(505, 72, 196, 34);
 		panel_1.add(dcNgayKetThuc);
 		

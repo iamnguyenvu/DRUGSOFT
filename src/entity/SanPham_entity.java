@@ -31,7 +31,6 @@ public class SanPham_entity {
 		this.thue = thue;
 	}
 
-
 	public SanPham_entity(String maSP, String tenSP, LocalDate ngaySanXuat, LocalDate ngayHetHan, double khoiLuong,
 			String donViTinh, String nhaCungCap, double gia, String thanhPhan, String congDung, String hinhAnhSP,
 			LoaiSanPham_entity loaiSanPham, int soLuong, double thue) {

@@ -503,6 +503,7 @@ public class KhachHang_GUI extends SimpleForm {
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
             int selectedRow = tbKhachHang.getSelectedRow();  // Lấy dòng được chọn
+            System.out.println(selectedRow);
             if (selectedRow >= 0) {
                 // Loại bỏ khoảng trắng ở đầu và cuối của các chuỗi
                 String tenKH = tfHoTenKhChinhSua.getText().trim();

@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.JPanel;
 import nguyenvu.components.SimpleForm;
+import nguyenvu.utils.RoundedPanel;
+
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -38,17 +40,17 @@ public class ThongKeDoanhThu_GUI extends SimpleForm {
         pnContent.setLayout(new BorderLayout(0, 0));
         
         
-        JPanel panel = new JPanel();
+        RoundedPanel panel = new RoundedPanel(50);
         panel.setLayout(null);
         panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        panel.setBackground(Color.WHITE);
+        panel.setBackground(new Color(11,101,136));
         panel.setBounds(10, 10, 1490, 119);
         pnCenter.add(panel);
         
-        JPanel panel_2 = new JPanel();
+        RoundedPanel panel_2 = new RoundedPanel(50);
         panel_2.setLayout(null);
         panel_2.setBorder(null);
-        panel_2.setBackground(Color.WHITE);
+        panel_2.setBackground(new Color(11,101,136));
         panel_2.setBounds(258, 24, 1212, 69);
         panel.add(panel_2);
         
@@ -81,7 +83,7 @@ public class ThongKeDoanhThu_GUI extends SimpleForm {
         panel_2.add(btnSLDDTQ);
         
         JLabel lblNewLabel = new JLabel("Thống Kê Doanh Thu");
-        lblNewLabel.setForeground(Color.BLACK);
+        lblNewLabel.setForeground(new Color(255, 255, 255));
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 20));
         lblNewLabel.setBackground(Color.WHITE);
         lblNewLabel.setBounds(10, 24, 215, 69);

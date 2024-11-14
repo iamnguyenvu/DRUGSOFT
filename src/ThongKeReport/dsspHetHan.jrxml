@@ -1,5 +1,4 @@
 <!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
-<jasperReport name="dsspHetHan" language="java" columnCount="1" pageWidth="1109" pageHeight="612" columnWidth="1069" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="673f36de-8863-47d2-9f82-7acc49e4e87e">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
