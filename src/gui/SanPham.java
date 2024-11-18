@@ -225,7 +225,7 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 		dftb_SanPham = new DefaultTableModel(columnNames, 0); // columnNames là mảng chứa tên cột
 		tb_SanPham = new JTable(dftb_SanPham);
 		tb_SanPham.setForeground(new Color(0, 0, 0));
-		tb_SanPham.setFont(new Font("Arial", Font.PLAIN, 12));
+		tb_SanPham.setFont(new Font("Arial", Font.PLAIN, 13));
 		tb_SanPham.setModel(dftb_SanPham);
 		tb_SanPham.addMouseListener(new MouseAdapter() {
 		    @Override

@@ -54,6 +54,10 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblWidth;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTblWidth;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -84,6 +88,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import org.apache.poi.xwpf.usermodel.TableRowAlign;
 
 /**
  *
@@ -286,173 +291,169 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
 		}
 		
 	}
-	// Hàm để xuất dữ liệu từ JTable ra file Excel
-	private void xuatBaoCaoExcel() {
-	    JFileChooser fileChooser = new JFileChooser();
-	    fileChooser.setDialogTitle("Lưu file báo cáo");
-	    fileChooser.setSelectedFile(new File("BaoCaoSanPhamHetHan.xlsx"));
+        public void xuatBaoCaoRaWord() {
+    XWPFDocument document = new XWPFDocument();
 
-	    int userSelection = fileChooser.showSaveDialog(this);
-	    if (userSelection == JFileChooser.APPROVE_OPTION) {
-	        File fileToSave = fileChooser.getSelectedFile();
-	        
-	        try (XSSFWorkbook workbook = new XSSFWorkbook()) {
-	            XSSFSheet sheet = workbook.createSheet("Danh sách sản phẩm hết hạn");
-	            XSSFRow headerRow = sheet.createRow(0);
+    // Tạo tiêu đề "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
+    XWPFParagraph title1 = document.createParagraph();
+    title1.setAlignment(ParagraphAlignment.CENTER); // Căn giữa
+    XWPFRun title1Run = title1.createRun();
+    title1Run.setBold(true);
+    title1Run.setFontSize(16);
+    title1Run.setText("CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM");
 
-	            // Tạo header row từ tên cột của bảng
-	            for (int i = 0; i < dftb_SanPham.getColumnCount(); i++) {
-	                Cell cell = headerRow.createCell(i);
-	                cell.setCellValue(dftb_SanPham.getColumnName(i));
-	            }
+    // Tạo tiêu đề "Độc Lập - Tự Do - Hạnh Phúc"
+    XWPFParagraph title2 = document.createParagraph();
+    title2.setAlignment(ParagraphAlignment.CENTER); // Căn giữa
+    XWPFRun title2Run = title2.createRun();
+    title2Run.setBold(true);
+    title2Run.setFontSize(16);
+    title2Run.setText("Độc Lập - Tự Do - Hạnh Phúc");
+    title2Run.addBreak(); // Thêm dòng trống
+    title2Run.setText("-----------------------");
+    title2Run.addBreak(); // Thêm dòng trống
 
-	            // Ghi dữ liệu từ bảng vào file Excel
-	            for (int row = 0; row < dftb_SanPham.getRowCount(); row++) {
-	                XSSFRow excelRow = sheet.createRow(row + 1);
-	                for (int col = 0; col < dftb_SanPham.getColumnCount(); col++) {
-	                    Object cellValue = dftb_SanPham.getValueAt(row, col);
-	                    Cell cell = excelRow.createCell(col);
-	                    cell.setCellValue(cellValue != null ? cellValue.toString() : "");
-	                }
-	            }
+    // Tạo phần "Ngày lập báo cáo" ngay sau "Độc Lập - Tự Do - Hạnh Phúc"
+    XWPFParagraph dateParagraph = document.createParagraph();
+    dateParagraph.setAlignment(ParagraphAlignment.RIGHT); // Căn phải
+    XWPFRun dateRun = dateParagraph.createRun();
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    dateRun.setText("Ngày lập báo cáo: " + sdf.format(new Date()));
+    dateRun.setFontSize(12);
+    dateRun.addBreak(); // Thêm dòng trống
 
-	            // Ghi file ra ổ đĩa
-	            try (FileOutputStream fos = new FileOutputStream(fileToSave)) {
-	                workbook.write(fos);
-	                JOptionPane.showMessageDialog(this, "Xuất báo cáo thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-	            } catch (IOException e) {
-	                JOptionPane.showMessageDialog(this, "Lỗi ghi file: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-	            }
+    // Tạo tiêu đề "Hiệu Thuốc Bán Lẻ An Tâm"
+    XWPFParagraph pharmacyName = document.createParagraph();
+    pharmacyName.setAlignment(ParagraphAlignment.CENTER); // Căn giữa
+    XWPFRun pharmacyRun = pharmacyName.createRun();
+    pharmacyRun.setBold(true);
+    pharmacyRun.setFontSize(16);
+    pharmacyRun.setText("Hiệu Thuốc Bán Lẻ An Tâm");
 
-	        } catch (IOException e) {
-	            JOptionPane.showMessageDialog(this, "Lỗi khi tạo file Excel: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-	        }
-	    }
-	}
+    // Lấy lựa chọn từ ComboBox và đặt tiêu đề báo cáo
+    String selectedItem = cb_sp.getSelectedItem().toString();
+    XWPFParagraph reportTitle = document.createParagraph();
+    reportTitle.setAlignment(ParagraphAlignment.CENTER); // Căn giữa
+    XWPFRun reportRun = reportTitle.createRun();
+    if (selectedItem.equals("Sản Phẩm Sắp Hết Hạn")) {
+        reportRun.setText("Báo Cáo Sản Phẩm Sắp Hết Hạn");
+    } else if (selectedItem.equals("Sản Phẩm Đã Hết Hạn")) {
+        reportRun.setText("Báo Cáo Sản Phẩm Đã Hết Hạn");
+    }
+    reportRun.setFontSize(16);
+    reportRun.setBold(true);
+    reportRun.addBreak(); // Thêm dòng trống
 
-	public void xuatBaoCaoRaWord() {
-	    XWPFDocument document = new XWPFDocument();
-	    
-	    // Tạo tiêu đề báo cáo
-	    XWPFParagraph title = document.createParagraph();
-	    title.setAlignment(ParagraphAlignment.CENTER);
-	    XWPFRun titleRun = title.createRun();
-	    titleRun.setText("CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM");
-	    titleRun.addBreak();
-	    titleRun.setText("Độc Lập - Tự Do - Hạnh Phúc");
-	    titleRun.addBreak();
-	    titleRun.addBreak();
-	    titleRun.setText("Hiệu Thuốc Bán Lẻ An Tâm");
-	    titleRun.addBreak();
-	    titleRun.addBreak();
-	    if (cb_sp.getSelectedItem().equals("Sản Phẩm Sắp Hết Hạn")) {
-	    	titleRun.setText("Báo Cáo Sản Phẩm Sắp Hết Hạn");
-        } else if (cb_sp.getSelectedItem().equals("Sản Phẩm Đã Hết Hạn")) {
-        	titleRun.setText("Báo Cáo Sản Phẩm Đã Hết Hạn");
+    // Thêm phần "Kính Gửi" và các thông tin khác
+    XWPFParagraph content = document.createParagraph();
+    content.setAlignment(ParagraphAlignment.LEFT);
+    XWPFRun contentRun = content.createRun();
+    contentRun.setFontSize(12);
+    contentRun.setText("Kính Gửi:");
+    contentRun.addBreak();
+    contentRun.addBreak();
+    contentRun.setText("Họ Tên Nhân Viên:");
+    contentRun.addBreak();
+    contentRun.addBreak();
+    contentRun.setText("Lý Do: Báo cáo danh sách sản phẩm " + (selectedItem.equals("Sản Phẩm Sắp Hết Hạn") ? "sắp hết hạn" : "đã hết hạn"));
+    contentRun.addBreak();
+    contentRun.addBreak();
+    contentRun.setText("Danh Sách Sản Phẩm:");
+    contentRun.addBreak();
+    contentRun.addBreak();
+    contentRun.addBreak();
+
+    // Tạo bảng trong Word
+    XWPFTable table = document.createTable();
+
+    // Căn bảng ra chiếm hết chiều rộng
+    table.setTableAlignment(TableRowAlign.CENTER); // Căn giữa cho bảng
+
+    // Thiết lập độ rộng bảng chiếm hết trang
+    CTTblWidth tblWidth = table.getCTTbl().addNewTblPr().addNewTblW();
+    tblWidth.setW(BigInteger.valueOf(11000));  // 10000 tương ứng với khoảng 115% chiều rộng trang
+
+    // Thêm hàng tiêu đề cho bảng
+    XWPFTableRow headerRow = table.getRow(0);
+    headerRow.getCell(0).setText("STT");
+    headerRow.addNewTableCell().setText("Mã Sản Phẩm");
+    headerRow.addNewTableCell().setText("Tên Sản Phẩm");
+    headerRow.addNewTableCell().setText("Số Lượng");
+    headerRow.addNewTableCell().setText("Ngày Sản Xuất");
+    headerRow.addNewTableCell().setText("Ngày Hết Hạn");
+    headerRow.addNewTableCell().setText("Khối Lượng");
+    headerRow.addNewTableCell().setText("Giá");
+    headerRow.addNewTableCell().setText("Loại SP");
+    headerRow.addNewTableCell().setText("Thuế");
+
+    // Cấu hình chiều rộng cho từng cột
+    headerRow.getCell(0).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(1000)); // Cột STT
+    headerRow.getCell(1).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(2000)); // Cột Mã Sản Phẩm
+    headerRow.getCell(2).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(2500)); // Cột Tên Sản Phẩm
+    headerRow.getCell(3).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(1500)); // Cột Số Lượng
+    headerRow.getCell(4).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(2000)); // Cột Ngày Sản Xuất
+    headerRow.getCell(5).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(2000)); // Cột Ngày Hết Hạn
+    headerRow.getCell(6).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(1500)); // Cột Khối Lượng
+    headerRow.getCell(7).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(2000)); // Cột Giá
+    headerRow.getCell(8).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(1500)); // Cột Loại SP
+    headerRow.getCell(9).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(1500)); // Cột Thuế
+
+    // Thêm dữ liệu sản phẩm vào bảng
+    for (int i = 0; i < tb_SanPham.getRowCount(); i++) {
+        XWPFTableRow row = table.createRow();
+        row.getCell(0).setText(String.valueOf(i + 1)); // Thêm STT (bắt đầu từ 1)
+        row.getCell(1).setText(tb_SanPham.getValueAt(i, 0).toString());
+        row.getCell(2).setText(tb_SanPham.getValueAt(i, 1).toString());
+        row.getCell(3).setText(tb_SanPham.getValueAt(i, 2).toString());
+        row.getCell(4).setText(tb_SanPham.getValueAt(i, 3).toString());
+        row.getCell(5).setText(tb_SanPham.getValueAt(i, 4).toString());
+        row.getCell(6).setText(tb_SanPham.getValueAt(i, 5).toString());
+        row.getCell(7).setText(tb_SanPham.getValueAt(i, 8).toString());
+        row.getCell(8).setText(tb_SanPham.getValueAt(i, 12).toString());
+        row.getCell(9).setText(tb_SanPham.getValueAt(i, 13).toString());
+    }
+    
+//   Thêm phần Ký Tên của Nhân Viên và Quản Lý
+    XWPFParagraph signParagraph = document.createParagraph();
+    signParagraph.setAlignment(ParagraphAlignment.LEFT); // Căn trái
+    XWPFRun signRun = signParagraph.createRun();
+    signRun.setFontSize(12);
+    signRun.addBreak();
+    signRun.addBreak();
+    signRun.addBreak();
+    signRun.setText("Nhân viên:");
+    signRun.addBreak();
+    signRun.setText("(Ký, ghi rõ họ tên)");
+
+    // Thêm phần Ký Tên của Quản Lý
+    XWPFParagraph managerSignParagraph = document.createParagraph();
+    managerSignParagraph.setAlignment(ParagraphAlignment.RIGHT); // Căn trái
+    XWPFRun managerSignRun = managerSignParagraph.createRun();
+    managerSignRun.setFontSize(12);
+    managerSignRun.setText("Quản Lý:");
+    managerSignRun.addBreak();
+    managerSignRun.setText("(Ký, ghi rõ họ tên)");
+
+    // Tạo hộp thoại lưu file
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Chọn vị trí lưu báo cáo");
+    if (cb_sp.getSelectedItem().equals("Sản Phẩm Sắp Hết Hạn")) {
+        fileChooser.setSelectedFile(new File("BaoCaoSanPhamSapHetHan.docx"));
+    } else if (cb_sp.getSelectedItem().equals("Sản Phẩm Đã Hết Hạn")) {
+        fileChooser.setSelectedFile(new File("BaoCaoSanPhamDaHetHan.docx"));
+    }
+
+    // Chọn vị trí lưu báo cáo
+    int userSelection = fileChooser.showSaveDialog(this);
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+        try (FileOutputStream out = new FileOutputStream(fileChooser.getSelectedFile())) {
+            document.write(out);
+            JOptionPane.showMessageDialog(this, "Xuất báo cáo thành công!");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi xuất báo cáo!");
         }
-	    
-	    titleRun.addBreak();
-	    titleRun.setBold(true);
-	    titleRun.setFontSize(16);
-
-	    // Thêm thông tin phụ
-	    XWPFParagraph subTitle = document.createParagraph();
-	    subTitle.setAlignment(ParagraphAlignment.RIGHT); // Căn phải đoạn văn bản
-	    XWPFRun subTitleRun = subTitle.createRun();
-	    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-	    subTitleRun.setText("Ngày lập báo cáo: " + sdf.format(new Date()));
-	    subTitleRun.setFontSize(12);
-
-	    // Thêm phần "Kính Gửi" và thông tin khác với căn trái và không in đậm
-	    XWPFParagraph content = document.createParagraph();
-	    content.setAlignment(ParagraphAlignment.LEFT); // Căn trái đoạn văn bản
-	    XWPFRun contentRun = content.createRun();
-	    contentRun.setText("Kính Gửi:");
-	    contentRun.addBreak();
-	    contentRun.setText("Họ Tên Nhân Viên:");
-	    contentRun.addBreak();
-	    if (cb_sp.getSelectedItem().equals("Sản Phẩm Sắp Hết Hạn")) {
-	    	contentRun.setText("Lý Do: Báo cáo danh sách sản phẩm sắp hết hạn");
-        } else if (cb_sp.getSelectedItem().equals("Sản Phẩm Đã Hết Hạn")) {
-        	contentRun.setText("Lý Do: Báo cáo danh sách sản phẩm đã hết hạn");
-        }
-	    contentRun.addBreak();
-	    contentRun.setText("Danh Sách Sản Phẩm:");
-	    contentRun.setFontSize(12); // Không in đậm, giữ font chữ nhỏ hơn
-	
-
-	    // Tạo bảng trong Word
-	    XWPFTable table = document.createTable();
-
-	 // Thêm hàng tiêu đề cho bảng
-	    XWPFTableRow headerRow = table.getRow(0);
-	    headerRow.getCell(0).setText("STT"); // Thêm cột STT
-	    headerRow.addNewTableCell().setText("Mã Sản Phẩm");
-	    headerRow.addNewTableCell().setText("Tên Sản Phẩm");
-	    headerRow.addNewTableCell().setText("Số Lượng");
-	    headerRow.addNewTableCell().setText("Ngày Sản Xuất");
-	    headerRow.addNewTableCell().setText("Ngày Hết Hạn");
-	    headerRow.addNewTableCell().setText("Khối Lượng");
-	    headerRow.addNewTableCell().setText("Đơn Vị Tính");
-	    headerRow.addNewTableCell().setText("Nhà Cung Cấp");
-	    headerRow.addNewTableCell().setText("Giá");
-	    headerRow.addNewTableCell().setText("Loại SP");
-	    headerRow.addNewTableCell().setText("Thuế");
-
-	    headerRow.getCell(0).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(3000)); 
-	    headerRow.getCell(1).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(5000));
-	    headerRow.getCell(2).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000)); 
-	    headerRow.getCell(3).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(5000));
-	    headerRow.getCell(4).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000)); 
-	    headerRow.getCell(5).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000));
-	    headerRow.getCell(6).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000)); 
-	    headerRow.getCell(7).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(700));
-	    headerRow.getCell(8).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000)); 
-	    headerRow.getCell(9).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000));
-	    headerRow.getCell(10).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000));
-	    headerRow.getCell(11).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000));
-	    // Thêm dữ liệu sản phẩm vào bảng
-	    for (int i = 0; i < tb_SanPham.getRowCount(); i++) {
-	        XWPFTableRow row = table.createRow();
-	        row.getCell(0).setText(String.valueOf(i + 1)); // Thêm STT (bắt đầu từ 1)
-	        row.getCell(1).setText(tb_SanPham.getValueAt(i, 0).toString());
-	        row.getCell(2).setText(tb_SanPham.getValueAt(i, 1).toString());
-	        row.getCell(3).setText(tb_SanPham.getValueAt(i, 2).toString());
-	        row.getCell(4).setText(tb_SanPham.getValueAt(i, 3).toString());
-	        row.getCell(5).setText(tb_SanPham.getValueAt(i, 4).toString());
-	        row.getCell(6).setText(tb_SanPham.getValueAt(i, 5).toString());
-	        row.getCell(7).setText(tb_SanPham.getValueAt(i, 6).toString());
-	        row.getCell(8).setText(tb_SanPham.getValueAt(i, 7).toString());
-	        row.getCell(9).setText(tb_SanPham.getValueAt(i, 8).toString());
-	        row.getCell(10).setText(tb_SanPham.getValueAt(i, 12).toString());
-	        row.getCell(11).setText(tb_SanPham.getValueAt(i, 13).toString());
-	    }
-
-
-	    // Tạo hộp thoại lưu file
-	    JFileChooser fileChooser = new JFileChooser();
-	    fileChooser.setDialogTitle("Chọn vị trí lưu báo cáo");
-	    if (cb_sp.getSelectedItem().equals("Sản Phẩm Sắp Hết Hạn")) {
-	    	fileChooser.setSelectedFile(new File("BaoCaoSanPhamSapHetHan.docx"));
-        } else if (cb_sp.getSelectedItem().equals("Sản Phẩm Đã Hết Hạn")) {
-        	fileChooser.setSelectedFile(new File("BaoCaoSanPhamDaHetHan.docx"));
-        }
-	    
-	    int userSelection = fileChooser.showSaveDialog(null);
-
-	    if (userSelection == JFileChooser.APPROVE_OPTION) {
-	        File fileToSave = fileChooser.getSelectedFile();
-	        
-	        // Lưu tài liệu ra file Word
-	        try (FileOutputStream out = new FileOutputStream(fileToSave)) {
-	            document.write(out);
-	            JOptionPane.showMessageDialog(null, "Báo cáo đã được xuất thành công!");
-	        } catch (IOException e) {
-	            JOptionPane.showMessageDialog(null, "Lỗi khi lưu báo cáo: " + e.getMessage());
-	            e.printStackTrace();
-	        }
-	    }
-	}
+    }
+}
 
 
 	@Override
