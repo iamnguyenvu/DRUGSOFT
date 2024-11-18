@@ -17,6 +17,7 @@ import dao.DangNhap_DAO;
 import net.miginfocom.swing.MigLayout;
 import nguyenvu.menu.FormManager;
 import nguyenvu.model.ModelUser;
+import nguyenvu.utils.LiveFaceDetection;
 import raven.alerts.MessageAlerts;
 
 public class Login extends JPanel {
@@ -102,6 +103,7 @@ public class Login extends JPanel {
         });
 
         cmdLogin.addActionListener((e) -> attemptLogin());
+        btnForgotPassword.addActionListener(e -> LiveFaceDetection.startDetectFace());
     }
 
     private void attemptLogin() {

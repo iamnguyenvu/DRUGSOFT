@@ -16,7 +16,6 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import nguyenvu.components.Background;
-import nguyenvu.forms.DashboardForm;
 import nguyenvu.menu.FormManager;
 import nguyenvu.model.ModelUser;
 import raven.popup.GlassPanePopup;

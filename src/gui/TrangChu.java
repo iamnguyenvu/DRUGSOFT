@@ -5,7 +5,15 @@
 package gui;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+import dao.TrangChu_DAO;
+import gui.components.LastTransactionPanel;
+import java.util.ArrayList;
+import javax.swing.JPanel;
+import net.miginfocom.swing.MigLayout;
 import nguyenvu.components.SimpleForm;
+import nguyenvu.model.ModelCard;
+import nguyenvu.model.ModelTransaction;
 import nguyenvu.model.ModelUser;
 
 /**
@@ -18,12 +26,32 @@ public class TrangChu extends SimpleForm {
     public TrangChu(ModelUser user) {
         this.user = user;
         initComponents();
+        initCardData();
+        initTransactionData();
+    }
+    
+    private void initCardData() {
+        card1.setData(new ModelCard("Sản phẩm sắp hết hàng: ", TrangChu_DAO.getListSPSapHetHang().size(), new FlatSVGIcon("gui/icon/out-of-stock.svg", 0.1f)));
+        card2.setData(new ModelCard("Sản phẩm sắp hết hạn: ", TrangChu_DAO.getListSPSapHetHan().size(), new FlatSVGIcon("gui/icon/outdate.svg", 0.4f)));
+        card3.setData(new ModelCard("Tổng doanh thu tháng: ", TrangChu_DAO.getDoanhThuThang().getDoanhThu(), new FlatSVGIcon("gui/icon/revenue.svg", 0.09f)));
+        card4.setData(new ModelCard("Số giao dịch tháng: ", TrangChu_DAO.getDoanhThuThang().getSoGiaoDich(), new FlatSVGIcon("gui/icon/transaction.svg", 0.4f)));
+    }
+    
+    private void initTransactionData() {
+        pnTransaction. setLayout(new MigLayout("wrap, fill, insets 10 10 10 10", "[center]", "[]10[]"));
+
+        ArrayList<ModelTransaction> transactions = TrangChu_DAO.getListLastTransaction();
+        for(ModelTransaction transaction : transactions) {
+            LastTransactionPanel pn = new LastTransactionPanel();
+            pn.setData(transaction);
+            pnTransaction.add(pn, "grow, w 100%");
+        }
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        pnTransaction = new javax.swing.JPanel();
         pnHeader = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         card1 = new gui.components.Card();
@@ -33,17 +61,17 @@ public class TrangChu extends SimpleForm {
 
         setPreferredSize(new java.awt.Dimension(1470, 730));
 
-        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        pnTransaction.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(11, 101, 136), 1, true), "Các hoạt động gần đây", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(11, 101, 136))); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 376, Short.MAX_VALUE)
+        javax.swing.GroupLayout pnTransactionLayout = new javax.swing.GroupLayout(pnTransaction);
+        pnTransaction.setLayout(pnTransactionLayout);
+        pnTransactionLayout.setHorizontalGroup(
+            pnTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 316, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        pnTransactionLayout.setVerticalGroup(
+            pnTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 628, Short.MAX_VALUE)
         );
 
         pnHeader.setBackground(new java.awt.Color(11, 101, 136));
@@ -69,56 +97,20 @@ public class TrangChu extends SimpleForm {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout card1Layout = new javax.swing.GroupLayout(card1);
-        card1.setLayout(card1Layout);
-        card1Layout.setHorizontalGroup(
-            card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
-        );
-        card1Layout.setVerticalGroup(
-            card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        card1.setGradientColor(new java.awt.Color(255, 102, 51));
 
-        javax.swing.GroupLayout card2Layout = new javax.swing.GroupLayout(card2);
-        card2.setLayout(card2Layout);
-        card2Layout.setHorizontalGroup(
-            card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
-        );
-        card2Layout.setVerticalGroup(
-            card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        card2.setGradientColor(new java.awt.Color(255, 51, 51));
 
-        javax.swing.GroupLayout card3Layout = new javax.swing.GroupLayout(card3);
-        card3.setLayout(card3Layout);
-        card3Layout.setHorizontalGroup(
-            card3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
-        );
-        card3Layout.setVerticalGroup(
-            card3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        card3.setGradientColor(new java.awt.Color(71, 193, 4));
 
-        javax.swing.GroupLayout card4Layout = new javax.swing.GroupLayout(card4);
-        card4.setLayout(card4Layout);
-        card4Layout.setHorizontalGroup(
-            card4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
-        );
-        card4Layout.setVerticalGroup(
-            card4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 130, Short.MAX_VALUE)
-        );
+        card4.setGradientColor(new java.awt.Color(28, 181, 224));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -130,8 +122,8 @@ public class TrangChu extends SimpleForm {
                         .addComponent(card3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(card4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(20, 20, 20)
+                        .addComponent(pnTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,18 +131,26 @@ public class TrangChu extends SimpleForm {
                 .addComponent(pnHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(card3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(card1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(card2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(card1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(card2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(card3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(card4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 656, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         pnHeader.putClientProperty(FlatClientProperties.STYLE, ""
+            + "border:0,0,0,0,$Component.borderColor,,20");
+        card1.putClientProperty(FlatClientProperties.STYLE, ""
+            + "border:0,0,0,0,$Component.borderColor,,20");
+        card2.putClientProperty(FlatClientProperties.STYLE, ""
+            + "border:0,0,0,0,$Component.borderColor,,20");
+        card3.putClientProperty(FlatClientProperties.STYLE, ""
+            + "border:0,0,0,0,$Component.borderColor,,20");
+        card4.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:0,0,0,0,$Component.borderColor,,20");
     }// </editor-fold>//GEN-END:initComponents
 
@@ -161,7 +161,7 @@ public class TrangChu extends SimpleForm {
     private gui.components.Card card3;
     private gui.components.Card card4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel pnHeader;
+    private javax.swing.JPanel pnTransaction;
     // End of variables declaration//GEN-END:variables
 }

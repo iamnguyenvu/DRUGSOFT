@@ -213,28 +213,23 @@ public class BanHang_DAO {
             stmt.setString(1, invoicePrefix + "%");
             ResultSet rs = stmt.executeQuery();
             
-            // Lấy số thứ tự hóa đơn cao nhất
             int counter = 0;
             if (rs.next()) {
                 String maxInvoiceCode = rs.getString(1);
                 if (maxInvoiceCode != null) {
-                    // Trích xuất phần số thứ tự (xxxxx) từ mã hóa đơn
-                    String counterStr = maxInvoiceCode.substring(8);  // Từ vị trí 8 trở đi là số thứ tự
+                    String counterStr = maxInvoiceCode.substring(8);
                     try {
-                        counter = Integer.parseInt(counterStr);  // Chuyển sang kiểu số nguyên
+                        counter = Integer.parseInt(counterStr);
                     } catch (NumberFormatException e) {
-                        counter = 0;  // Nếu không parse được (không có mã hóa đơn nào), thì bắt đầu từ 0
+                        counter = 0;
                     }
                 }
             }
             
-            // Tăng số thứ tự lên 1
             counter++;
             
-            // Đảm bảo số thứ tự có đủ 5 chữ số
             String counterPart = String.format("%05d", counter);
             
-            // Tạo mã hóa đơn mới
             return invoicePrefix + counterPart;
         }
     }
@@ -322,5 +317,37 @@ public class BanHang_DAO {
         }
         return null;
     }
+    
+    public boolean updateDiemThuong(String sdtKH, int suDung, int diemThuong) {
+        Connection con = connectDB.accessDataBase();
+        if (con == null) return false; 
+        PreparedStatement ps = null;
+
+        try {
+            String sql = "UPDATE KhachHang SET diemThuong = diemThuong - ? + ? WHERE sdtKH = ?";
+
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, suDung);
+            ps.setInt(2, diemThuong); 
+            ps.setString(3, sdtKH); 
+
+            int rowsAffected = ps.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false; 
+    }
+
 
 }
