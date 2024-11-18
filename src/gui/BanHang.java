@@ -6,55 +6,32 @@ package gui;
 
 import nguyenvu.utils.GenerateCode;
 import bill.BillManeger;
-
 import bill.FieldBill;
 import bill.ParameterBill;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.formdev.flatlaf.extras.components.FlatPopupMenu;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
 import dao.BanHang_DAO;
-import dao.SanPham_DAO;
 import entity.ChiTietHoaDon;
 import entity.DonTam_entity;
 import entity.HoaDon_entity;
 import entity.KhachHang_entity;
 import entity.NhanVien_entity;
 import entity.SanPham_entity;
+import gui.components.DialogTempOrderProcess;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
@@ -63,40 +40,25 @@ import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import net.miginfocom.swing.MigLayout;
 import nguyenvu.components.SimpleForm;
-import nguyenvu.forms.StatisticalForm;
 import nguyenvu.menu.FormManager;
-import nguyenvu.model.ModelItemSell;
 import nguyenvu.model.ModelUser;
-import nguyenvu.utils.BarcodeGenerator;
 import nguyenvu.utils.CustomerSelectListener;
-
 import nguyenvu.utils.FilterProductSearchPanel;
-
 import nguyenvu.utils.HeaderRenderer;
 import nguyenvu.utils.ImageRenderer;
 import nguyenvu.utils.LayerSearchList;
 import nguyenvu.utils.ListCustomerPanel;
 import nguyenvu.utils.ListProductSearchPanel;
 import nguyenvu.utils.MoneySuggestion;
-import nguyenvu.utils.ProductSearchPanel;
 import nguyenvu.utils.ProductSelectListener;
 import nguyenvu.utils.QuantityCellEditor;
-import nguyenvu.utils.QuantityCellEvent;
 import nguyenvu.utils.QuantityCellRenderer;
 import nguyenvu.utils.RoundedTextField;
-import nguyenvu.utils.TableActionCellEditor;
-import nguyenvu.utils.TableActionEvent;
 import nguyenvu.utils.TableDeleteCellEditor;
-import nguyenvu.utils.TableDeleteCellRenderer;
 import nguyenvu.utils.TableDeleteEvent;
-import nguyenvu.utils.WindowsTabbed;
 import raven.alerts.MessageAlerts;
 
 /**
@@ -160,7 +122,8 @@ public class BanHang extends SimpleForm {
                 kh = customer;
                 txtCustomer.setText(kh.getSdtKH() + " - " + kh.getTenKH());
                 menuCustomer.setVisible(false);
-                updateLblSoLuongSP();
+                if(table.getRowCount() > 0)
+                    updateLblSoLuongSP();
                 cbbPhuongThucThanhToan.requestFocusInWindow();
             }
         });
@@ -803,12 +766,16 @@ public class BanHang extends SimpleForm {
             public void onDelete(int row) {
                 if (row >= 0 && row < table.getRowCount()) {
                     ((DefaultTableModel) table.getModel()).removeRow(row);
+                    if (table.getRowCount() > 0) {
+                        for (int i = 0; i < table.getRowCount(); ++i) {
+                            table.setValueAt(i + 1, i, 0);
+                        }
+                    } else {
+                        ((DefaultTableModel) table.getModel()).setRowCount(0);
+                    }
                     ((DefaultTableModel) table.getModel()).fireTableDataChanged();
+                    updateLblSoLuongSP();
                 }
-                for(int i = 0; i < table.getRowCount(); ++i) {
-                    table.setValueAt(i+1, i, 0);
-                }
-                updateLblSoLuongSP();
             }
         }));
 
@@ -820,6 +787,14 @@ public class BanHang extends SimpleForm {
         table.getTableHeader().setForeground(Color.WHITE);
         table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));
         table.getColumnModel().getColumn(1).setCellRenderer(new ImageRenderer());
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
 
         javax.swing.GroupLayout pnLeftContentLayout = new javax.swing.GroupLayout(pnLeftContent);
         pnLeftContent.setLayout(pnLeftContentLayout);
@@ -863,7 +838,6 @@ public class BanHang extends SimpleForm {
                 .addComponent(pnRightContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(pnContentLayout.createSequentialGroup()
-                .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE)
                 .addComponent(pnLeftContent, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -884,6 +858,11 @@ public class BanHang extends SimpleForm {
         // TODO add your handling code here:
         if(table.getRowCount() < 1) {
             MessageAlerts.getInstance().showMessage("Lỗi", "Chưa thêm sản phẩm vào đơn!", MessageAlerts.MessageType.ERROR);
+            return;
+        }
+        
+        if(kh == null) {
+            MessageAlerts.getInstance().showMessage("Lỗi", "Chưa nhập thông tin khách hàng!", MessageAlerts.MessageType.ERROR);
             return;
         }
         
@@ -937,7 +916,6 @@ public class BanHang extends SimpleForm {
             HoaDon_entity hd = new HoaDon_entity(invoiceCode, issueDate, thanhToan, discount, ptThanhToan, true, customerPhone, employeeId, "BanSanPham", ghiChu);
             if(!dao.createHD(hd)) {
                 MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);
-                refresh();
                 return;
             } else {
                 for (int i = 0; i < table.getRowCount(); ++i) {
@@ -952,6 +930,10 @@ public class BanHang extends SimpleForm {
                     invoiceCode, GenerateCode.generateQrcode(invoiceCode), fields);
             
                 BillManeger.getInstance().printBill(billData);
+                
+                if(!dao.updateDiemThuong(kh.getSdtKH(), discount, rewardPoints)) {
+                    return;
+                }
             }
             
             refresh();
@@ -1082,7 +1064,6 @@ public class BanHang extends SimpleForm {
         FormManager.showForm(new SanPham());
     }//GEN-LAST:event_jButton8ActionPerformed
 
-
     private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
         // TODO add your handling code here:
         menuFilter.setVisible(true);
@@ -1125,22 +1106,29 @@ public class BanHang extends SimpleForm {
     public void updateLblSoLuongSP() {
         int sumSoLuong = 0;
         double sumThanhTien = 0;
-        for (int i = 0; i < table.getRowCount(); i++) {
-            sumSoLuong += Integer.parseInt(table.getValueAt(i, 5).toString());
-            sumThanhTien += Double.parseDouble(table.getValueAt(i, 7).toString());
-        }
         
-        lblSoLuongSP.setText(String.valueOf(sumSoLuong));
-        lblTongTien.setText(df.format(calculateTotalAmount()));
-        lblVAT.setText("0");
+        if(table.getRowCount() > 0) {
+            for (int i = 0; i < table.getRowCount(); i++) {
+                sumSoLuong += Integer.parseInt(table.getValueAt(i, 5).toString());
+                sumThanhTien += Double.parseDouble(table.getValueAt(i, 7).toString());
+            }
+            lblSoLuongSP.setText(String.valueOf(sumSoLuong));
+            lblTongTien.setText(df.format(calculateTotalAmount()));
 
-        if(kh != null) {
-            int diemThuong = kh.getDiemThuong();
-            int coefDT = diemThuong / 1000;
-            giamTru = coefDT > 0 ? coefDT * 1000 : 0;
+            if(kh != null) {
+                int diemThuong = kh.getDiemThuong();
+                int coefDT = diemThuong / 1000;
+                giamTru = coefDT > 0 ? coefDT * 1000 : 0;
+            }
+            lblDiemThuong.setText(String.valueOf(df.format(giamTru)));
+            lblKhachPhaiTra.setText(String.valueOf(df.format(sumThanhTien - giamTru)));
+        } else {
+            lblSoLuongSP.setText("");
+            lblTongTien.setText("");
+            lblDiemThuong.setText("");
+            lblKhachPhaiTra.setText("");
+            lblVAT.setText("");
         }
-        lblDiemThuong.setText(String.valueOf(df.format(giamTru)));
-        lblKhachPhaiTra.setText(String.valueOf(df.format(sumThanhTien - giamTru)));
         
         updateSuggestButton();
         updateTienThua();
@@ -1153,28 +1141,33 @@ public class BanHang extends SimpleForm {
             double tienKhachDua = Double.parseDouble(txtTienKhachDua.getText().replace(",", ""));
             lblTienThua.setText(df.format(tienKhachDua - khachPhaiTra));
         } catch (NumberFormatException e) {
-            lblTienThua.setText("0");
+            lblTienThua.setText("");
         }
     }
     
     private void updateVAT() {
-        double sumVAT = 0;
-        for (int i = 0; i < table.getRowCount(); ++i) {
-            Integer quantity = (Integer) table.getValueAt(i, 5);
-            Double price = (Double) table.getValueAt(i, 6);
+        if(table.getRowCount() > 0) {
+            double sumVAT = 0;
+            for (int i = 0; i < table.getRowCount(); ++i) {
+                Integer quantity = (Integer) table.getValueAt(i, 5);
+                Double price = (Double) table.getValueAt(i, 6);
 
-            if (quantity != null && price != null) {
-                double taxPercentage  = dao.getSP((String) table.getValueAt(i, 2)).getThue();
-                double taxAmount = taxPercentage / 100;
-                
-                sumVAT += taxAmount * quantity * price;
+                if (quantity != null && price != null) {
+                    double taxPercentage  = dao.getSP((String) table.getValueAt(i, 2)).getThue();
+                    double taxAmount = taxPercentage / 100;
+
+                    sumVAT += taxAmount * quantity * price;
+                }
             }
-        }
 
-        lblVAT.setText(df.format(sumVAT)); 
+            lblVAT.setText(df.format(sumVAT)); 
+        }
+        else lblVAT.setText("");
+        
     }
 
     private void updateSuggestButton() {
+        if(lblKhachPhaiTra.getText().isEmpty()) return;
         double khachPhaiTra = Double.parseDouble(lblKhachPhaiTra.getText().replace(",", ""));
         List<Integer> suggestions = MoneySuggestion.suggestAmounts((int) khachPhaiTra);
 

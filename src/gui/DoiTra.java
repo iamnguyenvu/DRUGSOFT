@@ -30,74 +30,34 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import net.miginfocom.swing.MigLayout;
 import nguyenvu.components.SimpleForm;
-import nguyenvu.forms.StatisticalForm;
-import nguyenvu.menu.FormManager;
-import nguyenvu.model.ModelItemSell;
 import nguyenvu.model.ModelUser;
 import nguyenvu.utils.AddButtonEditor;
 import nguyenvu.utils.AddButtonRenderer;
-import nguyenvu.utils.CustomerSelectListener;
 import nguyenvu.utils.DoiTraQuantityCellEditor;
 import nguyenvu.utils.GenerateCode;
 import nguyenvu.utils.HeaderRenderer;
 import nguyenvu.utils.ImageRenderer;
-import nguyenvu.utils.LayerSearchList;
-import nguyenvu.utils.ListCustomerPanel;
-import nguyenvu.utils.ListProductSearchPanel;
-import nguyenvu.utils.MoneySuggestion;
-import nguyenvu.utils.ProductSearchPanel;
-import nguyenvu.utils.ProductSelectListener;
-import nguyenvu.utils.QuantityCellEditor;
-import nguyenvu.utils.QuantityCellEvent;
-import nguyenvu.utils.QuantityCellRenderer;
 import nguyenvu.utils.RoundedTextField;
-import nguyenvu.utils.TableActionCellEditor;
-import nguyenvu.utils.TableActionEvent;
 import nguyenvu.utils.TableDeleteCellEditor;
-import nguyenvu.utils.TableDeleteCellRenderer;
 import nguyenvu.utils.TableDeleteEvent;
-import nguyenvu.utils.WindowsTabbed;
 import raven.alerts.MessageAlerts;
 
 /**
@@ -115,9 +75,6 @@ public class DoiTra extends SimpleForm {
     private HoaDon_entity hd;
     
     private ModelUser user;
-    
-//    private DefaultTableModel model1;
-//    private DefaultTableModel model2;
 
     public DoiTra(ModelUser user) {
         this.user = user;
@@ -223,11 +180,12 @@ public class DoiTra extends SimpleForm {
             pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnSearchLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtHoaDonSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnScanQrcode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnScanQrcode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtHoaDonSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         txtHoaDonSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon("gui/icon/search.svg"));
