@@ -44,9 +44,9 @@ public class AddButtonEditor extends DefaultCellEditor{
                     String existingMaSP = (String) model1.getValueAt(row, 1);
                     
                     for(int i = 0; i < model2.getRowCount(); ++i) {
-                        if(existingMaSP.equals((String) model2.getValueAt(i, 0))) {
-                            if((int) model2.getValueAt(i, 2) < (int) model1.getValueAt(row, 3)) {
-                                model2.setValueAt((int) model2.getValueAt(i, 2) + 1, i, 2);
+                        if(existingMaSP.equals((String) model2.getValueAt(i, 1))) {
+                            if((int) model2.getValueAt(i, 3) < (int) model1.getValueAt(row, 3)) {
+                                model2.setValueAt((int) model2.getValueAt(i, 3) + 1, i, 3);
                                 doiTra.updateInfor();
                             }
                             else {
@@ -58,6 +58,7 @@ public class AddButtonEditor extends DefaultCellEditor{
                     }
                         
                     Object[] rowData = new Object[]{
+                        model1.getValueAt(row, 0),
                         model1.getValueAt(row, 1),
                         model1.getValueAt(row, 2),
                         1

@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/nguyenvu/utils/FilterProductSearchPanel.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>123</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/SanPham.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/dao/TrangChu_DAO.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/TrangChu.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/components/Card1.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/TrangChu1.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/components/Card.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/model/ModelCard.java</file>
         </group>
     </open-files>
 </project-private>
