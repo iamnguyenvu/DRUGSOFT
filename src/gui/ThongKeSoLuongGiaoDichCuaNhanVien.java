@@ -6,6 +6,10 @@ import com.raven.chart.Chart;
 import com.raven.chart.ModelChart;
 
 import nguyenvu.components.SimpleForm;
+import nguyenvu.model.ModalDataSoLuongGiaoDich;
+import nguyenvu.model.ModelData;
+import nguyenvu.model.ModelDataSP;
+import nguyenvu.model.SoLuongGiaoDichNV;
 import raven.alerts.MessageAlerts;
 
 import java.awt.Color;
@@ -42,11 +46,7 @@ import connectDB.connectDB;
 import dao.ThongKe_DAO;
 import entity.DoanhSoBanHangNV;
 import entity.HoaDon_entity;
-import entity.ModalDataSoLuongGiaoDich;
-import entity.ModelData;
-import entity.ModelDataSP;
 import entity.SanPham_entity;
-import entity.SoLuongGiaoDichNV;
 
 import javax.swing.JRadioButton;
 import javax.swing.JComboBox;

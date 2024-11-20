@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="library/datechooser-swing-1.4.1.jar"/>
 	<classpathentry kind="lib" path="library/flatlaf-3.4.1.jar"/>
@@ -17,7 +13,6 @@
 	<classpathentry kind="lib" path="library/swing-chart-1.1.0-beta.jar"/>
 	<classpathentry kind="lib" path="library/swing-glasspane-popup-1.5.1.jar"/>
 	<classpathentry kind="lib" path="library/TimingFramework-0.55.jar"/>
-	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar"/>
 	<classpathentry kind="lib" path="library/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="library/lbChart/curve-line-chart.jar"/>
 	<classpathentry kind="lib" path="library/lbChart/miglayout-4.0.jar"/>
@@ -82,5 +77,6 @@
 	<classpathentry kind="lib" path="library/ireport/woodstox-core-6.4.0.jar"/>
 	<classpathentry kind="lib" path="library/java/opencv-4100.jar"/>
 	<classpathentry kind="lib" path="library/javax.mail.jar"/>
+	<classpathentry kind="lib" path="library/jgoodies-forms-1.8.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

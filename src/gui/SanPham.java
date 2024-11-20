@@ -520,43 +520,6 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 	}
 
 
-//	public void docDuLieuVaoTable() {
-//		dftb_SanPham.setRowCount(0); // Clear the current table model
-//		List<SanPham_entity> products = sp_dao.getAllSanPham(); // Assume this method exists
-//
-//		// Filtering based on selected product type
-//		String selectedType = cb_LocTheoLoai.getSelectedItem().toString();
-//
-//		if (!selectedType.equalsIgnoreCase("Tất cả")) {
-//			products = products.stream().filter(sp -> sp.getLoaiSanPham().getMaLoaiSP().equalsIgnoreCase(selectedType))
-//					.collect(Collectors.toList());
-//		}
-//
-//		// Sorting based on selected options
-//		Comparator<SanPham_entity> comparator = null;
-//
-//
-//		// Check price sorting option
-//		if (radio_giaTuThapDenCao.isSelected()) {
-//			comparator = (comparator == null) ? Comparator.comparingDouble(SanPham_entity::getGia)
-//					: comparator.thenComparing(Comparator.comparingDouble(SanPham_entity::getGia));
-//		} else if (radio_giaTuCaoDenThap.isSelected()) {
-//			comparator = (comparator == null) ? Comparator.comparingDouble(SanPham_entity::getGia).reversed()
-//					: comparator.thenComparing(Comparator.comparingDouble(SanPham_entity::getGia).reversed());
-//		}
-//
-//
-//		// Apply sorting if comparator is defined
-//		if (comparator != null) {
-//			products.sort(comparator);
-//		}
-//
-//		for (SanPham_entity product : products) {
-//			dftb_SanPham.addRow(new Object[] { product.getMaSP(), product.getTenSP(), product.getGia(), product.getLoaiSanPham().getMaLoaiSP(),product.getThue(),
-//					// Add actions for Update and Delete as necessary
-//			});
-//		}
-//	}
 	public void docDuLieuVaoTable(int currentPage, int rowsPerPage) {
 	    dftb_SanPham.setRowCount(0); // Xóa dữ liệu hiện tại trong bảng
 	    List<SanPham_entity> products = sp_dao.getAllSanPham();

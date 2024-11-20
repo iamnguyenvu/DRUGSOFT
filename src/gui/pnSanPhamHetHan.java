@@ -7,6 +7,8 @@ import com.raven.chart.Chart;
 import com.raven.chart.ModelChart;
 
 import nguyenvu.components.SimpleForm;
+import nguyenvu.model.ModelData;
+import nguyenvu.model.ModelDataSP;
 import nguyenvu.model.ModelItemSell;
 import nguyenvu.utils.RoundedBorder;
 import nguyenvu.utils.RoundedPanel;
@@ -65,8 +67,6 @@ import ThongKeReport.ReportManager;
 import ThongKeReport.SPHetHanReport;
 import connectDB.connectDB;
 import dao.ThongKe_DAO;
-import entity.ModelData;
-import entity.ModelDataSP;
 import entity.SanPham_entity;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;

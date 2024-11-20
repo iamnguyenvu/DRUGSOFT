@@ -1,4 +1,4 @@
-package entity;
+package nguyenvu.model;
 
 public class ModelData {
 	private String month;

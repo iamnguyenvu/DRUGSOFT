@@ -17,10 +17,10 @@ import entity.HoaDon_entity;
 import entity.KhachHang_entity;
 import entity.LoaiHoaDon_entity;
 import entity.LoaiSanPham_entity;
-import entity.ModalDataSoLuongGiaoDich;
 import entity.NhanVien_entity;
 import entity.SanPham_entity;
-import entity.SoLuongGiaoDichNV;
+import nguyenvu.model.ModalDataSoLuongGiaoDich;
+import nguyenvu.model.SoLuongGiaoDichNV;
 
 public class ThongKe_DAO {
 	public int soSanPhamSapHetHan() {

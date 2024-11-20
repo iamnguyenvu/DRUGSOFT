@@ -6,6 +6,10 @@ import com.raven.chart.Chart;
 import com.raven.chart.ModelChart;
 
 import nguyenvu.components.SimpleForm;
+import nguyenvu.model.DoanhSoBanHangModalData;
+import nguyenvu.model.ModalDataSoLuongGiaoDich;
+import nguyenvu.model.ModelData;
+import nguyenvu.model.ModelDataSP;
 import raven.alerts.MessageAlerts;
 
 import java.awt.Color;
@@ -42,9 +46,6 @@ import connectDB.connectDB;
 import dao.ThongKe_DAO;
 import entity.DoanhSoBanHangNV;
 import entity.HoaDon_entity;
-import entity.ModalDataSoLuongGiaoDich;
-import entity.ModelData;
-import entity.ModelDataSP;
 import entity.SanPham_entity;
 
 import javax.swing.JRadioButton;
@@ -160,7 +161,10 @@ public class DoanhSoBanHang extends SimpleForm{
                         jButton1ActionPerformed(evt);
                     }
                 });
-        chart.addLegend(null, new Color(135, 189, 245));
+        chart.addLegend("Doanh Thu", new Color(245, 189, 135));
+        chart.addLegend("Chi Phí", new Color(135, 189, 245));
+        chart.addLegend("Lợi Nhuận", new Color(189, 135, 245));
+//        chart.addLegend("Cost", new Color(139, 229, 222));
         themData();
         chart.start();
     }
@@ -253,7 +257,7 @@ public class DoanhSoBanHang extends SimpleForm{
 
     private void themData() {
         Connection connection = null; // Khai báo biến kết nối
-        java.util.List<ModelData> lists = new ArrayList<>(); // Danh sách để lưu dữ liệu từ CSDL
+        java.util.List<DoanhSoBanHangModalData> lists = new ArrayList<>(); // Danh sách để lưu dữ liệu từ CSDL
         try {
             connection = connectDB.accessDataBase(); // Lấy kết nối
             if (connection == null) {
@@ -261,11 +265,19 @@ public class DoanhSoBanHang extends SimpleForm{
                 return; // Dừng nếu không kết nối được
             }
 
-            String sql = "SELECT MONTH(ngayLapHD) AS Thang,SUM(tongTien - tienGiam) AS DoanhSo\r\n"
-            		+ "FROM HoaDon\r\n"
-            		+ "WHERE YEAR(ngayLapHD) = YEAR(GETDATE()) AND trangThai = 1\r\n"
-            		+ "GROUP BY MONTH(ngayLapHD)\r\n"
-            		+ "ORDER BY Thang;";
+            String sql = "SELECT \r\n"
+            		+ "    MONTH(ngayLapHD) AS Thang,\r\n"
+            		+ "    SUM(tongTien) AS tongDoanhThu,\r\n"
+            		+ "    SUM(tienGiam) AS tongChiPhi,\r\n"
+            		+ "    (SUM(tongTien) - SUM(tienGiam)) AS loiNhuan\r\n"
+            		+ "FROM \r\n"
+            		+ "    HoaDon\r\n"
+            		+ "WHERE \r\n"
+            		+ "    YEAR(ngayLapHD) = 2024\r\n"
+            		+ "GROUP BY \r\n"
+            		+ "    MONTH(ngayLapHD)\r\n"
+            		+ "ORDER BY \r\n"
+            		+ "    thang";
 
             PreparedStatement p = connection.prepareStatement(sql);
             ResultSet r = p.executeQuery();
@@ -273,19 +285,20 @@ public class DoanhSoBanHang extends SimpleForm{
             // Lấy dữ liệu từ ResultSet và lưu vào danh sách lists
             while (r.next()) {
                 String thang = r.getString("Thang");
-                double doanhSo = r.getInt("DoanhSo");
-                lists.add(new ModelData("Tháng" + thang, doanhSo));
+                int tongDoanhThu = r.getInt("tongDoanhThu");
+                int tongChiPhi = r.getInt("tongChiPhi");
+                int loiNhuan = r.getInt("loiNhuan");
+                lists.add(new DoanhSoBanHangModalData("Tháng" + thang,tongDoanhThu,tongChiPhi,loiNhuan));
             }
-
             // Đóng ResultSet và PreparedStatement sau khi sử dụng
             r.close();
             p.close();
 
             // Xóa dữ liệu cũ trên biểu đồ và thêm dữ liệu mới từ danh sách lists
             chart.clear();
-            for (ModelData data : lists) {
-                ModelChart modelChart = new ModelChart(data.getMonth(), new double[]{data.getTotal()});
-                chart.addData(modelChart);
+            for (DoanhSoBanHangModalData data : lists) {
+            	ModelChart mdChart = new ModelChart(data.getThang(),new double[] {data.getTongDoanhThu(),data.getTongChiPhi(),data.getLoiNhuan()});
+                chart.addData(mdChart);
             }
 
             // Bắt đầu hiển thị dữ liệu với hiệu ứng
