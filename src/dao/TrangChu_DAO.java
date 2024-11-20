@@ -5,7 +5,6 @@
 package dao;
 
 import connectDB.connectDB;
-import entity.HoaDon_entity;
 import entity.SanPham_entity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import nguyenvu.model.ModelDoanhThu;
+import nguyenvu.model.ModelSellTransaction;
 import nguyenvu.model.ModelTransaction;
 
 /**
@@ -33,6 +33,34 @@ public class TrangChu_DAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new ModelTransaction(rs.getString("tenLoaiNV") ,rs.getString("hotenNV"), rs.getDouble("thanhTien"))); 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
+    }
+    
+    public static ArrayList<ModelSellTransaction> getListLastSellTransaction() {
+        Connection con = connectDB.accessDataBase();
+        if(con == null) return null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<ModelSellTransaction> list = new ArrayList<>();
+        try {
+            ps = con.prepareStatement("SELECT TOP 10 LNV.tenLoaiNV, NV.hotenNV, thanhTien = tongTien - tienGiam, HD.ngayLapHD, HD.maLoaiHD\n" +
+                "FROM HoaDon HD JOIN NhanVien NV ON HD.maNV = NV.maNV JOIN LoaiNhanVien LNV ON NV.maLoaiNV = LNV.maLoaiNV\n" +
+                "ORDER BY ngayLapHD DESC");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new ModelSellTransaction(rs.getString("tenLoaiNV") ,rs.getString("hotenNV"), rs.getString("maLoaiHD"), rs.getDouble("thanhTien"), rs.getTimestamp("ngayLapHD").toLocalDateTime())); 
             }
         } catch (SQLException e) {
             e.printStackTrace();

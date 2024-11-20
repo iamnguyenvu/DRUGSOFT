@@ -8,11 +8,12 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import dao.TrangChu_DAO;
 import gui.components.LastTransactionPanel;
+import gui.components.SellTransactionPanel;
 import java.util.ArrayList;
-import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import nguyenvu.components.SimpleForm;
 import nguyenvu.model.ModelCard;
+import nguyenvu.model.ModelSellTransaction;
 import nguyenvu.model.ModelTransaction;
 import nguyenvu.model.ModelUser;
 
@@ -33,46 +34,40 @@ public class TrangChu extends SimpleForm {
     private void initCardData() {
         card1.setData(new ModelCard("Sản phẩm sắp hết hàng: ", TrangChu_DAO.getListSPSapHetHang().size(), new FlatSVGIcon("gui/icon/out-of-stock.svg", 0.1f)));
         card2.setData(new ModelCard("Sản phẩm sắp hết hạn: ", TrangChu_DAO.getListSPSapHetHan().size(), new FlatSVGIcon("gui/icon/outdate.svg", 0.4f)));
-        card3.setData(new ModelCard("Tổng doanh thu tháng: ", TrangChu_DAO.getDoanhThuThang().getDoanhThu(), new FlatSVGIcon("gui/icon/revenue.svg", 0.09f)));
-        card4.setData(new ModelCard("Số giao dịch tháng: ", TrangChu_DAO.getDoanhThuThang().getSoGiaoDich(), new FlatSVGIcon("gui/icon/transaction.svg", 0.4f)));
+        card3.setData(new ModelCard("Doanh thu trong tháng: ", TrangChu_DAO.getDoanhThuThang().getDoanhThu(), new FlatSVGIcon("gui/icon/revenue.svg", 0.09f)));
+        card4.setData(new ModelCard("Giao dịch trong tháng: ", TrangChu_DAO.getDoanhThuThang().getSoGiaoDich(), new FlatSVGIcon("gui/icon/transaction.svg", 0.4f)));
     }
     
     private void initTransactionData() {
         pnTransaction. setLayout(new MigLayout("wrap, fill, insets 10 10 10 10", "[center]", "[]10[]"));
 
-        ArrayList<ModelTransaction> transactions = TrangChu_DAO.getListLastTransaction();
-        for(ModelTransaction transaction : transactions) {
-            LastTransactionPanel pn = new LastTransactionPanel();
+//        ArrayList<ModelTransaction> transactions = TrangChu_DAO.getListLastTransaction();
+//        for(ModelTransaction transaction : transactions) {
+//            LastTransactionPanel pn = new LastTransactionPanel();
+//            pn.setData(transaction);
+//            pnTransaction.add(pn);
+//        }
+        ArrayList<ModelSellTransaction> transactions = TrangChu_DAO.getListLastSellTransaction();
+        for(ModelSellTransaction transaction : transactions) {
+            SellTransactionPanel pn = new SellTransactionPanel();
             pn.setData(transaction);
-            pnTransaction.add(pn, "grow, w 100%");
+            pnTransaction.add(pn);
         }
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnTransaction = new javax.swing.JPanel();
         pnHeader = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         card1 = new gui.components.Card();
         card2 = new gui.components.Card();
         card3 = new gui.components.Card();
         card4 = new gui.components.Card();
+        spTransaction = new javax.swing.JScrollPane();
+        pnTransaction = new javax.swing.JPanel();
 
         setPreferredSize(new java.awt.Dimension(1470, 730));
-
-        pnTransaction.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(11, 101, 136), 1, true), "Các hoạt động gần đây", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(11, 101, 136))); // NOI18N
-
-        javax.swing.GroupLayout pnTransactionLayout = new javax.swing.GroupLayout(pnTransaction);
-        pnTransaction.setLayout(pnTransactionLayout);
-        pnTransactionLayout.setHorizontalGroup(
-            pnTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 316, Short.MAX_VALUE)
-        );
-        pnTransactionLayout.setVerticalGroup(
-            pnTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 628, Short.MAX_VALUE)
-        );
 
         pnHeader.setBackground(new java.awt.Color(11, 101, 136));
 
@@ -105,6 +100,21 @@ public class TrangChu extends SimpleForm {
 
         card4.setGradientColor(new java.awt.Color(28, 181, 224));
 
+        spTransaction.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(11, 101, 136), 1, true), "Các hoạt động gần đây", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(11, 101, 136))); // NOI18N
+
+        javax.swing.GroupLayout pnTransactionLayout = new javax.swing.GroupLayout(pnTransaction);
+        pnTransaction.setLayout(pnTransactionLayout);
+        pnTransactionLayout.setHorizontalGroup(
+            pnTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 340, Short.MAX_VALUE)
+        );
+        pnTransactionLayout.setVerticalGroup(
+            pnTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 635, Short.MAX_VALUE)
+        );
+
+        spTransaction.setViewportView(pnTransaction);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -123,7 +133,7 @@ public class TrangChu extends SimpleForm {
                         .addGap(18, 18, 18)
                         .addComponent(card4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
-                        .addComponent(pnTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(spTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,7 +141,7 @@ public class TrangChu extends SimpleForm {
                 .addComponent(pnHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spTransaction)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(card1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -163,5 +173,6 @@ public class TrangChu extends SimpleForm {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel pnHeader;
     private javax.swing.JPanel pnTransaction;
+    private javax.swing.JScrollPane spTransaction;
     // End of variables declaration//GEN-END:variables
 }

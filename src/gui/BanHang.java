@@ -894,13 +894,13 @@ public class BanHang extends SimpleForm {
         
             kh = txtCustomer.getText().isEmpty() ? null : kh;
 
-            String employeeName = user != null ? user.getName() : "Nhân viên";  // Replace with actual employee data if available
+            String employeeName = user != null ? user.getName() : "Nhân viên";
             String employeeId = user != null ? user.getUserName() : "";
             
-            String customerName = kh != null ? kh.getTenKH() : "Khách vãng lai"; // Default customer name if kh is null
+            String customerName = kh != null ? kh.getTenKH() : "Khách vãng lai";
             String customerPhone = kh != null ? kh.getSdtKH().trim() : "";
             double totalAmount = calculateTotalAmount();
-            int discount = kh != null ? giamTru : 0;                       // Adjust if discounts apply
+            int discount = kh != null ? giamTru : 0;    
 
             int rewardPoints = (int) (kh != null ? thanhToan * 0.01 : 0);
             String invoiceCode = dao.generateInvoiceCode();
