@@ -149,9 +149,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item("Sản phẩm", "calendar.svg")
             .subMenu("Sản phẩm bán hàng")
             .subMenu("Sản phẩm đổi trả"),
-            new Item("Hóa đơn", "forms.svg")
-            .subMenu("Hóa đơn bán hàng")
-            .subMenu("Hóa đơn đổi trả"),
+            new Item("Hóa đơn", "forms.svg"),
             new Item("Khách hàng", "ui.svg"),
             new Item("Nhân viên", "icon.svg"),        
             new Item("Tài khoản", "key.svg"),
@@ -248,6 +246,10 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                         FormManager.showForm(doiTra);
                     }
                     
+                    if (index[0] == 4) {
+                        FormManager.showForm(new HoaDon());
+                    }
+                    
                     if (index[0] == 5) {
                     	FormManager.showForm(new gui.KhachHang_GUI());
                     }
@@ -272,15 +274,6 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                         }
                         if (index[1] == 1) {
                             FormManager.showForm(sanPhamDoiTra);
-                        }
-                    }
-                    
-                    if (index[0] == 4) {
-                        if (index[1] == 0) {
-                            FormManager.showForm(new HoaDon());
-                        }
-                        if (index[1] == 1) {
-                            FormManager.showForm(hoaDonDoiTra);
                         }
                     }
                     

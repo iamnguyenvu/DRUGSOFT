@@ -35,7 +35,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="card4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="pnTransaction" max="32767" attributes="0"/>
+                      <Component id="spTransaction" pref="330" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -47,7 +47,7 @@
               <Component id="pnHeader" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="pnTransaction" max="-2" attributes="0"/>
+                  <Component id="spTransaction" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="card1" min="-2" max="-2" attributes="0"/>
@@ -64,36 +64,6 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="pnTransaction">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="C&#xe1;c ho&#x1ea1;t &#x111;&#x1ed9;ng g&#x1ea7;n &#x111;&#xe2;y">
-              <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder roundedCorners="true">
-                  <Color PropertyName="color" blue="88" green="65" red="b" type="rgb"/>
-                </LineBorder>
-              </Border>
-              <Font PropertyName="font" name="Arial" size="14" style="0"/>
-              <Color PropertyName="color" blue="88" green="65" red="b" type="rgb"/>
-            </TitledBorder>
-          </Border>
-        </Property>
-      </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="316" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="628" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-    </Container>
     <Container class="javax.swing.JPanel" name="pnHeader">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -178,5 +148,41 @@
         <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="card4.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;border:0,0,0,0,$Component.borderColor,,20&quot;);"/>
       </AuxValues>
     </Component>
+    <Container class="javax.swing.JScrollPane" name="spTransaction">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="C&#xe1;c ho&#x1ea1;t &#x111;&#x1ed9;ng g&#x1ea7;n &#x111;&#xe2;y">
+              <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder roundedCorners="true">
+                  <Color PropertyName="color" blue="88" green="65" red="b" type="rgb"/>
+                </LineBorder>
+              </Border>
+              <Font PropertyName="font" name="Segoe UI" size="14" style="0"/>
+              <Color PropertyName="color" blue="88" green="65" red="b" type="rgb"/>
+            </TitledBorder>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="pnTransaction">
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="340" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="635" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+        </Container>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>

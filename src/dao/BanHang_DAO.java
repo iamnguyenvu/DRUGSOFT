@@ -65,7 +65,7 @@ public class BanHang_DAO {
         ResultSet rs = null;
         ArrayList<KhachHang_entity> listKH = new ArrayList<>();
         try {
-            ps = con.prepareStatement("SELECT TOP 8 * FROM KhachHang WHERE sdtKH LIKE ?");
+            ps = con.prepareStatement("SELECT TOP 8 sdtKH, tenKH, diemThuong, gioiTinh FROM KhachHang WHERE sdtKH LIKE ?");
             ps.setString(1, sdt + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -95,7 +95,7 @@ public class BanHang_DAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("SELECT * FROM KhachHang WHERE sdtKH LIKE ?");
+            ps = con.prepareStatement("SELECT tenKH, sdtKH, diemThuong, gioiTinh FROM KhachHang WHERE sdtKH LIKE ?");
             ps.setString(1, sdt);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -270,7 +270,7 @@ public class BanHang_DAO {
         ResultSet rs = null;
         ArrayList<ChiTietHoaDon> listCTHD = new ArrayList<>();
         try {
-            ps = con.prepareStatement("SELECT * FROM ChiTietHoaDon WHERE maHD LIKE ?");
+            ps = con.prepareStatement("SELECT maHD, maSP, soLuongSanPham, thanhTien FROM ChiTietHoaDon WHERE maHD LIKE ?");
             ps.setString(1, maHD);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -298,7 +298,7 @@ public class BanHang_DAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("SELECT * FROM HoaDon WHERE maHD LIKE ?");
+            ps = con.prepareStatement("SELECT maHD, sdtKH FROM HoaDon WHERE maHD LIKE ?");
             ps.setString(1, maHD);
             rs = ps.executeQuery();
             if (rs.next()) {
