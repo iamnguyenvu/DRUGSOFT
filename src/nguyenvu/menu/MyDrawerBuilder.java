@@ -50,7 +50,6 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     
     private BanHang banHang;
     private DoiTra doiTra;
-    private DonDoiTra hoaDonDoiTra;
     private SanPhamDoiTra sanPhamDoiTra;
     private TrangChu trangChu;
 
@@ -59,7 +58,6 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
         trangChu = new TrangChu(user);
         banHang = new BanHang(user);
         doiTra = new DoiTra(user);
-        hoaDonDoiTra = new DonDoiTra();
         sanPhamDoiTra = new SanPhamDoiTra();
         SimpleHeaderData headerData = header.getSimpleHeaderData();
         headerData.setTitle(user.getName());

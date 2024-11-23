@@ -34,7 +34,7 @@ public class BanHang_DAO {
         ResultSet rs = null;
         ArrayList<SanPham_entity> listSP = new ArrayList<>();
         try {
-            ps = con.prepareStatement("SELECT TOP 8 * FROM SanPham WHERE tenSP LIKE ? OR maSP LIKE ?");
+            ps = con.prepareStatement("SELECT TOP 8 * FROM SanPham WHERE tenSP COLLATE Latin1_General_CI_AI LIKE ? OR maSP LIKE ?");
             ps.setString(1, "%" + key + "%");
             ps.setString(2, "%" + key + "%");
             rs = ps.executeQuery();
@@ -147,7 +147,7 @@ public class BanHang_DAO {
         return n>0;
     }
     
-    public boolean createCTHD(ChiTietHoaDon cthd) {
+    public static boolean createCTHD(ChiTietHoaDon cthd) {
         Connection con = connectDB.accessDataBase();
         PreparedStatement stmt = null;
         int n = 0;
@@ -330,6 +330,36 @@ public class BanHang_DAO {
             ps.setInt(1, suDung);
             ps.setInt(2, diemThuong); 
             ps.setString(3, sdtKH); 
+
+            int rowsAffected = ps.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false; 
+    }
+    
+    public static boolean updateSLSP(String maSP, int soLuong) {
+        Connection con = connectDB.accessDataBase();
+        if (con == null) return false; 
+        PreparedStatement ps = null;
+
+        try {
+            String sql = "UPDATE SanPham SET soLuong = soLuong - ? WHERE maSP = ?";
+
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, soLuong);
+            ps.setString(2, maSP); 
 
             int rowsAffected = ps.executeUpdate();
 

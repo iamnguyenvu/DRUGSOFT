@@ -4,6 +4,7 @@
  */
 package nguyenvu.utils;
 
+import dao.BanHang_DAO;
 import gui.BanHang;
 import java.awt.Component;
 import javax.swing.DefaultCellEditor;
@@ -15,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.DefaultFormatter;
+import raven.alerts.MessageAlerts;
 
 /**
  *
@@ -26,14 +28,17 @@ public class QuantityCellEditor extends DefaultCellEditor {
     private JTable table;
     private int row;
     private BanHang banHang;
+    private BanHang_DAO dao;
     
 
     public QuantityCellEditor(BanHang banHang) {
         super(new JCheckBox());
         this.banHang = banHang;
+        dao = new BanHang_DAO();
         input = new JSpinner();
         SpinnerNumberModel numberModel = (SpinnerNumberModel) input.getModel();
         numberModel.setMinimum(1);
+        numberModel.setMaximum(50);
         JSpinner.NumberEditor editor = (JSpinner.NumberEditor) input.getEditor();
         DefaultFormatter formatter = (DefaultFormatter) editor.getTextField().getFormatter();
         formatter.setCommitsOnValidEdit(true);
@@ -58,7 +63,23 @@ public class QuantityCellEditor extends DefaultCellEditor {
         this.table = table;
         this.row = row;
         Component com = super.getTableCellEditorComponent(table, value, isSelected, row, column); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        
         int quantity = Integer.parseInt(value.toString());
+        
+//        so luong ton kho
+        int maxQuantity = dao.getSP((String) table.getValueAt(row, 2)).getSoLuong();
+        
+//        toi da 50 hoac kh vuot qua so luong ton kho
+        int maxAllowedQuantity = Math.min(maxQuantity, 50);
+
+        if (quantity > maxAllowedQuantity) {
+            quantity = maxAllowedQuantity;
+            String message = (quantity == 50) 
+                    ? "Số lượng tối đa cho phép là 50!" 
+                    : "Vượt quá số lượng tồn kho!";
+            MessageAlerts.getInstance().showMessage("Cảnh báo", message, MessageAlerts.MessageType.WARNING);
+        }
+            
         input.setValue(quantity);
         input.addChangeListener(new ChangeListener() {
             @Override

@@ -18,7 +18,11 @@ public class CircleLabel extends JLabel{
     private Color backgroundColor = new Color(11,101,136);
      public CircleLabel() {
         setOpaque(false);
-         setForeground(Color.WHITE);
+        setForeground(Color.WHITE);
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
     }
 
     public void setBackgroundColor(Color color) {

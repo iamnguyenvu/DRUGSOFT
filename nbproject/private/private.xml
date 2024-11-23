@@ -12,19 +12,13 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/CircleLabel.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/entity/HoaDon_entity.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/dao/BanHang_DAO.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/dao/TrangChu_DAO.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/forms/DashboardForm.java</file>
             <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/SanPhamDoiTra.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/model/ModelDoanhThu.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/TrangChu.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/ThongKeTongQuan.java</file>
             <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/BanHang.java</file>
             <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/components/SellTransactionPanel.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/login/Login.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/model/ModelTransaction.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/menu/MyDrawerBuilder.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/components/LastTransactionPanel.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/TrangChu1.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/QuantityCellEditor.java</file>
         </group>
     </open-files>
 </project-private>
