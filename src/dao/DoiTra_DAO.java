@@ -227,4 +227,34 @@ public class DoiTra_DAO {
             return invoicePrefix + counterPart;
         }
     }
+    
+    public boolean updateSLSP(String maSP, int soLuong) {
+        Connection con = connectDB.accessDataBase();
+        if (con == null) return false; 
+        PreparedStatement ps = null;
+
+        try {
+            String sql = "UPDATE SanPham SET soLuong = soLuong - ? WHERE maSP = ?";
+
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, soLuong);
+            ps.setString(2, maSP); 
+
+            int rowsAffected = ps.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false; 
+    }
 }
