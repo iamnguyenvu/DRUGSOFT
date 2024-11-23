@@ -1,5 +1,6 @@
 package entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import java.time.format.DateTimeFormatter;
@@ -18,7 +19,7 @@ public class HoaDon_entity {
     private String maLoaiHoaDon;           // Loại hóa đơn
     private String ghiChu;
 
-    public HoaDon_entity() {
+    public HoaDon_entity(String mahd2, LocalDate lcNgayLapHD, double tongTien2, double tienGiam2, String hinhThucThanhToan2, boolean trangThai2, KhachHang_entity kh, NhanVien_entity nv, LoaiHoaDon_entity lhd) {
     }
 
 
@@ -307,4 +308,5 @@ public class HoaDon_entity {
         this.ngayLapHD = ngayLapHD;
         this.hinhThucThanhToan = hinhThucThanhToan;
     }
+
 }

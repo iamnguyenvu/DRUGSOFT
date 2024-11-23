@@ -126,7 +126,6 @@ public class DialogTempOrderProcess extends SimpleForm{
         if(popupMenu != null) {
             popupMenu.setVisible(false);
             this.setVisible(false);
-            System.out.println("gui.DialogTempOrderProcess.jButton1ActionPerformed()");
         }
     }//GEN-LAST:event_btnCancelActionPerformed
 
@@ -151,7 +150,7 @@ public class DialogTempOrderProcess extends SimpleForm{
 
     public void capNhatBangTemp() {
         DefaultTableModel model = (DefaultTableModel) tableTemp.getModel();
-//        model.setRowCount(0);
+        model.setRowCount(0);
         for (DonTam_entity donTam : listDonTam) {
             model.addRow(new Object[]{
                 donTam.getSdtKH(),

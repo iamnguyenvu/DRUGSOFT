@@ -16,7 +16,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-38,0,0,5,-66"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,3,-33,0,0,6,5"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -48,13 +48,16 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="layer" min="-2" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="txtProductSearch" min="-2" pref="730" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                          <Component id="txtProductSearch" min="-2" pref="451" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnFilter" min="-2" pref="60" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="layer" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="565" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -63,10 +66,22 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtProductSearch" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnFilter" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txtProductSearch" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="btnFilter" min="-2" pref="40" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="layer" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <Component id="layer" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -83,6 +98,9 @@
               <Connection code="new java.awt.Dimension(75, 40)" type="code"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFilterActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JButton(createIcon(&quot;gui/icon/filter.svg&quot;, 1f))"/>
           </AuxValues>
@@ -147,6 +165,21 @@
             </Container>
           </SubComponents>
         </Container>
+        <Container class="javax.swing.JPanel" name="jPanel1">
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="210" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+        </Container>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="pnContent">
@@ -182,7 +215,7 @@
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
-                  <Component id="pnLeftContent" pref="694" max="32767" attributes="0"/>
+                  <Component id="pnLeftContent" pref="925" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -912,6 +945,9 @@
                       <Dimension value="[80, 40]"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="addStyleBtn(jButton8);"/>
                   </AuxValues>
@@ -944,40 +980,19 @@
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="9" rowCount="0">
                         <Column editable="false" title="STT" type="java.lang.Object"/>
-                        <Column editable="false" title="hinhAnh" type="java.lang.Object"/>
-                        <Column editable="false" title="maSP" type="java.lang.Object"/>
-                        <Column editable="false" title="tenSP" type="java.lang.Object"/>
-                        <Column editable="false" title="donVi" type="java.lang.Object"/>
-                        <Column editable="true" title="soLuong" type="java.lang.Object"/>
-                        <Column editable="false" title="donGia" type="java.lang.Object"/>
-                        <Column editable="false" title="thanhTien" type="java.lang.Object"/>
-                        <Column editable="true" title="btnDelete" type="java.lang.Object"/>
+                        <Column editable="false" title="H&#xec;nh &#x1ea3;nh" type="java.lang.Object"/>
+                        <Column editable="false" title="M&#xe3; s&#x1ea3;n ph&#x1ea9;m" type="java.lang.Object"/>
+                        <Column editable="false" title="T&#xea;n s&#x1ea3;n ph&#x1ea9;m" type="java.lang.Object"/>
+                        <Column editable="false" title="&#x110;&#x1a1;n v&#x1ecb;" type="java.lang.Object"/>
+                        <Column editable="true" title="S&#x1ed1; l&#x1b0;&#x1a1;ng" type="java.lang.Object"/>
+                        <Column editable="false" title="&#x110;&#x1a1;n gi&#xe1;" type="java.lang.Object"/>
+                        <Column editable="false" title="Th&#xe0;nh ti&#x1ec1;n" type="java.lang.Object"/>
+                        <Column editable="true" title="X&#xf3;a" type="java.lang.Object"/>
                       </Table>
                     </Property>
-                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="table.getColumnModel().getColumn(8).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());&#xa;table.getColumnModel().getColumn(8).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {&#xa;    @Override&#xa;    public void onDelete(int row) {&#xa;        if (row &gt;= 0 &amp;&amp; row &lt; table.getRowCount()) {&#xa;            ((DefaultTableModel) table.getModel()).removeRow(row);&#xa;            ((DefaultTableModel) table.getModel()).fireTableDataChanged();&#xa;        }&#xa;        for(int i = 0; i &lt; table.getRowCount(); ++i) {&#xa;            table.setValueAt(i+1, i, 0);&#xa;        }&#xa;        updateLblSoLuongSP();&#xa;    }&#xa;}));&#xa;&#xa;table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(this));&#xa;table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());&#xa;table.setTableHeader(null);">
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="table.getColumnModel().getColumn(8).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());&#xa;table.getColumnModel().getColumn(8).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {&#xa;    @Override&#xa;    public void onDelete(int row) {&#xa;        if (row &gt;= 0 &amp;&amp; row &lt; table.getRowCount()) {&#xa;            ((DefaultTableModel) table.getModel()).removeRow(row);&#xa;            ((DefaultTableModel) table.getModel()).fireTableDataChanged();&#xa;        }&#xa;        for(int i = 0; i &lt; table.getRowCount(); ++i) {&#xa;            table.setValueAt(i+1, i, 0);&#xa;        }&#xa;        updateLblSoLuongSP();&#xa;    }&#xa;}));&#xa;&#xa;table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(this));&#xa;table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());&#xa;//table.setTableHeader(null);&#xa;table.getTableHeader().setDefaultRenderer(new HeaderRenderer());&#xa;table.getTableHeader().setBackground(new Color(11,101,136));&#xa;table.getTableHeader().setForeground(Color.WHITE);&#xa;table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));&#xa;table.getColumnModel().getColumn(1).setCellRenderer(new ImageRenderer());">
                       <TableColumnModel selectionModel="0">
-<<<<<<< HEAD
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="20" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer editor="org.netbeans.modules.form.ComponentChooserEditor">
-                            <ComponentRef name="null"/>
-                          </Renderer>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="60" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="100" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="200" resizable="false">
-=======
                         <Column maxWidth="-1" minWidth="-1" prefWidth="30" resizable="false">
->>>>>>> 0ee568a102cedaeb3911f8b093f2fa0a4f4b1803
                           <Title/>
                           <Editor/>
                           <Renderer/>
@@ -985,9 +1000,7 @@
                         <Column maxWidth="-1" minWidth="-1" prefWidth="80" resizable="false">
                           <Title/>
                           <Editor/>
-                          <Renderer editor="org.netbeans.modules.form.ComponentChooserEditor">
-                            <ComponentRef name="null"/>
-                          </Renderer>
+                          <Renderer/>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="120" resizable="false">
                           <Title/>

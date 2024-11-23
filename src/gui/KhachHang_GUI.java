@@ -357,9 +357,9 @@ public class KhachHang_GUI extends SimpleForm {
                 .addComponent(tfTim, javax.swing.GroupLayout.PREFERRED_SIZE, 727, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(183, 183, 183)
+                .addGap(34, 34, 34)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(0, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         pnHeadLayout.setVerticalGroup(
             pnHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -831,7 +831,7 @@ public class KhachHang_GUI extends SimpleForm {
         return tenParts[tenParts.length - 1];
     }
     
-    private void hienThiDialogThem() {
+    public void hienThiDialogThem() {
         // Đặt kích thước cho dialog
         dlThem.setSize(1000, 500);
         // Đặt vị trí ở giữa màn hình

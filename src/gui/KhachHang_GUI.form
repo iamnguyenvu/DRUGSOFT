@@ -494,9 +494,9 @@
                       <Component id="tfTim" min="-2" pref="727" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnTim" min="-2" pref="212" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="183" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="btnThem" min="-2" pref="179" max="-2" attributes="0"/>
-                      <EmptySpace pref="0" max="32767" attributes="0"/>
+                      <EmptySpace pref="68" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

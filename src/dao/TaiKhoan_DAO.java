@@ -132,4 +132,41 @@ public class TaiKhoan_DAO {
         }
         return false;
     }
+    
+    public String getTenDangNhapByEmail(String email) {
+        String sql = "SELECT tk.tenDangNhap " +
+                     "FROM TaiKhoan tk " +
+                     "JOIN NhanVien nv ON tk.tenDangNhap = nv.maNV " +
+                     "WHERE nv.email = ?";
+        try (Connection con = connectDB.accessDataBase();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("tenDangNhap");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // Phương thức cập nhật mật khẩu trong cơ sở dữ liệu
+    public boolean updatePassword(String tenDangNhap, String newPassword) {
+        String sql = "UPDATE TaiKhoan SET matKhau = ? WHERE tenDangNhap = ?";
+        try (Connection con = connectDB.accessDataBase();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, newPassword);  // Gán mật khẩu mới
+            ps.setString(2, tenDangNhap);  // Gán tên đăng nhập
+            int rowsUpdated = ps.executeUpdate();  // Thực hiện cập nhật
+
+            return rowsUpdated > 0;  // Trả về true nếu cập nhật thành công
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;  // Trả về false nếu có lỗi
+        }
+    }
+
 }
