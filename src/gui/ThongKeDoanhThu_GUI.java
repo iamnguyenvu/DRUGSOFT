@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,7 +36,7 @@ public class ThongKeDoanhThu_GUI extends SimpleForm {
         pnCenter.setLayout(null);
         
         pnContent = new JPanel();
-        pnContent.setBounds(10, 129, 1480, 671);
+        pnContent.setBounds(10, 89, 1480, 711);
         pnCenter.add(pnContent);
         pnContent.setLayout(new BorderLayout(0, 0));
         
@@ -44,14 +45,14 @@ public class ThongKeDoanhThu_GUI extends SimpleForm {
         panel.setLayout(null);
         panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         panel.setBackground(new Color(11,101,136));
-        panel.setBounds(10, 10, 1490, 119);
+        panel.setBounds(10, 10, 1490, 69);
         pnCenter.add(panel);
         
         RoundedPanel panel_2 = new RoundedPanel(50);
         panel_2.setLayout(null);
         panel_2.setBorder(null);
         panel_2.setBackground(new Color(11,101,136));
-        panel_2.setBounds(258, 24, 1212, 69);
+        panel_2.setBounds(255, 0, 1212, 69);
         panel.add(panel_2);
         
         btnSoLuongGiaoDich = new JButton("Số Lượng Giao Dịch Nhân Viên");
@@ -86,7 +87,7 @@ public class ThongKeDoanhThu_GUI extends SimpleForm {
         lblNewLabel.setForeground(new Color(255, 255, 255));
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 20));
         lblNewLabel.setBackground(Color.WHITE);
-        lblNewLabel.setBounds(10, 24, 215, 69);
+        lblNewLabel.setBounds(10, 0, 215, 69);
         panel.add(lblNewLabel);
         
         

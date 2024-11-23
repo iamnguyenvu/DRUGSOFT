@@ -2,6 +2,8 @@ package nguyenvu.menu;
 
 import java.awt.Color;
 
+
+
 import java.awt.Component;
 
 import javax.swing.Icon;
@@ -16,6 +18,7 @@ import gui.BanHang;
 import gui.DoiTra;
 import gui.HoaDon;
 import gui.DonDoiTra;
+import gui.GDThongKeMoi;
 import gui.SanPham;
 import gui.SanPhamDoiTra;
 import gui.ThongKeDoanhThu_GUI;
@@ -290,6 +293,9 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                         }
                         if (index[1] == 0) {
                             FormManager.showForm(new ThongKeDoanhThu_GUI());
+                        }
+                        if (index[1] == 2) {
+                            FormManager.showForm(new GDThongKeMoi());
                         }
                     }
                 }
