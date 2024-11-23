@@ -6,6 +6,8 @@ import com.raven.chart.Chart;
 import com.raven.chart.ModelChart;
 
 import nguyenvu.components.SimpleForm;
+import nguyenvu.model.ModelData;
+import nguyenvu.model.ModelDataSP;
 
 import java.awt.Color;
 import java.awt.Desktop;
@@ -52,8 +54,6 @@ import com.toedter.calendar.JDateChooser;
 
 import connectDB.connectDB;
 import dao.ThongKe_DAO;
-import entity.ModelData;
-import entity.ModelDataSP;
 import entity.SanPham_entity;
 
 import javax.swing.JRadioButton;

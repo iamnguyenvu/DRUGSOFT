@@ -48,6 +48,7 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -69,17 +70,23 @@ import nguyenvu.components.SimpleForm;
 import nguyenvu.utils.ButtonEditor;
 import nguyenvu.utils.ButtonRenderer;
 import nguyenvu.utils.DeleteButtonPanel;
+import nguyenvu.utils.HeaderRenderer;
 import nguyenvu.utils.RoundedPanel;
 import raven.alerts.MessageAlerts;
 
 import javax.swing.border.EtchedBorder;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import nguyenvu.utils.RoundedTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 
 public class SanPham extends SimpleForm implements ActionListener,MouseListener {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField tf_timKiem;
+	private RoundedTextField tf_timKiem;
 	public JTable tb_SanPham;
 	public DefaultTableModel dftb_SanPham;
 	private JButton btn_Add;
@@ -90,7 +97,7 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 	private JButton btnXuatEx;
 	private formCapNhatSanPham updateForm;
 	private int currentPage = 1;
-	private final int rowsPerPage = 10;
+	private final int rowsPerPage = 9;
 	private int totalPages = 0;
 	private JLabel lblPageIndicator;
 
@@ -108,116 +115,14 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 		JPanel pnContent = new JPanel();
 		pnContent.setBackground(new Color(240, 240, 240,0));
 		add(pnContent, BorderLayout.CENTER);
-		pnContent.setLayout(new BorderLayout(0, 0));
-
-		RoundedPanel pnHeading = new RoundedPanel(50);
-		pnHeading.setBackground(new Color(11,101,136));
-		pnHeading.setPreferredSize(new Dimension(10, 70));
-		pnContent.add(pnHeading, BorderLayout.NORTH);
-		pnHeading.setLayout(null);
-		
-//		tbDark = new TableDark();
-		tf_timKiem = new JTextField();
-		tf_timKiem.setFont(new Font("Arial", Font.PLAIN, 15));
-		tf_timKiem.setBackground(new Color(11, 101, 136));
-		tf_timKiem.setBounds(240, 16, 537, 32);
-		pnHeading.add(tf_timKiem);
-		tf_timKiem.setColumns(10);
+		pnContent.setLayout(null);
 		// Tạo đường viền chỉ có phía dưới
 		Border bottomBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK);
-		tf_timKiem.setBorder(bottomBorder);
-
-		// Placeholder behavior khi JTextField mất hoặc có focus
-		tf_timKiem.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				if (tf_timKiem.getText().equals("Nhập Tên Hoặc Mã Sản Phẩm")) {
-					tf_timKiem.setText("");
-					tf_timKiem.setForeground(Color.GRAY); // Đặt lại màu văn bản xám cho placeholder
-				} else {
-					tf_timKiem.setForeground(Color.BLACK); // Đặt màu văn bản bình thường nếu có nội dung
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (tf_timKiem.getText().equals("")) {
-					tf_timKiem.setForeground(Color.GRAY);
-					tf_timKiem.setText("Nhập Tên Hoặc Mã Sản Phẩm"); // Nếu không có nội dung thì để trống
-				}
-			}
-		});
-
-		// Khởi tạo với placeholder
-		tf_timKiem.setText("Nhập Tên Hoặc Mã Sản Phẩm"); // Hiện placeholder
-		tf_timKiem.setForeground(new Color(255, 255, 255)); // Đặt màu xám cho văn bản placeholder
-
-		JButton btn_Search = new JButton(new FlatSVGIcon("gui/icon/search_123.svg", 0.6f));
-		btn_Search.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String searchText = tf_timKiem.getText().trim();
-				if (searchText.equals("") || searchText.equals("Nhập Tên Hoặc Mã Sản Phẩm")) {
-//					docDuLieuVaoTable();
-					docDuLieuVaoTable(currentPage, rowsPerPage);
-				} else {
-					dftb_SanPham.setRowCount(0);
-					List<SanPham_entity> filteredProducts = sp_dao.timKiemSanPham(searchText);
-					for (SanPham_entity product : filteredProducts) {
-						dftb_SanPham.addRow(new Object[] { product.getMaSP(), product.getTenSP(), product.getSoLuong(),
-								product.getNgaySanXuat(), product.getNgayHetHan(), product.getKhoiLuong(),
-								product.getDonViTinh(), product.getNhaCungCap(), product.getGia(),
-
-								product.getThanhPhan(),
-
-								product.getCongDung(), product.getHinhAnhSP(), product.getLoaiSanPham().getMaLoaiSP(),product.getThue()
-								// Add actions for Update and Delete as necessary
-						});
-					}
-				}
-
-			}
-		});
-
-		btn_Search.setBounds(787, 16, 47, 32);
-		pnHeading.add(btn_Search);
-
-		btn_Add = new JButton(new FlatSVGIcon("gui/icon/add.svg", 0.03f));
-		btn_Add.addActionListener(new ActionListener() {
-			private formThemSanPham themSanPhamPanel;
-
-			public void actionPerformed(ActionEvent e) {
-				// Tạo JDialog chứa formThemSanPham
-				JDialog dialog = new JDialog();
-
-				// Thêm formThemSanPham vào dialog
-				themSanPhamPanel = new formThemSanPham(SanPham.this);
-				dialog.getContentPane().add(themSanPhamPanel);
-
-				// Đặt kích thước cho dialog (phù hợp với formThemSanPham)
-				dialog.setSize(1150, 800);
-
-				// Căn giữa màn hình
-				dialog.setLocationRelativeTo(null);
-
-				// Thiết lập đóng form khi nhấn nút "X"
-				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
-				// Hiển thị dialog
-				dialog.setVisible(true);
-			}
-		});
-		btn_Add.setBounds(1242, 16, 58, 32);
-		pnHeading.add(btn_Add);
-		
-		btnXuatEx = new JButton("Xuất File Excel");
-		btnXuatEx.setFont(new Font("Arial", Font.BOLD, 12));
-		btnXuatEx.setBounds(1334, 16, 125, 32);
-		btnXuatEx.addActionListener(this);
-		pnHeading.add(btnXuatEx);
 
 		JPanel pnCenter = new JPanel();
+		pnCenter.setBounds(0, 49, 1500, 751);
 		pnCenter.setBackground(new Color(240, 240, 240,0));
-		pnContent.add(pnCenter, BorderLayout.CENTER);
+		pnContent.add(pnCenter);
 		pnCenter.setLayout(null);
 
 		String[] columnNames = { "Mã Sản Phẩm", "Tên Sản Phẩm", "Giá","Loại Sản Phẩm","Thuế", "Cập Nhật", "Xóa" };
@@ -225,7 +130,7 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 		dftb_SanPham = new DefaultTableModel(columnNames, 0); // columnNames là mảng chứa tên cột
 		tb_SanPham = new JTable(dftb_SanPham);
 		tb_SanPham.setForeground(new Color(0, 0, 0));
-		tb_SanPham.setFont(new Font("Arial", Font.PLAIN, 12));
+		tb_SanPham.setFont(new Font("Arial", Font.PLAIN, 13));
 		tb_SanPham.setModel(dftb_SanPham);
 		tb_SanPham.addMouseListener(new MouseAdapter() {
 		    @Override
@@ -297,6 +202,18 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 			tb_SanPham.getColumnModel().getColumn(6).setResizable(false);
 			tb_SanPham.getColumnModel().getColumn(6).setPreferredWidth(40);
 		}
+		tb_SanPham.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+		tb_SanPham.getTableHeader().setPreferredSize(new Dimension(tb_SanPham.getWidth(), 40));
+		tb_SanPham.getTableHeader().setBackground(new Color(11,101,136));
+		tb_SanPham.getTableHeader().setForeground(Color.WHITE);
+		
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		for (int i = 0; i < tb_SanPham.getColumnCount(); i++) {
+			tb_SanPham.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+		}
+
+
 
 		
 		
@@ -372,7 +289,7 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 
 		JScrollPane scp_SanPham = new JScrollPane(tb_SanPham);
 		scp_SanPham.setBackground(new Color(240, 240, 240,0));
-		scp_SanPham.setBounds(23, 20, 1107, 629);
+		scp_SanPham.setBounds(23, 60, 1107, 589);
 		pnCenter.add(scp_SanPham);
 
 		// đưa dữ liệu từ database vào table
@@ -440,19 +357,19 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 		pnCenter.add(panel);
 		panel.setLayout(null);
 		
-		JButton btnFirst = new JButton((new FlatSVGIcon("gui/icon/first-page.svg",0.04f)));
+		JButton btnFirst = new JButton((new FlatSVGIcon("gui/icon/first-page.svg",0.03f)));
 		btnFirst.setBounds(10, 10, 67, 37);
 		panel.add(btnFirst);
 		
-		JButton btnPrevious = new JButton((new FlatSVGIcon("gui/icon/pre-page.svg",0.03f)));
+		JButton btnPrevious = new JButton((new FlatSVGIcon("gui/icon/pre-page.svg",0.02f)));
 		btnPrevious.setBounds(90, 10, 67, 37);
 		panel.add(btnPrevious);
 		
-		JButton btnNext = new JButton((new FlatSVGIcon("gui/icon/next-page.svg",0.04f)));
+		JButton btnNext = new JButton((new FlatSVGIcon("gui/icon/next-page.svg",0.02f)));
 		btnNext.setBounds(242, 10, 67, 37);
 		panel.add(btnNext);
 		
-		JButton btnLast = new JButton((new FlatSVGIcon("gui/icon/last-page.svg",0.04f)));
+		JButton btnLast = new JButton((new FlatSVGIcon("gui/icon/last-page.svg",0.03f)));
 		btnLast.setBounds(319, 10, 67, 37);
 		panel.add(btnLast);
 		
@@ -460,6 +377,141 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 		lblPageIndicator.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblPageIndicator.setBounds(174, 10, 45, 37);
 		panel.add(lblPageIndicator);
+										
+										JLabel jLabel1 = new JLabel();
+										jLabel1.setText("Sản phẩm Bán Hàng");
+										jLabel1.setForeground(new Color(11, 101, 136));
+										jLabel1.setFont(new Font("Arial", Font.BOLD, 24));
+										jLabel1.setBounds(23, 20, 247, 30);
+										pnCenter.add(jLabel1);
+										
+										
+										RoundedPanel pnHeader = new RoundedPanel(30);
+										pnHeader.setPreferredSize(new Dimension(1522, 50));
+										pnHeader.setBackground(new Color(11, 101, 136));
+										pnHeader.setBounds(0, 0, 1522, 50);
+										pnContent.add(pnHeader);
+										
+//		tbDark = new TableDark();
+										tf_timKiem = new RoundedTextField(40);
+//										tf_timKiem = new JTextField();
+										tf_timKiem.setFont(new Font("Arial", Font.PLAIN, 15));
+										tf_timKiem.setBackground(new Color(255, 255, 255));
+										tf_timKiem.setColumns(10);
+										
+												// Placeholder behavior khi JTextField mất hoặc có focus
+												tf_timKiem.addFocusListener(new FocusAdapter() {
+													@Override
+													public void focusGained(FocusEvent e) {
+														if (tf_timKiem.getText().equals("Nhập Tên Hoặc Mã Sản Phẩm")) {
+															tf_timKiem.setText("");
+															tf_timKiem.setForeground(Color.GRAY); // Đặt lại màu văn bản xám cho placeholder
+														} else {
+															tf_timKiem.setForeground(Color.BLACK); // Đặt màu văn bản bình thường nếu có nội dung
+														}
+													}
+										
+													@Override
+													public void focusLost(FocusEvent e) {
+														if (tf_timKiem.getText().equals("")) {
+															tf_timKiem.setForeground(Color.GRAY);
+															tf_timKiem.setText("Nhập Tên Hoặc Mã Sản Phẩm"); // Nếu không có nội dung thì để trống
+														}
+													}
+												});
+												
+														// Khởi tạo với placeholder
+														tf_timKiem.setText("Nhập Tên Hoặc Mã Sản Phẩm"); // Hiện placeholder
+														tf_timKiem.setForeground(new Color(0, 0, 0)); // Đặt màu xám cho văn bản placeholder
+										
+												btn_Add = new JButton(new FlatSVGIcon("gui/icon/add.svg", 0.03f));
+												btn_Add.setBackground(new Color(255, 255, 255));
+												btn_Add.addActionListener(new ActionListener() {
+													private formThemSanPham themSanPhamPanel;
+
+													public void actionPerformed(ActionEvent e) {
+														// Tạo JDialog chứa formThemSanPham
+														JDialog dialog = new JDialog();
+
+														// Thêm formThemSanPham vào dialog
+														themSanPhamPanel = new formThemSanPham(SanPham.this);
+														dialog.getContentPane().add(themSanPhamPanel);
+
+														// Đặt kích thước cho dialog (phù hợp với formThemSanPham)
+														dialog.setSize(1150, 800);
+
+														// Căn giữa màn hình
+														dialog.setLocationRelativeTo(null);
+
+														// Thiết lập đóng form khi nhấn nút "X"
+														dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+														// Hiển thị dialog
+														dialog.setVisible(true);
+													}
+												});
+										
+										btnXuatEx = new JButton("Xuất File Excel");
+										btnXuatEx.setBackground(new Color(255, 255, 255));
+										btnXuatEx.setFont(new Font("Arial", Font.BOLD, 12));
+										btnXuatEx.addActionListener(this);
+										
+												JButton btn_Search = new JButton();
+												btn_Search.setBackground(new Color(255, 255, 255));
+												btn_Search.setText("Tìm kiếm");
+												btn_Search.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+												btn_Search.addActionListener(new ActionListener() {
+													public void actionPerformed(ActionEvent e) {
+														String searchText = tf_timKiem.getText().trim();
+														if (searchText.equals("") || searchText.equals("Nhập Tên Hoặc Mã Sản Phẩm")) {
+															docDuLieuVaoTable(currentPage, rowsPerPage);
+														} else {
+															dftb_SanPham.setRowCount(0);
+															List<SanPham_entity> filteredProducts = sp_dao.timKiemSanPham(searchText);
+															for (SanPham_entity product : filteredProducts) {
+																dftb_SanPham.addRow(new Object[] { product.getMaSP(), product.getTenSP(), product.getSoLuong(),
+																		product.getNgaySanXuat(), product.getNgayHetHan(), product.getKhoiLuong(),
+																		product.getDonViTinh(), product.getNhaCungCap(), product.getGia(),
+
+																		product.getThanhPhan(),
+
+																		product.getCongDung(), product.getHinhAnhSP(), product.getLoaiSanPham().getMaLoaiSP(),product.getThue()
+																		// Add actions for Update and Delete as necessary
+																});
+															}
+														}
+
+													}
+												});
+										
+										
+										GroupLayout gl_pnHeader = new GroupLayout(pnHeader);
+										gl_pnHeader.setHorizontalGroup(
+											gl_pnHeader.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_pnHeader.createSequentialGroup()
+													.addGap(21)
+													.addComponent(tf_timKiem, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
+													.addGap(18)
+													.addComponent(btn_Search, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+													.addPreferredGap(ComponentPlacement.RELATED, 778, Short.MAX_VALUE)
+													.addComponent(btn_Add, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
+													.addGap(30)
+													.addComponent(btnXuatEx, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+													.addGap(42))
+										);
+										gl_pnHeader.setVerticalGroup(
+											gl_pnHeader.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_pnHeader.createSequentialGroup()
+													.addContainerGap()
+													.addGroup(gl_pnHeader.createParallelGroup(Alignment.LEADING)
+														.addComponent(btn_Add, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+														.addComponent(btnXuatEx, GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+														.addGroup(gl_pnHeader.createParallelGroup(Alignment.LEADING, false)
+															.addComponent(btn_Search, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+															.addComponent(tf_timKiem, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
+													.addContainerGap())
+										);
+										pnHeader.setLayout(gl_pnHeader);
 
 		ButtonGroup group_ngsx = new ButtonGroup();
 
@@ -499,12 +551,10 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-//				docDuLieuVaoTable();
 				docDuLieuVaoTable(currentPage, rowsPerPage);
 
 			}
 		});
-//		docDuLieuVaoTable();
 		docDuLieuVaoTable(currentPage, rowsPerPage);
 
 	}
@@ -520,43 +570,6 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 	}
 
 
-//	public void docDuLieuVaoTable() {
-//		dftb_SanPham.setRowCount(0); // Clear the current table model
-//		List<SanPham_entity> products = sp_dao.getAllSanPham(); // Assume this method exists
-//
-//		// Filtering based on selected product type
-//		String selectedType = cb_LocTheoLoai.getSelectedItem().toString();
-//
-//		if (!selectedType.equalsIgnoreCase("Tất cả")) {
-//			products = products.stream().filter(sp -> sp.getLoaiSanPham().getMaLoaiSP().equalsIgnoreCase(selectedType))
-//					.collect(Collectors.toList());
-//		}
-//
-//		// Sorting based on selected options
-//		Comparator<SanPham_entity> comparator = null;
-//
-//
-//		// Check price sorting option
-//		if (radio_giaTuThapDenCao.isSelected()) {
-//			comparator = (comparator == null) ? Comparator.comparingDouble(SanPham_entity::getGia)
-//					: comparator.thenComparing(Comparator.comparingDouble(SanPham_entity::getGia));
-//		} else if (radio_giaTuCaoDenThap.isSelected()) {
-//			comparator = (comparator == null) ? Comparator.comparingDouble(SanPham_entity::getGia).reversed()
-//					: comparator.thenComparing(Comparator.comparingDouble(SanPham_entity::getGia).reversed());
-//		}
-//
-//
-//		// Apply sorting if comparator is defined
-//		if (comparator != null) {
-//			products.sort(comparator);
-//		}
-//
-//		for (SanPham_entity product : products) {
-//			dftb_SanPham.addRow(new Object[] { product.getMaSP(), product.getTenSP(), product.getGia(), product.getLoaiSanPham().getMaLoaiSP(),product.getThue(),
-//					// Add actions for Update and Delete as necessary
-//			});
-//		}
-//	}
 	public void docDuLieuVaoTable(int currentPage, int rowsPerPage) {
 	    dftb_SanPham.setRowCount(0); // Xóa dữ liệu hiện tại trong bảng
 	    List<SanPham_entity> products = sp_dao.getAllSanPham();

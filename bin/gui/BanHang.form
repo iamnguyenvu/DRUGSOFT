@@ -55,9 +55,7 @@
                           <Component id="btnFilter" min="-2" pref="60" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="565" max="32767" attributes="0"/>
+                  <EmptySpace pref="781" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -66,21 +64,11 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtProductSearch" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="btnFilter" min="-2" pref="40" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Component id="layer" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="txtProductSearch" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnFilter" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="layer" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -118,13 +106,11 @@
           </Properties>
           <Events>
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtProductSearchFocusGained"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtProductSearchActionPerformed"/>
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtProductSearchKeyReleased"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="//txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder());&#xa;&#xa;txtProductSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon(&quot;gui/icon/search.svg&quot;));&#xa;//txtSearch.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;//                + &quot;border:5,5,5,5,$Component.borderColor,,20&quot;);&#xa;txtProductSearch.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa; + &quot;showClearButton: true&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="txtProductSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon(&quot;gui/icon/search.svg&quot;));&#xa;txtProductSearch.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa; + &quot;showClearButton: true&quot;);&#xa;txtProductSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, &quot;[F2] Th&#xea;m s&#x1ea3;n ph&#x1ea9;m v&#xe0;o &#x111;&#x1a1;n&quot;);"/>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new RoundedTextField(40)"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtProductSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, &quot;[F2] Th&#xea;m s&#x1ea3;n ph&#x1ea9;m v&#xe0;o &#x111;&#x1a1;n&quot;);"/>
           </AuxValues>
         </Component>
         <Container class="javax.swing.JLayeredPane" name="layer">
@@ -164,21 +150,6 @@
               </SubComponents>
             </Container>
           </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="jPanel1">
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="210" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-          </Layout>
         </Container>
       </SubComponents>
     </Container>
@@ -714,6 +685,9 @@
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="new Color(0, 0, 0, 0)&#xa;    " type="code"/>
                     </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Segoe UI" size="24" style="1"/>
+                    </Property>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
                         <MatteColorBorder bottom="2" left="0" right="0" top="0">
@@ -984,13 +958,13 @@
                         <Column editable="false" title="M&#xe3; s&#x1ea3;n ph&#x1ea9;m" type="java.lang.Object"/>
                         <Column editable="false" title="T&#xea;n s&#x1ea3;n ph&#x1ea9;m" type="java.lang.Object"/>
                         <Column editable="false" title="&#x110;&#x1a1;n v&#x1ecb;" type="java.lang.Object"/>
-                        <Column editable="true" title="S&#x1ed1; l&#x1b0;&#x1a1;ng" type="java.lang.Object"/>
+                        <Column editable="true" title="S&#x1ed1; l&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
                         <Column editable="false" title="&#x110;&#x1a1;n gi&#xe1;" type="java.lang.Object"/>
                         <Column editable="false" title="Th&#xe0;nh ti&#x1ec1;n" type="java.lang.Object"/>
                         <Column editable="true" title="X&#xf3;a" type="java.lang.Object"/>
                       </Table>
                     </Property>
-                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="table.getColumnModel().getColumn(8).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());&#xa;table.getColumnModel().getColumn(8).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {&#xa;    @Override&#xa;    public void onDelete(int row) {&#xa;        if (row &gt;= 0 &amp;&amp; row &lt; table.getRowCount()) {&#xa;            ((DefaultTableModel) table.getModel()).removeRow(row);&#xa;            ((DefaultTableModel) table.getModel()).fireTableDataChanged();&#xa;        }&#xa;        for(int i = 0; i &lt; table.getRowCount(); ++i) {&#xa;            table.setValueAt(i+1, i, 0);&#xa;        }&#xa;        updateLblSoLuongSP();&#xa;    }&#xa;}));&#xa;&#xa;table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(this));&#xa;table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());&#xa;//table.setTableHeader(null);&#xa;table.getTableHeader().setDefaultRenderer(new HeaderRenderer());&#xa;table.getTableHeader().setBackground(new Color(11,101,136));&#xa;table.getTableHeader().setForeground(Color.WHITE);&#xa;table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));&#xa;table.getColumnModel().getColumn(1).setCellRenderer(new ImageRenderer());">
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="table.getColumnModel().getColumn(8).setCellRenderer(new nguyenvu.utils.TableDeleteCellRenderer());&#xa;table.getColumnModel().getColumn(8).setCellEditor(new TableDeleteCellEditor(new TableDeleteEvent() {&#xa;    @Override&#xa;    public void onDelete(int row) {&#xa;        if (row &gt;= 0 &amp;&amp; row &lt; table.getRowCount()) {&#xa;            ((DefaultTableModel) table.getModel()).removeRow(row);&#xa;            if (table.getRowCount() &gt; 0) {&#xa;                for (int i = 0; i &lt; table.getRowCount(); ++i) {&#xa;                    table.setValueAt(i + 1, i, 0);&#xa;                }&#xa;            } else {&#xa;                ((DefaultTableModel) table.getModel()).setRowCount(0);&#xa;            }&#xa;            ((DefaultTableModel) table.getModel()).fireTableDataChanged();&#xa;            updateLblSoLuongSP();&#xa;        }&#xa;    }&#xa;}));&#xa;&#xa;table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(this));&#xa;table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());&#xa;//table.setTableHeader(null);&#xa;table.getTableHeader().setDefaultRenderer(new HeaderRenderer());&#xa;table.getTableHeader().setBackground(new Color(11,101,136));&#xa;table.getTableHeader().setForeground(Color.WHITE);&#xa;table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));&#xa;table.getColumnModel().getColumn(1).setCellRenderer(new ImageRenderer());&#xa;&#xa;DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();&#xa;centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);&#xa;table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);">
                       <TableColumnModel selectionModel="0">
                         <Column maxWidth="-1" minWidth="-1" prefWidth="30" resizable="false">
                           <Title/>
@@ -1017,7 +991,7 @@
                           <Editor/>
                           <Renderer/>
                         </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="50" resizable="false">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="60" resizable="false">
                           <Title/>
                           <Editor/>
                           <Renderer/>
@@ -1038,9 +1012,6 @@
                           <Renderer/>
                         </Column>
                       </TableColumnModel>
-                    </Property>
-                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[675, 500]"/>
                     </Property>
                     <Property name="rowHeight" type="int" value="60"/>
                     <Property name="rowSelectionAllowed" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">

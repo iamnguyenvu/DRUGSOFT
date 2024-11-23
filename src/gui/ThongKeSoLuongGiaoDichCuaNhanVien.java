@@ -6,6 +6,10 @@ import com.raven.chart.Chart;
 import com.raven.chart.ModelChart;
 
 import nguyenvu.components.SimpleForm;
+import nguyenvu.model.ModalDataSoLuongGiaoDich;
+import nguyenvu.model.ModelData;
+import nguyenvu.model.ModelDataSP;
+import nguyenvu.model.SoLuongGiaoDichNV;
 import raven.alerts.MessageAlerts;
 
 import java.awt.Color;
@@ -42,11 +46,7 @@ import connectDB.connectDB;
 import dao.ThongKe_DAO;
 import entity.DoanhSoBanHangNV;
 import entity.HoaDon_entity;
-import entity.ModalDataSoLuongGiaoDich;
-import entity.ModelData;
-import entity.ModelDataSP;
 import entity.SanPham_entity;
-import entity.SoLuongGiaoDichNV;
 
 import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
@@ -65,11 +65,7 @@ import java.awt.event.ActionEvent;
 public class ThongKeSoLuongGiaoDichCuaNhanVien extends SimpleForm{
 
     private Chart chart;
-	private JButton btnTruyVan;
 	private JPanel pnCenter;
-	private JDateChooser dcNgayBatDau;
-	private JDateChooser dcNgayKetThuc;
-	private JButton btnXuatExcel;
 	private ThongKe_DAO tk_Dao;
 
 	/**
@@ -77,90 +73,13 @@ public class ThongKeSoLuongGiaoDichCuaNhanVien extends SimpleForm{
      */
     public ThongKeSoLuongGiaoDichCuaNhanVien() {
     	tk_Dao = new ThongKe_DAO();
-		setPreferredSize(new Dimension(1500, 660));
+		setPreferredSize(new Dimension(1041, 668));
         initComponents();
         setBackground(new Color(240, 240, 240,0));
-        setLayout(null);
+        setLayout(new BorderLayout(0, 0));
         add(pnCenter);
         
-        JPanel panel_1 = new JPanel();
-        panel_1.setBackground(new Color(255, 255, 255));
-        panel_1.setLayout(null);
-        panel_1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        panel_1.setBounds(0, 10, 1490, 137);
-        pnCenter.add(panel_1);
-        
-        JLabel lblNewLabel_1 = new JLabel("Thời Gian");
-        lblNewLabel_1.setForeground(new Color(0, 0, 0));
-        lblNewLabel_1.setBackground(new Color(255, 255, 255));
-        lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 18));
-        lblNewLabel_1.setBounds(10, 10, 196, 34);
-        panel_1.add(lblNewLabel_1);
-        
-        JLabel lblNewLabel_2 = new JLabel("Ngày Bắt Đầu");
-        lblNewLabel_2.setForeground(new Color(0, 0, 0));
-        lblNewLabel_2.setBackground(new Color(255, 255, 255));
-        lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 15));
-        lblNewLabel_2.setBounds(106, 72, 100, 34);
-        panel_1.add(lblNewLabel_2);
-        
-        dcNgayBatDau = new JDateChooser();
-        dcNgayBatDau.setDateFormatString("dd-MM-yyyy");
-        dcNgayBatDau.setBackground(new Color(255, 255, 255));
-        dcNgayBatDau.setBounds(227, 72, 296, 34);
-        panel_1.add(dcNgayBatDau);
-        
-        JLabel lblNewLabel_2_1 = new JLabel("Ngày Kết Thúc");
-        lblNewLabel_2_1.setForeground(new Color(0, 0, 0));
-        lblNewLabel_2_1.setBackground(new Color(255, 255, 255));
-        lblNewLabel_2_1.setFont(new Font("Arial", Font.PLAIN, 15));
-        lblNewLabel_2_1.setBounds(549, 72, 100, 34);
-        panel_1.add(lblNewLabel_2_1);
-        
         Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
-        
-        dcNgayKetThuc = new JDateChooser();
-        dcNgayKetThuc.setDateFormatString("dd-MM-yyyy");
-        dcNgayKetThuc.setBackground(new Color(255, 255, 255));
-        dcNgayKetThuc.setBounds(659, 72, 296, 34);
-        dcNgayBatDau.setBackground(new Color(255, 255, 255));
-        dcNgayBatDau.getDateEditor().getUiComponent().setBackground(new Color(255, 255, 255));
-        dcNgayKetThuc.setBackground(new Color(255, 255, 255));
-        dcNgayKetThuc.getDateEditor().getUiComponent().setBackground(new Color(255, 255, 255));
-        
-        dcNgayBatDau.setBorder(border);
-        dcNgayKetThuc.setBorder(border);
-        panel_1.add(dcNgayKetThuc);
-        btnTruyVan = new javax.swing.JButton();
-        btnTruyVan.setForeground(new Color(0, 0, 0));
-        btnTruyVan.setBackground(new Color(255, 255, 255));
-        btnTruyVan.setFont(new Font("Arial", Font.PLAIN, 15));
-        btnTruyVan.setBounds(1162, 72, 115, 34);
-        panel_1.add(btnTruyVan);
-        
-                btnTruyVan.setText("Truy Vấn");
-                
-                btnXuatExcel = new JButton("Xuất File");
-                btnXuatExcel.addActionListener(new ActionListener() {
-                	public void actionPerformed(ActionEvent e) {
-                		try {
-							xuatExcel();
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-                	}
-                });
-                btnXuatExcel.setForeground(new Color(0, 0, 0));
-                btnXuatExcel.setBackground(new Color(255, 255, 255));
-                btnXuatExcel.setFont(new Font("Arial", Font.PLAIN, 15));
-                btnXuatExcel.setBounds(1325, 72, 100, 34);
-                panel_1.add(btnXuatExcel);
-                btnTruyVan.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jButton1ActionPerformed(evt);
-                    }
-                });
         chart.addLegend(null, new Color(135, 189, 245));
         themData();
         chart.start();
@@ -177,35 +96,14 @@ public class ThongKeSoLuongGiaoDichCuaNhanVien extends SimpleForm{
         
         pnCenter = new JPanel();
         pnCenter.setBackground(new Color(240, 240, 240,0));
-        pnCenter.setBounds(0, 0, 1500, 661);
-        pnCenter.setLayout(null);
+                        pnCenter.setLayout(new BorderLayout(0, 0));
                 
                         chart = new com.raven.chart.Chart();
                         chart.setBackground(new Color(255, 255, 255));
-                        chart.setBounds(0, 157, 1490, 494);
                         pnCenter.add(chart);
                         
                                 chart.setFont(new Font("Arial", Font.PLAIN, 12));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // Lấy giá trị từ JDateChooser
-        java.util.Date startDate = dcNgayBatDau.getDate();
-        java.util.Date endDate = dcNgayKetThuc.getDate();
-        
-        if (startDate == null && endDate == null) {
-    		themData();
-        } else if (startDate != null && endDate == null) {
-            MessageAlerts.getInstance().showMessage("Lỗi", "Vui Lòng Nhập Vào Ngày Kết Thúc!", MessageAlerts.MessageType.ERROR);
-            return;
-        } else if (startDate == null && endDate != null) {
-            MessageAlerts.getInstance().showMessage("Lỗi", "Vui Lòng Nhập Vào Ngày Bắt Đầu!", MessageAlerts.MessageType.ERROR);
-            return;
-        } else {
-        	 themData(startDate, endDate);
-        }
-       
-    }
 
     private void themData(java.util.Date startDate, java.util.Date endDate) {
         Connection connection = null; // Declare connection variable
@@ -316,73 +214,73 @@ public class ThongKeSoLuongGiaoDichCuaNhanVien extends SimpleForm{
         }
     }
 
-    private void xuatExcel() throws SQLException {
-        // Lấy dữ liệu từ JDateChooser và JComboBox
-        Date startDate = dcNgayBatDau.getDate();
-        Date endDate = dcNgayKetThuc.getDate();
-        ArrayList<SoLuongGiaoDichNV> dsList;
-        
-        if (startDate == null && endDate == null) {
-        	dsList = tk_Dao.laySoLuongGiaoDichNV();
-        } else if (startDate != null && endDate == null) {
-            MessageAlerts.getInstance().showMessage("Lỗi", "Vui Lòng Nhập Vào Ngày Kết Thúc!", MessageAlerts.MessageType.ERROR);
-            return;
-        } else if (startDate == null && endDate != null) {
-            MessageAlerts.getInstance().showMessage("Lỗi", "Vui Lòng Nhập Vào Ngày Bắt Đầu!", MessageAlerts.MessageType.ERROR);
-            return;
-        } else {
-        	dsList = tk_Dao.laySoLuongGiaoDichNV(startDate, endDate);
-        }
-
-        // Thực hiện logic để lấy danh sách sản phẩm theo tiêu chí lọc
-        
-		
-		// Tạo workbook và sheet
-		XSSFWorkbook workbook = new XSSFWorkbook();
-		XSSFSheet sheet = workbook.createSheet("Danh sách Số Lượng Giao Dịch Của Nhân Viên");
-
-		// Tạo tiêu đề cột
-		XSSFRow headerRow = sheet.createRow(0);
-		headerRow.createCell(0).setCellValue("Mã Nhân Viên");
-		headerRow.createCell(1).setCellValue("Họ Tên Nhân Viên");
-		headerRow.createCell(2).setCellValue("Số Lượng Giao Dịch");
-
-		
-		// Thêm dữ liệu vào sheet
-		int rowNum = 1;
-		for (SoLuongGiaoDichNV ds : dsList) {
-		    XSSFRow row = sheet.createRow(rowNum++);
-		    row.createCell(0).setCellValue(ds.getMaNV());
-		    row.createCell(1).setCellValue(ds.getHotenNV());
-		    row.createCell(2).setCellValue(ds.getSoLuongDD());
-		    
-		}
-
-		// Hiển thị JFileChooser để chọn vị trí lưu file
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setDialogTitle("Chọn nơi lưu file Excel");
-		fileChooser.setSelectedFile(new File("ThongKeSoLuongGiaoDichCuaNhanVien.xlsx")); // Đặt tên file mặc định
-
-		int userSelection = fileChooser.showSaveDialog(null);
-		if (userSelection == JFileChooser.APPROVE_OPTION) {
-		    File fileToSave = fileChooser.getSelectedFile();
-		    try (FileOutputStream fileOut = new FileOutputStream(fileToSave)) {
-		        workbook.write(fileOut);
-		        JOptionPane.showMessageDialog(null, "Xuất Excel thành công!");
-		    } catch (IOException ex) {
-		        JOptionPane.showMessageDialog(null, "Lỗi xuất Excel: " + ex.getMessage());
-		    }
-		} else {
-		    JOptionPane.showMessageDialog(null, "Bạn đã hủy thao tác lưu file.");
-		}
-
-		try {
-			workbook.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} // Đảm bảo workbook được đóng
-    }
+//    private void xuatExcel() throws SQLException {
+//        // Lấy dữ liệu từ JDateChooser và JComboBox
+//        Date startDate = dcNgayBatDau.getDate();
+//        Date endDate = dcNgayKetThuc.getDate();
+//        ArrayList<SoLuongGiaoDichNV> dsList;
+//        
+//        if (startDate == null && endDate == null) {
+//        	dsList = tk_Dao.laySoLuongGiaoDichNV();
+//        } else if (startDate != null && endDate == null) {
+//            MessageAlerts.getInstance().showMessage("Lỗi", "Vui Lòng Nhập Vào Ngày Kết Thúc!", MessageAlerts.MessageType.ERROR);
+//            return;
+//        } else if (startDate == null && endDate != null) {
+//            MessageAlerts.getInstance().showMessage("Lỗi", "Vui Lòng Nhập Vào Ngày Bắt Đầu!", MessageAlerts.MessageType.ERROR);
+//            return;
+//        } else {
+//        	dsList = tk_Dao.laySoLuongGiaoDichNV(startDate, endDate);
+//        }
+//
+//        // Thực hiện logic để lấy danh sách sản phẩm theo tiêu chí lọc
+//        
+//		
+//		// Tạo workbook và sheet
+//		XSSFWorkbook workbook = new XSSFWorkbook();
+//		XSSFSheet sheet = workbook.createSheet("Danh sách Số Lượng Giao Dịch Của Nhân Viên");
+//
+//		// Tạo tiêu đề cột
+//		XSSFRow headerRow = sheet.createRow(0);
+//		headerRow.createCell(0).setCellValue("Mã Nhân Viên");
+//		headerRow.createCell(1).setCellValue("Họ Tên Nhân Viên");
+//		headerRow.createCell(2).setCellValue("Số Lượng Giao Dịch");
+//
+//		
+//		// Thêm dữ liệu vào sheet
+//		int rowNum = 1;
+//		for (SoLuongGiaoDichNV ds : dsList) {
+//		    XSSFRow row = sheet.createRow(rowNum++);
+//		    row.createCell(0).setCellValue(ds.getMaNV());
+//		    row.createCell(1).setCellValue(ds.getHotenNV());
+//		    row.createCell(2).setCellValue(ds.getSoLuongDD());
+//		    
+//		}
+//
+//		// Hiển thị JFileChooser để chọn vị trí lưu file
+//		JFileChooser fileChooser = new JFileChooser();
+//		fileChooser.setDialogTitle("Chọn nơi lưu file Excel");
+//		fileChooser.setSelectedFile(new File("ThongKeSoLuongGiaoDichCuaNhanVien.xlsx")); // Đặt tên file mặc định
+//
+//		int userSelection = fileChooser.showSaveDialog(null);
+//		if (userSelection == JFileChooser.APPROVE_OPTION) {
+//		    File fileToSave = fileChooser.getSelectedFile();
+//		    try (FileOutputStream fileOut = new FileOutputStream(fileToSave)) {
+//		        workbook.write(fileOut);
+//		        JOptionPane.showMessageDialog(null, "Xuất Excel thành công!");
+//		    } catch (IOException ex) {
+//		        JOptionPane.showMessageDialog(null, "Lỗi xuất Excel: " + ex.getMessage());
+//		    }
+//		} else {
+//		    JOptionPane.showMessageDialog(null, "Bạn đã hủy thao tác lưu file.");
+//		}
+//
+//		try {
+//			workbook.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} // Đảm bảo workbook được đóng
+//    }
 
 
 

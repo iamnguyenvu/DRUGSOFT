@@ -16,7 +16,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import connectDB.connectDB;
 import dao.ThongKe_DAO;
-import entity.ModelData;
+import nguyenvu.model.ModelData;
 import nguyenvu.utils.RoundedPanel;
 import raven.chart.ModelChart;
 import javax.swing.JLabel;
