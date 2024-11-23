@@ -5,20 +5,10 @@
 package gui;
 
 import bill.BillDTManeger;
-import bill.BillManeger;
-import bill.FieldBill;
 import bill.FieldBillDT;
-import bill.ParameterBill;
 import bill.ParameterBillDT;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.formdev.flatlaf.extras.components.FlatPopupMenu;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
 import dao.BanHang_DAO;
 import dao.DoiTra_DAO;
 import entity.ChiTietHoaDon;
@@ -563,7 +553,6 @@ cbbLyDo.addActionListener(new java.awt.event.ActionListener() {
         }
     });
     table.setCellSelectionEnabled(false);
-    table.setPreferredSize(new java.awt.Dimension(675, 500));
     table.setRowHeight(60);
     table.getTableHeader().setResizingAllowed(false);
     table.getTableHeader().setReorderingAllowed(false);
@@ -668,7 +657,7 @@ cbbLyDo.addActionListener(new java.awt.event.ActionListener() {
             String lyDo = txtLyDo.getText().isEmpty() ? (String) cbbLyDo.getSelectedItem() : txtLyDo.getText();
             System.out.println(lyDo);
             String loaiDT;
-            String billCode = dao.generateInvoiceCode();
+            String invoiceCode = dao.generateInvoiceCode();
             String date = getCurrentDate();
             double totalAmount = 0;
             
@@ -702,15 +691,38 @@ cbbLyDo.addActionListener(new java.awt.event.ActionListener() {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
             LocalDateTime issueDate = LocalDateTime.parse(date, formatter);
             
-            HoaDon_entity hd = new HoaDon_entity(billCode, issueDate, totalAmount, 0, ptThanhToan, true, kh.getSdtKH(), employeeId, loaiDT, lyDo);
+            HoaDon_entity hd = new HoaDon_entity(invoiceCode, issueDate, totalAmount, 0, ptThanhToan, true, kh.getSdtKH(), employeeId, loaiDT, lyDo);
             
             if(!dao.createHD(hd)) {
                 MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);
                 refresh();
                 return;
             } else {
+                for (int i = 0; i < tableExchange.getRowCount(); ++i) {
+                    String maSP = (String) tableExchange.getValueAt(i, 1);
+                    int quantity = (int) model.getValueAt(i, 3); 
+                    
+                    double totalValue = 0;
+                    
+                    if(loaiDT.equals("TraSanPham")) {
+                        double gia = dao.getSP(maSP).getGia();
+                        totalValue = gia * quantity;
+                    }
+                    else {
+                        if(!dao.updateSLSP(maSP, quantity)){
+                            System.out.println("Lỗi update số lượng sản phẩm");
+                        }
+                    }
+                    
+                    if(!BanHang_DAO.createCTHD(new ChiTietHoaDon(invoiceCode, maSP,
+                        (int) table.getValueAt(i, 3), totalValue))) {
+                        System.out.println("Lỗi insert cthd");
+                    }
+                    
+                }
+                
                 ParameterBillDT billData = new ParameterBillDT(date, employeeName, kh.getTenKH(), 
-                    kh.getSdtKH(), totalAmount, loai, lyDo, billCode, GenerateCode.generateQrcode(billCode), fields); 
+                    kh.getSdtKH(), totalAmount, loai, lyDo, invoiceCode, GenerateCode.generateQrcode(invoiceCode), fields); 
                 BillDTManeger.getInstance().printBill(billData);
             }
             refresh();

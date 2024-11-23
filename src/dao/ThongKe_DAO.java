@@ -888,7 +888,7 @@ public class ThongKe_DAO {
 	                int tongChiPhi = rs.getInt("tongChiPhi");
 	                int loiNhuan = rs.getInt("loiNhuan");
 
-	                DoanhSoBanHangModalData dsbh = new DoanhSoBanHangModalData("Tháng " + thang + "/" + nam, tongDoanhThu, tongChiPhi, loiNhuan);
+	                DoanhSoBanHangModalData dsbh = new DoanhSoBanHangModalData(thang + "/" + nam, tongDoanhThu, tongChiPhi, loiNhuan);
 	                List.add(dsbh);
 	            }
 	            rs.close();
@@ -923,7 +923,7 @@ public class ThongKe_DAO {
 	                int tongChiPhi = rs.getInt("tongChiPhi");
 	                int loiNhuan = rs.getInt("loiNhuan");
 
-	                DoanhSoBanHangModalData dsbh = new DoanhSoBanHangModalData("Tháng " + thang + "/" + nam, tongDoanhThu, tongChiPhi, loiNhuan);
+	                DoanhSoBanHangModalData dsbh = new DoanhSoBanHangModalData(thang + "/" + nam, tongDoanhThu, tongChiPhi, loiNhuan);
 	                List.add(dsbh);
 	            }
 	            rs.close();
@@ -962,7 +962,7 @@ public class ThongKe_DAO {
                 int tongChiPhi = rs.getInt("tongChiPhi");
                 int loiNhuan = rs.getInt("loiNhuan");
 
-                DoanhSoBanHangModalData dsbh = new DoanhSoBanHangModalData("Tháng " + thang, tongDoanhThu, tongChiPhi, loiNhuan);
+                DoanhSoBanHangModalData dsbh = new DoanhSoBanHangModalData(thang, tongDoanhThu, tongChiPhi, loiNhuan);
                 List.add(dsbh);
             }
 

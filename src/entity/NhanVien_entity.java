@@ -65,6 +65,13 @@ public class NhanVien_entity {
         this.maLoaiNV = maLoaiNV; // Khởi tạo mã loại nhân viên
     }
 
+    public NhanVien_entity(String maNV, String hoTenNV) {
+        this.maNV = maNV;
+        this.hoTenNV = hoTenNV;
+    }
+    
+    
+
     // Getter and Setter methods
     public String getMaNV() {
         return maNV;

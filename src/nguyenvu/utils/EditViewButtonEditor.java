@@ -13,19 +13,20 @@ import javax.swing.JTable;
  *
  * @author HP
  */
-public class TableDeleteCellEditor extends DefaultCellEditor{
-    private TableDeleteEvent ev;
+public class EditViewButtonEditor extends DefaultCellEditor{
+    private EditViewButtonEvent event;
 
-    public TableDeleteCellEditor(TableDeleteEvent ev) {
+    public EditViewButtonEditor(EditViewButtonEvent event) {
         super(new JCheckBox());
-        this.ev = ev;
+        this.event = event;
     }
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-        DeleteButtonPanel pn = new DeleteButtonPanel();
-        pn.initEvent(ev, row, table);
-//        pn.setBackground(table.getSelectionBackground());
+//        Component com = super.getTableCellEditorComponent(table, value, isSelected, row, column); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        EditViewButtonPanel pn = new EditViewButtonPanel();
+        pn.initEvent(event, row, table);
+        pn.setBackground(table.getSelectionBackground());
         return pn;
     }
 }

@@ -4,6 +4,7 @@ import java.awt.Color;
 
 
 
+
 import java.awt.Component;
 
 import javax.swing.Icon;
@@ -18,7 +19,6 @@ import gui.BanHang;
 import gui.DoiTra;
 import gui.HoaDon;
 import gui.DonDoiTra;
-import gui.GDThongKeMoi;
 import gui.SanPham;
 import gui.SanPhamDoiTra;
 import gui.ThongKeDoanhThu_GUI;
@@ -53,7 +53,6 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     
     private BanHang banHang;
     private DoiTra doiTra;
-    private DonDoiTra hoaDonDoiTra;
     private SanPhamDoiTra sanPhamDoiTra;
     private TrangChu trangChu;
 
@@ -62,7 +61,6 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
         trangChu = new TrangChu(user);
         banHang = new BanHang(user);
         doiTra = new DoiTra(user);
-        hoaDonDoiTra = new DonDoiTra();
         sanPhamDoiTra = new SanPhamDoiTra();
         SimpleHeaderData headerData = header.getSimpleHeaderData();
         headerData.setTitle(user.getName());
@@ -152,9 +150,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item("Sản phẩm", "calendar.svg")
             .subMenu("Sản phẩm bán hàng")
             .subMenu("Sản phẩm đổi trả"),
-            new Item("Hóa đơn", "forms.svg")
-            .subMenu("Hóa đơn bán hàng")
-            .subMenu("Hóa đơn đổi trả"),
+            new Item("Hóa đơn", "forms.svg"),
             new Item("Khách hàng", "ui.svg"),
             new Item("Nhân viên", "icon.svg"),        
             new Item("Tài khoản", "key.svg"),
@@ -251,6 +247,10 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                         FormManager.showForm(doiTra);
                     }
                     
+                    if (index[0] == 4) {
+                        FormManager.showForm(new HoaDon());
+                    }
+                    
                     if (index[0] == 5) {
                     	FormManager.showForm(new gui.KhachHang_GUI());
                     }
@@ -278,15 +278,6 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                         }
                     }
                     
-                    if (index[0] == 4) {
-                        if (index[1] == 0) {
-                            FormManager.showForm(new HoaDon());
-                        }
-                        if (index[1] == 1) {
-                            FormManager.showForm(hoaDonDoiTra);
-                        }
-                    }
-                    
                     if (index[0] == 8) {
                         if (index[1] == 1) {
                             FormManager.showForm(new ThongKeSanPham_GUI());
@@ -295,7 +286,6 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                             FormManager.showForm(new ThongKeDoanhThu_GUI());
                         }
                         if (index[1] == 2) {
-                            FormManager.showForm(new GDThongKeMoi());
                         }
                     }
                 }

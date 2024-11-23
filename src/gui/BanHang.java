@@ -102,6 +102,10 @@ public class BanHang extends SimpleForm {
         listProductSearch.addProductSelectListener(new ProductSelectListener() {
             @Override
             public void onProductSelected(SanPham_entity sp) {
+                if(sp.getSoLuong() < 1) {
+                    MessageAlerts.getInstance().showMessage("Cảnh báo", "Sản phẩm không đủ số lượng để thêm vào giỏ hàng!", MessageAlerts.MessageType.WARNING);
+                    return;
+                }
                 addProductToTable(sp);
                 menuProduct.setVisible(false);
                 txtProductSearch.requestFocusInWindow();
@@ -416,6 +420,7 @@ public class BanHang extends SimpleForm {
 
         txtTienKhachDua.setBackground(new Color(0, 0, 0, 0)
         );
+        txtTienKhachDua.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         txtTienKhachDua.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
         txtTienKhachDua.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -734,7 +739,6 @@ public class BanHang extends SimpleForm {
                 return canEdit [columnIndex];
             }
         });
-        table.setPreferredSize(new java.awt.Dimension(675, 500));
         table.setRowHeight(60);
         table.setRowSelectionAllowed(false);
         table.getTableHeader().setResizingAllowed(false);
@@ -752,7 +756,7 @@ public class BanHang extends SimpleForm {
             table.getColumnModel().getColumn(4).setResizable(false);
             table.getColumnModel().getColumn(4).setPreferredWidth(100);
             table.getColumnModel().getColumn(5).setResizable(false);
-            table.getColumnModel().getColumn(5).setPreferredWidth(50);
+            table.getColumnModel().getColumn(5).setPreferredWidth(60);
             table.getColumnModel().getColumn(6).setResizable(false);
             table.getColumnModel().getColumn(6).setPreferredWidth(100);
             table.getColumnModel().getColumn(7).setResizable(false);
@@ -894,16 +898,16 @@ public class BanHang extends SimpleForm {
         
             kh = txtCustomer.getText().isEmpty() ? null : kh;
 
-            String employeeName = user != null ? user.getName() : "Nhân viên";  // Replace with actual employee data if available
+            String employeeName = user != null ? user.getName() : "Nhân viên";
             String employeeId = user != null ? user.getUserName() : "";
             
-            String customerName = kh != null ? kh.getTenKH() : "Khách vãng lai"; // Default customer name if kh is null
+            String customerName = kh != null ? kh.getTenKH() : "Khách vãng lai";
             String customerPhone = kh != null ? kh.getSdtKH().trim() : "";
             double totalAmount = calculateTotalAmount();
-            int discount = kh != null ? giamTru : 0;                       // Adjust if discounts apply
+            int discount = kh != null ? giamTru : 0;    
 
             int rewardPoints = (int) (kh != null ? thanhToan * 0.01 : 0);
-            String invoiceCode = dao.generateInvoiceCode();
+            String invoiceCode = BanHang_DAO.generateInvoiceCode();
 
             
             String ptThanhToan = (String) cbbPhuongThucThanhToan.getSelectedItem();
@@ -919,11 +923,15 @@ public class BanHang extends SimpleForm {
                 return;
             } else {
                 for (int i = 0; i < table.getRowCount(); ++i) {
-                    if(!dao.createCTHD(new ChiTietHoaDon(invoiceCode, (String) table.getValueAt(i, 2),
+                    if(!BanHang_DAO.createCTHD(new ChiTietHoaDon(invoiceCode, (String) table.getValueAt(i, 2),
                         (int) table.getValueAt(i, 5), (double) table.getValueAt(i, 7)))) {
                         System.out.println("Lỗi insert cthd");
                     }
+                    if(!BanHang_DAO.updateSLSP((String) table.getValueAt(i, 2), (int) table.getValueAt(i, 5))){
+                        System.out.println("Lỗi update số lượng sản phẩm");
+                    }
                 }
+                
                 ParameterBill billData = new ParameterBill(
                     getCurrentDate(), employeeName, customerName, customerPhone, 
                     totalAmount, discount, thanhToan, rewardPoints, 
@@ -1076,6 +1084,17 @@ public class BanHang extends SimpleForm {
             String existingMaSP = (String) table.getValueAt(i, 2);
             if (existingMaSP.equals(sp.getMaSP())) {
                 int existingQuantity = (int) table.getValueAt(i, 5);
+                
+                if(existingQuantity == sp.getSoLuong()) {
+                    MessageAlerts.getInstance().showMessage("Cảnh báo", "Vượt quá số lượng tồn kho!", MessageAlerts.MessageType.WARNING);
+                    return;
+                }
+                
+                if(existingQuantity == 50) {
+                    MessageAlerts.getInstance().showMessage("Cảnh báo", "Số lượng tối đa cho phép là 50", MessageAlerts.MessageType.WARNING);
+                    return;
+                }
+                
                 table.setValueAt(existingQuantity + 1, i, 5);
                 double price = (double) table.getValueAt(i, 6);
                 table.setValueAt(price * (existingQuantity + 1), i, 7);
