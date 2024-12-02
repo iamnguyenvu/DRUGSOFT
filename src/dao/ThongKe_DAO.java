@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -21,6 +22,7 @@ import entity.NhanVien_entity;
 import entity.SanPham_entity;
 import nguyenvu.model.DoanhSoBanHangModalData;
 import nguyenvu.model.ModalDataSoLuongGiaoDich;
+import nguyenvu.model.ModelDataSP;
 import nguyenvu.model.SoLuongGiaoDichNV;
 
 public class ThongKe_DAO {
@@ -277,9 +279,10 @@ public class ThongKe_DAO {
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
 	            double thue = rs.getDouble("thue");
+	            double giaNhap = rs.getDouble("giaNhap");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue,giaNhap);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -317,9 +320,10 @@ public class ThongKe_DAO {
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
 	            double thue = rs.getDouble("thue");
+	            double giaNhap = rs.getDouble("giaNhap");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue,giaNhap);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -357,9 +361,10 @@ public class ThongKe_DAO {
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
 	            double thue = rs.getDouble("thue");
+	            double giaNhap = rs.getDouble("giaNhap");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue,giaNhap);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -398,9 +403,10 @@ public class ThongKe_DAO {
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
 	            double thue = rs.getDouble("thue");
+	            double giaNhap = rs.getDouble("giaNhap");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue,giaNhap);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -438,9 +444,10 @@ public class ThongKe_DAO {
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            double thue = rs.getDouble("thue");
 	            String maLoaiSP = rs.getString("maLoaiSP");
+	            double giaNhap = rs.getDouble("giaNhap");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue,giaNhap);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -716,234 +723,49 @@ public class ThongKe_DAO {
 	    return List;
 	}
 	public ArrayList<DoanhSoBanHangModalData> layDoanhSoBanHangTQTheoThoiGian(int time) {
-	    ArrayList<DoanhSoBanHangModalData> List = new ArrayList<>();
-	    Connection connection = connectDB.accessDataBase();
+	    ArrayList<DoanhSoBanHangModalData> list = new ArrayList<>();
+	    Connection connection = null;
 
-	    // Trường hợp time == 7
-	    if (time == 7) {
-	        StringBuilder sql = new StringBuilder();
-	        sql.append("SELECT CAST(ngayLapHD AS DATE) AS ngay, ");
-	        sql.append("SUM(tongTien) AS tongDoanhThu, ");
-	        sql.append("SUM(tienGiam) AS tongChiPhi, ");
-	        sql.append("(SUM(tongTien) - SUM(tienGiam)) AS loiNhuan ");
-	        sql.append("FROM HoaDon ");
-	        sql.append("WHERE ngayLapHD >= DATEADD(DAY, -7, GETDATE()) ");  // Truy vấn 7 ngày
-	        sql.append("GROUP BY CAST(ngayLapHD AS DATE) ");
-	        sql.append("ORDER BY ngay;");
+	    try {
+	        connection = connectDB.accessDataBase();
+	        String sql = buildQueryByTime(time);
+	        if (sql == null) {
+	            throw new IllegalArgumentException("Thời gian không hợp lệ!");
+	        }
 
-	        try {
-	            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+	        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 	            ResultSet rs = preparedStatement.executeQuery();
-
 	            while (rs.next()) {
-	                String ngay = rs.getString("ngay");
-	                int tongDoanhThu = rs.getInt("tongDoanhThu");
-	                int tongChiPhi = rs.getInt("tongChiPhi");
-	                int loiNhuan = rs.getInt("loiNhuan");
+	                String ngay = rs.getString(1);
+	                int tongDoanhThu = rs.getInt(2);
+	                int tongChiPhi = rs.getInt(3);
+	                int loiNhuan = rs.getInt(4);
 
 	                DoanhSoBanHangModalData dsbh = new DoanhSoBanHangModalData(ngay, tongDoanhThu, tongChiPhi, loiNhuan);
-	                List.add(dsbh);
+	                list.add(dsbh);
 	            }
-	            rs.close();
-	            preparedStatement.close();
-	            connection.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        if (connection != null) {
+	            try {
+	                connection.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
 	        }
 	    }
-	    // Trường hợp time == 30
-	    else if (time == 30) {
-	        StringBuilder sql = new StringBuilder();
-	        sql.append("WITH DateRanges AS (SELECT DATEADD(DAY, (6 * (ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1)), GETDATE() - 30) AS startDate,DATEADD(DAY, (6 * ROW_NUMBER() OVER (ORDER BY (SELECT NULL))), GETDATE() - 30) AS endDate ");
-	        sql.append("FROM master.dbo.spt_values WHERE type = 'P' AND number <= 7), ");
-	        sql.append("WeeklyData AS (SELECT CONCAT(FORMAT(DateRanges.startDate, 'dd/MM'), ' - ', FORMAT(DateRanges.endDate, 'dd/MM')) AS tuan, ");
-	        sql.append("SUM(tongTien) AS tongDoanhThu,SUM(tienGiam) AS tongChiPhi,(SUM(tongTien) - SUM(tienGiam)) AS loiNhuan,DateRanges.startDate ");
-	        sql.append("FROM HoaDon JOIN DateRanges ON ngayLapHD >= DateRanges.startDate AND ngayLapHD < DateRanges.endDate GROUP BY DateRanges.startDate, DateRanges.endDate) ");
-	        sql.append("SELECT tuan, tongDoanhThu, tongChiPhi, loiNhuan FROM WeeklyData ORDER BY startDate ASC;");
-
-	        try {
-	            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-	            ResultSet rs = preparedStatement.executeQuery();
-
-	            while (rs.next()) {
-	                String ngay = rs.getString("tuan");
-	                int tongDoanhThu = rs.getInt("tongDoanhThu");
-	                int tongChiPhi = rs.getInt("tongChiPhi");
-	                int loiNhuan = rs.getInt("loiNhuan");
-
-	                DoanhSoBanHangModalData dsbh = new DoanhSoBanHangModalData(ngay, tongDoanhThu, tongChiPhi, loiNhuan);
-	                List.add(dsbh);
-	            }
-	            rs.close();
-	            preparedStatement.close();
-	            connection.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
-	 // Trường hợp time == 90
-	    else if (time == 90) {
-	        StringBuilder sql = new StringBuilder();
-	        sql.append("WITH DateRanges AS (SELECT DATEADD(DAY, (12 * (ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1)), GETDATE() - 90) AS startDate,DATEADD(DAY, (12 * ROW_NUMBER() OVER (ORDER BY (SELECT NULL))), GETDATE() - 90) AS endDate ");
-	        sql.append("FROM master.dbo.spt_values ");
-	        sql.append("WHERE type = 'P' AND number <= 7 ), ");
-	        sql.append("WeeklyData AS (SELECT CONCAT(FORMAT(DateRanges.startDate, 'dd/MM'), ' - ', FORMAT(DateRanges.endDate, 'dd/MM')) AS tuan,SUM(tongTien) AS tongDoanhThu,SUM(tienGiam) AS tongChiPhi,(SUM(tongTien) - SUM(tienGiam)) AS loiNhuan,DateRanges.startDate ");
-	        sql.append("FROM HoaDon JOIN DateRanges ON ngayLapHD >= DateRanges.startDate AND ngayLapHD < DateRanges.endDate GROUP BY DateRanges.startDate, DateRanges.endDate) ");
-	        sql.append("SELECT tuan, tongDoanhThu, tongChiPhi, loiNhuan FROM WeeklyData ORDER BY startDate ASC;");
-	        try {
-	            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-	            ResultSet rs = preparedStatement.executeQuery();
-
-	            while (rs.next()) {
-	                String ngay = rs.getString("tuan");
-	                int tongDoanhThu = rs.getInt("tongDoanhThu");
-	                int tongChiPhi = rs.getInt("tongChiPhi");
-	                int loiNhuan = rs.getInt("loiNhuan");
-
-	                DoanhSoBanHangModalData dsbh = new DoanhSoBanHangModalData(ngay, tongDoanhThu, tongChiPhi, loiNhuan);
-	                List.add(dsbh);
-	            }
-	            rs.close();
-	            preparedStatement.close();
-	            connection.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
-	 // Trường hợp time == 365
-	    else if (time == 365) {
-	        StringBuilder sql = new StringBuilder();
-	        sql.append("WITH DateRanges AS (SELECT DATEADD(DAY, (46 * (ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1)), GETDATE() - 365) AS startDate,DATEADD(DAY, (46 * ROW_NUMBER() OVER (ORDER BY (SELECT NULL))), GETDATE() - 365) AS endDate ");
-	        sql.append("FROM master.dbo.spt_values WHERE type = 'P' AND number <= 30), ");
-	        sql.append("WeeklyData AS (SELECT CONCAT(FORMAT(DateRanges.startDate, 'dd/MM'), ' - ', FORMAT(DateRanges.endDate, 'dd/MM')) AS tuan, SUM(tongTien) AS tongDoanhThu,SUM(tienGiam) AS tongChiPhi,(SUM(tongTien) - SUM(tienGiam)) AS loiNhuan,DateRanges.startDate ");
-	        sql.append("FROM HoaDon JOIN DateRanges ON ngayLapHD >= DateRanges.startDate AND ngayLapHD < DateRanges.endDate GROUP BY DateRanges.startDate, DateRanges.endDate) ");
-	        sql.append("SELECT tuan, tongDoanhThu, tongChiPhi, loiNhuan FROM WeeklyData ORDER BY startDate ASC;");
-	        try {
-	            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-	            ResultSet rs = preparedStatement.executeQuery();
-
-	            while (rs.next()) {
-	                String ngay = rs.getString("tuan");
-	                int tongDoanhThu = rs.getInt("tongDoanhThu");
-	                int tongChiPhi = rs.getInt("tongChiPhi");
-	                int loiNhuan = rs.getInt("loiNhuan");
-
-	                DoanhSoBanHangModalData dsbh = new DoanhSoBanHangModalData(ngay, tongDoanhThu, tongChiPhi, loiNhuan);
-	                List.add(dsbh);
-	            }
-	            rs.close();
-	            preparedStatement.close();
-	            connection.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
-	 // Trường hợp time == TOÀN THỜI GIAN
-	    else if (time == 1) {
-	        StringBuilder sql = new StringBuilder();
-	        sql.append("SELECT YEAR(ngayLapHD) AS NAM,SUM(tongTien) AS tongDoanhThu,SUM(tienGiam) AS tongChiPhi,(SUM(tongTien) - SUM(tienGiam)) AS loiNhuan ");
-	        sql.append("FROM HoaDon WHERE ngayLapHD >= DATEADD(YEAR, -5, GETDATE()) ");
-	        sql.append("GROUP BY YEAR(ngayLapHD) ");
-	        sql.append("ORDER BY NAM;");
-	        try {
-	            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-	            ResultSet rs = preparedStatement.executeQuery();
-
-	            while (rs.next()) {
-	                String ngay = rs.getString("NAM");
-	                int tongDoanhThu = rs.getInt("tongDoanhThu");
-	                int tongChiPhi = rs.getInt("tongChiPhi");
-	                int loiNhuan = rs.getInt("loiNhuan");
-
-	                DoanhSoBanHangModalData dsbh = new DoanhSoBanHangModalData(ngay, tongDoanhThu, tongChiPhi, loiNhuan);
-	                List.add(dsbh);
-	            }
-	            rs.close();
-	            preparedStatement.close();
-	            connection.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
-	    else if (time == 2024) {
-	        StringBuilder sql = new StringBuilder();
-	        sql.append("SELECT YEAR(ngayLapHD) AS NAM, ")
-	           .append("MONTH(ngayLapHD) AS THANG, ")
-	           .append("SUM(tongTien) AS tongDoanhThu, ")
-	           .append("SUM(tienGiam) AS tongChiPhi, ")
-	           .append("(SUM(tongTien) - SUM(tienGiam)) AS loiNhuan ")
-	           .append("FROM HoaDon ")
-	           .append("WHERE YEAR(ngayLapHD) = 2024 ")
-	           .append("GROUP BY YEAR(ngayLapHD), MONTH(ngayLapHD) ")  // Nhóm theo năm và tháng
-	           .append("ORDER BY YEAR(ngayLapHD), MONTH(ngayLapHD);");  // Sắp xếp theo năm và tháng
-
-	        try {
-	            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-	            ResultSet rs = preparedStatement.executeQuery();
-
-	            while (rs.next()) {
-	                String nam = rs.getString("NAM");
-	                String thang = rs.getString("THANG");
-	                int tongDoanhThu = rs.getInt("tongDoanhThu");
-	                int tongChiPhi = rs.getInt("tongChiPhi");
-	                int loiNhuan = rs.getInt("loiNhuan");
-
-	                DoanhSoBanHangModalData dsbh = new DoanhSoBanHangModalData(thang + "/" + nam, tongDoanhThu, tongChiPhi, loiNhuan);
-	                List.add(dsbh);
-	            }
-	            rs.close();
-	            preparedStatement.close();
-	            connection.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
-
-	 // Trường hợp time == 2023
-	    else if (time == 2023) {
-	        StringBuilder sql = new StringBuilder();
-	        sql.append("SELECT YEAR(ngayLapHD) AS NAM, ")
-	           .append("MONTH(ngayLapHD) AS THANG, ")
-	           .append("SUM(tongTien) AS tongDoanhThu, ")
-	           .append("SUM(tienGiam) AS tongChiPhi, ")
-	           .append("(SUM(tongTien) - SUM(tienGiam)) AS loiNhuan ")
-	           .append("FROM HoaDon ")
-	           .append("WHERE YEAR(ngayLapHD) = 2023 ")
-	           .append("GROUP BY YEAR(ngayLapHD), MONTH(ngayLapHD) ")  // Nhóm theo năm và tháng
-	           .append("ORDER BY YEAR(ngayLapHD), MONTH(ngayLapHD);");  // Sắp xếp theo năm và tháng
-
-	        try {
-	            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-	            ResultSet rs = preparedStatement.executeQuery();
-
-	            while (rs.next()) {
-	                String nam = rs.getString("NAM");
-	                String thang = rs.getString("THANG");
-	                int tongDoanhThu = rs.getInt("tongDoanhThu");
-	                int tongChiPhi = rs.getInt("tongChiPhi");
-	                int loiNhuan = rs.getInt("loiNhuan");
-
-	                DoanhSoBanHangModalData dsbh = new DoanhSoBanHangModalData(thang + "/" + nam, tongDoanhThu, tongChiPhi, loiNhuan);
-	                List.add(dsbh);
-	            }
-	            rs.close();
-	            preparedStatement.close();
-	            connection.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
-
-
-	    return List;
+	    return list;
 	}
+
 	public ArrayList<DoanhSoBanHangModalData> layDoanhSoBanHangTQTheoThoiGian(java.util.Date startDate, java.util.Date endDate) {
 	    ArrayList<DoanhSoBanHangModalData> List = new ArrayList<>();
 	    Connection connection = connectDB.accessDataBase();
 
 	    StringBuilder sql = new StringBuilder();
-	    sql.append("SELECT FORMAT(ngayLapHD, 'MM/yyyy') AS thang,SUM(tongTien) AS tongDoanhThu,SUM(tienGiam) AS tongChiPhi,(SUM(tongTien) - SUM(tienGiam)) AS loiNhuan ");
-	    sql.append("FROM HoaDon ");
+	    sql.append("SELECT FORMAT(ngayLapHD, 'MM/yyyy') AS thang,SUM(tongTien) AS tongDoanhThu,SUM(sp.giaNhap * soLuong) AS tongChiPhi,(SUM(tongTien) - SUM(sp.giaNhap * soLuong)) AS loiNhuan ");
+	    sql.append("FROM HoaDon hd Join ChiTietHoaDon cthd on hd.maHD = cthd.maHD Join SanPham sp on cthd.maSP = sp.maSP ");
 	    sql.append("WHERE ngayLapHD >= ? AND ngayLapHD <= ? ");
 	    sql.append("GROUP BY FORMAT(ngayLapHD, 'MM/yyyy') ");
 	    sql.append("ORDER BY FORMAT(ngayLapHD, 'MM/yyyy');");
@@ -965,6 +787,582 @@ public class ThongKe_DAO {
                 DoanhSoBanHangModalData dsbh = new DoanhSoBanHangModalData(thang, tongDoanhThu, tongChiPhi, loiNhuan);
                 List.add(dsbh);
             }
+
+	        rs.close();
+	        preparedStatement.close();
+	        connection.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return List;
+	}
+
+	private String buildQueryByTime(int time) {
+	    switch (time) {
+	        case 7:
+	            return "{CALL GetDoanhThuChiPhiLoiNhuanTrong7ngayTruoc}";
+
+	        case 30:
+	        	 return "{CALL GetDoanhThuChiPhiLoiNhuanTheoTuanTrong30Ngay}";
+
+	        case 90:
+	        	return "{CALL GetDoanhThuChiPhiLoiNhuanTrong90Ngay}";
+
+	        case 365:
+	        	return "{CALL GetDoanhThuChiPhiLoiNhuanTheo46NgayTrong365Ngay}";
+
+	        case 1:
+	        	return "{CALL GetDoanhThuChiPhiLoiNhuanTheoNam}";
+
+	        case 2023:
+	        	return "{CALL GetDoanhThuChiPhiLoiNhuanTheoNam2023}";
+
+	        case 2024:
+	            return "{CALL GetDoanhThuChiPhiLoiNhuan2024}";
+
+	        default:
+	            return null;
+	    }
+	}
+
+	
+	public ArrayList<ModelDataSP> SanPhamBanChay(int time) {
+	    ArrayList<ModelDataSP> List = new ArrayList<>();
+	    Connection connection = connectDB.accessDataBase();
+	    
+	    if(time == 2024) {
+		    StringBuilder sql = new StringBuilder();
+		    sql.append("SELECT TOP 7 sp.tenSP, SUM(cthd.soLuongSanPham) AS tongSoLuongBan FROM ChiTietHoaDon cthd ");
+		    sql.append("JOIN SanPham sp ON cthd.maSP = sp.maSP JOIN HoaDon hd ON cthd.maHD = hd.maHD ");
+		    sql.append("WHERE YEAR(ngayLapHD) = 2024 ");
+		    sql.append("GROUP BY sp.maSP, sp.tenSP ");
+		    sql.append("ORDER BY tongSoLuongBan DESC");
+
+
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String tenSP = rs.getString("tenSP");
+	                int tongSLBAN = rs.getInt("tongSoLuongBan");
+
+	                ModelDataSP slbh = new ModelDataSP(tenSP, tongSLBAN);
+	                List.add(slbh);
+	            }
+
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 2023) {
+		    StringBuilder sql = new StringBuilder();
+		    sql.append("SELECT TOP 7 sp.tenSP, SUM(cthd.soLuongSanPham) AS tongSoLuongBan FROM ChiTietHoaDon cthd ");
+		    sql.append("JOIN SanPham sp ON cthd.maSP = sp.maSP JOIN HoaDon hd ON cthd.maHD = hd.maHD ");
+		    sql.append("WHERE YEAR(ngayLapHD) = 2023 ");
+		    sql.append("GROUP BY sp.maSP, sp.tenSP ");
+		    sql.append("ORDER BY tongSoLuongBan DESC");
+
+
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String tenSP = rs.getString("tenSP");
+	                int tongSLBAN = rs.getInt("tongSoLuongBan");
+
+	                ModelDataSP slbh = new ModelDataSP(tenSP, tongSLBAN);
+	                List.add(slbh);
+	            }
+
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 0) {
+			    StringBuilder sql = new StringBuilder();
+			    sql.append("SELECT TOP 7 sp.tenSP, SUM(cthd.soLuongSanPham) AS tongSoLuongBan FROM ChiTietHoaDon cthd ");
+			    sql.append("JOIN SanPham sp ON cthd.maSP = sp.maSP JOIN HoaDon hd ON cthd.maHD = hd.maHD ");
+			    sql.append("GROUP BY sp.maSP, sp.tenSP ");
+			    sql.append("ORDER BY tongSoLuongBan DESC");
+
+
+			    try {
+			    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+			        ResultSet rs = preparedStatement.executeQuery();
+
+			        while (rs.next()) {
+		                String tenSP = rs.getString("tenSP");
+		                int tongSLBAN = rs.getInt("tongSoLuongBan");
+
+		                ModelDataSP slbh = new ModelDataSP(tenSP, tongSLBAN);
+		                List.add(slbh);
+		            }
+
+			        rs.close();
+			        preparedStatement.close();
+			        connection.close();
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    }
+	    }else {
+		    StringBuilder sql = new StringBuilder();
+		    sql.append("SELECT TOP 7 sp.tenSP, SUM(cthd.soLuongSanPham) AS tongSoLuongBan FROM ChiTietHoaDon cthd ");
+		    sql.append("JOIN SanPham sp ON cthd.maSP = sp.maSP JOIN HoaDon hd ON cthd.maHD = hd.maHD ");
+		    if(time == 2024) {
+		    	 sql.append("WHERE YEAR(ngayLapHD) = 2024 ");
+		    }else if(time == 2023) {
+		    	 sql.append("WHERE YEAR(ngayLapHD) = 2023 ");
+		    }else {
+		    	sql.append("WHERE hd.ngayLapHD >= DATEADD(DAY, -?, GETDATE()) ");
+		    }
+		    sql.append("GROUP BY sp.maSP, sp.tenSP ");
+		    sql.append("ORDER BY tongSoLuongBan DESC");
+
+
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+		        preparedStatement.setInt(1, time);
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String tenSP = rs.getString("tenSP");
+	                int tongSLBAN = rs.getInt("tongSoLuongBan");
+
+	                ModelDataSP slbh = new ModelDataSP(tenSP, tongSLBAN);
+	                List.add(slbh);
+	            }
+
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }
+	    return List;
+	}
+	public ArrayList<ModelDataSP> SanPhamBanCham(int time) {
+	    ArrayList<ModelDataSP> List = new ArrayList<>();
+	    Connection connection = connectDB.accessDataBase();
+	    
+	    if(time == 2024) {
+		    StringBuilder sql = new StringBuilder();
+		    sql.append("SELECT TOP 7 sp.tenSP, SUM(cthd.soLuongSanPham) AS tongSoLuongBan FROM ChiTietHoaDon cthd ");
+		    sql.append("JOIN SanPham sp ON cthd.maSP = sp.maSP JOIN HoaDon hd ON cthd.maHD = hd.maHD ");
+		    sql.append("WHERE YEAR(ngayLapHD) = 2024 ");
+		    sql.append("GROUP BY sp.maSP, sp.tenSP ");
+		    sql.append("ORDER BY tongSoLuongBan");
+
+
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String tenSP = rs.getString("tenSP");
+	                int tongSLBAN = rs.getInt("tongSoLuongBan");
+
+	                ModelDataSP slbh = new ModelDataSP(tenSP, tongSLBAN);
+	                List.add(slbh);
+	            }
+
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 2023) {
+		    StringBuilder sql = new StringBuilder();
+		    sql.append("SELECT TOP 7 sp.tenSP, SUM(cthd.soLuongSanPham) AS tongSoLuongBan FROM ChiTietHoaDon cthd ");
+		    sql.append("JOIN SanPham sp ON cthd.maSP = sp.maSP JOIN HoaDon hd ON cthd.maHD = hd.maHD ");
+		    sql.append("WHERE YEAR(ngayLapHD) = 2023 ");
+		    sql.append("GROUP BY sp.maSP, sp.tenSP ");
+		    sql.append("ORDER BY tongSoLuongBan");
+
+
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String tenSP = rs.getString("tenSP");
+	                int tongSLBAN = rs.getInt("tongSoLuongBan");
+
+	                ModelDataSP slbh = new ModelDataSP(tenSP, tongSLBAN);
+	                List.add(slbh);
+	            }
+
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 0) {
+			    StringBuilder sql = new StringBuilder();
+			    sql.append("SELECT TOP 7 sp.tenSP, SUM(cthd.soLuongSanPham) AS tongSoLuongBan FROM ChiTietHoaDon cthd ");
+			    sql.append("JOIN SanPham sp ON cthd.maSP = sp.maSP JOIN HoaDon hd ON cthd.maHD = hd.maHD ");
+			    sql.append("GROUP BY sp.maSP, sp.tenSP ");
+			    sql.append("ORDER BY tongSoLuongBan");
+
+
+			    try {
+			    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+			        ResultSet rs = preparedStatement.executeQuery();
+
+			        while (rs.next()) {
+		                String tenSP = rs.getString("tenSP");
+		                int tongSLBAN = rs.getInt("tongSoLuongBan");
+
+		                ModelDataSP slbh = new ModelDataSP(tenSP, tongSLBAN);
+		                List.add(slbh);
+		            }
+
+			        rs.close();
+			        preparedStatement.close();
+			        connection.close();
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    }
+	    }else {
+		    StringBuilder sql = new StringBuilder();
+		    sql.append("SELECT TOP 7 sp.tenSP, SUM(cthd.soLuongSanPham) AS tongSoLuongBan FROM ChiTietHoaDon cthd ");
+		    sql.append("JOIN SanPham sp ON cthd.maSP = sp.maSP JOIN HoaDon hd ON cthd.maHD = hd.maHD ");
+		    if(time == 2024) {
+		    	 sql.append("WHERE YEAR(ngayLapHD) = 2024 ");
+		    }else if(time == 2023) {
+		    	 sql.append("WHERE YEAR(ngayLapHD) = 2023 ");
+		    }else {
+		    	sql.append("WHERE hd.ngayLapHD >= DATEADD(DAY, -?, GETDATE()) ");
+		    }
+		    sql.append("GROUP BY sp.maSP, sp.tenSP ");
+		    sql.append("ORDER BY tongSoLuongBan");
+
+
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+		        preparedStatement.setInt(1, time);
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String tenSP = rs.getString("tenSP");
+	                int tongSLBAN = rs.getInt("tongSoLuongBan");
+
+	                ModelDataSP slbh = new ModelDataSP(tenSP, tongSLBAN);
+	                List.add(slbh);
+	            }
+
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }
+	    return List;
+	}
+	public ArrayList<ModalDataSoLuongGiaoDich> SoLuongGiaoDich(int time) {
+	    ArrayList<ModalDataSoLuongGiaoDich> List = new ArrayList<>();
+	    Connection connection = connectDB.accessDataBase();
+	    
+	    if(time == 2024) {
+		    StringBuilder sql = new StringBuilder();
+		    sql.append("SELECT MONTH(ngayLapHD) AS Thang, COUNT(*) AS TongSoGiaoDich ");
+		    sql.append("FROM HoaDon ");
+		    sql.append("WHERE YEAR(ngayLapHD) = YEAR(GETDATE()) AND trangThai = 1 ");
+		    sql.append("GROUP BY MONTH(ngayLapHD) ");
+		    sql.append("ORDER BY Thang");
+
+
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String thang = rs.getString("Thang");
+	                int TongSoGiaoDich = rs.getInt("TongSoGiaoDich");
+
+	                ModalDataSoLuongGiaoDich slbh = new ModalDataSoLuongGiaoDich(thang, TongSoGiaoDich);
+	                List.add(slbh);
+	            }
+
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 2023) {
+		    StringBuilder sql = new StringBuilder();
+		    sql.append("SELECT MONTH(ngayLapHD) AS Thang, COUNT(*) AS TongSoGiaoDich ");
+		    sql.append("FROM HoaDon ");
+		    sql.append("WHERE YEAR(ngayLapHD) = YEAR(GETDATE())-1 AND trangThai = 1 ");
+		    sql.append("GROUP BY MONTH(ngayLapHD) ");
+		    sql.append("ORDER BY Thang");
+
+
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String thang = rs.getString("Thang");
+	                int TongSoGiaoDich = rs.getInt("TongSoGiaoDich");
+
+	                ModalDataSoLuongGiaoDich slbh = new ModalDataSoLuongGiaoDich(thang, TongSoGiaoDich);
+	                List.add(slbh);
+	            }
+
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 7) {
+		    StringBuilder sql = new StringBuilder();
+		    sql.append("SELECT CONVERT(DATE, ngayLapHD) AS Ngay, COUNT(*) AS TongSoGiaoDich ");
+		    sql.append("FROM HoaDon ");
+		    sql.append("WHERE ngayLapHD >= DATEADD(DAY, -7, GETDATE()) AND ngayLapHD < GETDATE()AND trangThai = 1 ");
+		    sql.append("GROUP BY CONVERT(DATE, ngayLapHD) ");
+		    sql.append("ORDER BY Ngay ASC;");
+
+
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String thang = rs.getString("Ngay");
+	                int TongSoGiaoDich = rs.getInt("TongSoGiaoDich");
+
+	                ModalDataSoLuongGiaoDich slbh = new ModalDataSoLuongGiaoDich(thang, TongSoGiaoDich);
+	                List.add(slbh);
+	            }
+
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 30) {
+		    StringBuilder sql = new StringBuilder();
+		    sql.append("WITH DateRanges AS (SELECT  ");
+		    sql.append("DATEADD(DAY, (4 * (ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1)), DATEADD(DAY, -30, GETDATE())) AS StartDate, ");
+		    sql.append("DATEADD(DAY, (4 * ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1), DATEADD(DAY, -30, GETDATE())) AS EndDate ");
+		    sql.append("FROM master.dbo.spt_values WHERE type = 'P' AND number <= 7), ");
+		    sql.append("WeeklyData AS (SELECT CONCAT(FORMAT(DateRanges.StartDate, 'dd/MM'), ' - ', FORMAT(DateRanges.EndDate, 'dd/MM')) AS Tuan,COUNT(*) AS TongSoGiaoDich,DateRanges.StartDate ");
+		    sql.append("FROM HoaDon JOIN DateRanges  ");
+		    sql.append("ON ngayLapHD >= DateRanges.StartDate AND ngayLapHD < DateRanges.EndDate ");
+		    sql.append("WHERE trangThai = 1GROUP BY DateRanges.StartDate, DateRanges.EndDate) ");
+		    sql.append("SELECT Tuan, TongSoGiaoDich FROM WeeklyData ORDER BY StartDate ASC; ");
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String thang = rs.getString("Tuan");
+	                int TongSoGiaoDich = rs.getInt("TongSoGiaoDich");
+
+	                ModalDataSoLuongGiaoDich slbh = new ModalDataSoLuongGiaoDich(thang, TongSoGiaoDich);
+	                List.add(slbh);
+	            }
+
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 90) {
+	    	StringBuilder sql = new StringBuilder();
+	    	sql.append("WITH DateRanges AS ( ");
+	    	sql.append("    SELECT ");
+	    	sql.append("        DATEADD(DAY, (12 * (ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1)), DATEADD(DAY, -90, GETDATE())) AS StartDate, ");
+	    	sql.append("        DATEADD(DAY, (12 * ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1), DATEADD(DAY, -90, GETDATE())) AS EndDate ");
+	    	sql.append("    FROM master.dbo.spt_values ");
+	    	sql.append("    WHERE type = 'P' AND number <= 7 ");
+	    	sql.append("), ");
+	    	sql.append("WeeklyData AS ( ");
+	    	sql.append("    SELECT ");
+	    	sql.append("        CONCAT(FORMAT(DateRanges.StartDate, 'dd/MM'), ' - ', FORMAT(DateRanges.EndDate, 'dd/MM')) AS Tuan, ");
+	    	sql.append("        COUNT(*) AS TongSoGiaoDich, ");
+	    	sql.append("        DateRanges.StartDate ");
+	    	sql.append("    FROM HoaDon ");
+	    	sql.append("    JOIN DateRanges ");
+	    	sql.append("    ON ngayLapHD >= DateRanges.StartDate AND ngayLapHD < DateRanges.EndDate ");
+	    	sql.append("    WHERE trangThai = 1 ");
+	    	sql.append("    GROUP BY DateRanges.StartDate, DateRanges.EndDate ");
+	    	sql.append(") ");
+	    	sql.append("SELECT Tuan, TongSoGiaoDich ");
+	    	sql.append("FROM WeeklyData ");
+	    	sql.append("ORDER BY StartDate ASC; ");
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String thang = rs.getString("Tuan");
+	                int TongSoGiaoDich = rs.getInt("TongSoGiaoDich");
+
+	                ModalDataSoLuongGiaoDich slbh = new ModalDataSoLuongGiaoDich(thang, TongSoGiaoDich);
+	                List.add(slbh);
+	            }
+
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 365) {
+	    	StringBuilder sql = new StringBuilder();
+	    	sql.append("WITH DateRanges AS ( ");
+	    	sql.append("    SELECT ");
+	    	sql.append("        DATEADD(DAY, (47 * (ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1)), DATEADD(DAY, -365, GETDATE())) AS StartDate, ");
+	    	sql.append("        DATEADD(DAY, (47 * ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1), DATEADD(DAY, -365, GETDATE())) AS EndDate ");
+	    	sql.append("    FROM master.dbo.spt_values ");
+	    	sql.append("    WHERE type = 'P' AND number <= 12 ");
+	    	sql.append("), ");
+	    	sql.append("MonthlyData AS ( ");
+	    	sql.append("    SELECT ");
+	    	sql.append("        CONCAT(FORMAT(DateRanges.StartDate, 'dd/MM'), ' - ', FORMAT(DateRanges.EndDate, 'dd/MM')) AS Thang, ");
+	    	sql.append("        COUNT(*) AS TongSoGiaoDich, ");
+	    	sql.append("        DateRanges.StartDate ");
+	    	sql.append("    FROM HoaDon ");
+	    	sql.append("    JOIN DateRanges ");
+	    	sql.append("        ON ngayLapHD >= DateRanges.StartDate AND ngayLapHD < DateRanges.EndDate ");
+	    	sql.append("    WHERE trangThai = 1 ");
+	    	sql.append("    GROUP BY DateRanges.StartDate, DateRanges.EndDate ");
+	    	sql.append(") ");
+	    	sql.append("SELECT Thang, TongSoGiaoDich ");
+	    	sql.append("FROM MonthlyData ");
+	    	sql.append("ORDER BY StartDate;");
+
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String thang = rs.getString("Thang");
+	                int TongSoGiaoDich = rs.getInt("TongSoGiaoDich");
+
+	                ModalDataSoLuongGiaoDich slbh = new ModalDataSoLuongGiaoDich(thang, TongSoGiaoDich);
+	                List.add(slbh);
+	            }
+
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 0) {
+	    	StringBuilder sql = new StringBuilder();
+	    	sql.append("WITH YearlyData AS ( ");
+	    	sql.append("    SELECT ");
+	    	sql.append("        YEAR(ngayLapHD) AS Nam, ");
+	    	sql.append("        COUNT(*) AS TongSoGiaoDich ");
+	    	sql.append("    FROM HoaDon ");
+	    	sql.append("    WHERE trangThai = 1 ");
+	    	sql.append("    GROUP BY YEAR(ngayLapHD) ");
+	    	sql.append(") ");
+	    	sql.append("SELECT Nam, TongSoGiaoDich ");
+	    	sql.append("FROM YearlyData ");
+	    	sql.append("ORDER BY Nam ASC;");
+
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String thang = rs.getString("Nam");
+	                int TongSoGiaoDich = rs.getInt("TongSoGiaoDich");
+
+	                ModalDataSoLuongGiaoDich slbh = new ModalDataSoLuongGiaoDich(thang, TongSoGiaoDich);
+	                List.add(slbh);
+	            }
+
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }
+	    return List;
+	}
+	public ArrayList<ModalDataSoLuongGiaoDich> SoLuongGiaoDich(java.util.Date startDate, java.util.Date endDate) {
+	    ArrayList<ModalDataSoLuongGiaoDich> List = new ArrayList<>();
+	    Connection connection = connectDB.accessDataBase();
+	    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+	    String formattedStartDate = sdf.format(startDate);
+	    String formattedEndDate = sdf.format(endDate);
+
+	    StringBuilder sql = new StringBuilder();    
+	    sql.append("WITH DateRanges AS (\r\n"
+	    		+ "    SELECT \r\n"
+	    		+ "        DATEADD(DAY, ((DATEDIFF(DAY, ?, ?) / 8) * (ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1)), ?) AS StartDate,\r\n"
+	    		+ "        DATEADD(DAY, ((DATEDIFF(DAY, ?, ?) / 8) * ROW_NUMBER() OVER (ORDER BY (SELECT NULL))), ?) AS EndDate\r\n"
+	    		+ "    FROM master.dbo.spt_values\r\n"
+	    		+ "    WHERE type = 'P' AND number <= 8\r\n"
+	    		+ "),\r\n"
+	    		+ "GroupedData AS (\r\n"
+	    		+ "    SELECT \r\n"
+	    		+ "        CONCAT(FORMAT(DateRanges.StartDate, 'dd/MM'), ' - ', FORMAT(DateRanges.EndDate, 'dd/MM')) AS KhoangThoiGian,\r\n"
+	    		+ "        COUNT(*) AS TongSoGiaoDich,\r\n"
+	    		+ "        DateRanges.StartDate\r\n"
+	    		+ "    FROM HoaDon\r\n"
+	    		+ "    JOIN DateRanges\r\n"
+	    		+ "        ON ngayLapHD >= DateRanges.StartDate AND ngayLapHD < DateRanges.EndDate\r\n"
+	    		+ "    WHERE trangThai = 1\r\n"
+	    		+ "    GROUP BY DateRanges.StartDate, DateRanges.EndDate\r\n"
+	    		+ ")\r\n"
+	    		+ "SELECT KhoangThoiGian, TongSoGiaoDich\r\n"
+	    		+ "FROM GroupedData\r\n"
+	    		+ "ORDER BY StartDate ASC; ");
+	    try {
+	        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+	        preparedStatement.setString(1, formattedStartDate);
+	        preparedStatement.setString(2, formattedEndDate);
+	        preparedStatement.setString(3, formattedStartDate);
+	        preparedStatement.setString(4, formattedStartDate);
+	        preparedStatement.setString(5, formattedEndDate);
+	        preparedStatement.setString(6, formattedStartDate);
+
+	        ResultSet rs = preparedStatement.executeQuery();
+
+	        while (rs.next()) {
+	            String khoangThoiGian = rs.getString("KhoangThoiGian"); 
+	            int tongSoGiaoDich = rs.getInt("TongSoGiaoDich");
+
+	            ModalDataSoLuongGiaoDich slbh = new ModalDataSoLuongGiaoDich(khoangThoiGian, tongSoGiaoDich);
+	            List.add(slbh);
+	        }
 
 	        rs.close();
 	        preparedStatement.close();

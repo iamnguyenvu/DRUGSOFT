@@ -17,6 +17,7 @@ public class SanPham_entity {
     private LoaiSanPham_entity loaiSanPham;  // Loại sản phẩm
     private int soLuong;
     private double thue;
+    private double giaNhap;
 	public SanPham_entity() {
 		super();
 	}
@@ -33,7 +34,7 @@ public class SanPham_entity {
 
 	public SanPham_entity(String maSP, String tenSP, LocalDate ngaySanXuat, LocalDate ngayHetHan, double khoiLuong,
 			String donViTinh, String nhaCungCap, double gia, String thanhPhan, String congDung, String hinhAnhSP,
-			LoaiSanPham_entity loaiSanPham, int soLuong, double thue) {
+			LoaiSanPham_entity loaiSanPham, int soLuong, double thue,double giaNhap) {
 		super();
 		this.maSP = maSP;
 		this.tenSP = tenSP;
@@ -49,6 +50,7 @@ public class SanPham_entity {
 		this.loaiSanPham = loaiSanPham;
 		this.soLuong = soLuong;
 		this.thue = thue;
+		this.giaNhap = giaNhap;
 	}
 
 
@@ -136,6 +138,16 @@ public class SanPham_entity {
 		this.soLuong = soLuong;
 	}
 	
+	public double getGiaNhap() {
+		return giaNhap;
+	}
+
+
+	public void setGiaNhap(double giaNhap) {
+		this.giaNhap = giaNhap;
+	}
+
+
 	public SanPham_entity(String hinhAnhSP, String maSP, String tenSP, String donViTinh, int soLuong, double gia) {
 		super();
 		this.hinhAnhSP = hinhAnhSP;
@@ -183,6 +195,8 @@ public class SanPham_entity {
         this.gia = gia;
         this.hinhAnhSP = hinhAnhSP;
     }
+
+
 
     
        

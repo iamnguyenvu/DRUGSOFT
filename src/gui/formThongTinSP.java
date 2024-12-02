@@ -63,6 +63,7 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 	public JTextField tf_thue;
 	private String maSP;
 	public SanPham_entity spCapNhat;
+	private JTextField tf_giaNhap;
 	public String getMaSP() {
 		return maSP;
 	}
@@ -108,14 +109,14 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 		tf_soLuong.setForeground(new Color(0, 0, 0));
 		tf_soLuong.setColumns(10);
 		tf_soLuong.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		tf_soLuong.setBounds(20, 166, 299, 34);
+		tf_soLuong.setBounds(20, 166, 261, 34);
 		pnCenter.add(tf_soLuong);
 
-		JLabel lb_Gia = new JLabel("Giá");
+		JLabel lb_Gia = new JLabel("Giá Bán");
 		lb_Gia.setForeground(new Color(0, 0, 0));
 		lb_Gia.setBackground(new Color(0, 0, 0));
 		lb_Gia.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_Gia.setBounds(405, 10, 46, 46);
+		lb_Gia.setBounds(524, 10, 63, 46);
 		pnCenter.add(lb_Gia);
 
 		tf_Gia = new JTextField();
@@ -124,14 +125,14 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 		tf_Gia.setBackground(new Color(255, 255, 255));
 		tf_Gia.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		tf_Gia.setColumns(10);
-		tf_Gia.setBounds(405, 66, 251, 34);
+		tf_Gia.setBounds(524, 66, 132, 34);
 		pnCenter.add(tf_Gia);
 
 		JLabel lb_HinhAnh = new JLabel("Hình Ảnh");
 		lb_HinhAnh.setForeground(new Color(0, 0, 0));
 		lb_HinhAnh.setBackground(new Color(0, 0, 0));
 		lb_HinhAnh.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_HinhAnh.setBounds(405, 110, 105, 46);
+		lb_HinhAnh.setBounds(371, 110, 105, 46);
 		pnCenter.add(lb_HinhAnh);
 
 		tf_HinhAnh = new JTextField();
@@ -140,7 +141,7 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 		tf_HinhAnh.setForeground(new Color(0, 0, 0));
 		tf_HinhAnh.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		tf_HinhAnh.setColumns(10);
-		tf_HinhAnh.setBounds(405, 166, 251, 34);
+		tf_HinhAnh.setBounds(371, 166, 285, 34);
 		pnCenter.add(tf_HinhAnh);
 
 		tf_Tensp = new JTextField();
@@ -149,7 +150,7 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 		tf_Tensp.setBackground(new Color(255, 255, 255));
 		tf_Tensp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		tf_Tensp.setColumns(10);
-		tf_Tensp.setBounds(22, 66, 297, 34);
+		tf_Tensp.setBounds(22, 66, 259, 34);
 		pnCenter.add(tf_Tensp);
 
 		JLabel lb_soLuong = new JLabel("Số Lượng");
@@ -158,6 +159,22 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 		lb_soLuong.setFont(new Font("Times New Roman", Font.PLAIN, 17));
 		lb_soLuong.setBounds(20, 110, 105, 46);
 		pnCenter.add(lb_soLuong);
+		
+		JLabel lb_Gia_1 = new JLabel("Giá Nhập");
+		lb_Gia_1.setForeground(Color.BLACK);
+		lb_Gia_1.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+		lb_Gia_1.setBackground(Color.BLACK);
+		lb_Gia_1.setBounds(371, 10, 63, 46);
+		pnCenter.add(lb_Gia_1);
+		
+		tf_giaNhap = new JTextField();
+		tf_giaNhap.setForeground(Color.BLACK);
+		tf_giaNhap.setEditable(false);
+		tf_giaNhap.setColumns(10);
+		tf_giaNhap.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		tf_giaNhap.setBackground(Color.WHITE);
+		tf_giaNhap.setBounds(371, 66, 132, 34);
+		pnCenter.add(tf_giaNhap);
 
 		JLabel lb_ThemMoiSP = new JLabel("Thông Tin Sản Phẩm");
 		lb_ThemMoiSP.setForeground(new Color(0, 0, 0));
@@ -430,7 +447,7 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 	    ta_ThanhPhan.setText(sp.getThanhPhan());
 	    ta_CongDung.setText(sp.getCongDung());
 	    tf_HinhAnh.setText(sp.getHinhAnhSP());
-	    
+	    tf_giaNhap.setText(String.valueOf(sp.getGiaNhap()));
 	    String mlsp = sp.getLoaiSanPham().getMaLoaiSP();
 	    if(mlsp.equals("Thuoc")) {
 	    	cb_LoaiSP.setText("Thuốc");

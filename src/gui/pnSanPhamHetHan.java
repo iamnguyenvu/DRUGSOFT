@@ -111,17 +111,17 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
      */
     public pnSanPhamHetHan() {
     	tk_Dao = new ThongKe_DAO();
-		setPreferredSize(new Dimension(1500, 660));
+		setPreferredSize(new Dimension(1117, 668));
         initComponents();
         setBackground(new Color(240, 240, 240,0));
-        setLayout(null);
+        setLayout(new BorderLayout(0, 0));
         add(pnCenter);
         
         lblNewLabel = new JLabel("Danh Sách Sản Phẩm");
         lblNewLabel.setForeground(new Color(0, 0, 0));
         lblNewLabel.setBackground(new Color(255, 255, 255));
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        lblNewLabel.setBounds(10, 10, 275, 40);
+        lblNewLabel.setBounds(10, 10, 191, 40);
         pnCenter.add(lblNewLabel);
         
         String[] columnNames = { "Mã Sản Phẩm", "Tên Sản Phẩm", "Số Lượng", "Ngày Sản Xuất", "Ngày Hết Hạn",
@@ -172,7 +172,7 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
 
 		JScrollPane scp_SanPham = new JScrollPane(tb_SanPham);
 		scp_SanPham.setBackground(new Color(255, 255, 255));
-		scp_SanPham.setBounds(10, 132, 1480, 410);
+		scp_SanPham.setBounds(10, 132, 1088, 444);
 		pnCenter.add(scp_SanPham);
 		docDataVaoTableDaHetHan();
         btnXuatFile = new JButton("Xuất File Excel");
@@ -181,7 +181,7 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
 //        btnXuatFile.setBackground(Color.CYAN);
         btnXuatFile.setFont(new Font("Arial", Font.BOLD, 15));
         btnXuatFile.setBorder(new LineBorder(Color.BLACK, 1, true));
-        btnXuatFile.setBounds(1156, 568, 145, 40);
+        btnXuatFile.setBounds(798, 598, 145, 40);
         pnCenter.add(btnXuatFile);
         
         
@@ -193,23 +193,23 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
         btnBaoCao.setForeground(Color.BLACK);
         btnBaoCao.setFont(new Font("Arial", Font.BOLD, 15));
         btnBaoCao.setBackground(Color.WHITE);
-        btnBaoCao.setBounds(1320, 568, 145, 40);
+        btnBaoCao.setBounds(953, 598, 145, 40);
         pnCenter.add(btnBaoCao);
         
         JLabel lblSLng = new JLabel("Số Lượng :");
         lblSLng.setForeground(Color.BLACK);
         lblSLng.setFont(new Font("Serif", Font.PLAIN, 18));
         lblSLng.setBackground(Color.WHITE);
-        lblSLng.setBounds(10, 82, 109, 40);
+        lblSLng.setBounds(10, 57, 89, 40);
         pnCenter.add(lblSLng);
         
         tf_soLuong = new JTextField();
         tf_soLuong.setHorizontalAlignment(SwingConstants.LEFT);
-        tf_soLuong.setFont(new Font("Serif", Font.PLAIN, 18));
+        tf_soLuong.setFont(new Font("Serif", Font.PLAIN, 20));
         tf_soLuong.setForeground(new Color(0, 0, 0));
         tf_soLuong.setBackground(new Color(255, 255, 255));
         tf_soLuong.setBorder(null);
-        tf_soLuong.setBounds(104, 82, 62, 40);
+        tf_soLuong.setBounds(100, 57, 33, 40);
         tf_soLuong.setText(tk_Dao.soSanPhamSapHetHan()+"");
         pnCenter.add(tf_soLuong);
         tf_soLuong.setColumns(10);
@@ -218,14 +218,15 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
         lblNewLabel_1.setForeground(new Color(0, 0, 0));
         lblNewLabel_1.setBackground(new Color(255, 255, 255));
         lblNewLabel_1.setFont(new Font("Serif", Font.PLAIN, 18));
-        lblNewLabel_1.setBounds(1121, 85, 109, 35);
+        lblNewLabel_1.setBounds(768, 60, 109, 35);
         pnCenter.add(lblNewLabel_1);
         
         cb_sp = new JComboBox();
+        cb_sp.setFont(new Font("Serif", Font.PLAIN, 17));
         cb_sp.setForeground(new Color(0, 0, 0));
         cb_sp.setBackground(new Color(255, 255, 255));
         cb_sp.setBorder(new LineBorder(Color.BLACK, 1));
-        cb_sp.setBounds(1226, 82, 212, 39);
+        cb_sp.setBounds(886, 58, 212, 39);
         pnCenter.add(cb_sp);
         cb_sp.addItem("Sản Phẩm Sắp Hết Hạn");      
         cb_sp.addItem("Sản Phẩm Đã Hết Hạn");   
@@ -247,7 +248,6 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
         
         pnCenter = new JPanel();
         pnCenter.setBackground(new Color(255, 255, 255));
-        pnCenter.setBounds(10, 10, 1490, 640);
         pnCenter.setLayout(null);
     }
  // Phương thức để đọc dữ liệu sản phẩm sắp hết hạn vào bảng

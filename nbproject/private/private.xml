@@ -12,13 +12,8 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/forms/DashboardForm.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/SanPhamDoiTra.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/ThongKeTongQuan.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/BanHang.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/components/SellTransactionPanel.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/TrangChu1.java</file>
-            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/utils/QuantityCellEditor.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/gui/SanPham.java</file>
+            <file>file:/D:/PhatTrienUngDung/DRUGSOFT/src/nguyenvu/application/Application.java</file>
         </group>
     </open-files>
 </project-private>

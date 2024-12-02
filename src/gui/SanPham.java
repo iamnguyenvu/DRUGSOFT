@@ -125,175 +125,122 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 		pnContent.add(pnCenter);
 		pnCenter.setLayout(null);
 
-		String[] columnNames = { "Mã Sản Phẩm", "Tên Sản Phẩm", "Giá","Loại Sản Phẩm","Thuế", "Cập Nhật", "Xóa" };
+		String[] columnNames = { "Mã Sản Phẩm", "Tên Sản Phẩm", "Giá Bán", "Loại Sản Phẩm", "Thuế", "Cập Nhật", "Xóa" };
 
 		dftb_SanPham = new DefaultTableModel(columnNames, 0); // columnNames là mảng chứa tên cột
 		tb_SanPham = new JTable(dftb_SanPham);
-		tb_SanPham.setForeground(new Color(0, 0, 0));
+		tb_SanPham.setForeground(Color.BLACK);
 		tb_SanPham.setFont(new Font("Arial", Font.PLAIN, 13));
 		tb_SanPham.setModel(dftb_SanPham);
+		tb_SanPham.setBackground(Color.WHITE);
+		tb_SanPham.setRowHeight(60);
+		tb_SanPham.getTableHeader().setReorderingAllowed(false);
+
+		// Tùy chỉnh tiêu đề bảng
+		tb_SanPham.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+		tb_SanPham.getTableHeader().setPreferredSize(new Dimension(tb_SanPham.getWidth(), 40));
+		tb_SanPham.getTableHeader().setBackground(new Color(11, 101, 136));
+		tb_SanPham.getTableHeader().setForeground(Color.WHITE);
+
+		// Căn giữa nội dung các ô
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		for (int i = 0; i < tb_SanPham.getColumnCount(); i++) {
+		    tb_SanPham.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+		}
+
+		// Định dạng các cột đặc biệt
+		tb_SanPham.getColumnModel().getColumn(0).setPreferredWidth(60); // Mã Sản Phẩm
+		tb_SanPham.getColumnModel().getColumn(1).setPreferredWidth(100); // Tên Sản Phẩm
+		tb_SanPham.getColumnModel().getColumn(2).setPreferredWidth(80); // Giá Bán
+		tb_SanPham.getColumnModel().getColumn(5).setPreferredWidth(40); // Cập Nhật
+		tb_SanPham.getColumnModel().getColumn(6).setPreferredWidth(40); // Xóa
+
+		// Thêm hành động khi double-click chuột
 		tb_SanPham.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
 		        int row = tb_SanPham.getSelectedRow();
 		        int col = tb_SanPham.getSelectedColumn();
 
-		        // Chỉ mở form thông tin sản phẩm nếu không click vào cột "Cập Nhật" hoặc "Xóa"
-		        if (col != 5 && col != 6) {
-		            String maSP = (String) dftb_SanPham.getValueAt(row, 0);
-		            String tenSP = (String) dftb_SanPham.getValueAt(row, 1);
-		            double gia = (dftb_SanPham.getValueAt(row, 2) != null) ? Double.parseDouble(dftb_SanPham.getValueAt(row, 2).toString()) : 0;
-		            String maLoaiSP = (String) dftb_SanPham.getValueAt(row, 3);
-		            double thue = (dftb_SanPham.getValueAt(row, 4) != null) ? Double.parseDouble(dftb_SanPham.getValueAt(row, 4).toString()) : 0;
-
-		            // Lấy các thông tin sản phẩm khác
-		            SanPham_entity sp = sp_dao.getThongTinSP(maSP);
-		            int soLuong = sp.getSoLuong();
-		            LocalDate ngaySX = sp.getNgaySanXuat();
-		            LocalDate ngayHH = sp.getNgayHetHan();
-		            double khoiLuong = sp.getKhoiLuong();
-		            String donViTinh = sp.getDonViTinh();
-		            String nhaCC = sp.getNhaCungCap();
-		            String thanhPhan = sp.getThanhPhan();
-		            String congDung = sp.getCongDung();
-		            String hinhAnh = sp.getHinhAnhSP();
-		            LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(maLoaiSP);
-
-		            // Tạo form hiển thị thông tin sản phẩm
-		            formThongTinSP thongTinSPForm = new formThongTinSP();
-		            SanPham_entity ttsp = new SanPham_entity(maSP, tenSP, ngaySX, ngayHH, khoiLuong, donViTinh, nhaCC, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong, thue);
-		            thongTinSPForm.CN(ttsp);
-
-		            JDialog dialog = new JDialog();
-		            dialog.getContentPane().add(thongTinSPForm);
-		            dialog.setSize(1150, 800);
-		            dialog.setLocationRelativeTo(null);
-		            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		            dialog.setVisible(true);
-		        }
-		    }
-		});
-
-
-
-
-
-
-		tb_SanPham.setBackground(new Color(255, 255, 255));
-
-		tb_SanPham.getTableHeader().setReorderingAllowed(false);
-		tb_SanPham.setRowHeight(60);
-		
-
-//		tb_SanPham.getColumn("Xóa").setCellRenderer((TableCellRenderer) new DeleteButtonPanel());
-		if (tb_SanPham.getColumnModel().getColumnCount() > 0) {
-			tb_SanPham.getColumnModel().getColumn(0).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(0).setPreferredWidth(60);
-			tb_SanPham.getColumnModel().getColumn(1).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(1).setPreferredWidth(60);
-			tb_SanPham.getColumnModel().getColumn(2).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(2).setPreferredWidth(40);
-			tb_SanPham.getColumnModel().getColumn(3).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(3).setPreferredWidth(60);
-			tb_SanPham.getColumnModel().getColumn(4).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(4).setPreferredWidth(60);
-			tb_SanPham.getColumnModel().getColumn(5).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(5).setPreferredWidth(40);
-			tb_SanPham.getColumnModel().getColumn(6).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(6).setPreferredWidth(40);
-		}
-		tb_SanPham.getTableHeader().setDefaultRenderer(new HeaderRenderer());
-		tb_SanPham.getTableHeader().setPreferredSize(new Dimension(tb_SanPham.getWidth(), 40));
-		tb_SanPham.getTableHeader().setBackground(new Color(11,101,136));
-		tb_SanPham.getTableHeader().setForeground(Color.WHITE);
-		
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-		for (int i = 0; i < tb_SanPham.getColumnCount(); i++) {
-			tb_SanPham.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-		}
-
-
-
-		
-		
-		// Gán renderer và editor cho các cột "Cập Nhật" và "Xóa"
-		tb_SanPham.getColumn("Cập Nhật").setCellRenderer(new ButtonRenderer("Cập Nhật"));
-		tb_SanPham.getColumn("Cập Nhật").setCellEditor(new ButtonEditor("Cập Nhật", new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        String command = e.getActionCommand();
-		        if (command.startsWith("Cập Nhật")) {
-		            int row = Integer.parseInt(command.split("_")[1]);
-		            System.out.println("Cập Nhật cho dòng: " + row);
-
-		            // Xử lý cập nhật cho dòng tương ứng
+		        // Kiểm tra số lần click
+		        if (e.getClickCount() == 2 && col != 5 && col != 6) { // Double-click, không phải cột "Cập Nhật" hoặc "Xóa"
 		            try {
 		                String maSP = (String) dftb_SanPham.getValueAt(row, 0);
-		                // Lấy các thông tin khác và hiển thị form cập nhật
 		                SanPham_entity sp = sp_dao.getThongTinSP(maSP);
-		                formCapNhatSanPham updateForm = new formCapNhatSanPham();
-		                updateForm.CN(sp);
+
+		                // Hiển thị form thông tin sản phẩm
+		                formThongTinSP thongTinSPForm = new formThongTinSP();
+		                thongTinSPForm.CN(sp);
+
 		                JDialog dialog = new JDialog();
-		                dialog.getContentPane().add(updateForm);
+		                dialog.getContentPane().add(thongTinSPForm);
 		                dialog.setSize(1150, 800);
 		                dialog.setLocationRelativeTo(null);
 		                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		                dialog.setVisible(true);
 		            } catch (Exception ex) {
-		                System.err.println("Lỗi: " + ex.getMessage());
+		                JOptionPane.showMessageDialog(null, "Lỗi xử lý sản phẩm: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
 		            }
 		        }
 		    }
-		}));
+		});
 
-		
+
+		// Gán nút cho các cột "Cập Nhật" và "Xóa"
+		tb_SanPham.getColumn("Cập Nhật").setCellRenderer(new ButtonRenderer("Cập Nhật"));
+		tb_SanPham.getColumn("Cập Nhật").setCellEditor(new ButtonEditor("Cập Nhật", e -> {
+		    try {
+		        int row = Integer.parseInt(e.getActionCommand().split("_")[1]);
+		        String maSP = (String) dftb_SanPham.getValueAt(row, 0);
+		        SanPham_entity sp = sp_dao.getThongTinSP(maSP);
+
+		        // Hiển thị form cập nhật sản phẩm
+		        formCapNhatSanPham updateForm = new formCapNhatSanPham();
+		        updateForm.CN(sp);
+
+		        JDialog dialog = new JDialog();
+		        dialog.getContentPane().add(updateForm);
+		        dialog.setSize(1150, 800);
+		        dialog.setLocationRelativeTo(null);
+		        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		        dialog.setVisible(true);
+		    } catch (Exception ex) {
+		        JOptionPane.showMessageDialog(null, "Lỗi cập nhật sản phẩm: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+		    }
+		}));
 
 		tb_SanPham.getColumn("Xóa").setCellRenderer(new ButtonRenderer("Xóa"));
-		tb_SanPham.getColumn("Xóa").setCellEditor(new ButtonEditor("Xóa", new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        String command = e.getActionCommand();
-		        if (command.startsWith("Xóa")) {
-		            int row = Integer.parseInt(command.split("_")[1]);
+		tb_SanPham.getColumn("Xóa").setCellEditor(new ButtonEditor("Xóa", e -> {
+		    try {
+		        int row = Integer.parseInt(e.getActionCommand().split("_")[1]);
+		        String maSP = (String) dftb_SanPham.getValueAt(row, 0);
 
-		            // Lấy mã sản phẩm (giả sử cột đầu tiên là maSP)
-		            String maSP = (String) dftb_SanPham.getValueAt(row, 0);
+		        int confirm = JOptionPane.showConfirmDialog(null,
+		                "Bạn có xác nhận xóa không?",
+		                "Xác nhận xóa",
+		                JOptionPane.YES_NO_OPTION);
 
-		            // Hiển thị hộp thoại xác nhận xóa ở giữa màn hình
-		            int confirm = JOptionPane.showConfirmDialog(null, 
-		                    "Bạn có xác nhận xóa không?", 
-		                    "Xác nhận xóa", 
-		                    JOptionPane.YES_NO_OPTION);
+		        if (confirm == JOptionPane.YES_OPTION) {
+		            boolean isDeleted = sp_dao.xoaSanPham(maSP);
 
-		            if (confirm == JOptionPane.YES_OPTION) {
-		                // Gọi hàm xoaSanPham
-		                boolean isDeleted = sp_dao.xoaSanPham(maSP);
-		                
-		                if (isDeleted) {
-		                    // Xóa dòng trong TableModel nếu xóa thành công từ cơ sở dữ liệu
-		                    dftb_SanPham.removeRow(row);
-		                    JOptionPane.showMessageDialog(null, "Xóa sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-		                } else {
-		                    JOptionPane.showMessageDialog(null, "Xóa sản phẩm thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-		                }
+		            if (isDeleted) {
+		                dftb_SanPham.removeRow(row);
+		                JOptionPane.showMessageDialog(null, "Xóa sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 		            } else {
-		                System.out.println("Đã hủy thao tác xóa.");
+		                JOptionPane.showMessageDialog(null, "Xóa sản phẩm thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
 		            }
 		        }
+		    } catch (Exception ex) {
+		        JOptionPane.showMessageDialog(null, "Lỗi xóa sản phẩm: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
 		    }
 		}));
-
-
-
 
 		JScrollPane scp_SanPham = new JScrollPane(tb_SanPham);
 		scp_SanPham.setBackground(new Color(240, 240, 240,0));
 		scp_SanPham.setBounds(23, 60, 1107, 589);
 		pnCenter.add(scp_SanPham);
-
 		// đưa dữ liệu từ database vào table
-
 		RoundedPanel pnLoc = new RoundedPanel(30);
 		pnLoc.setForeground(new Color(0, 0, 0));
 		pnLoc.setBackground(new Color(240,240,240,0));
@@ -301,7 +248,6 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 		pnLoc.setBounds(1165, 78, 307, 370);
 		pnCenter.add(pnLoc);
 		pnLoc.setLayout(null);
-
 		JLabel lbLocTheoLoai = new JLabel("Loại Sản Phẩm");
 		lbLocTheoLoai.setForeground(new Color(0, 0, 0));
 //		lbLocTheoLoai.setBackground(new Color(255, 255, 255));
@@ -561,19 +507,15 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 
 	// Phương thức thêm dòng vào bảng
 	public void addRowTable(SanPham_entity sp) {
-
 		// Thêm dòng mới vào mô hình bảng
-
 		dftb_SanPham.addRow(new Object[] { sp.getMaSP(), sp.getTenSP(), sp.getGia(), sp.getLoaiSanPham().getMaLoaiSP(),sp.getThue() });
 				sp_dao.themSanPham(sp);
 				
 	}
 
-
 	public void docDuLieuVaoTable(int currentPage, int rowsPerPage) {
 	    dftb_SanPham.setRowCount(0); // Xóa dữ liệu hiện tại trong bảng
 	    List<SanPham_entity> products = sp_dao.getAllSanPham();
-
 	    // Lọc theo loại sản phẩm (nếu có)
 	    String selectedType = cb_LocTheoLoai.getSelectedItem().toString();
 	    if (!selectedType.equalsIgnoreCase("Tất cả")) {
