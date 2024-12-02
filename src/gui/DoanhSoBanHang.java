@@ -86,6 +86,9 @@ public class DoanhSoBanHang extends SimpleForm{
         themData(time);
         chart.start();
     }
+    /**
+     * @wbp.parser.constructor
+     */
     public DoanhSoBanHang(java.sql.Date ngayBatDau, java.sql.Date ngayKetThuc) {
     	tk_Dao = new ThongKe_DAO();
 		setPreferredSize(new Dimension(1041, 668));
@@ -119,9 +122,7 @@ public class DoanhSoBanHang extends SimpleForm{
     }
 
     public void themData(int time) {
-    	java.util.List<DoanhSoBanHangModalData> lists = new ArrayList<DoanhSoBanHangModalData>();
-    		 lists = tk_Dao.layDoanhSoBanHangTQTheoThoiGian(time);
-       
+    	java.util.List<DoanhSoBanHangModalData> lists = tk_Dao.layDoanhSoBanHangTQTheoThoiGian(time);
             chart.clear();
             for (DoanhSoBanHangModalData data : lists) {
             	ModelChart mdChart = new ModelChart(data.getThang(),new double[] {data.getTongDoanhThu(),data.getTongChiPhi(),data.getLoiNhuan()});

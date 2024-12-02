@@ -65,6 +65,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 	public JTextField tf_thue;
 	private String maSP;
 	public SanPham_entity spCapNhat;
+	private JTextField tf_giaNhap;
 	public String getMaSP() {
 		return maSP;
 	}
@@ -109,14 +110,14 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		tf_soLuong.setForeground(new Color(0, 0, 0));
 		tf_soLuong.setColumns(10);
 		tf_soLuong.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		tf_soLuong.setBounds(20, 166, 299, 34);
+		tf_soLuong.setBounds(20, 166, 201, 34);
 		pnCenter.add(tf_soLuong);
 
-		JLabel lb_Gia = new JLabel("Giá");
+		JLabel lb_Gia = new JLabel("Giá Bán");
 		lb_Gia.setForeground(new Color(0, 0, 0));
 		lb_Gia.setBackground(new Color(0, 0, 0));
 		lb_Gia.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_Gia.setBounds(405, 10, 46, 46);
+		lb_Gia.setBounds(520, 10, 68, 46);
 		pnCenter.add(lb_Gia);
 
 		tf_Gia = new JTextField();
@@ -124,14 +125,14 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		tf_Gia.setBackground(new Color(255, 255, 255));
 		tf_Gia.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		tf_Gia.setColumns(10);
-		tf_Gia.setBounds(405, 66, 251, 34);
+		tf_Gia.setBounds(520, 66, 173, 34);
 		pnCenter.add(tf_Gia);
 
 		JLabel lb_HinhAnh = new JLabel("Hình Ảnh");
 		lb_HinhAnh.setForeground(new Color(0, 0, 0));
 		lb_HinhAnh.setBackground(new Color(0, 0, 0));
 		lb_HinhAnh.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_HinhAnh.setBounds(405, 110, 105, 46);
+		lb_HinhAnh.setBounds(327, 110, 105, 46);
 		pnCenter.add(lb_HinhAnh);
 
 		tf_HinhAnh = new JTextField();
@@ -139,7 +140,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		tf_HinhAnh.setForeground(new Color(0, 0, 0));
 		tf_HinhAnh.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		tf_HinhAnh.setColumns(10);
-		tf_HinhAnh.setBounds(405, 166, 173, 34);
+		tf_HinhAnh.setBounds(327, 166, 288, 34);
 		pnCenter.add(tf_HinhAnh);
 
 		btnChonHinhAnh = new JButton("Chọn");
@@ -164,7 +165,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 			}
 		});
 		btnChonHinhAnh.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnChonHinhAnh.setBounds(581, 166, 75, 34);
+		btnChonHinhAnh.setBounds(618, 163, 75, 40);
 		pnCenter.add(btnChonHinhAnh);
 
 		tf_Tensp = new JTextField();
@@ -172,7 +173,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		tf_Tensp.setBackground(new Color(255, 255, 255));
 		tf_Tensp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		tf_Tensp.setColumns(10);
-		tf_Tensp.setBounds(22, 66, 297, 34);
+		tf_Tensp.setBounds(22, 66, 201, 34);
 		pnCenter.add(tf_Tensp);
 
 		JLabel lb_soLuong = new JLabel("Số Lượng");
@@ -193,7 +194,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		JLabel lblCanhBaoGia = new JLabel("*");
 		lblCanhBaoGia.setForeground(new Color(255, 0, 0));
 		lblCanhBaoGia.setFont(new Font("Serif", Font.ITALIC, 12));
-		lblCanhBaoGia.setBounds(437, 28, 166, 13);
+		lblCanhBaoGia.setBounds(583, 28, 49, 13);
 		pnCenter.add(lblCanhBaoGia);
 
 		JLabel lbCanhBaoSoLuong = new JLabel("*");
@@ -205,8 +206,29 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		JLabel lblCui = new JLabel("* Có Đuôi.jpg");
 		lblCui.setForeground(new Color(255, 0, 0));
 		lblCui.setFont(new Font("Serif", Font.ITALIC, 12));
-		lblCui.setBounds(484, 128, 166, 13);
+		lblCui.setBounds(401, 128, 88, 13);
 		pnCenter.add(lblCui);
+		
+		tf_giaNhap = new JTextField();
+		tf_giaNhap.setForeground(Color.BLACK);
+		tf_giaNhap.setColumns(10);
+		tf_giaNhap.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		tf_giaNhap.setBackground(Color.WHITE);
+		tf_giaNhap.setBounds(327, 66, 173, 34);
+		pnCenter.add(tf_giaNhap);
+		
+		JLabel lb_Gia_1 = new JLabel("Giá Nhập");
+		lb_Gia_1.setForeground(Color.BLACK);
+		lb_Gia_1.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+		lb_Gia_1.setBackground(Color.BLACK);
+		lb_Gia_1.setBounds(327, 10, 68, 46);
+		pnCenter.add(lb_Gia_1);
+		
+		JLabel lbCanhBaoNSX_1 = new JLabel("*");
+		lbCanhBaoNSX_1.setForeground(Color.RED);
+		lbCanhBaoNSX_1.setFont(new Font("Serif", Font.ITALIC, 12));
+		lbCanhBaoNSX_1.setBounds(401, 26, 184, 17);
+		pnCenter.add(lbCanhBaoNSX_1);
 
 		JLabel lb_ThemMoiSP = new JLabel("Thông Tin Sản Phẩm");
 		lb_ThemMoiSP.setForeground(new Color(0, 0, 0));
@@ -316,7 +338,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		cb_DonViTinh.setBackground(new Color(255, 255, 255));
 		cb_DonViTinh.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		cb_DonViTinh.setBounds(287, 102, 127, 34);
-		cb_DonViTinh.addItem("Vỉ");
+		cb_DonViTinh.addItem("Vĩ");
 		cb_DonViTinh.addItem("Viên");
 		cb_DonViTinh.addItem("Chai");
 		cb_DonViTinh.addItem("Cái");
@@ -571,7 +593,8 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 	            }
 
 	            LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
-	            spCapNhat = new SanPham_entity(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong, thue);
+	            double giaNhap = Double.parseDouble(tf_giaNhap.getText());
+	            spCapNhat = new SanPham_entity(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong, thue,giaNhap);
 	            SanPham_DAO sp_dao = new SanPham_DAO();
 	            sp_dao.capNhatSanPham(spCapNhat); // Cập nhật sản phẩm trong cơ sở dữ liệu
 	            
@@ -620,7 +643,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 	    ta_ThanhPhan.setText(sp.getThanhPhan());
 	    ta_CongDung.setText(sp.getCongDung());
 	    tf_HinhAnh.setText(sp.getHinhAnhSP());
-	    
+	    tf_giaNhap.setText(String.valueOf(sp.getGiaNhap()));
 	    String mlsp = sp.getLoaiSanPham().getMaLoaiSP();
 	    if(mlsp.equals("Thuoc")) {
 	    	cb_LoaiSP.setSelectedItem("Thuốc");
