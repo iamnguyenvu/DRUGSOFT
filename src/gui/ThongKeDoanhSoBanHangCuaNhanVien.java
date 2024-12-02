@@ -171,8 +171,6 @@ public class ThongKeDoanhSoBanHangCuaNhanVien extends SimpleForm{
 
             PreparedStatement p = connection.prepareStatement(sql);
             ResultSet r = p.executeQuery();
-
-            // Lấy dữ liệu từ ResultSet và lưu vào danh sách lists
             while (r.next()) {
                 String tenNV = r.getString("hotenNV");
                 int soLuongGiaoDich = r.getInt("DoanhSo");
@@ -189,7 +187,6 @@ public class ThongKeDoanhSoBanHangCuaNhanVien extends SimpleForm{
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            // Đảm bảo đóng kết nối nếu không null
             if (connection != null) {
                 try {
                     connection.close();

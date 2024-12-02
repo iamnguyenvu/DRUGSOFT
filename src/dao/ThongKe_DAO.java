@@ -22,6 +22,7 @@ import entity.NhanVien_entity;
 import entity.SanPham_entity;
 import nguyenvu.model.DoanhSoBanHangModalData;
 import nguyenvu.model.ModalDataSoLuongGiaoDich;
+import nguyenvu.model.ModelData;
 import nguyenvu.model.ModelDataSP;
 import nguyenvu.model.SoLuongGiaoDichNV;
 
@@ -1369,6 +1370,39 @@ public class ThongKe_DAO {
 	        connection.close();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
+	    }
+
+	    return List;
+	}
+	public ArrayList<ModelData> doanhSoBanHangNhanVien(int time){
+	    ArrayList<ModelData> List = new ArrayList<>();
+	    Connection connection = connectDB.accessDataBase();
+
+	    if(time == 7) {
+	    	StringBuilder sql = new StringBuilder();
+	    	sql.append("SELECT TOP 7 [hotenNV], SUM([tongTien]) AS DoanhSo \r\n"
+	    			+ "FROM HoaDon hd join NhanVien nv on hd.maNV = nv.maNV\r\n"
+	    			+ "WHERE ngayLapHD >= DATEADD(DAY, -7, GETDATE())\r\n"
+	    			+ "GROUP BY [hotenNV]\r\n"
+	    			+ "ORDER BY SUM([tongTien])");
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String hotenNV = rs.getString("hotenNV");
+	                int DoanhSo = rs.getInt("DoanhSo");
+
+	                ModelData doanhSo = new ModelData(hotenNV,DoanhSo);
+	                List.add(doanhSo);
+	            }
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
 	    }
 
 	    return List;
