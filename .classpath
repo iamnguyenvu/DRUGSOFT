@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="library/datechooser-swing-1.4.1.jar"/>
 	<classpathentry kind="lib" path="library/flatlaf-3.4.1.jar"/>
@@ -78,5 +82,7 @@
 	<classpathentry kind="lib" path="library/java/opencv-4100.jar"/>
 	<classpathentry kind="lib" path="library/javax.mail.jar"/>
 	<classpathentry kind="lib" path="library/jgoodies-forms-1.8.0.jar"/>
+	<classpathentry kind="lib" path="library/swing-chart-1.1.1.jar"/>
+	<classpathentry kind="lib" path="library/swing-datetime-picker-1.2.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

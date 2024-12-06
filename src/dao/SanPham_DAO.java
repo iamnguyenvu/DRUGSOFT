@@ -240,6 +240,7 @@ public class SanPham_DAO {
 	    }
 	}
 
+	
 
     // Get product price by maSP
     public SanPham_entity getThongTinSP(String maSP) {

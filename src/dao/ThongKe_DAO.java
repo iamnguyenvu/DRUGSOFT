@@ -1317,6 +1317,7 @@ public class ThongKe_DAO {
 	    }
 	    return List;
 	}
+	
 	public ArrayList<ModalDataSoLuongGiaoDich> SoLuongGiaoDich(java.util.Date startDate, java.util.Date endDate) {
 	    ArrayList<ModalDataSoLuongGiaoDich> List = new ArrayList<>();
 	    Connection connection = connectDB.accessDataBase();
@@ -1374,20 +1375,92 @@ public class ThongKe_DAO {
 
 	    return List;
 	}
+
 	public ArrayList<ModelData> doanhSoBanHangNhanVien(int time){
 	    ArrayList<ModelData> List = new ArrayList<>();
 	    Connection connection = connectDB.accessDataBase();
 
-	    if(time == 7) {
+	    if(time == 7 || time  == 30 || time ==90 || time == 365) {
 	    	StringBuilder sql = new StringBuilder();
 	    	sql.append("SELECT TOP 7 [hotenNV], SUM([tongTien]) AS DoanhSo \r\n"
 	    			+ "FROM HoaDon hd join NhanVien nv on hd.maNV = nv.maNV\r\n"
-	    			+ "WHERE ngayLapHD >= DATEADD(DAY, -7, GETDATE())\r\n"
+	    			+ "WHERE ngayLapHD >= DATEADD(DAY, -?, GETDATE())\r\n"
 	    			+ "GROUP BY [hotenNV]\r\n"
 	    			+ "ORDER BY SUM([tongTien])");
 		    try {
 		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+		    	preparedStatement.setInt(1, time);
+		        ResultSet rs = preparedStatement.executeQuery();
 
+		        while (rs.next()) {
+	                String hotenNV = rs.getString("hotenNV");
+	                int DoanhSo = rs.getInt("DoanhSo");
+
+	                ModelData doanhSo = new ModelData(hotenNV,DoanhSo);
+	                List.add(doanhSo);
+	            }
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 0) {
+	    	StringBuilder sql = new StringBuilder();
+	    	sql.append("SELECT TOP 7 [hotenNV], SUM([tongTien]) AS DoanhSo \r\n"
+	    			+ "FROM HoaDon hd join NhanVien nv on hd.maNV = nv.maNV\r\n"
+	    			+ "GROUP BY [hotenNV]\r\n"
+	    			+ "ORDER BY SUM([tongTien])");
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String hotenNV = rs.getString("hotenNV");
+	                int DoanhSo = rs.getInt("DoanhSo");
+
+	                ModelData doanhSo = new ModelData(hotenNV,DoanhSo);
+	                List.add(doanhSo);
+	            }
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 2024) {
+	    	StringBuilder sql = new StringBuilder();
+	    	sql.append("SELECT TOP 7 [hotenNV], SUM([tongTien]) AS DoanhSo\r\n"
+	    			+ "	    			FROM HoaDon hd join NhanVien nv on hd.maNV = nv.maNV\r\n"
+	    			+ "	    			WHERE YEAR(ngayLapHD) = 2024\r\n"
+	    			+ "	    			GROUP BY [hotenNV]\r\n"
+	    			+ "	    			ORDER BY SUM([tongTien])");
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String hotenNV = rs.getString("hotenNV");
+	                int DoanhSo = rs.getInt("DoanhSo");
+
+	                ModelData doanhSo = new ModelData(hotenNV,DoanhSo);
+	                List.add(doanhSo);
+	            }
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 2023) {
+	    	StringBuilder sql = new StringBuilder();
+	    	sql.append("SELECT TOP 7 [hotenNV], SUM([tongTien]) AS DoanhSo\r\n"
+	    			+ "	    			FROM HoaDon hd join NhanVien nv on hd.maNV = nv.maNV\r\n"
+	    			+ "	    			WHERE YEAR(ngayLapHD) = 2023\r\n"
+	    			+ "	    			GROUP BY [hotenNV]\r\n"
+	    			+ "	    			ORDER BY SUM([tongTien])");
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
 		        ResultSet rs = preparedStatement.executeQuery();
 
 		        while (rs.next()) {
@@ -1407,6 +1480,191 @@ public class ThongKe_DAO {
 
 	    return List;
 	}
+	
+	public ArrayList<ModelData> doanhSoBanHangNhanVien(java.util.Date startDate, java.util.Date endDate) {
+	    ArrayList<ModelData> List = new ArrayList<>();
+	    Connection connection = connectDB.accessDataBase();
+	    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+	    String formattedStartDate = sdf.format(startDate);
+	    String formattedEndDate = sdf.format(endDate);
 
+	    StringBuilder sql = new StringBuilder();    
+	    sql.append("SELECT TOP 7 [hotenNV], SUM([tongTien]) AS DoanhSo\r\n"
+	    		+ "	    			FROM HoaDon hd join NhanVien nv on hd.maNV = nv.maNV\r\n"
+	    		+ "	    			WHERE ngayLapHD BETWEEN ? AND ?\r\n"
+	    		+ "	    			GROUP BY [hotenNV]\r\n"
+	    		+ "	    			ORDER BY SUM([tongTien])");
+	    try {
+	        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+	        preparedStatement.setString(1, formattedStartDate);
+	        preparedStatement.setString(2, formattedEndDate);
+
+	        ResultSet rs = preparedStatement.executeQuery();
+
+	        while (rs.next()) {
+	            String hotenNV = rs.getString("hotenNV"); 
+	            int DoanhSo = rs.getInt("DoanhSo");
+
+	            ModelData dsbh = new ModelData(hotenNV, DoanhSo);
+	            List.add(dsbh);
+	        }
+
+	        rs.close();
+	        preparedStatement.close();
+	        connection.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return List;
+	}
+	public ArrayList<ModalDataSoLuongGiaoDich> soLuongGiaoDichNhanVien(int time){
+	    ArrayList<ModalDataSoLuongGiaoDich> List = new ArrayList<>();
+	    Connection connection = connectDB.accessDataBase();
+
+	    if(time == 7 || time  == 30 || time ==90 || time == 365) {
+	    	StringBuilder sql = new StringBuilder();
+	    	sql.append("SELECT TOP 10 nv.hotenNV, COUNT(hd.maHD) AS soLuongGiaoDich\r\n"
+	    			+ "FROM HoaDon hd\r\n"
+	    			+ "JOIN NhanVien nv ON hd.maNV = nv.maNV\r\n"
+	    			+ "WHERE hd.ngayLapHD >= DATEADD(DAY, -?, CAST(GETDATE() AS DATE))\r\n"
+	    			+ "GROUP BY hd.maNV, nv.hotenNV\r\n"
+	    			+ "ORDER BY soLuongGiaoDich DESC;");
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+		    	preparedStatement.setInt(1, time);
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String hotenNV = rs.getString("hotenNV");
+	                int DoanhSo = rs.getInt("soLuongGiaoDich");
+
+	                ModalDataSoLuongGiaoDich doanhSo = new ModalDataSoLuongGiaoDich(hotenNV,DoanhSo);
+	                List.add(doanhSo);
+	            }
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 0) {
+	    	StringBuilder sql = new StringBuilder();
+	    	sql.append("SELECT TOP 10 nv.hotenNV, COUNT(hd.maHD) AS soLuongGiaoDich\r\n"
+	    			+ "FROM HoaDon hd\r\n"
+	    			+ "JOIN NhanVien nv ON hd.maNV = nv.maNV\r\n"
+	    			+ "GROUP BY hd.maNV, nv.hotenNV\r\n"
+	    			+ "ORDER BY soLuongGiaoDich DESC;");
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String hotenNV = rs.getString("hotenNV");
+	                int DoanhSo = rs.getInt("soLuongGiaoDich");
+
+	                ModalDataSoLuongGiaoDich doanhSo = new ModalDataSoLuongGiaoDich(hotenNV,DoanhSo);
+	                List.add(doanhSo);
+	            }
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 2024) {
+	    	StringBuilder sql = new StringBuilder();
+	    	sql.append("SELECT TOP 10 nv.hotenNV, COUNT(hd.maHD) AS soLuongGiaoDich\r\n"
+	    			+ "FROM HoaDon hd\r\n"
+	    			+ "JOIN NhanVien nv ON hd.maNV = nv.maNV\r\n"
+	    			+ "WHERE year(ngayLapHD) = 2024\r\n"
+	    			+ "GROUP BY hd.maNV, nv.hotenNV\r\n"
+	    			+ "ORDER BY soLuongGiaoDich DESC;");
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String hotenNV = rs.getString("hotenNV");
+	                int DoanhSo = rs.getInt("soLuongGiaoDich");
+
+	                ModalDataSoLuongGiaoDich doanhSo = new ModalDataSoLuongGiaoDich(hotenNV,DoanhSo);
+	                List.add(doanhSo);
+	            }
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }else if(time == 2023) {
+	    	StringBuilder sql = new StringBuilder();
+	    	sql.append("SELECT TOP 10 nv.hotenNV, COUNT(hd.maHD) AS soLuongGiaoDich\r\n"
+	    			+ "FROM HoaDon hd\r\n"
+	    			+ "JOIN NhanVien nv ON hd.maNV = nv.maNV\r\n"
+	    			+ "WHERE year(ngayLapHD) = 2023\r\n"
+	    			+ "GROUP BY hd.maNV, nv.hotenNV\r\n"
+	    			+ "ORDER BY soLuongGiaoDich DESC;");
+		    try {
+		    	PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+	                String hotenNV = rs.getString("hotenNV");
+	                int DoanhSo = rs.getInt("soLuongGiaoDich");
+
+	                ModalDataSoLuongGiaoDich doanhSo = new ModalDataSoLuongGiaoDich(hotenNV,DoanhSo);
+	                List.add(doanhSo);
+	            }
+		        rs.close();
+		        preparedStatement.close();
+		        connection.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	    }
+
+	    return List;
+	}
+
+	public ArrayList<ModalDataSoLuongGiaoDich> soLuongGiaoDichNhanVien(java.util.Date startDate, java.util.Date endDate) {
+	    ArrayList<ModalDataSoLuongGiaoDich> List = new ArrayList<>();
+	    Connection connection = connectDB.accessDataBase();
+	    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+	    String formattedStartDate = sdf.format(startDate);
+	    String formattedEndDate = sdf.format(endDate);
+
+	    StringBuilder sql = new StringBuilder();    
+	    sql.append("SELECT TOP 10 nv.hotenNV, COUNT(hd.maHD) AS soLuongGiaoDich\r\n"
+	    		+ "FROM HoaDon hd\r\n"
+	    		+ "JOIN NhanVien nv ON hd.maNV = nv.maNV\r\n"
+	    		+ "WHERE ngayLapHD BETWEEN ? AND ?\r\n"
+	    		+ "GROUP BY hd.maNV, nv.hotenNV\r\n"
+	    		+ "ORDER BY soLuongGiaoDich DESC;");
+	    try {
+	        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+	        preparedStatement.setString(1, formattedStartDate);
+	        preparedStatement.setString(2, formattedEndDate);
+
+	        ResultSet rs = preparedStatement.executeQuery();
+
+	        while (rs.next()) {
+	            String hotenNV = rs.getString("hotenNV"); 
+	            int DoanhSo = rs.getInt("soLuongGiaoDich");
+
+	            ModalDataSoLuongGiaoDich dsbh = new ModalDataSoLuongGiaoDich(hotenNV, DoanhSo);
+	            List.add(dsbh);
+	        }
+
+	        rs.close();
+	        preparedStatement.close();
+	        connection.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return List;
+	}
+	
 
 }
