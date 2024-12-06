@@ -6,6 +6,9 @@ package nguyenvu.utils;
 
 import dao.BanHang_DAO;
 import gui.BanHang;
+import gui.NhapHang;
+import gui.NhapHangLuuTam;
+
 import java.awt.Component;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
@@ -29,6 +32,8 @@ public class QuantityCellEditor extends DefaultCellEditor {
     private int row;
     private BanHang banHang;
     private BanHang_DAO dao;
+    private NhapHangLuuTam nhapHangLuuTam;
+	private NhapHang nhapHang;
     
 
     public QuantityCellEditor(BanHang banHang) {
@@ -58,7 +63,56 @@ public class QuantityCellEditor extends DefaultCellEditor {
 
     }
 
-    @Override
+    public QuantityCellEditor(NhapHang nhapHang) {
+        super(new JCheckBox());
+        this.nhapHang = nhapHang;
+        dao = new BanHang_DAO();
+        input = new JSpinner();
+        SpinnerNumberModel numberModel = (SpinnerNumberModel) input.getModel();
+        numberModel.setMinimum(1);
+        numberModel.setMaximum(50);
+        JSpinner.NumberEditor editor = (JSpinner.NumberEditor) input.getEditor();
+        DefaultFormatter formatter = (DefaultFormatter) editor.getTextField().getFormatter();
+        formatter.setCommitsOnValidEdit(true);
+        editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
+        input.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (table != null) {
+                    int quantity = (int) input.getValue();
+                    double pricePerUnit = (double) table.getValueAt(row, 7);
+                    double newTotal = pricePerUnit * quantity;
+                    table.setValueAt(newTotal, row, 8);
+                }
+            }
+        });
+	}
+    public QuantityCellEditor(NhapHangLuuTam nhapHangLuuTam) {
+        super(new JCheckBox());
+        this.nhapHangLuuTam = nhapHangLuuTam;
+        dao = new BanHang_DAO();
+        input = new JSpinner();
+        SpinnerNumberModel numberModel = (SpinnerNumberModel) input.getModel();
+        numberModel.setMinimum(1);
+        numberModel.setMaximum(50);
+        JSpinner.NumberEditor editor = (JSpinner.NumberEditor) input.getEditor();
+        DefaultFormatter formatter = (DefaultFormatter) editor.getTextField().getFormatter();
+        formatter.setCommitsOnValidEdit(true);
+        editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
+        input.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (table != null) {
+                    int quantity = (int) input.getValue();
+                    double pricePerUnit = (double) table.getValueAt(row, 7);
+                    double newTotal = pricePerUnit * quantity;
+                    table.setValueAt(newTotal, row, 8);
+                }
+            }
+        });
+	}
+
+	@Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         this.table = table;
         this.row = row;

@@ -18,6 +18,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import gui.BanHang;
 import gui.DoiTra;
 import gui.HoaDon;
+import gui.NhapHang;
 import gui.DonDoiTra;
 import gui.SanPham;
 import gui.SanPhamDoiTra;
@@ -246,6 +247,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     
                     if (index[0] == 2) {
                         FormManager.showForm(doiTra);
+//                    	FormManager.showForm(new NhapHang());
                     }
                     
                     if (index[0] == 4) {

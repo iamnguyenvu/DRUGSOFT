@@ -76,7 +76,7 @@ public class ThongKeSoLuongGiaoDichTongQuan extends SimpleForm{
         add(pnCenter);
         
         Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
-        chart.addLegend(null, new Color(135, 189, 245));
+        chart.addLegend("Số Lượng Giao Dịch", new Color(135, 189, 245));
         themData(time);
         chart.start();
     }
@@ -89,7 +89,7 @@ public class ThongKeSoLuongGiaoDichTongQuan extends SimpleForm{
         add(pnCenter);
         
         Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
-        chart.addLegend(null, new Color(135, 189, 245));
+        chart.addLegend("Số Lượng Giao Dịch", new Color(135, 189, 245));
         themData(ngayBatDau,ngayKetThuc);
         chart.start();
     }
