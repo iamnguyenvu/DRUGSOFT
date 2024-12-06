@@ -16,6 +16,8 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import gui.BanHang;
+import gui.BaoCaoDoanhThu;
+import gui.BaoCaoSanPham;
 import gui.DoiTra;
 import gui.HoaDon;
 import gui.NhapHang;
@@ -249,6 +251,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     
                     if (index[0] == 2) {
                         FormManager.showForm(doiTra);
+//                    	FormManager.showForm(new NhapHang());
                     }
                     if (index[0] == 3) {
                     	FormManager.showForm(new NhapHang());
@@ -293,6 +296,14 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                             FormManager.showForm(new ThongKeDoanhThu_GUI());
                         }
                         if (index[1] == 2) {
+                        }
+                    }
+                    if (index[0] == 11) {
+                        if (index[1] == 0) {
+                            FormManager.showForm(new BaoCaoDoanhThu());
+                        }
+                        if (index[1] == 1) {
+                            FormManager.showForm(new BaoCaoSanPham());
                         }
                     }
                 }

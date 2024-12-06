@@ -470,19 +470,19 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 	        docDuLieuVaoTable(currentPage, rowsPerPage);
 	    });
 
-	    btnPrevious.addActionListener(e -> {
-	        if (currentPage > 1) {
-	            currentPage--;
-	            docDuLieuVaoTable(currentPage, rowsPerPage);
-	        }
-	    });
+                btnPrevious.addActionListener(e -> {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        docDuLieuVaoTable(currentPage, rowsPerPage);
+                    }
+                });
 
-	    btnNext.addActionListener(e -> {
-	        if (currentPage < totalPages) {
-	            currentPage++;
-	            docDuLieuVaoTable(currentPage, rowsPerPage);
-	        }
-	    });
+                btnNext.addActionListener(e -> {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        docDuLieuVaoTable(currentPage, rowsPerPage);
+                    }
+                });
 
 	    btnLast.addActionListener(e -> {
 	        currentPage = totalPages;
