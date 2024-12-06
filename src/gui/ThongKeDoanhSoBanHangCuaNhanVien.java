@@ -71,7 +71,7 @@ public class ThongKeDoanhSoBanHangCuaNhanVien extends SimpleForm{
 	/**
      * Creates new form Main
      */
-    public ThongKeDoanhSoBanHangCuaNhanVien() {
+    public ThongKeDoanhSoBanHangCuaNhanVien(int time) {
     	tk_Dao = new ThongKe_DAO();
 		setPreferredSize(new Dimension(1041, 668));
         initComponents();
@@ -80,8 +80,21 @@ public class ThongKeDoanhSoBanHangCuaNhanVien extends SimpleForm{
         add(pnCenter);
         
         Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
-        chart.addLegend(null, new Color(135, 189, 245));
-        themData();
+        chart.addLegend("Doanh Số Bán Hàng Của Nhân Viên", new Color(135, 189, 245));
+        themData(time);
+        chart.start();
+    }
+    public ThongKeDoanhSoBanHangCuaNhanVien(java.sql.Date ngayBatDau, java.sql.Date ngayKetThuc) {
+    	tk_Dao = new ThongKe_DAO();
+		setPreferredSize(new Dimension(1041, 668));
+        initComponents();
+        setBackground(new Color(240, 240, 240,0));
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        add(pnCenter);
+        
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+        chart.addLegend("Doanh Số Bán Hàng Của Nhân Viên", new Color(135, 189, 245));
+        themData(ngayBatDau,ngayKetThuc);
         chart.start();
     }
     @SuppressWarnings("unchecked")
@@ -98,103 +111,25 @@ public class ThongKeDoanhSoBanHangCuaNhanVien extends SimpleForm{
                                 chart.setFont(new Font("Arial", Font.PLAIN, 12));
     }
     private void themData(java.util.Date startDate, java.util.Date endDate) {
-        Connection connection = null; 
-        try {
-            ArrayList<ModelData> lists = new ArrayList<>(); 
-            connection = connectDB.accessDataBase();
-            if (connection == null) {
-                System.out.println("Cannot connect to the database.");
-                return;
-            }
-
-            String sql = "SELECT TOP 10 nv.maNV, nv.hotenNV, SUM(tongTien) AS DoanhSo\r\n"
-            		+ "FROM HoaDon hd \r\n"
-            		+ "JOIN NhanVien nv ON hd.maNV = nv.maNV\r\n"
-            		+ "WHERE ngayLapHD BETWEEN ? AND ?\r\n"
-            		+ "GROUP BY nv.maNV, nv.hotenNV\r\n"
-            		+ "ORDER BY DoanhSo DESC";
-
-            PreparedStatement p = connection.prepareStatement(sql);
-            // Convert java.util.Date to java.sql.Date
-            p.setDate(1, new java.sql.Date(startDate.getTime()));
-            p.setDate(2, new java.sql.Date(endDate.getTime()));
-
-            ResultSet r = p.executeQuery();
-
-            // Clear previous data from the chart
-            chart.clear();
-
-            while (r.next()) {
-                String tenNV = r.getString("hotenNV");
-                double doanhSo = r.getInt("DoanhSo");
-
-                // Add data to your model for the chart
-                ModelChart modelChart = new ModelChart(tenNV, new double[]{doanhSo});
-                chart.addData(modelChart);
-            }
-            chart.start();
-            
-            r.close(); // Close the ResultSet
-            p.close(); // Close the PreparedStatement
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Always close the connection in the 'finally' block to avoid leaks
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-
-
-    private void themData() {
-        Connection connection = null; // Khai báo biến kết nối
-        ArrayList<ModelData> lists = new ArrayList<>(); // Danh sách để lưu dữ liệu từ CSDL
-        try {
-            connection = connectDB.accessDataBase(); // Lấy kết nối
-            if (connection == null) {
-                System.out.println("Cannot connect to the database.");
-                return; // Dừng nếu không kết nối được
-            }
-
-            // Truy vấn SQL để lấy top 10 sản phẩm bán chạy nhất
-            String sql = "SELECT TOP 10 hotenNV, SUM(tongTien) AS DoanhSo\r\n"
-            		+ "FROM HoaDon hd join NhanVien nv on hd.maNV = nv.maNV\r\n"
-            		+ "WHERE YEAR(ngayLapHD) = YEAR(getdate())\r\n"
-            		+ "GROUP BY MONTH(ngayLapHD), YEAR(ngayLapHD), hotenNV\r\n"
-            		+ "ORDER BY hotenNV;";
-
-            PreparedStatement p = connection.prepareStatement(sql);
-            ResultSet r = p.executeQuery();
-            while (r.next()) {
-                String tenNV = r.getString("hotenNV");
-                int soLuongGiaoDich = r.getInt("DoanhSo");
-                lists.add(new ModelData(tenNV, soLuongGiaoDich));
-            }
-            r.close();
-            p.close();
-            chart.clear();
+            Connection connection = null; // Khai báo biến kết nối
+            ArrayList<ModelData> lists = tk_Dao.doanhSoBanHangNhanVien(startDate,endDate);
             for (ModelData data : lists) {
                 ModelChart modelChart = new ModelChart(data.getMonth(), new double[]{data.getTotal()});
                 chart.addData(modelChart);
             }
             chart.start();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
+
+
+
+    private void themData(int time) {
+        Connection connection = null; // Khai báo biến kết nối
+        ArrayList<ModelData> lists = tk_Dao.doanhSoBanHangNhanVien(time);
+        for (ModelData data : lists) {
+            ModelChart modelChart = new ModelChart(data.getMonth(), new double[]{data.getTotal()});
+            chart.addData(modelChart);
+        }
+        chart.start();
     }
 
 //    private void xuatExcel() throws SQLException {

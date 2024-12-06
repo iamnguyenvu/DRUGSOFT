@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Component;
 import java.time.LocalDate;
 
 public class SanPham_entity {
@@ -195,6 +196,12 @@ public class SanPham_entity {
         this.gia = gia;
         this.hinhAnhSP = hinhAnhSP;
     }
+
+
+	public Component toLowerCase() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 

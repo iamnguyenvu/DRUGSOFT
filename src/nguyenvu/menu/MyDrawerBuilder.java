@@ -18,6 +18,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import gui.BanHang;
 import gui.DoiTra;
 import gui.HoaDon;
+import gui.NhapHang;
 import gui.DonDoiTra;
 import gui.SanPham;
 import gui.SanPhamDoiTra;
@@ -148,6 +149,8 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item.Label("QUẢN LÝ"),
             new Item("Bán hàng", "email.svg"),
             new Item("Đổi trả", "chat.svg"),
+            new Item("Nhập Hàng", "chat.svg"),
+            new Item("Quản Lý Nhập Hàng", "chat.svg"),
             new Item("Sản phẩm", "calendar.svg")
             .subMenu("Sản phẩm bán hàng")
             .subMenu("Sản phẩm đổi trả"),
@@ -247,30 +250,33 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     if (index[0] == 2) {
                         FormManager.showForm(doiTra);
                     }
-                    
-                    if (index[0] == 4) {
-                        FormManager.showForm(new HoaDon());
-                    }
-                    
-                    if (index[0] == 5) {
-                    	FormManager.showForm(new gui.KhachHang_GUI());
+                    if (index[0] == 3) {
+                    	FormManager.showForm(new NhapHang());
                     }
                     
                     if (index[0] == 6) {
-                    	FormManager.showForm(new gui.NhanVien());
+                        FormManager.showForm(new HoaDon());
                     }
                     
                     if (index[0] == 7) {
+                    	FormManager.showForm(new gui.KhachHang_GUI());
+                    }
+                    
+                    if (index[0] == 8) {
+                    	FormManager.showForm(new gui.NhanVien());
+                    }
+                    
+                    if (index[0] == 9) {
                     	FormManager.showForm(new gui.TaiKhoan_GUI());
                     }
                     
-                    if (index[0] == 10) {
+                    if (index[0] == 12) {
                         // logout
                         FormManager.logout();
                     }
                 } 
                 else if (index.length == 2) {
-                    if (index[0] == 3) {
+                    if (index[0] == 5) {
                         if (index[1] == 0) {
                             FormManager.showForm(new SanPham());
                         }
@@ -279,7 +285,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                         }
                     }
                     
-                    if (index[0] == 8) {
+                    if (index[0] == 10) {
                         if (index[1] == 1) {
                             FormManager.showForm(new ThongKeSanPham_GUI());
                         }
