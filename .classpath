@@ -80,5 +80,7 @@
 	<classpathentry kind="lib" path="library/ireport/openpdf-1.3.30.jaspersoft.2.jar"/>
 	<classpathentry kind="lib" path="library/ireport/stax2-api-4.2.1.jar"/>
 	<classpathentry kind="lib" path="library/ireport/woodstox-core-6.4.0.jar"/>
+	<classpathentry kind="lib" path="library/java/opencv-4100.jar"/>
+	<classpathentry kind="lib" path="library/javax.mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

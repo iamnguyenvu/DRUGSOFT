@@ -168,5 +168,50 @@ public class TaiKhoan_DAO {
             return false;  // Trả về false nếu có lỗi
         }
     }
+    // Phương thức kiểm tra mật khẩu hiện tại và cập nhật mật khẩu mới
+public boolean changePassword(String tenDangNhap, String currentPassword, String newPassword) {
+    // Kiểm tra mật khẩu hiện tại
+    String sqlCheckCurrentPassword = "SELECT matKhau FROM TaiKhoan WHERE tenDangNhap = ?";
+    try (Connection con = connectDB.accessDataBase();
+         PreparedStatement ps = con.prepareStatement(sqlCheckCurrentPassword)) {
+        
+        ps.setString(1, tenDangNhap);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                String currentPasswordInDb = rs.getString("matKhau");
+                if (!currentPasswordInDb.equals(currentPassword)) {
+                    JOptionPane.showMessageDialog(null, "Mật khẩu hiện tại không đúng!");
+                    return false;
+                }
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+
+    // Kiểm tra mật khẩu mới có hợp lệ không (tương tự như đã làm trong updateTaiKhoan)
+    if (newPassword.length() < 8 || newPassword.length() > 16 ||
+        !newPassword.matches(".*[0-9].*") || !newPassword.matches(".*[A-Z].*") ||
+        !newPassword.matches(".*[a-z].*") || !newPassword.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
+        JOptionPane.showMessageDialog(null, "Mật khẩu mới không hợp lệ!");
+        return false;
+    }
+
+    // Cập nhật mật khẩu mới
+    String sqlUpdatePassword = "UPDATE TaiKhoan SET matKhau = ? WHERE tenDangNhap = ?";
+    try (Connection con = connectDB.accessDataBase();
+         PreparedStatement ps = con.prepareStatement(sqlUpdatePassword)) {
+
+        ps.setString(1, newPassword);
+        ps.setString(2, tenDangNhap);
+        int rowsUpdated = ps.executeUpdate();
+
+        return rowsUpdated > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
 
 }

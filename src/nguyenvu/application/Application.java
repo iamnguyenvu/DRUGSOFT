@@ -1,11 +1,11 @@
 package nguyenvu.application;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.util.UIScale;
-import gui.ManHinhNen;
+import gui.TrangChu;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,7 +14,6 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import nguyenvu.components.Background;
-import nguyenvu.forms.DashboardForm;
 import nguyenvu.menu.FormManager;
 import nguyenvu.model.ModelUser;
 import raven.popup.GlassPanePopup;
@@ -27,13 +26,15 @@ public class Application extends JFrame {
 
     private final boolean UNDECORATED = !true;
     private ModelUser user;
+    
+    private TrangChu trangChu;
 
     public Application() {
         init();
     }
 
     private void init() {
-    	
+    	trangChu = new TrangChu(user);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(UIScale.scale(new Dimension(1366, 768)));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -48,7 +49,7 @@ public class Application extends JFrame {
         // applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         GlassPanePopup.install(this);
         FormManager.install(this, UNDECORATED);
-        FormManager.showForm(new ManHinhNen());
+        FormManager.showForm(trangChu);
         FormManager.logout();
         // applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
     }
@@ -57,7 +58,7 @@ public class Application extends JFrame {
         FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("nguyenvu.themes");
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
-        FlatMacDarkLaf.setup();
+        FlatIntelliJLaf.setup();
         EventQueue.invokeLater(() -> new Application().setVisible(true));
     }
 }

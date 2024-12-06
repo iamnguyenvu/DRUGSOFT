@@ -33,7 +33,7 @@ public class DoiTra_DAO {
         ResultSet rs = null;
         ArrayList<ChiTietHoaDon> listCTHD = new ArrayList<>();
         try {
-            ps = con.prepareStatement("SELECT * FROM ChiTietHoaDon WHERE maHD LIKE ?");
+            ps = con.prepareStatement("SELECT maHD, maSP, soLuongSanPham, thanhTien FROM ChiTietHoaDon WHERE maHD LIKE ?");
             ps.setString(1, key);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -62,11 +62,12 @@ public class DoiTra_DAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("SELECT * FROM SanPham WHERE maSP LIKE ?");
+            ps = con.prepareStatement("SELECT maSP, tenSP, donViTinh, gia, hinhAnhSP FROM SanPham WHERE maSP LIKE ?");
             ps.setString(1, maSP);
             rs = ps.executeQuery();
             if (rs.next()) {
-                return new SanPham_entity(rs.getString("maSP"), rs.getString("tenSP"), rs.getDouble("gia"));
+                return new SanPham_entity(rs.getString("maSP"), rs.getString("tenSP"), 
+                        rs.getString("donViTinh"), rs.getDouble("gia"), rs.getString("hinhAnhSP"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,11 +90,11 @@ public class DoiTra_DAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("SELECT * FROM NhanVien WHERE maNV = (SELECT maNV FROM HoaDon WHERE maHD LIKE ?)");
+            ps = con.prepareStatement("SELECT maNV, hotenNV FROM NhanVien WHERE maNV = (SELECT maNV FROM HoaDon WHERE maHD LIKE ?)");
             ps.setString(1, maHD);
             rs = ps.executeQuery();
             if (rs.next()) {
-                return new NhanVien_entity(rs.getString("maNV"), rs.getString("hotenNV"), maHD, maHD, maHD, maHD, null, false, null, null, null, maHD, maHD);
+                return new NhanVien_entity(rs.getString("maNV"), rs.getString("hotenNV"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -116,7 +117,7 @@ public class DoiTra_DAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("SELECT * FROM KhachHang WHERE sdtKH = (SELECT sdtKH FROM HoaDon WHERE maHD LIKE ?)");
+            ps = con.prepareStatement("SELECT tenKH, sdtKH FROM KhachHang WHERE sdtKH = (SELECT sdtKH FROM HoaDon WHERE maHD LIKE ?)");
             ps.setString(1, maHD);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -143,7 +144,7 @@ public class DoiTra_DAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("SELECT * FROM HoaDon WHERE maHD = ?");
+            ps = con.prepareStatement("SELECT maHD, ngayLapHD, hinhThucThanhToan FROM HoaDon WHERE maHD = ?");
             ps.setString(1, maHD);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -201,36 +202,59 @@ public class DoiTra_DAO {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
         String currentDate = dateFormat.format(new Date());
         
-        // Truy vấn để tìm số thứ tự hóa đơn cao nhất trong ngày hiện tại
         String query = "SELECT MAX(maHD) FROM HoaDon WHERE maHD LIKE ?";
         String invoicePrefix = "HD" + currentDate;
         
         try (
              PreparedStatement stmt = con.prepareStatement(query)) {
             
-            // Đặt tham số để tìm các hóa đơn trong ngày hiện tại
             stmt.setString(1, invoicePrefix + "%");
             ResultSet rs = stmt.executeQuery();
             
-            // Lấy số thứ tự hóa đơn cao nhất
             int counter = 0;
             if (rs.next()) {
                 String maxInvoiceCode = rs.getString(1);
                 if (maxInvoiceCode != null) {
-                    // Trích xuất phần số thứ tự (xxxxx) từ mã hóa đơn
-                    String counterStr = maxInvoiceCode.substring(8);  // Từ vị trí 8 trở đi là số thứ tự
+                    String counterStr = maxInvoiceCode.substring(8); 
                     counter = Integer.parseInt(counterStr);
                 }
             }
             
-            // Tăng số thứ tự lên 1
             counter++;
             
-            // Đảm bảo số thứ tự có đủ 5 chữ số
             String counterPart = String.format("%05d", counter);
             
-            // Tạo mã hóa đơn mới
             return invoicePrefix + counterPart;
         }
+    }
+    
+    public boolean updateSLSP(String maSP, int soLuong) {
+        Connection con = connectDB.accessDataBase();
+        if (con == null) return false; 
+        PreparedStatement ps = null;
+
+        try {
+            String sql = "UPDATE SanPham SET soLuong = soLuong - ? WHERE maSP = ?";
+
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, soLuong);
+            ps.setString(2, maSP); 
+
+            int rowsAffected = ps.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false; 
     }
 }

@@ -1,6 +1,7 @@
 
 package nguyenvu.login;
 
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import dao.DangNhap_DAO;
 import dao.TaiKhoan_DAO;
 import java.awt.BorderLayout;
@@ -24,6 +25,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
@@ -33,6 +35,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.Border;
@@ -42,7 +45,6 @@ import nguyenvu.model.ModelUser;
 import raven.alerts.MessageAlerts;
 
 public class Login extends JPanel implements ActionListener, ItemListener, MouseListener {
-
     private static final long serialVersionUID = 1L;
     private JTextField txtUsername;
     private JPasswordField txtPassword;
@@ -59,33 +61,43 @@ public class Login extends JPanel implements ActionListener, ItemListener, Mouse
     private JDialog forgotDialog;
     private JButton sendButton;
     private JButton backButton;
+    
+    public String ygetTenDangNhap(){
+        return txtUsername.getText();
+    }
 
     public Login() {
         setPreferredSize(new Dimension(1000, 600));
         setLayout(new MigLayout("fill", "push[center][center]push", "push[center]push")); // Căn giữa panel chính
         init();
-
-        // Tạo đối tượng popup một lần duy nhất
-        RememberedAccountPopup popup = new RememberedAccountPopup(txtUsername, txtPassword);
-
-        txtUsername.addMouseListener(new MouseAdapter() {
+        
+        addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    // Kiểm tra xem có tài khoản nào để hiển thị
-                    if (popup.hasItems()) {
-                        popup.showPopup(e); // Hiển thị popup nếu có ít nhất một tài khoản
-                    }
-                }
+            public void mousePressed(MouseEvent e) {
+                xMouse = e.getX();
+                yMouse = e.getY();
             }
         });
-}
 
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                int x = e.getXOnScreen();
+                int y = e.getYOnScreen();
+                setLocation(x - xMouse, y - yMouse);
+            }
+        });
+    }
 
     private void init() {
         // dialog forgot
         JButton backButton = new JButton("Back");
+        backButton.setBackground(Color.decode("#E0E0E0"));
+        backButton.setIcon(new FlatSVGIcon("gui/icon/back.svg",0.02f));
+        
         JButton sendButton = new JButton("Gửi mật khẩu mới");
+        sendButton.setBackground(Color.decode("#28A745"));
+        
         forgotDialog = new JDialog();
         forgotDialog.setTitle("Quên Mật Khẩu");
         forgotDialog.setSize(400, 200);
@@ -94,7 +106,19 @@ public class Login extends JPanel implements ActionListener, ItemListener, Mouse
         forgotDialog.setUndecorated(true);
 
         JLabel forgotLabel = new JLabel("Quên Mật Khẩu", JLabel.CENTER);
-        forgotLabel.setFont(forgotLabel.getFont().deriveFont(16f));
+
+        // Thiết lập font chữ
+        forgotLabel.setFont(new Font("Open Sans", Font.BOLD,24)); // Font đậm, kích thước 18
+
+        // Thiết lập màu chữ
+        forgotLabel.setForeground(Color.decode("#007BFF")); // Màu xanh dương
+
+        // Thiết lập kích thước và căn giữa
+        forgotLabel.setHorizontalAlignment(JLabel.CENTER);
+        forgotLabel.setVerticalAlignment(JLabel.CENTER);
+
+        // Đặt padding hoặc khoảng trống
+        forgotLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Padding xung quanh
         forgotDialog.add(forgotLabel, "span, center, wrap 20");
 
         JLabel emailLabel = new JLabel("Nhập email của bạn:");
@@ -147,17 +171,38 @@ public class Login extends JPanel implements ActionListener, ItemListener, Mouse
 
         // Tải ảnh và resize với chất lượng cao
         try {
-            ImageIcon iiLogin = new ImageIcon(getClass().getResource("/img/login_img.jpg"));
-            Image originalImage = iiLogin.getImage();
-            Image scaledImage = getHighQualityScaledImage(originalImage, 500, 600);
-            JLabel lblLogin = new JLabel(new ImageIcon(scaledImage));
-            pnLeft.add(lblLogin, BorderLayout.CENTER);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JLabel lblError = new JLabel("Không thể tải hình ảnh");
-            lblError.setHorizontalAlignment(JLabel.CENTER);
-            pnLeft.add(lblError, BorderLayout.CENTER);
-        }
+    ImageIcon iiLogin = new ImageIcon(getClass().getResource("/img/loginbg1.jpg"));
+    Image originalImage = iiLogin.getImage();
+    Image scaledImage = getHighQualityScaledImage(originalImage, 500, 600);
+
+    // Tạo JLabel hiển thị ảnh nền
+    JLabel lblLogin = new JLabel(new ImageIcon(scaledImage));
+    lblLogin.setLayout(new BorderLayout()); // Cho phép thêm các thành phần con
+
+    // Tạo JLabel chứa text với phong cách Drugsoft
+    JLabel lblDrugsoft = new JLabel("<html><div style='text-align: center;'>"
+        + "<span style='font-size: 28px; font-weight: bold;'>DRUGSOFT</span><br>"
+        + "<span style='font-size: 12px;'>Powered by N13 - 2024</span>"
+        + "</div></html>");
+
+    lblDrugsoft.setHorizontalAlignment(JLabel.RIGHT); // Căn lề phải
+    lblDrugsoft.setVerticalAlignment(JLabel.TOP);     // Căn lề trên
+    lblDrugsoft.setForeground(Color.decode("#003366"));           // Màu chữ
+    lblDrugsoft.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Khoảng cách padding
+
+    // Thêm JLabel text vào góc trên phải của ảnh
+    lblLogin.add(lblDrugsoft, BorderLayout.NORTH);
+
+    // Thêm JLabel vào panel bên trái
+    pnLeft.add(lblLogin, BorderLayout.CENTER);
+} catch (Exception ex) {
+    ex.printStackTrace();
+    JLabel lblError = new JLabel("Không thể tải hình ảnh");
+    lblError.setHorizontalAlignment(JLabel.CENTER);
+    pnLeft.add(lblError, BorderLayout.CENTER);
+}
+
+
 
         // Right Panel
         JPanel pnRight = new JPanel() {
@@ -166,18 +211,28 @@ public class Login extends JPanel implements ActionListener, ItemListener, Mouse
                 super.paintComponent(g);
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                GradientPaint gp = new GradientPaint(0, 0, Color.decode("#009bff"), 0, getHeight(), Color.decode("#13283d"));
+                GradientPaint gp = new GradientPaint(0, 0, Color.decode("#0B6588"), 0, getHeight(), Color.decode("#13283d"));
                 g2.setPaint(gp);
                 g2.fillRect(0, 0, getWidth(), getHeight());
             }
         };
         pnRight.setPreferredSize(new Dimension(500, 600));
-        pnRight.setLayout(new MigLayout("wrap, fillx, insets 40 40 40 40", "[grow]", "[]20[]20[]20[]20[]"));
+        pnRight.setLayout(new MigLayout("wrap, fillx, insets 40 40 40 40", "[grow]", "[]20[]20[]20[]20[]40[]"));
 
         // Title
-        JLabel lblTitle = new JLabel("ĐĂNG NHẬP VÀO HỆ THỐNG");
-        lblTitle.setFont(new Font("Arial", Font.BOLD, 24));
-        lblTitle.setForeground(Color.WHITE);
+        
+        JLabel lblTitle = new JLabel("ĐĂNG NHẬP VÀO HỆ THỐNG", JLabel.CENTER);
+
+        // Thiết lập font chữ
+        lblTitle.setFont(new Font("Arial", Font.BOLD, 30)); // Font đậm, kích thước lớn
+
+        // Thiết lập màu sắc
+        lblTitle.setForeground(Color.WHITE); // Màu trắng
+
+        // Thiết lập căn giữa và padding
+        lblTitle.setHorizontalAlignment(JLabel.CENTER);
+        lblTitle.setVerticalAlignment(JLabel.CENTER);
+        lblTitle.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0)); // Khoảng cách trên và dưới
         pnRight.add(lblTitle, "wrap, center");
 
         // Username Label and Input Field
@@ -211,14 +266,14 @@ public class Login extends JPanel implements ActionListener, ItemListener, Mouse
         chRememberMe.setOpaque(false);
         chRememberMe.setFocusPainted(false);
         chRememberMe.addItemListener(this);
-        pnOptions.add(chRememberMe, "split 2, left");
+        pnOptions.add(chRememberMe, "left"); // Checkbox căn trái
 
         btnForgotPassword = new JButton("Quên mật khẩu?");
-        btnForgotPassword.setBackground(Color.BLACK);
+        btnForgotPassword.setBackground(Color.decode("#808080"));
         btnForgotPassword.setForeground(Color.WHITE);
         btnForgotPassword.setFocusPainted(false);
-        btnForgotPassword.setAlignmentX(JButton.CENTER_ALIGNMENT);
-        pnOptions.add(btnForgotPassword, "right");
+        pnOptions.add(btnForgotPassword, "alignx right"); // Nút căn phải
+
 
         //sử lý sự kiện Quên mật khẩu
         btnForgotPassword.addActionListener(e -> {
@@ -226,14 +281,14 @@ public class Login extends JPanel implements ActionListener, ItemListener, Mouse
             forgotDialog.setVisible(true); // Hiển thị dialog
         });
 
-        
         pnRight.add(pnOptions, "growx, wrap");
 
         // Login Button
         btnLogin = new JButton("ĐĂNG NHẬP");
-        btnLogin.setBackground(Color.BLACK);
+        btnLogin.setBackground(Color.decode("#28A745"));
         btnLogin.setForeground(Color.WHITE);
         btnLogin.setFocusPainted(false);
+        btnLogin.setPreferredSize(new Dimension(65,50));
         btnLogin.setAlignmentX(JButton.CENTER_ALIGNMENT);
         btnLogin.setAlignmentY(JButton.CENTER_ALIGNMENT);
         pnRight.add(btnLogin, "growx, center");
@@ -295,6 +350,7 @@ public class Login extends JPanel implements ActionListener, ItemListener, Mouse
         Integer role = dao.getRole(username, password);
 
         if (role != null) {
+            CurrentUser.setUsername(username); // Lưu tên đăng nhập vào CurrentUser
             String avatarPath = dao.getAvatar(username);
             String hoTen = dao.getHoTen(username);
             ModelUser user = new ModelUser(username, role, avatarPath, hoTen);

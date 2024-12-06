@@ -4,9 +4,16 @@
  */
 package gui;
 
+import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import dao.TaiKhoan_DAO;
 import gui.vi.ButtonEditor;
 import gui.vi.ButtonRenderer;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 
 import java.util.ArrayList;
@@ -21,8 +28,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.BorderFactory;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
+
+import dao.NhanVien_DAO;
+import entity.TaiKhoan_entity;
 
 import nguyenvu.components.SimpleForm;
+import nguyenvu.utils.HeaderRenderer;
 
 /**
 
@@ -32,6 +47,10 @@ public class TaiKhoan_GUI extends SimpleForm {
     private ButtonGroup groupTrangThai;
     private TaiKhoan_DAO taiKhoanDAO = new TaiKhoan_DAO();
     private TaiKhoan_GUI taiKhoan ;
+    private int totalPages = 0;
+    private int currentPage = 1;
+    private final int rowsPerPage = 15;
+    private NhanVien_DAO nhanVienDao;
     
     /**
      * Creates new form TaiKhoan
@@ -39,9 +58,16 @@ public class TaiKhoan_GUI extends SimpleForm {
     public TaiKhoan_GUI() {
         initComponents();
         initializeDatabase();
+        ysetShadowPanel();
+        dialogEdit.setUndecorated(true);
         radioLoc();
+        yiconForButton();
         setDefaultState();
-        loadDataToTable(); 
+        yloadDataToTable(currentPage,rowsPerPage); 
+//        suaTimKiem();
+        ySuKienFielTim();
+        yCbbTenTaiKhoan();
+        ySuKienPhanTrang();
     }
     
     private void initializeDatabase() {
@@ -81,7 +107,6 @@ public class TaiKhoan_GUI extends SimpleForm {
         tfTenTKEdit = new javax.swing.JTextField();
         pnContent = new javax.swing.JPanel();
         pnHeader = new javax.swing.JPanel();
-        lblQuanLiTaiKhoan = new javax.swing.JLabel();
         tfTim = new javax.swing.JTextField();
         btnTim = new javax.swing.JButton();
         spTable = new javax.swing.JScrollPane();
@@ -99,14 +124,20 @@ public class TaiKhoan_GUI extends SimpleForm {
         lblMatKhau = new javax.swing.JLabel();
         lblNhapLaiMatKhau = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        tfTenTaiKhoan = new javax.swing.JTextField();
         btnHuy = new javax.swing.JButton();
         btnLuu = new javax.swing.JButton();
         cbbPhanQuyen = new javax.swing.JComboBox<>();
         pfMatKhau = new javax.swing.JPasswordField();
         pfNhapLaiMatKhau = new javax.swing.JPasswordField();
+        cbbTenTaiKhoan = new javax.swing.JComboBox<>();
+        jPanel1 = new javax.swing.JPanel();
+        btnLast = new javax.swing.JButton();
+        btnNext = new javax.swing.JButton();
+        btnFirst = new javax.swing.JButton();
+        btnPrevious = new javax.swing.JButton();
+        lblPageIndicator = new javax.swing.JLabel();
 
-        pnEdit.setBackground(new java.awt.Color(255, 255, 255));
+        pnEdit.setBackground(new java.awt.Color(245, 245, 245));
 
         lblTenTKEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
         lblTenTKEdit.setText("Tên tài khoản");
@@ -140,7 +171,9 @@ public class TaiKhoan_GUI extends SimpleForm {
         cbbTrangThaiEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
         cbbTrangThaiEdit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hoạt động", "Ngừng hoạt động" }));
 
+        btnHuyEdit.setBackground(new java.awt.Color(173, 181, 189));
         btnHuyEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        btnHuyEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnHuyEdit.setText("Hủy");
         btnHuyEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,7 +181,9 @@ public class TaiKhoan_GUI extends SimpleForm {
             }
         });
 
+        btnLuuEdit.setBackground(new java.awt.Color(40, 167, 69));
         btnLuuEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        btnLuuEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnLuuEdit.setText("Lưu");
         btnLuuEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,9 +191,11 @@ public class TaiKhoan_GUI extends SimpleForm {
             }
         });
 
-        pnHeadEdit.setBackground(new java.awt.Color(204, 204, 204));
+        pnHeadEdit.setBackground(new java.awt.Color(11, 101, 136));
+        pnHeadEdit.setForeground(new java.awt.Color(255, 255, 255));
 
         lblHeadEdit.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
+        lblHeadEdit.setForeground(new java.awt.Color(255, 255, 255));
         lblHeadEdit.setText("Cập nhật thông tin tài khoản");
 
         javax.swing.GroupLayout pnHeadEditLayout = new javax.swing.GroupLayout(pnHeadEdit);
@@ -166,16 +203,16 @@ public class TaiKhoan_GUI extends SimpleForm {
         pnHeadEditLayout.setHorizontalGroup(
             pnHeadEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnHeadEditLayout.createSequentialGroup()
-                .addGap(203, 203, 203)
+                .addGap(240, 240, 240)
                 .addComponent(lblHeadEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(323, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnHeadEditLayout.setVerticalGroup(
             pnHeadEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnHeadEditLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnHeadEditLayout.createSequentialGroup()
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addComponent(lblHeadEdit)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
 
         tfTenTKEdit.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
@@ -193,9 +230,9 @@ public class TaiKhoan_GUI extends SimpleForm {
                 .addGroup(pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnEditLayout.createSequentialGroup()
                         .addGap(117, 117, 117)
-                        .addComponent(btnHuyEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(244, 244, 244)
-                        .addComponent(btnLuuEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnHuyEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(239, 239, 239)
+                        .addComponent(btnLuuEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnEditLayout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,15 +248,15 @@ public class TaiKhoan_GUI extends SimpleForm {
                             .addComponent(cbbPhanQuyenEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfNhapLaiMatKhauEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfMatKhauEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfTenTKEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(pnHeadEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(tfTenTKEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(137, Short.MAX_VALUE))
+            .addComponent(pnHeadEdit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnEditLayout.setVerticalGroup(
             pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnEditLayout.createSequentialGroup()
                 .addComponent(pnHeadEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(30, 30, 30)
                 .addGroup(pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTenTKEdit)
                     .addComponent(tfTenTKEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -241,8 +278,8 @@ public class TaiKhoan_GUI extends SimpleForm {
                     .addComponent(cbbTrangThaiEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(pnEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnHuyEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLuuEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnHuyEdit)
+                    .addComponent(btnLuuEdit))
                 .addGap(21, 21, 21))
         );
 
@@ -250,26 +287,34 @@ public class TaiKhoan_GUI extends SimpleForm {
         dialogEdit.getContentPane().setLayout(dialogEditLayout);
         dialogEditLayout.setHorizontalGroup(
             dialogEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         dialogEditLayout.setVerticalGroup(
             dialogEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        setPreferredSize(new java.awt.Dimension(1500, 800));
+        setMinimumSize(new java.awt.Dimension(1470, 730));
+        setPreferredSize(new java.awt.Dimension(1470, 730));
         setLayout(new java.awt.BorderLayout());
 
         pnContent.setMinimumSize(new java.awt.Dimension(1500, 800));
         pnContent.setPreferredSize(new java.awt.Dimension(1500, 800));
 
-        pnHeader.setBackground(new java.awt.Color(255, 255, 255));
+        pnHeader.setBackground(new java.awt.Color(11, 101, 136));
 
-        lblQuanLiTaiKhoan.setBackground(new java.awt.Color(255, 255, 255));
-        lblQuanLiTaiKhoan.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
-        lblQuanLiTaiKhoan.setText("Quản lý tài khoản");
+        tfTim.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tfTim.setForeground(new java.awt.Color(204, 204, 204));
+        tfTim.setText("Nhập Tên Tài Khoản ");
+        tfTim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfTimActionPerformed(evt);
+            }
+        });
 
-        btnTim.setText("Tìm");
+        btnTim.setBackground(new java.awt.Color(0, 123, 255));
+        btnTim.setForeground(new java.awt.Color(255, 255, 255));
+        btnTim.setText("Tìm kiếm");
         btnTim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTimActionPerformed(evt);
@@ -281,23 +326,20 @@ public class TaiKhoan_GUI extends SimpleForm {
         pnHeaderLayout.setHorizontalGroup(
             pnHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnHeaderLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblQuanLiTaiKhoan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 782, Short.MAX_VALUE)
-                .addComponent(tfTim, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(296, Short.MAX_VALUE)
+                .addComponent(tfTim, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(485, 485, 485))
         );
         pnHeaderLayout.setVerticalGroup(
             pnHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnHeaderLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(pnHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblQuanLiTaiKhoan)
-                    .addComponent(tfTim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTim))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(13, 13, 13)
+                .addGroup(pnHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnTim, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(tfTim))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tableTK.setModel(new javax.swing.table.DefaultTableModel(
@@ -316,6 +358,26 @@ public class TaiKhoan_GUI extends SimpleForm {
                 return types [columnIndex];
             }
         });
+        tableTK.setRowHeight(40);
+        tableTK.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        tableTK.getTableHeader().setPreferredSize(new Dimension(tableTK.getWidth(), 40));
+        tableTK.getTableHeader().setBackground(new Color(11,101,136));
+        tableTK.getTableHeader().setForeground(Color.WHITE);
+
+        // Cài đặt độ rộng cho từng cột
+        tableTK.getColumnModel().getColumn(0).setPreferredWidth(25); // Cột STT
+        tableTK.getColumnModel().getColumn(1).setPreferredWidth(155); // Cột Tên khách hàng
+        tableTK.getColumnModel().getColumn(2).setPreferredWidth(100); // Cột mật khẩu
+        tableTK.getColumnModel().getColumn(3).setPreferredWidth(70); // Cột Phân quyền
+        tableTK.getColumnModel().getColumn(4).setPreferredWidth(50); // Cột Trạng thái
+        tableTK.getColumnModel().getColumn(5).setPreferredWidth(120); // Cột Cập nhật
+
+        // Căn giữa dữ liệu trong các cột
+        for (int i = 0; i < tableTK.getColumnCount(); i++) {
+            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+            renderer.setHorizontalAlignment(SwingConstants.CENTER);  // Căn giữa nội dung của cột
+            tableTK.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
         spTable.setViewportView(tableTK);
 
         pnLoc.setBackground(new java.awt.Color(255, 255, 255));
@@ -359,7 +421,9 @@ public class TaiKhoan_GUI extends SimpleForm {
             }
         });
 
+        btnKhoiPhuc.setBackground(new java.awt.Color(108, 117, 125));
         btnKhoiPhuc.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
+        btnKhoiPhuc.setForeground(new java.awt.Color(255, 255, 255));
         btnKhoiPhuc.setText("Khôi phục");
         btnKhoiPhuc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -372,26 +436,29 @@ public class TaiKhoan_GUI extends SimpleForm {
         pnLocLayout.setHorizontalGroup(
             pnLocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnLocLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(lblPhanQuyen))
-            .addGroup(pnLocLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(radioQuanLy, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(pnLocLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(radioNhanVien))
-            .addGroup(pnLocLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(lblTrangThai))
-            .addGroup(pnLocLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(radioHoatDong))
-            .addGroup(pnLocLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(radioNgungHoatDong))
-            .addGroup(pnLocLayout.createSequentialGroup()
-                .addGap(135, 135, 135)
-                .addComponent(btnKhoiPhuc))
+                .addGroup(pnLocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnLocLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(lblPhanQuyen))
+                    .addGroup(pnLocLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(radioQuanLy, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnLocLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(radioNhanVien))
+                    .addGroup(pnLocLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(lblTrangThai))
+                    .addGroup(pnLocLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(radioHoatDong))
+                    .addGroup(pnLocLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(radioNgungHoatDong))
+                    .addGroup(pnLocLayout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addComponent(btnKhoiPhuc, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
         pnLocLayout.setVerticalGroup(
             pnLocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -408,9 +475,12 @@ public class TaiKhoan_GUI extends SimpleForm {
                 .addComponent(radioHoatDong)
                 .addGap(16, 16, 16)
                 .addComponent(radioNgungHoatDong)
-                .addGap(26, 26, 26)
-                .addComponent(btnKhoiPhuc))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnKhoiPhuc, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        btnKhoiPhuc.getAccessibleContext().setAccessibleDescription("");
 
         pnThem.setBackground(new java.awt.Color(255, 255, 255));
         pnThem.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thêm Tài Khoản", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Serif", 1, 14))); // NOI18N
@@ -429,9 +499,9 @@ public class TaiKhoan_GUI extends SimpleForm {
         jLabel3.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
         jLabel3.setText("Phân quyền");
 
-        tfTenTaiKhoan.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
-
+        btnHuy.setBackground(new java.awt.Color(173, 181, 189));
         btnHuy.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
+        btnHuy.setForeground(new java.awt.Color(255, 255, 255));
         btnHuy.setText("Hủy");
         btnHuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -439,7 +509,9 @@ public class TaiKhoan_GUI extends SimpleForm {
             }
         });
 
+        btnLuu.setBackground(new java.awt.Color(40, 167, 69));
         btnLuu.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
+        btnLuu.setForeground(new java.awt.Color(255, 255, 255));
         btnLuu.setText("Lưu");
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -454,83 +526,139 @@ public class TaiKhoan_GUI extends SimpleForm {
 
         pfNhapLaiMatKhau.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
 
+        cbbTenTaiKhoan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cbbTenTaiKhoan.setPreferredSize(new java.awt.Dimension(64, 25));
+
         javax.swing.GroupLayout pnThemLayout = new javax.swing.GroupLayout(pnThem);
         pnThem.setLayout(pnThemLayout);
         pnThemLayout.setHorizontalGroup(
             pnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnThemLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(pnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnHuy)
-                    .addGroup(pnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblTenTaiKhoan)
-                        .addComponent(lblMatKhau)
-                        .addComponent(lblNhapLaiMatKhau)
-                        .addComponent(jLabel3)))
                 .addGroup(pnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnThemLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
-                        .addComponent(btnLuu)
-                        .addGap(85, 85, 85))
                     .addGroup(pnThemLayout.createSequentialGroup()
-                        .addGap(57, 57, 57)
                         .addGroup(pnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfTenTaiKhoan)
-                            .addComponent(cbbPhanQuyen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblNhapLaiMatKhau)
+                            .addComponent(jLabel3))
+                        .addGroup(pnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnThemLayout.createSequentialGroup()
+                                .addGap(57, 57, 57)
+                                .addComponent(cbbPhanQuyen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(pnThemLayout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(pfNhapLaiMatKhau))))
+                    .addGroup(pnThemLayout.createSequentialGroup()
+                        .addGroup(pnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTenTaiKhoan)
+                            .addComponent(lblMatKhau))
+                        .addGap(47, 47, 47)
+                        .addGroup(pnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pfMatKhau)
-                            .addComponent(pfNhapLaiMatKhau))
-                        .addContainerGap())))
+                            .addComponent(cbbTenTaiKhoan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(60, 60, 60))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnThemLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
+                .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         pnThemLayout.setVerticalGroup(
             pnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnThemLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap(10, Short.MAX_VALUE)
                 .addGroup(pnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTenTaiKhoan)
-                    .addComponent(tfTenTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                    .addComponent(cbbTenTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
                 .addGroup(pnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMatKhau)
                     .addComponent(pfMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                .addGap(31, 31, 31)
                 .addGroup(pnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNhapLaiMatKhau)
                     .addComponent(pfNhapLaiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
+                .addGap(31, 31, 31)
                 .addGroup(pnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cbbPhanQuyen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53)
+                .addGap(35, 35, 35)
                 .addGroup(pnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnHuy)
-                    .addComponent(btnLuu))
-                .addContainerGap(44, Short.MAX_VALUE))
+                    .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47))
+        );
+
+        jPanel1.setBackground(new java.awt.Color(238, 238, 238));
+
+        lblPageIndicator.setText("Page");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(btnFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(lblPageIndicator)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnLast, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnLast, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                        .addComponent(btnNext, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                        .addComponent(btnFirst, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                        .addComponent(btnPrevious, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblPageIndicator)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout pnContentLayout = new javax.swing.GroupLayout(pnContent);
         pnContent.setLayout(pnContentLayout);
         pnContentLayout.setHorizontalGroup(
             pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(pnContentLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(spTable, javax.swing.GroupLayout.PREFERRED_SIZE, 1040, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
                 .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(pnHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnContentLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(spTable, javax.swing.GroupLayout.PREFERRED_SIZE, 1040, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pnLoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnContentLayout.setVerticalGroup(
             pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnContentLayout.createSequentialGroup()
                 .addComponent(pnHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spTable, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnContentLayout.createSequentialGroup()
                         .addComponent(pnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(pnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnContentLayout.createSequentialGroup()
+                        .addComponent(spTable)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         add(pnContent, java.awt.BorderLayout.CENTER);
@@ -592,7 +720,7 @@ public class TaiKhoan_GUI extends SimpleForm {
     }//GEN-LAST:event_radioNgungHoatDongActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-      String tenTaiKhoan = tfTenTaiKhoan.getText().trim();
+      String tenTaiKhoan = (String) cbbTenTaiKhoan.getSelectedItem();
       String matKhau = new String(pfMatKhau.getPassword()).trim();
       String nhapLaiMatKhau = new String(pfNhapLaiMatKhau.getPassword()).trim();
 
@@ -615,7 +743,7 @@ public class TaiKhoan_GUI extends SimpleForm {
       boolean success = taiKhoanDAO.addTaiKhoan(tenTaiKhoan, matKhau, phanQuyen, trangThai);
       if (success) {
           JOptionPane.showMessageDialog(this, "Thêm tài khoản thành công!");
-          loadDataToTable();
+          yloadDataToTable(currentPage,rowsPerPage);
           clearInputFields();
           setDefaultState();
       } else {
@@ -676,7 +804,7 @@ public class TaiKhoan_GUI extends SimpleForm {
         boolean success = taiKhoanDAO.updateTaiKhoan(tenTaiKhoan, matKhau, phanQuyen, trangThai);
         if (success) {
             JOptionPane.showMessageDialog(this, "Cập nhật tài khoản thành công!");
-            loadDataToTable();  // Cập nhật lại bảng với dữ liệu mới
+            yloadDataToTable(currentPage,rowsPerPage);  // Cập nhật lại bảng với dữ liệu mới
             dialogEdit.dispose();  // Đóng dialog
         } else {
             JOptionPane.showMessageDialog(this, "Cập nhật tài khoản thất bại. Vui lòng thử lại.");
@@ -687,8 +815,11 @@ public class TaiKhoan_GUI extends SimpleForm {
         dialogEdit.setVisible(false);
     }//GEN-LAST:event_btnHuyEditActionPerformed
 
+    private void tfTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTimActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfTimActionPerformed
+
     private void clearInputFields() {
-        tfTenTaiKhoan.setText("");
         pfMatKhau.setText("");
         pfNhapLaiMatKhau.setText("");
         cbbPhanQuyen.setSelectedIndex(0);
@@ -746,34 +877,104 @@ public class TaiKhoan_GUI extends SimpleForm {
     
     nutChoBang();
 }
-
-    private void loadDataToTable() {
-        ArrayList<entity.TaiKhoan_entity> dsTaiKhoan = taiKhoanDAO.getAllTaiKhoan();
-        if (dsTaiKhoan == null) {
-            JOptionPane.showMessageDialog(this, "Không thể tải dữ liệu từ SQL Server!");
-            return;
+    
+    public void ysetShadowPanel(){
+        pnHeader.putClientProperty(FlatClientProperties.STYLE, ""
+                + "border:0,0,0,0,$Component.borderColor,,26");
+        pnHeadEdit.putClientProperty(FlatClientProperties.STYLE, ""
+                + "border:0,0,0,0,$Component.borderColor,,26");
+    }
+    
+    public void yCbbTenTaiKhoan(){
+        nhanVienDao = new NhanVien_DAO();
+        ArrayList<String> dsMaNV = nhanVienDao.getAllMaNhanVien();
+        for (String maNV : dsMaNV) {
+            cbbTenTaiKhoan.addItem(maNV);  // Thêm từng mã nhân viên vào ComboBox
         }
+    }
+    
+    public void ySuKienPhanTrang(){
+        btnFirst.addActionListener(e -> {
+	        currentPage = 1;
+	        yloadDataToTable(currentPage, rowsPerPage);
+	    });
 
+                btnPrevious.addActionListener(e -> {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        yloadDataToTable(currentPage, rowsPerPage);
+                    }
+                });
+
+                btnNext.addActionListener(e -> {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        yloadDataToTable(currentPage, rowsPerPage);
+                    }
+                });
+
+	    btnLast.addActionListener(e -> {
+	        currentPage = totalPages;
+	        yloadDataToTable(currentPage, rowsPerPage);
+	    });
+    }
+    
+    public void yiconForButton(){
+        btnTim.setIcon(new FlatSVGIcon("gui/icon/vi_search_white.svg",0.2f));
+        btnKhoiPhuc.setIcon(new FlatSVGIcon("gui/icon/vi_restore_white.svg",0.125f));
+        btnHuy.setIcon(new FlatSVGIcon("gui/icon/vi_restore_white.svg",0.125f));
+        btnLuu.setIcon(new FlatSVGIcon("gui/icon/vi_add_white.svg",0.125f));
+        btnHuyEdit.setIcon(new FlatSVGIcon("gui/icon/vi_restore_white.svg",0.125f));
+        btnLuuEdit.setIcon(new FlatSVGIcon("gui/icon/vi_add_white.svg",0.125f));
+        btnFirst.setIcon(new FlatSVGIcon("gui/icon/first-page.svg",0.02f));
+        btnPrevious.setIcon(new FlatSVGIcon("gui/icon/pre-page.svg",0.01f));
+        btnNext.setIcon(new FlatSVGIcon("gui/icon/next-page.svg",0.01f));
+        btnLast.setIcon(new FlatSVGIcon("gui/icon/last-page.svg",0.02f));
+    }
+    
+    private void yloadDataToTable(int currentPage, int rowsPerPage) {
         DefaultTableModel model = (DefaultTableModel) tableTK.getModel();
-        model.setRowCount(0); // Xóa dữ liệu cũ
-        originalData.clear(); // Xóa dữ liệu gốc cũ
+        model.setRowCount(0); // Xóa dữ liệu hiện tại trong bảng
 
-        int stt = 1;
-        for (entity.TaiKhoan_entity tk : dsTaiKhoan) {
-            Object[] row = {
-                stt++,
-                tk.getTenDangNhap(),
-                tk.getMatKhau(),
-                tk.isPhanQuyen() ? "Quản lý" : "Nhân viên",
-                tk.isTrangThai() ? "Hoạt động" : "Ngừng hoạt động",
-                "Chỉnh sửa",  // Placeholder
-                "Xóa"         // Placeholder
-            };
-            model.addRow(row);
-            originalData.add(row);  // Lưu dữ liệu vào originalData
+        try {
+            ArrayList<TaiKhoan_entity> dsTaiKhoan = taiKhoanDAO.getAllTaiKhoan();
+            if (dsTaiKhoan == null) {
+                JOptionPane.showMessageDialog(this, "Không thể tải dữ liệu từ SQL Server!");
+                return;
+            }
+
+            // Tính tổng số trang
+            int totalPages = (int) Math.ceil((double) dsTaiKhoan.size() / rowsPerPage);
+
+            // Tính toán chỉ số bắt đầu và kết thúc
+            int start = (currentPage - 1) * rowsPerPage;
+            int end = Math.min(start + rowsPerPage, dsTaiKhoan.size());
+
+            // Hiển thị dữ liệu của trang hiện tại
+            int stt = start + 1; // Đếm từ dòng hiện tại
+            for (int i = start; i < end; i++) {
+                TaiKhoan_entity tk = dsTaiKhoan.get(i);
+                Object[] row = {
+                    stt++,
+                    tk.getTenDangNhap(),
+                    tk.getMatKhau(),
+                    tk.isPhanQuyen() ? "Quản lý" : "Nhân viên",
+                    tk.isTrangThai() ? "Hoạt động" : "Ngừng hoạt động",
+                    "Chỉnh sửa", // Placeholder
+                    "Xóa"        // Placeholder
+                };
+                model.addRow(row);
+            }
+
+            // Cập nhật chỉ số trang lên giao diện
+            lblPageIndicator.setText(currentPage + " / " + totalPages);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi tải dữ liệu lên bảng!");
         }
-        nutChoBang();
-}
+    }
+
     
     public void showEditDialog(int row) {
         DefaultTableModel model = (DefaultTableModel) tableTK.getModel();
@@ -784,10 +985,7 @@ public class TaiKhoan_GUI extends SimpleForm {
         String phanQuyen = model.getValueAt(row, 3).toString();
         String trangThai = model.getValueAt(row, 4).toString();
         
-//        if()
-//        {
-//            
-//        }
+
         
         // Đưa dữ liệu vào các trường trên form
         tfMatKhauEdit.setText(matKhau);
@@ -845,28 +1043,93 @@ public class TaiKhoan_GUI extends SimpleForm {
             JOptionPane.showMessageDialog(this, "Xóa tài khoản thất bại. Vui lòng thử lại.");
         }
     }
+    
+    public void ySuKienFielTim(){
+        tfTim.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (tfTim.getText().equals("Nhập Tên Tài Khoản ")) {
+					tfTim.setText("");
+					tfTim.setForeground(Color.GRAY); // Đặt lại màu văn bản xám cho placeholder
+				} else {
+					tfTim.setForeground(Color.BLACK); // Đặt màu văn bản bình thường nếu có nội dung
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (tfTim.getText().equals("")) {
+					tfTim.setForeground(Color.GRAY);
+					tfTim.setText("Nhập Tên Tài Khoản "); // Nếu không có nội dung thì để trống
+				}
+			}
+		});
+    }
+    
+//            public void suaTimKiem(){
+//                tfTim = new JTextField();
+//		tfTim.setFont(new Font("Arial", Font.PLAIN, 15));
+//		tfTim.setBackground(new Color(11, 101, 136));
+//		tfTim.setBounds(240, 16, 537, 32);
+//		pnHeader.add(tfTim);
+//		tfTim.setColumns(10);
+//		// Tạo đường viền chỉ có phía dưới
+//		Border bottomBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK);
+//		tfTim.setBorder(bottomBorder);
+//
+//		// Placeholder behavior khi JTextField mất hoặc có focus
+//		tfTim.addFocusListener(new FocusAdapter() {
+//			@Override
+//			public void focusGained(FocusEvent e) {
+//				if (tfTim.getText().equals("Nhập Tên Hoặc Mã Sản Phẩm")) {
+//					tfTim.setText("");
+//					tfTim.setForeground(Color.GRAY); // Đặt lại màu văn bản xám cho placeholder
+//				} else {
+//					tfTim.setForeground(Color.BLACK); // Đặt màu văn bản bình thường nếu có nội dung
+//				}
+//			}
+//
+//			@Override
+//			public void focusLost(FocusEvent e) {
+//				if (tfTim.getText().equals("")) {
+//					tfTim.setForeground(Color.GRAY);
+//					tfTim.setText("Nhập Tên Hoặc Mã Sản Phẩm"); // Nếu không có nội dung thì để trống
+//				}
+//			}
+//		});
+//
+//		// Khởi tạo với placeholder
+//		tfTim.setText("Nhập Tên Hoặc Mã Sản Phẩm"); // Hiện placeholder
+//		tfTim.setForeground(new Color(255, 255, 255)); // Đặt màu xám cho văn bản placeholder
+//    }
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFirst;
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnHuyEdit;
     private javax.swing.JButton btnKhoiPhuc;
+    private javax.swing.JButton btnLast;
     private javax.swing.JButton btnLuu;
     private javax.swing.JButton btnLuuEdit;
+    private javax.swing.JButton btnNext;
+    private javax.swing.JButton btnPrevious;
     private javax.swing.JButton btnTim;
     private javax.swing.JComboBox<String> cbbPhanQuyen;
     private javax.swing.JComboBox<String> cbbPhanQuyenEdit;
+    private javax.swing.JComboBox<String> cbbTenTaiKhoan;
     private javax.swing.JComboBox<String> cbbTrangThaiEdit;
     private javax.swing.JDialog dialogEdit;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblHeadEdit;
     private javax.swing.JLabel lblMatKhau;
     private javax.swing.JLabel lblMatKhauEdit;
     private javax.swing.JLabel lblNhapLaiMatKhau;
     private javax.swing.JLabel lblNhapLaiMatKhauEdit;
+    private javax.swing.JLabel lblPageIndicator;
     private javax.swing.JLabel lblPhanQuyen;
     private javax.swing.JLabel lblPhanQuyenEdit;
-    private javax.swing.JLabel lblQuanLiTaiKhoan;
     private javax.swing.JLabel lblTenTKEdit;
     private javax.swing.JLabel lblTenTaiKhoan;
     private javax.swing.JLabel lblTrangThai;
@@ -888,7 +1151,6 @@ public class TaiKhoan_GUI extends SimpleForm {
     private javax.swing.JTextField tfMatKhauEdit;
     private javax.swing.JTextField tfNhapLaiMatKhauEdit;
     private javax.swing.JTextField tfTenTKEdit;
-    private javax.swing.JTextField tfTenTaiKhoan;
     private javax.swing.JTextField tfTim;
     // End of variables declaration//GEN-END:variables
     private List<Object[]> originalData = new ArrayList<>();

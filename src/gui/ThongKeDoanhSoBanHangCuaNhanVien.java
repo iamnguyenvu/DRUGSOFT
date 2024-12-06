@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.BorderLayout;
@@ -28,6 +29,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -102,6 +104,8 @@ public class ThongKeDoanhSoBanHangCuaNhanVien extends SimpleForm{
         panel_1.add(lblNewLabel_2);
         
         dcNgayBatDau = new JDateChooser();
+        dcNgayBatDau.setDateFormatString("dd-MM-yyyy");
+        dcNgayBatDau.setBackground(new Color(255, 255, 255));
         dcNgayBatDau.setBounds(227, 72, 296, 34);
         panel_1.add(dcNgayBatDau);
         
@@ -113,7 +117,19 @@ public class ThongKeDoanhSoBanHangCuaNhanVien extends SimpleForm{
         panel_1.add(lblNewLabel_2_1);
         
         dcNgayKetThuc = new JDateChooser();
+        dcNgayKetThuc.setDateFormatString("dd-MM-yyyy");
+        dcNgayKetThuc.setBackground(new Color(255, 255, 255));
         dcNgayKetThuc.setBounds(659, 72, 296, 34);
+        
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+        
+        dcNgayBatDau.setBackground(new Color(255, 255, 255));
+        dcNgayBatDau.getDateEditor().getUiComponent().setBackground(new Color(255, 255, 255));
+        dcNgayKetThuc.setBackground(new Color(255, 255, 255));
+        dcNgayKetThuc.getDateEditor().getUiComponent().setBackground(new Color(255, 255, 255));
+        
+        dcNgayBatDau.setBorder(border);
+        dcNgayKetThuc.setBorder(border);
         panel_1.add(dcNgayKetThuc);
         btnTruyVan = new javax.swing.JButton();
         btnTruyVan.setForeground(new Color(0, 0, 0));
@@ -197,11 +213,12 @@ public class ThongKeDoanhSoBanHangCuaNhanVien extends SimpleForm{
                 return; // Stop if the connection fails
             }
 
-            String sql = "SELECT TOP 10 hotenNV, SUM(tongTien) AS DoanhSo\r\n"
-                		+ "FROM HoaDon hd join NhanVien nv on hd.maNV = nv.maNV\r\n"
-                		+ "WHERE ngayLapHD BETWEEN ? AND ? "
-                		+ "GROUP BY MONTH(ngayLapHD), YEAR(ngayLapHD), hotenNV\r\n"
-                		+ "ORDER BY hotenNV;";
+            String sql = "SELECT TOP 10 nv.maNV, nv.hotenNV, SUM(tongTien) AS DoanhSo\r\n"
+            		+ "FROM HoaDon hd \r\n"
+            		+ "JOIN NhanVien nv ON hd.maNV = nv.maNV\r\n"
+            		+ "WHERE ngayLapHD BETWEEN ? AND ?\r\n"
+            		+ "GROUP BY nv.maNV, nv.hotenNV\r\n"
+            		+ "ORDER BY DoanhSo DESC";
 
             PreparedStatement p = connection.prepareStatement(sql);
             // Convert java.util.Date to java.sql.Date

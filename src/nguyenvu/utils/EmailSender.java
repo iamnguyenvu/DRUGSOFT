@@ -4,7 +4,10 @@
  */
 package nguyenvu.utils;
 
+import java.net.Authenticator;
+
 import java.util.Properties;
+
 import javax.mail.*;
 import javax.mail.internet.*;
 /**
@@ -24,11 +27,7 @@ public class EmailSender {
         properties.setProperty("mail.smtp.auth", "true");
         properties.setProperty("mail.smtp.starttls.enable", "true");
 
-        Session session = Session.getInstance(properties, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
+        Session session = Session.getInstance(properties);
 
         try {
             MimeMessage message = new MimeMessage(session);

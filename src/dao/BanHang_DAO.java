@@ -6,6 +6,7 @@ package dao;
 
 //import java.security.Timestamp;
 import connectDB.connectDB;
+import entity.ChiTietHoaDon;
 import entity.HoaDon_entity;
 import entity.KhachHang_entity;
 import entity.SanPham_entity;
@@ -33,12 +34,13 @@ public class BanHang_DAO {
         ResultSet rs = null;
         ArrayList<SanPham_entity> listSP = new ArrayList<>();
         try {
-            ps = con.prepareStatement("SELECT TOP 8 * FROM SanPham WHERE tenSP LIKE ? OR maSP LIKE ?");
+            ps = con.prepareStatement("SELECT TOP 8 * FROM SanPham WHERE tenSP COLLATE Latin1_General_CI_AI LIKE ? OR maSP LIKE ?");
             ps.setString(1, "%" + key + "%");
             ps.setString(2, "%" + key + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
-                SanPham_entity sp = new SanPham_entity(rs.getString("maSP"), rs.getString("tenSP"), rs.getString("donViTinh"), rs.getDouble("gia"), rs.getString("hinhAnhSP"), rs.getInt("soLuong")); 
+                SanPham_entity sp = new SanPham_entity(rs.getString("maSP"), rs.getString("tenSP"), rs.getString("donViTinh"), 
+                        rs.getDouble("gia"), rs.getString("hinhAnhSP"), rs.getInt("soLuong"), rs.getDouble("thue")); 
                 listSP.add(sp);
             }
         } catch (SQLException e) {
@@ -63,7 +65,7 @@ public class BanHang_DAO {
         ResultSet rs = null;
         ArrayList<KhachHang_entity> listKH = new ArrayList<>();
         try {
-            ps = con.prepareStatement("SELECT TOP 8 * FROM KhachHang WHERE sdtKH LIKE ?");
+            ps = con.prepareStatement("SELECT TOP 8 sdtKH, tenKH, diemThuong, gioiTinh FROM KhachHang WHERE sdtKH LIKE ?");
             ps.setString(1, sdt + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -93,7 +95,7 @@ public class BanHang_DAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("SELECT * FROM KhachHang WHERE sdtKH LIKE ?");
+            ps = con.prepareStatement("SELECT tenKH, sdtKH, diemThuong, gioiTinh FROM KhachHang WHERE sdtKH LIKE ?");
             ps.setString(1, sdt);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -145,6 +147,30 @@ public class BanHang_DAO {
         return n>0;
     }
     
+    public static boolean createCTHD(ChiTietHoaDon cthd) {
+        Connection con = connectDB.accessDataBase();
+        PreparedStatement stmt = null;
+        int n = 0;
+        try {
+                stmt = con.prepareStatement("INSERT INTO ChiTietHoaDon VALUES(?, ?, ?, ?)");
+                stmt.setInt(1, cthd.getSoLuongSanPham());
+                stmt.setDouble(2, cthd.getThanhTien());
+                stmt.setString(3, cthd.getMaHD());
+                stmt.setString(4, cthd.getMaSP());
+                n = stmt.executeUpdate();
+        } catch (SQLException e) {
+                // TODO: handle exception
+                e.printStackTrace();
+        } finally {
+                 try {
+             stmt.close();
+         } catch (SQLException e) {
+              e.printStackTrace();
+         }
+        }
+        return n>0;
+    }
+    
     public SanPham_entity getSP(String maSP) {
         Connection con = connectDB.accessDataBase();
         if(con == null) return null;
@@ -156,7 +182,7 @@ public class BanHang_DAO {
             rs = ps.executeQuery();
             if (rs.next()) {
                 return new SanPham_entity(rs.getString("maSP"), rs.getString("tenSP"), 
-                        rs.getString("donViTinh"), rs.getDouble("gia"), rs.getString("hinhAnhSP")); 
+                        rs.getString("donViTinh"), rs.getDouble("gia"), rs.getString("hinhAnhSP"), rs.getInt("soLuong"), rs.getDouble("thue")); 
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -187,32 +213,171 @@ public class BanHang_DAO {
             stmt.setString(1, invoicePrefix + "%");
             ResultSet rs = stmt.executeQuery();
             
-            // Lấy số thứ tự hóa đơn cao nhất
             int counter = 0;
             if (rs.next()) {
                 String maxInvoiceCode = rs.getString(1);
                 if (maxInvoiceCode != null) {
-                    // Trích xuất phần số thứ tự (xxxxx) từ mã hóa đơn
-                    String counterStr = maxInvoiceCode.substring(8);  // Từ vị trí 8 trở đi là số thứ tự
+                    String counterStr = maxInvoiceCode.substring(8);
                     try {
-                        counter = Integer.parseInt(counterStr);  // Chuyển sang kiểu số nguyên
+                        counter = Integer.parseInt(counterStr);
                     } catch (NumberFormatException e) {
-                        counter = 0;  // Nếu không parse được (không có mã hóa đơn nào), thì bắt đầu từ 0
+                        counter = 0;
                     }
                 }
             }
             
-            // Tăng số thứ tự lên 1
             counter++;
             
-            // Đảm bảo số thứ tự có đủ 5 chữ số
             String counterPart = String.format("%05d", counter);
             
-            // Tạo mã hóa đơn mới
             return invoicePrefix + counterPart;
         }
     }
     
+    public static ArrayList<SanPham_entity> getListSanPham(String maHD) {
+        Connection con = connectDB.accessDataBase();
+        if(con == null) return null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<SanPham_entity> listSP = new ArrayList<>();
+        try {
+            ps = con.prepareStatement("SELECT maSP FROM ChiTietHoaDon WHERE maHD LIKE ?");
+            ps.setString(1, maHD);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                SanPham_entity sp = new SanPham_entity(rs.getString(""));
+                listSP.add(sp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return listSP;
+    }
     
+    public static ArrayList<ChiTietHoaDon> getListCTHD (String maHD) {
+        Connection con = connectDB.accessDataBase();
+        if(con == null) return null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<ChiTietHoaDon> listCTHD = new ArrayList<>();
+        try {
+            ps = con.prepareStatement("SELECT maHD, maSP, soLuongSanPham, thanhTien FROM ChiTietHoaDon WHERE maHD LIKE ?");
+            ps.setString(1, maHD);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                listCTHD.add(new ChiTietHoaDon(rs.getString("maHD"), 
+                        rs.getString("maSP"), rs.getInt("soLuongSanPham"), rs.getDouble("thanhTien")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return listCTHD;
+    }
     
+    public static HoaDon_entity getHD(String maHD) {
+        Connection con = connectDB.accessDataBase();
+        if(con == null) return null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement("SELECT maHD, sdtKH FROM HoaDon WHERE maHD LIKE ?");
+            ps.setString(1, maHD);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new HoaDon_entity(rs.getString("maHD"), rs.getString("sdtKH")); 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+    
+    public boolean updateDiemThuong(String sdtKH, int suDung, int diemThuong) {
+        Connection con = connectDB.accessDataBase();
+        if (con == null) return false; 
+        PreparedStatement ps = null;
+
+        try {
+            String sql = "UPDATE KhachHang SET diemThuong = diemThuong - ? + ? WHERE sdtKH = ?";
+
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, suDung);
+            ps.setInt(2, diemThuong); 
+            ps.setString(3, sdtKH); 
+
+            int rowsAffected = ps.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false; 
+    }
+    
+    public static boolean updateSLSP(String maSP, int soLuong) {
+        Connection con = connectDB.accessDataBase();
+        if (con == null) return false; 
+        PreparedStatement ps = null;
+
+        try {
+            String sql = "UPDATE SanPham SET soLuong = soLuong - ? WHERE maSP = ?";
+
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, soLuong);
+            ps.setString(2, maSP); 
+
+            int rowsAffected = ps.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false; 
+    }
+
+
 }

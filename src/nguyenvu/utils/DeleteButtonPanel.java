@@ -23,7 +23,7 @@ public class DeleteButtonPanel extends javax.swing.JPanel {
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(ev != null) ev.onDelete(row);
+                if(ev != null && row > 0) ev.onDelete(row);
                 table.getCellEditor().stopCellEditing();
             };
         });

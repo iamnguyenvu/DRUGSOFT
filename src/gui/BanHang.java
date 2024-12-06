@@ -4,54 +4,34 @@
  */
 package gui;
 
+import nguyenvu.utils.GenerateCode;
 import bill.BillManeger;
 import bill.FieldBill;
 import bill.ParameterBill;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.formdev.flatlaf.extras.components.FlatPopupMenu;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
 import dao.BanHang_DAO;
-import dao.SanPham_DAO;
+import entity.ChiTietHoaDon;
 import entity.DonTam_entity;
 import entity.HoaDon_entity;
 import entity.KhachHang_entity;
 import entity.NhanVien_entity;
 import entity.SanPham_entity;
+import gui.components.DialogTempOrderProcess;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
@@ -60,18 +40,11 @@ import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import net.miginfocom.swing.MigLayout;
 import nguyenvu.components.SimpleForm;
-import nguyenvu.forms.StatisticalForm;
 import nguyenvu.menu.FormManager;
-import nguyenvu.model.ModelItemSell;
 import nguyenvu.model.ModelUser;
-import nguyenvu.utils.BarcodeGenerator;
 import nguyenvu.utils.CustomerSelectListener;
 import nguyenvu.utils.FilterProductSearchPanel;
 import nguyenvu.utils.HeaderRenderer;
@@ -80,18 +53,12 @@ import nguyenvu.utils.LayerSearchList;
 import nguyenvu.utils.ListCustomerPanel;
 import nguyenvu.utils.ListProductSearchPanel;
 import nguyenvu.utils.MoneySuggestion;
-import nguyenvu.utils.ProductSearchPanel;
 import nguyenvu.utils.ProductSelectListener;
 import nguyenvu.utils.QuantityCellEditor;
-import nguyenvu.utils.QuantityCellEvent;
 import nguyenvu.utils.QuantityCellRenderer;
 import nguyenvu.utils.RoundedTextField;
-import nguyenvu.utils.TableActionCellEditor;
-import nguyenvu.utils.TableActionEvent;
 import nguyenvu.utils.TableDeleteCellEditor;
-import nguyenvu.utils.TableDeleteCellRenderer;
 import nguyenvu.utils.TableDeleteEvent;
-import nguyenvu.utils.WindowsTabbed;
 import raven.alerts.MessageAlerts;
 
 /**
@@ -135,6 +102,10 @@ public class BanHang extends SimpleForm {
         listProductSearch.addProductSelectListener(new ProductSelectListener() {
             @Override
             public void onProductSelected(SanPham_entity sp) {
+                if(sp.getSoLuong() < 1) {
+                    MessageAlerts.getInstance().showMessage("Cảnh báo", "Sản phẩm không đủ số lượng để thêm vào giỏ hàng!", MessageAlerts.MessageType.WARNING);
+                    return;
+                }
                 addProductToTable(sp);
                 menuProduct.setVisible(false);
                 txtProductSearch.requestFocusInWindow();
@@ -155,7 +126,8 @@ public class BanHang extends SimpleForm {
                 kh = customer;
                 txtCustomer.setText(kh.getSdtKH() + " - " + kh.getTenKH());
                 menuCustomer.setVisible(false);
-                updateLblSoLuongSP();
+                if(table.getRowCount() > 0)
+                    updateLblSoLuongSP();
                 cbbPhuongThucThanhToan.requestFocusInWindow();
             }
         });
@@ -168,18 +140,18 @@ public class BanHang extends SimpleForm {
         menuTempOrder.setFocusable(false);
         
         menuFilter = new JPopupMenu();
-        filterSearch = new FilterProductSearchPanel(menuFilter, this);
+        filterSearch = new FilterProductSearchPanel(menuFilter, this, table);
         menuFilter.add(filterSearch);
         menuFilter.setFocusable(false);
         
-        ArrayList<SanPham_entity> listSP = new SanPham_DAO().getAllSanPham();
-        for (SanPham_entity sp : listSP) {
-            try {
-                BarcodeGenerator.createBarcode(sp.getMaSP());
-            } catch (Exception ex) {
-                Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+//        ArrayList<SanPham_entity> listSP = new SanPham_DAO().getAllSanPham();
+//        for (SanPham_entity sp : listSP) {
+//            try {
+//                BarcodeGenerator.createBarcode(sp.getMaSP());
+//            } catch (Exception ex) {
+//                Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -191,7 +163,6 @@ public class BanHang extends SimpleForm {
         layer = new LayerSearchList();
         jScrollPane1 = new javax.swing.JScrollPane();
         listSanPham = new javax.swing.JList<>();
-        jPanel1 = new javax.swing.JPanel();
         pnContent = new javax.swing.JPanel();
         pnRightContent = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -253,15 +224,9 @@ public class BanHang extends SimpleForm {
 
         txtProductSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         txtProductSearch.setPreferredSize(new java.awt.Dimension(85, 40));
-        txtProductSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "[F2] Thêm sản phẩm vào đơn");
         txtProductSearch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtProductSearchFocusGained(evt);
-            }
-        });
-        txtProductSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtProductSearchActionPerformed(evt);
             }
         });
         txtProductSearch.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -287,17 +252,6 @@ public class BanHang extends SimpleForm {
                 .addGap(0, 230, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 210, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout pnSearchLayout = new javax.swing.GroupLayout(pnSearch);
         pnSearch.setLayout(pnSearchLayout);
         pnSearchLayout.setHorizontalGroup(
@@ -310,35 +264,24 @@ public class BanHang extends SimpleForm {
                         .addComponent(txtProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(565, Short.MAX_VALUE))
+                .addContainerGap(781, Short.MAX_VALUE))
         );
         pnSearchLayout.setVerticalGroup(
             pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnSearchLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnSearchLayout.createSequentialGroup()
-                        .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnSearchLayout.createSequentialGroup()
-                                .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addComponent(layer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnSearchLayout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(layer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        //txtSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-
         txtProductSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon("gui/icon/search.svg"));
-        //txtSearch.putClientProperty(FlatClientProperties.STYLE, ""
-            //                + "border:5,5,5,5,$Component.borderColor,,20");
         txtProductSearch.putClientProperty(FlatClientProperties.STYLE, ""
             + "showClearButton: true");
+        txtProductSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "[F2] Thêm sản phẩm vào đơn");
         layer.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:5,5,5,5,$Component.borderColor,,20");
 
@@ -477,6 +420,7 @@ public class BanHang extends SimpleForm {
 
         txtTienKhachDua.setBackground(new Color(0, 0, 0, 0)
         );
+        txtTienKhachDua.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         txtTienKhachDua.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
         txtTienKhachDua.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -784,7 +728,7 @@ public class BanHang extends SimpleForm {
 
             },
             new String [] {
-                "STT", "Hình ảnh", "Mã sản phẩm", "Tên sản phẩm", "Đơn vị", "Số lương", "Đơn giá", "Thành tiền", "Xóa"
+                "STT", "Hình ảnh", "Mã sản phẩm", "Tên sản phẩm", "Đơn vị", "Số lượng", "Đơn giá", "Thành tiền", "Xóa"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -795,7 +739,6 @@ public class BanHang extends SimpleForm {
                 return canEdit [columnIndex];
             }
         });
-        table.setPreferredSize(new java.awt.Dimension(675, 500));
         table.setRowHeight(60);
         table.setRowSelectionAllowed(false);
         table.getTableHeader().setResizingAllowed(false);
@@ -813,7 +756,7 @@ public class BanHang extends SimpleForm {
             table.getColumnModel().getColumn(4).setResizable(false);
             table.getColumnModel().getColumn(4).setPreferredWidth(100);
             table.getColumnModel().getColumn(5).setResizable(false);
-            table.getColumnModel().getColumn(5).setPreferredWidth(50);
+            table.getColumnModel().getColumn(5).setPreferredWidth(60);
             table.getColumnModel().getColumn(6).setResizable(false);
             table.getColumnModel().getColumn(6).setPreferredWidth(100);
             table.getColumnModel().getColumn(7).setResizable(false);
@@ -827,12 +770,16 @@ public class BanHang extends SimpleForm {
             public void onDelete(int row) {
                 if (row >= 0 && row < table.getRowCount()) {
                     ((DefaultTableModel) table.getModel()).removeRow(row);
+                    if (table.getRowCount() > 0) {
+                        for (int i = 0; i < table.getRowCount(); ++i) {
+                            table.setValueAt(i + 1, i, 0);
+                        }
+                    } else {
+                        ((DefaultTableModel) table.getModel()).setRowCount(0);
+                    }
                     ((DefaultTableModel) table.getModel()).fireTableDataChanged();
+                    updateLblSoLuongSP();
                 }
-                for(int i = 0; i < table.getRowCount(); ++i) {
-                    table.setValueAt(i+1, i, 0);
-                }
-                updateLblSoLuongSP();
             }
         }));
 
@@ -844,6 +791,14 @@ public class BanHang extends SimpleForm {
         table.getTableHeader().setForeground(Color.WHITE);
         table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));
         table.getColumnModel().getColumn(1).setCellRenderer(new ImageRenderer());
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
 
         javax.swing.GroupLayout pnLeftContentLayout = new javax.swing.GroupLayout(pnLeftContent);
         pnLeftContent.setLayout(pnLeftContentLayout);
@@ -903,14 +858,15 @@ public class BanHang extends SimpleForm {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCustomerActionPerformed
 
-    private void txtProductSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtProductSearchActionPerformed
-
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         // TODO add your handling code here:
         if(table.getRowCount() < 1) {
             MessageAlerts.getInstance().showMessage("Lỗi", "Chưa thêm sản phẩm vào đơn!", MessageAlerts.MessageType.ERROR);
+            return;
+        }
+        
+        if(kh == null) {
+            MessageAlerts.getInstance().showMessage("Lỗi", "Chưa nhập thông tin khách hàng!", MessageAlerts.MessageType.ERROR);
             return;
         }
         
@@ -942,16 +898,16 @@ public class BanHang extends SimpleForm {
         
             kh = txtCustomer.getText().isEmpty() ? null : kh;
 
-            String employeeName = user != null ? user.getName() : "Nhân viên";  // Replace with actual employee data if available
+            String employeeName = user != null ? user.getName() : "Nhân viên";
             String employeeId = user != null ? user.getUserName() : "";
             
-            String customerName = kh != null ? kh.getTenKH() : "Khách vãng lai"; // Default customer name if kh is null
+            String customerName = kh != null ? kh.getTenKH() : "Khách vãng lai";
             String customerPhone = kh != null ? kh.getSdtKH().trim() : "";
             double totalAmount = calculateTotalAmount();
-            int discount = kh != null ? giamTru : 0;                       // Adjust if discounts apply
+            int discount = kh != null ? giamTru : 0;    
 
             int rewardPoints = (int) (kh != null ? thanhToan * 0.01 : 0);
-            String invoiceCode = dao.generateInvoiceCode();
+            String invoiceCode = BanHang_DAO.generateInvoiceCode();
 
             
             String ptThanhToan = (String) cbbPhuongThucThanhToan.getSelectedItem();
@@ -964,15 +920,28 @@ public class BanHang extends SimpleForm {
             HoaDon_entity hd = new HoaDon_entity(invoiceCode, issueDate, thanhToan, discount, ptThanhToan, true, customerPhone, employeeId, "BanSanPham", ghiChu);
             if(!dao.createHD(hd)) {
                 MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);
-                refresh();
                 return;
             } else {
+                for (int i = 0; i < table.getRowCount(); ++i) {
+                    if(!BanHang_DAO.createCTHD(new ChiTietHoaDon(invoiceCode, (String) table.getValueAt(i, 2),
+                        (int) table.getValueAt(i, 5), (double) table.getValueAt(i, 7)))) {
+                        System.out.println("Lỗi insert cthd");
+                    }
+                    if(!BanHang_DAO.updateSLSP((String) table.getValueAt(i, 2), (int) table.getValueAt(i, 5))){
+                        System.out.println("Lỗi update số lượng sản phẩm");
+                    }
+                }
+                
                 ParameterBill billData = new ParameterBill(
                     getCurrentDate(), employeeName, customerName, customerPhone, 
                     totalAmount, discount, thanhToan, rewardPoints, 
                     invoiceCode, GenerateCode.generateQrcode(invoiceCode), fields);
             
                 BillManeger.getInstance().printBill(billData);
+                
+                if(!dao.updateDiemThuong(kh.getSdtKH(), discount, rewardPoints)) {
+                    return;
+                }
             }
             
             refresh();
@@ -1115,6 +1084,17 @@ public class BanHang extends SimpleForm {
             String existingMaSP = (String) table.getValueAt(i, 2);
             if (existingMaSP.equals(sp.getMaSP())) {
                 int existingQuantity = (int) table.getValueAt(i, 5);
+                
+                if(existingQuantity == sp.getSoLuong()) {
+                    MessageAlerts.getInstance().showMessage("Cảnh báo", "Vượt quá số lượng tồn kho!", MessageAlerts.MessageType.WARNING);
+                    return;
+                }
+                
+                if(existingQuantity == 50) {
+                    MessageAlerts.getInstance().showMessage("Cảnh báo", "Số lượng tối đa cho phép là 50", MessageAlerts.MessageType.WARNING);
+                    return;
+                }
+                
                 table.setValueAt(existingQuantity + 1, i, 5);
                 double price = (double) table.getValueAt(i, 6);
                 table.setValueAt(price * (existingQuantity + 1), i, 7);
@@ -1145,25 +1125,33 @@ public class BanHang extends SimpleForm {
     public void updateLblSoLuongSP() {
         int sumSoLuong = 0;
         double sumThanhTien = 0;
-        for (int i = 0; i < table.getRowCount(); i++) {
-            sumSoLuong += Integer.parseInt(table.getValueAt(i, 5).toString());
-            sumThanhTien += Double.parseDouble(table.getValueAt(i, 7).toString());
-        }
         
-        lblSoLuongSP.setText(String.valueOf(sumSoLuong));
-        lblTongTien.setText(df.format(calculateTotalAmount()));
-        lblVAT.setText("0");
+        if(table.getRowCount() > 0) {
+            for (int i = 0; i < table.getRowCount(); i++) {
+                sumSoLuong += Integer.parseInt(table.getValueAt(i, 5).toString());
+                sumThanhTien += Double.parseDouble(table.getValueAt(i, 7).toString());
+            }
+            lblSoLuongSP.setText(String.valueOf(sumSoLuong));
+            lblTongTien.setText(df.format(calculateTotalAmount()));
 
-        if(kh != null) {
-            int diemThuong = kh.getDiemThuong();
-            int coefDT = diemThuong / 1000;
-            giamTru = coefDT > 0 ? coefDT * 1000 : 0;
+            if(kh != null) {
+                int diemThuong = kh.getDiemThuong();
+                int coefDT = diemThuong / 1000;
+                giamTru = coefDT > 0 ? coefDT * 1000 : 0;
+            }
+            lblDiemThuong.setText(String.valueOf(df.format(giamTru)));
+            lblKhachPhaiTra.setText(String.valueOf(df.format(sumThanhTien - giamTru)));
+        } else {
+            lblSoLuongSP.setText("");
+            lblTongTien.setText("");
+            lblDiemThuong.setText("");
+            lblKhachPhaiTra.setText("");
+            lblVAT.setText("");
         }
-        lblDiemThuong.setText(String.valueOf(df.format(giamTru)));
-        lblKhachPhaiTra.setText(String.valueOf(df.format(sumThanhTien - giamTru)));
         
         updateSuggestButton();
         updateTienThua();
+        updateVAT();
     }
 
     private void updateTienThua() {
@@ -1172,11 +1160,33 @@ public class BanHang extends SimpleForm {
             double tienKhachDua = Double.parseDouble(txtTienKhachDua.getText().replace(",", ""));
             lblTienThua.setText(df.format(tienKhachDua - khachPhaiTra));
         } catch (NumberFormatException e) {
-            lblTienThua.setText("0");
+            lblTienThua.setText("");
         }
+    }
+    
+    private void updateVAT() {
+        if(table.getRowCount() > 0) {
+            double sumVAT = 0;
+            for (int i = 0; i < table.getRowCount(); ++i) {
+                Integer quantity = (Integer) table.getValueAt(i, 5);
+                Double price = (Double) table.getValueAt(i, 6);
+
+                if (quantity != null && price != null) {
+                    double taxPercentage  = dao.getSP((String) table.getValueAt(i, 2)).getThue();
+                    double taxAmount = taxPercentage / 100;
+
+                    sumVAT += taxAmount * quantity * price;
+                }
+            }
+
+            lblVAT.setText(df.format(sumVAT)); 
+        }
+        else lblVAT.setText("");
+        
     }
 
     private void updateSuggestButton() {
+        if(lblKhachPhaiTra.getText().isEmpty()) return;
         double khachPhaiTra = Double.parseDouble(lblKhachPhaiTra.getText().replace(",", ""));
         List<Integer> suggestions = MoneySuggestion.suggestAmounts((int) khachPhaiTra);
 
@@ -1263,28 +1273,7 @@ public class BanHang extends SimpleForm {
     private String getCurrentDate() {
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         return sdf.format(new java.util.Date());
-    }
-    
-    private InputStream generateQrcode() throws WriterException, IOException {
-        NumberFormat nf = new DecimalFormat("00000000");
-        Random ran = new Random();
-        String invoice = nf.format(ran.nextInt(99999999) + 1);
-        Map<EncodeHintType, Object> hints = new HashMap<>();
-        hints.put(EncodeHintType.MARGIN, 0);
-        BitMatrix bitMat = new MultiFormatWriter().encode(invoice, BarcodeFormat.QR_CODE, 60, 60, hints);
-        BufferedImage img = MatrixToImageWriter.toBufferedImage(bitMat);
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        ImageIO.write(img, "png", output);
-        return new ByteArrayInputStream(output.toByteArray());
-    }
-    
-    private static String generateBillCode() {
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyMMdd");
-        Random random = new Random();
-        int rdDigit = 1000 + random.nextInt(90000);
-        String billCode = "HD" + sdf.format(new java.util.Date()) + rdDigit;
-        return billCode;
-    }
+    }  
     
     private Icon createIcon(String path, float scale) {
         FlatSVGIcon icon = new FlatSVGIcon(path, scale);
@@ -1402,7 +1391,6 @@ public class BanHang extends SimpleForm {
     private javax.swing.JComboBox<String> cbbPhuongThucThanhToan;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

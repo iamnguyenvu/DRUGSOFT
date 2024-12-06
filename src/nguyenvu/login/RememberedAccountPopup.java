@@ -55,27 +55,15 @@ public class RememberedAccountPopup {
      * Tải danh sách các tài khoản đã ghi nhớ và thêm vào popup menu.
      */
    private void loadPopupItems() {
-    Map<String, String> accounts = rememberedAccountList.getRememberedAccounts();
-    popupMenu.removeAll(); // Xóa các mục cũ trước khi thêm mới
-
-    // Kiểm tra nếu có tài khoản nào
-    if (accounts.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "No remembered accounts.", "Info", JOptionPane.INFORMATION_MESSAGE);
+        Map<String, String> accounts = rememberedAccountList.getRememberedAccounts();
+        popupMenu.removeAll(); // Xóa các mục cũ trước khi thêm mới
+        for (Map.Entry<String, String> entry : accounts.entrySet()) {
+            String username = entry.getKey();
+            JMenuItem menuItem = new JMenuItem(username);
+            menuItem.addActionListener(e -> fillLoginFields(username));
+            popupMenu.add(menuItem); // Thêm item vào popup
+        }
     }
-
-    // Thêm các tài khoản vào popup
-    for (Map.Entry<String, String> entry : accounts.entrySet()) {
-        String username = entry.getKey();  // Tên tài khoản
-        JMenuItem menuItem = new JMenuItem(username);
-
-        // Gán sự kiện click vào mỗi menu item
-        menuItem.addActionListener(e -> fillLoginFields(username));
-        popupMenu.add(menuItem); // Thêm item vào popup
-    }
-}
-
-
-
 
     /**
      * Điền thông tin đăng nhập (username và password) vào các trường văn bản.

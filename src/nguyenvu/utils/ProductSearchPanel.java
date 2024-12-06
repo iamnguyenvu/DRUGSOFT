@@ -6,6 +6,7 @@ package nguyenvu.utils;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import entity.SanPham_entity;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -54,7 +55,15 @@ public class ProductSearchPanel extends javax.swing.JPanel{
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                
+                setBackground(new Color(11,101,136));
+            }
+            
+        });
+        
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setBackground(null);
             }
             
         });
@@ -88,11 +97,6 @@ public class ProductSearchPanel extends javax.swing.JPanel{
         lblGiaDonViSP = new javax.swing.JLabel();
 
         setForeground(new java.awt.Color(204, 204, 204));
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                formMouseEntered(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -125,11 +129,6 @@ public class ProductSearchPanel extends javax.swing.JPanel{
                 .addGap(10, 10, 10))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_formMouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

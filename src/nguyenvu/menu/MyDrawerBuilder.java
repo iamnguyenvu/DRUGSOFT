@@ -1,6 +1,7 @@
 package nguyenvu.menu;
 
 import java.awt.Color;
+
 import java.awt.Component;
 
 import javax.swing.Icon;
@@ -12,14 +13,18 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import gui.BanHang;
+import gui.BaoCaoDoanhThu;
+import gui.BaoCaoSanPham;
 import gui.DoiTra;
-import gui.DoiTraSanPham;
+import gui.HoaDon;
+import gui.DonDoiTra;
+import gui.SanPham;
+import gui.SanPhamDoiTra;
+import gui.TaiKhoanForNhanVien;
+import gui.TaiKhoan_GUI;
 import gui.ThongKeDoanhThu_GUI;
 import gui.ThongKeSanPham_GUI;
-import gui.barChar_ThongKe;
-import nguyenvu.forms.DashboardForm;
-import nguyenvu.forms.ReadForm;
-import nguyenvu.forms.StatisticalForm;
+import gui.TrangChu;
 import nguyenvu.model.ModelUser;
 import raven.drawer.component.DrawerPanel;
 import raven.drawer.component.SimpleDrawerBuilder;
@@ -49,11 +54,15 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     
     private BanHang banHang;
     private DoiTra doiTra;
+    private SanPhamDoiTra sanPhamDoiTra;
+    private TrangChu trangChu;
 
     public void setUser(ModelUser user) {
         this.user = user;
+        trangChu = new TrangChu(user);
         banHang = new BanHang(user);
         doiTra = new DoiTra(user);
+        sanPhamDoiTra = new SanPhamDoiTra();
         SimpleHeaderData headerData = header.getSimpleHeaderData();
         headerData.setTitle(user.getName());
         AvatarIcon icon = new AvatarIcon(getClass().getResource(user.getAvatarPath()), 60, 60, 999);
@@ -139,7 +148,9 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item.Label("QUẢN LÝ"),
             new Item("Bán hàng", "email.svg"),
             new Item("Đổi trả", "chat.svg"),
-            new Item("Sản phẩm", "calendar.svg"),
+            new Item("Sản phẩm", "calendar.svg")
+            .subMenu("Sản phẩm bán hàng")
+            .subMenu("Sản phẩm đổi trả"),
             new Item("Hóa đơn", "forms.svg"),
             new Item("Khách hàng", "ui.svg"),
             new Item("Nhân viên", "icon.svg"),        
@@ -190,7 +201,6 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     boolean act
                             = 
                             checkMenu(index, new int[]{6}) && 
-                            checkMenu(index, new int[]{7}) &&
                             checkMenu(index, new int[]{8, 0})&&
                             checkMenu(index, new int[]{8, 2})&&
                             checkMenu(index, new int[]{9, 0});
@@ -226,41 +236,66 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             public void selected(MenuAction action, int[] index) {
                 if (index.length == 1) {
                     if (index[0] == 0) {
-                    	FormManager.showForm(new gui.ManHinhNen());
+                    	FormManager.showForm(trangChu);
                     }
+                    
                     if (index[0] == 1) {
                         FormManager.showForm(banHang);
                     }
+                    
                     if (index[0] == 2) {
                         FormManager.showForm(doiTra);
                     }
-                    if (index[0] == 3) {
-                    	FormManager.showForm(new gui.SanPham());
-                    }
+                    
                     if (index[0] == 4) {
-                    	FormManager.showForm(new gui.HoaDon());
+                        FormManager.showForm(new HoaDon());
                     }
+                    
                     if (index[0] == 5) {
                     	FormManager.showForm(new gui.KhachHang_GUI());
                     }
+                    
                     if (index[0] == 6) {
                     	FormManager.showForm(new gui.NhanVien());
                     }
-                    if (index[0] == 7) {
-                    	FormManager.showForm(new gui.TaiKhoan_GUI());
+                    
+                    if (index[0] == 7) { // Mục "Tài khoản"
+                        if (user.getRole() == 1) { // Nếu là quản lý
+                            FormManager.showForm(new TaiKhoan_GUI());
+                        } else { // Nếu là nhân viên
+                            FormManager.showForm(new TaiKhoanForNhanVien());
+                        }
                     }
+                    
                     if (index[0] == 10) {
                         // logout
                         FormManager.logout();
                     }
                 } 
                 else if (index.length == 2) {
+                    if (index[0] == 3) {
+                        if (index[1] == 0) {
+                            FormManager.showForm(new SanPham());
+                        }
+                        if (index[1] == 1) {
+                            FormManager.showForm(sanPhamDoiTra);
+                        }
+                    }
+                    
                     if (index[0] == 8) {
                         if (index[1] == 1) {
                             FormManager.showForm(new ThongKeSanPham_GUI());
                         }
                         if (index[1] == 0) {
                             FormManager.showForm(new ThongKeDoanhThu_GUI());
+                        }
+                    }
+                    if (index[0] == 9) {
+                        if (index[1] == 1) {
+                            FormManager.showForm(new BaoCaoSanPham());
+                        }
+                        if (index[1] == 0) {
+                            FormManager.showForm(new BaoCaoDoanhThu());
                         }
                     }
                 }

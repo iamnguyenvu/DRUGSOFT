@@ -25,7 +25,7 @@ public class TableDeleteCellEditor extends DefaultCellEditor{
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         DeleteButtonPanel pn = new DeleteButtonPanel();
         pn.initEvent(ev, row, table);
-        pn.setBackground(table.getSelectionBackground());
+//        pn.setBackground(table.getSelectionBackground());
         return pn;
     }
 }
