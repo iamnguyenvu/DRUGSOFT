@@ -1,6 +1,7 @@
 package nguyenvu.application;
 
 import com.formdev.flatlaf.FlatClientProperties;
+
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;

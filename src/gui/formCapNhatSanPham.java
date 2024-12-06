@@ -65,6 +65,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 	public JTextField tf_thue;
 	private String maSP;
 	public SanPham_entity spCapNhat;
+	private JTextField tf_giaNhap;
 	public String getMaSP() {
 		return maSP;
 	}
@@ -72,7 +73,6 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 	public void setMaSP(String maSP) {
 		this.maSP = maSP;
 	}
-	private SanPham_entity sp;
 
 	/**
 	 * Create the panel.
@@ -110,14 +110,14 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		tf_soLuong.setForeground(new Color(0, 0, 0));
 		tf_soLuong.setColumns(10);
 		tf_soLuong.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		tf_soLuong.setBounds(20, 166, 299, 34);
+		tf_soLuong.setBounds(20, 166, 201, 34);
 		pnCenter.add(tf_soLuong);
 
-		JLabel lb_Gia = new JLabel("Giá");
+		JLabel lb_Gia = new JLabel("Giá Bán");
 		lb_Gia.setForeground(new Color(0, 0, 0));
 		lb_Gia.setBackground(new Color(0, 0, 0));
 		lb_Gia.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_Gia.setBounds(405, 10, 46, 46);
+		lb_Gia.setBounds(520, 10, 68, 46);
 		pnCenter.add(lb_Gia);
 
 		tf_Gia = new JTextField();
@@ -125,14 +125,14 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		tf_Gia.setBackground(new Color(255, 255, 255));
 		tf_Gia.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		tf_Gia.setColumns(10);
-		tf_Gia.setBounds(405, 66, 251, 34);
+		tf_Gia.setBounds(520, 66, 173, 34);
 		pnCenter.add(tf_Gia);
 
 		JLabel lb_HinhAnh = new JLabel("Hình Ảnh");
 		lb_HinhAnh.setForeground(new Color(0, 0, 0));
 		lb_HinhAnh.setBackground(new Color(0, 0, 0));
 		lb_HinhAnh.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_HinhAnh.setBounds(405, 110, 105, 46);
+		lb_HinhAnh.setBounds(327, 110, 105, 46);
 		pnCenter.add(lb_HinhAnh);
 
 		tf_HinhAnh = new JTextField();
@@ -140,7 +140,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		tf_HinhAnh.setForeground(new Color(0, 0, 0));
 		tf_HinhAnh.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		tf_HinhAnh.setColumns(10);
-		tf_HinhAnh.setBounds(405, 166, 173, 34);
+		tf_HinhAnh.setBounds(327, 166, 288, 34);
 		pnCenter.add(tf_HinhAnh);
 
 		btnChonHinhAnh = new JButton("Chọn");
@@ -165,7 +165,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 			}
 		});
 		btnChonHinhAnh.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnChonHinhAnh.setBounds(581, 166, 75, 34);
+		btnChonHinhAnh.setBounds(618, 163, 75, 40);
 		pnCenter.add(btnChonHinhAnh);
 
 		tf_Tensp = new JTextField();
@@ -173,7 +173,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		tf_Tensp.setBackground(new Color(255, 255, 255));
 		tf_Tensp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		tf_Tensp.setColumns(10);
-		tf_Tensp.setBounds(22, 66, 297, 34);
+		tf_Tensp.setBounds(22, 66, 201, 34);
 		pnCenter.add(tf_Tensp);
 
 		JLabel lb_soLuong = new JLabel("Số Lượng");
@@ -194,7 +194,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		JLabel lblCanhBaoGia = new JLabel("*");
 		lblCanhBaoGia.setForeground(new Color(255, 0, 0));
 		lblCanhBaoGia.setFont(new Font("Serif", Font.ITALIC, 12));
-		lblCanhBaoGia.setBounds(437, 28, 166, 13);
+		lblCanhBaoGia.setBounds(583, 28, 49, 13);
 		pnCenter.add(lblCanhBaoGia);
 
 		JLabel lbCanhBaoSoLuong = new JLabel("*");
@@ -206,10 +206,31 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		JLabel lblCui = new JLabel("* Có Đuôi.jpg");
 		lblCui.setForeground(new Color(255, 0, 0));
 		lblCui.setFont(new Font("Serif", Font.ITALIC, 12));
-		lblCui.setBounds(484, 128, 166, 13);
+		lblCui.setBounds(401, 128, 88, 13);
 		pnCenter.add(lblCui);
+		
+		tf_giaNhap = new JTextField();
+		tf_giaNhap.setForeground(Color.BLACK);
+		tf_giaNhap.setColumns(10);
+		tf_giaNhap.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		tf_giaNhap.setBackground(Color.WHITE);
+		tf_giaNhap.setBounds(327, 66, 173, 34);
+		pnCenter.add(tf_giaNhap);
+		
+		JLabel lb_Gia_1 = new JLabel("Giá Nhập");
+		lb_Gia_1.setForeground(Color.BLACK);
+		lb_Gia_1.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+		lb_Gia_1.setBackground(Color.BLACK);
+		lb_Gia_1.setBounds(327, 10, 68, 46);
+		pnCenter.add(lb_Gia_1);
+		
+		JLabel lbCanhBaoNSX_1 = new JLabel("*");
+		lbCanhBaoNSX_1.setForeground(Color.RED);
+		lbCanhBaoNSX_1.setFont(new Font("Serif", Font.ITALIC, 12));
+		lbCanhBaoNSX_1.setBounds(401, 26, 184, 17);
+		pnCenter.add(lbCanhBaoNSX_1);
 
-		JLabel lb_ThemMoiSP = new JLabel("Cập Nhật Sản Phẩm");
+		JLabel lb_ThemMoiSP = new JLabel("Thông Tin Sản Phẩm");
 		lb_ThemMoiSP.setForeground(new Color(0, 0, 0));
 		lb_ThemMoiSP.setBackground(new Color(0, 0, 0));
 		lb_ThemMoiSP.setFont(new Font("Serif", Font.PLAIN, 24));
@@ -317,10 +338,10 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		cb_DonViTinh.setBackground(new Color(255, 255, 255));
 		cb_DonViTinh.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		cb_DonViTinh.setBounds(287, 102, 127, 34);
-		cb_DonViTinh.addItem("Vỉ");
+		cb_DonViTinh.addItem("Vĩ");
 		cb_DonViTinh.addItem("Viên");
 		cb_DonViTinh.addItem("Chai");
-
+		cb_DonViTinh.addItem("Cái");
 		cb_DonViTinh.addItem("Hộp");
 		pn_KhoHang.add(cb_DonViTinh);
 
@@ -337,13 +358,7 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		lb_DonViTinh_1.setBounds(530, 48, 105, 46);
 		pn_KhoHang.add(lb_DonViTinh_1);
 		
-		tf_thue = new JTextField();
-		tf_thue.setForeground(Color.BLACK);
-		tf_thue.setColumns(10);
-		tf_thue.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		tf_thue.setBackground(Color.WHITE);
-		tf_thue.setBounds(529, 104, 144, 34);
-		pn_KhoHang.add(tf_thue);
+		
 
 		JPanel pn_PhanLoai = new JPanel();
 		pn_PhanLoai.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -462,228 +477,8 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		btnXacNhan = new JButton("Xác Nhận");
 		btnXacNhan.setFont(new Font("Serif", Font.PLAIN, 20));
 		btnXacNhan.setBounds(994, 703, 115, 42);
-		pnContent.add(btnXacNhan);
 		btnXacNhan.addActionListener(this);
-
-	}
-
-//
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		Object o = e.getSource();
-//		if (o.equals(btnXacNhan)) {
-//			try {
-//				String tenSP = tf_Tensp.getText();
-//				if (tenSP.isEmpty()) {
-//					JOptionPane.showMessageDialog(null, "Tên sản phẩm không được để trống.", "Lỗi",
-//							JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//
-//				// Lấy ngày sản xuất và ngày hết hạn từ JDateChooser
-//				java.util.Date ngaySX = dcNgaySanXuat.getDate();
-//				LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-//						: null;
-//
-//				java.util.Date ngayHH = dcNgayHetHan.getDate();
-//				LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-//						: null;
-//
-//				LocalDate today = LocalDate.now(); // Lấy ngày hiện tại
-//
-//				// Kiểm tra điều kiện ngày sản xuất và ngày hết hạn
-//				if (lcNgaySX == null || lcNgaySX.isAfter(today)) {
-//					JOptionPane.showMessageDialog(null, "Ngày sản xuất không được sau ngày hiện tại.", "Lỗi",
-//							JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//
-//				if (lcNgayHH == null || !lcNgayHH.isAfter(today)) {
-//					JOptionPane.showMessageDialog(null, "Ngày hết hạn phải lớn hơn ngày hiện tại.", "Lỗi",
-//							JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//
-//				// Lấy các giá trị còn lại
-//				double khoiLuong = Double.parseDouble(tf_KhoiLuong.getText());
-//				if (khoiLuong <= 0) {
-//					JOptionPane.showMessageDialog(null, "Khối lượng phải > 0.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//				String donViTinh = (String) cb_DonViTinh.getSelectedItem();
-//				String nhaCungCap = tf_NhaCungCap.getText();
-//				if (nhaCungCap.isEmpty()) {
-//					JOptionPane.showMessageDialog(null, "Nhà cung cấp không được để trống.", "Lỗi",
-//							JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//				double gia = Double.parseDouble(tf_Gia.getText());
-//				if (gia <= 0) {
-//					JOptionPane.showMessageDialog(null, "Giá lượng phải > 0.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//				String congDung = ta_CongDung.getText();
-//				if (congDung.isEmpty()) {
-//					JOptionPane.showMessageDialog(null, "Công dụng không được để trống.", "Lỗi",
-//							JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//				String hinhAnh = tf_HinhAnh.getText().trim(); // Loại bỏ khoảng trắng ở đầu và cuối chuỗi
-//
-//				// Kiểm tra nếu chuỗi rỗng hoặc không có đuôi .png hoặc .svg
-//				if (hinhAnh.isEmpty() || !(hinhAnh.endsWith(".png") || hinhAnh.endsWith(".svg"))) {
-//					JOptionPane.showMessageDialog(null,
-//							"Hình ảnh phải có định dạng .png hoặc .svg và không được để trống.", "Lỗi",
-//							JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//
-//				String loaiSanPham = (String) cb_LoaiSP.getSelectedItem();
-//				int soLuong = Integer.parseInt(tf_soLuong.getText());
-//				if (soLuong <= 0) {
-//					JOptionPane.showMessageDialog(null, "Số lượng phải > 0.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//
-//				// Chuyển đổi loại sản phẩm
-//				if (loaiSanPham.equals("Thuốc")) {
-//					loaiSanPham = "Thuoc";
-//				} else if (loaiSanPham.equals("Thực Phẩm Chức Năng")) {
-//					loaiSanPham = "TPCN";
-//				} else if (loaiSanPham.equals("Thiết Bị Y Tế")) {
-//					loaiSanPham = "TBYT";
-//				}
-//				String thanhPhan = ta_ThanhPhan.getText();
-//				if (thanhPhan.isEmpty()) {
-//					JOptionPane.showMessageDialog(null, "Thành phần không được để trống.", "Lỗi",
-//							JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//				LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
-////
-////				SanPham_entity sp = new SanPham_entity(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh,
-////						nhaCungCap, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong);
-//
-//				// `addRowTable`)
-////				sanPham.updateRowTable(sp);
-//
-//				// Hiển thị thông báo thành công
-//				JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công!", "Thông báo",
-//						JOptionPane.INFORMATION_MESSAGE);
-//			} catch (Exception ex) {
-//				// Hiển thị thông báo lỗi nếu có bất kỳ ngoại lệ nào xảy ra
-//				JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi",
-//						JOptionPane.ERROR_MESSAGE);
-//			}
-//>>>>>>> c6b1f164876dc3df481535944ed6652f79813b7d
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-		            String tenSP = tf_Tensp.getText();
-		            if (tenSP.isEmpty()) {
-		                JOptionPane.showMessageDialog(null, "Tên sản phẩm không được để trống.", "Lỗi",
-		                        JOptionPane.ERROR_MESSAGE);
-		                return;
-		            }
-
-		            // Lấy ngày sản xuất và ngày hết hạn từ JDateChooser
-		            java.util.Date ngaySX = dcNgaySanXuat.getDate();
-		            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-		                    : null;
-
-		            java.util.Date ngayHH = dcNgayHetHan.getDate();
-		            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-		                    : null;
-
-		            LocalDate today = LocalDate.now(); // Lấy ngày hiện tại
-
-		            // Kiểm tra điều kiện ngày sản xuất và ngày hết hạn
-		            if (lcNgaySX == null || lcNgaySX.isAfter(today)) {
-		                JOptionPane.showMessageDialog(null, "Ngày sản xuất không được sau ngày hiện tại.", "Lỗi",
-		                        JOptionPane.ERROR_MESSAGE);
-		                return;
-		            }
-
-		            if (lcNgayHH == null || !lcNgayHH.isAfter(today)) {
-		                JOptionPane.showMessageDialog(null, "Ngày hết hạn phải lớn hơn ngày hiện tại.", "Lỗi",
-		                        JOptionPane.ERROR_MESSAGE);
-		                return;
-		            }
-
-		            // Lấy các giá trị còn lại
-		            double khoiLuong = Double.parseDouble(tf_KhoiLuong.getText());
-		            if (khoiLuong <= 0) {
-		                JOptionPane.showMessageDialog(null, "Khối lượng phải > 0.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-		                return;
-		            }
-		            String donViTinh = (String) cb_DonViTinh.getSelectedItem();
-		            String nhaCungCap = tf_NhaCungCap.getText();
-		            if (nhaCungCap.isEmpty()) {
-		                JOptionPane.showMessageDialog(null, "Nhà cung cấp không được để trống.", "Lỗi",
-		                        JOptionPane.ERROR_MESSAGE);
-		                return;
-		            }
-		            double gia = Double.parseDouble(tf_Gia.getText());
-		            if (gia <= 0) {
-		                JOptionPane.showMessageDialog(null, "Giá lượng phải > 0.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-		                return;
-		            }
-		            String congDung = ta_CongDung.getText();
-		            if (congDung.isEmpty()) {
-		                JOptionPane.showMessageDialog(null, "Công dụng không được để trống.", "Lỗi",
-		                        JOptionPane.ERROR_MESSAGE);
-		                return;
-		            }
-		            String hinhAnh = tf_HinhAnh.getText().trim(); // Loại bỏ khoảng trắng ở đầu và cuối chuỗi
-
-		            // Kiểm tra nếu chuỗi rỗng hoặc không có đuôi .png
-		            if (hinhAnh.isEmpty() || !hinhAnh.endsWith(".jpg")) {
-		                JOptionPane.showMessageDialog(null,
-		                        "Hình ảnh phải có định dạng .jpg và không được để trống.", "Lỗi",
-		                        JOptionPane.ERROR_MESSAGE);
-		                return;
-		            }
-
-		            String loaiSanPham = (String) cb_LoaiSP.getSelectedItem();
-		            int soLuong = Integer.parseInt(tf_soLuong.getText());
-		            if (soLuong <= 0) {
-		                JOptionPane.showMessageDialog(null, "Số lượng phải > 0.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-		                return;
-		            }
-
-		            // Chuyển đổi loại sản phẩm
-		            if (loaiSanPham.equals("Thuốc")) {
-		                loaiSanPham = "Thuoc";
-		            } else if (loaiSanPham.equals("Thực Phẩm Chức Năng")) {
-		                loaiSanPham = "TPCN";
-		            } else if (loaiSanPham.equals("Thiết Bị Y Tế")) {
-		                loaiSanPham = "TBYT";
-		            }
-		            String thanhPhan = ta_ThanhPhan.getText();
-		            double thue = Double.parseDouble(tf_thue.getText());
-		            if (thanhPhan.isEmpty()) {
-		                JOptionPane.showMessageDialog(null, "Thành phần không được để trống.", "Lỗi",
-		                        JOptionPane.ERROR_MESSAGE);
-		                return;
-		            }
-
-		            LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
-		            spCapNhat = new SanPham_entity(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong, thue);
-		            SanPham_DAO sp_dao = new SanPham_DAO();
-		            sp_dao.capNhatSanPham(spCapNhat); // Cập nhật sản phẩm trong cơ sở dữ liệu
-		            
-		            
-
-		            // Hiển thị thông báo thành công
-		            JOptionPane.showMessageDialog(null, "Cập Nhật Sản Phẩm Thành Công!", "Thông báo",
-		                    JOptionPane.INFORMATION_MESSAGE);
-		        } catch (Exception ex) {
-		            // Hiển thị thông báo lỗi nếu có bất kỳ ngoại lệ nào xảy ra
-		            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi",
-		                    JOptionPane.ERROR_MESSAGE);
-		        }
-
+		pnContent.add(btnXacNhan);
 		
 		
 		cb_LoaiSP.addItemListener(new ItemListener() {
@@ -702,9 +497,138 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 		        }
 		    }
 		});
-
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if (o.equals(btnXacNhan)) {
+			try {
+	            String tenSP = tf_Tensp.getText();
+	            if (tenSP.isEmpty()) {
+	                JOptionPane.showMessageDialog(null, "Tên sản phẩm không được để trống.", "Lỗi",
+	                        JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+
+	            // Lấy ngày sản xuất và ngày hết hạn từ JDateChooser
+	            java.util.Date ngaySX = dcNgaySanXuat.getDate();
+	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+	                    : null;
+
+	            java.util.Date ngayHH = dcNgayHetHan.getDate();
+	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+	                    : null;
+
+	            LocalDate today = LocalDate.now(); // Lấy ngày hiện tại
+
+	            // Kiểm tra điều kiện ngày sản xuất và ngày hết hạn
+	            if (lcNgaySX == null || lcNgaySX.isAfter(today)) {
+	                JOptionPane.showMessageDialog(null, "Ngày sản xuất không được sau ngày hiện tại.", "Lỗi",
+	                        JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+
+	            if (lcNgayHH == null || !lcNgayHH.isAfter(today)) {
+	                JOptionPane.showMessageDialog(null, "Ngày hết hạn phải lớn hơn ngày hiện tại.", "Lỗi",
+	                        JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+
+	            // Lấy các giá trị còn lại
+	            double khoiLuong = Double.parseDouble(tf_KhoiLuong.getText());
+	            if (khoiLuong <= 0) {
+	                JOptionPane.showMessageDialog(null, "Khối lượng phải > 0.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+	            String donViTinh = (String) cb_DonViTinh.getSelectedItem();
+	            String nhaCungCap = tf_NhaCungCap.getText();
+	            if (nhaCungCap.isEmpty()) {
+	                JOptionPane.showMessageDialog(null, "Nhà cung cấp không được để trống.", "Lỗi",
+	                        JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+	            double gia = Double.parseDouble(tf_Gia.getText());
+	            if (gia <= 0) {
+	                JOptionPane.showMessageDialog(null, "Giá lượng phải > 0.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+	            String congDung = ta_CongDung.getText();
+	            if (congDung.isEmpty()) {
+	                JOptionPane.showMessageDialog(null, "Công dụng không được để trống.", "Lỗi",
+	                        JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+	            String hinhAnh = tf_HinhAnh.getText().trim(); // Loại bỏ khoảng trắng ở đầu và cuối chuỗi
+
+	            // Kiểm tra nếu chuỗi rỗng hoặc không có đuôi .png
+	            if (hinhAnh.isEmpty() || !hinhAnh.endsWith(".jpg")) {
+	                JOptionPane.showMessageDialog(null,
+	                        "Hình ảnh phải có định dạng .jpg và không được để trống.", "Lỗi",
+	                        JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+
+	            String loaiSanPham = (String) cb_LoaiSP.getSelectedItem();
+	            int soLuong = Integer.parseInt(tf_soLuong.getText());
+	            if (soLuong <= 0) {
+	                JOptionPane.showMessageDialog(null, "Số lượng phải > 0.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+
+	            // Chuyển đổi loại sản phẩm
+	            if (loaiSanPham.equals("Thuốc")) {
+	                loaiSanPham = "Thuoc";
+	            } else if (loaiSanPham.equals("Thực Phẩm Chức Năng")) {
+	                loaiSanPham = "TPCN";
+	            } else if (loaiSanPham.equals("Thiết Bị Y Tế")) {
+	                loaiSanPham = "TBYT";
+	            }
+	            String thanhPhan = ta_ThanhPhan.getText();
+	            double thue = Double.parseDouble(tf_thue.getText());
+	            if (thanhPhan.isEmpty()) {
+	                JOptionPane.showMessageDialog(null, "Thành phần không được để trống.", "Lỗi",
+	                        JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+
+	            LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
+	            double giaNhap = Double.parseDouble(tf_giaNhap.getText());
+	            spCapNhat = new SanPham_entity(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, nhaCungCap, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong, thue,giaNhap);
+	            SanPham_DAO sp_dao = new SanPham_DAO();
+	            sp_dao.capNhatSanPham(spCapNhat); // Cập nhật sản phẩm trong cơ sở dữ liệu
+	            
+	            
+
+	            // Hiển thị thông báo thành công
+	            JOptionPane.showMessageDialog(null, "Cập Nhật Sản Phẩm Thành Công!", "Thông báo",
+	                    JOptionPane.INFORMATION_MESSAGE);
+	        } catch (Exception ex) {
+	            // Hiển thị thông báo lỗi nếu có bất kỳ ngoại lệ nào xảy ra
+	            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi",
+	                    JOptionPane.ERROR_MESSAGE);
+	        }
+
+	
+	
+	cb_LoaiSP.addItemListener(new ItemListener() {
+	    @Override
+	    public void itemStateChanged(ItemEvent e) {
+	        // Kiểm tra nếu sự kiện là sự thay đổi (ItemEvent.SELECTED)
+	        if (e.getStateChange() == ItemEvent.SELECTED) {
+	            String selectedLoaiSP = (String) cb_LoaiSP.getSelectedItem();
+	            
+	            // Cập nhật giá trị thuế tùy thuộc vào lựa chọn
+	            if ("Thuốc".equals(selectedLoaiSP) || "Thiết Bị Y Tế".equals(selectedLoaiSP)) {
+	                tf_thue.setText("5.0");
+	            } else if ("Thực Phẩm Chức Năng".equals(selectedLoaiSP)) {
+	                tf_thue.setText("10.0");
+	            }
+	        }
+	    }
+	});
+}
+	}
 	public void CN(SanPham_entity sp) {
 		maSP = sp.getMaSP();
 	    tf_Tensp.setText(sp.getTenSP());
@@ -713,12 +637,25 @@ public class formCapNhatSanPham extends SimpleForm implements ActionListener {
 	    dcNgayHetHan.setDate(java.sql.Date.valueOf(sp.getNgayHetHan()));
 	    tf_KhoiLuong.setText(String.valueOf(sp.getKhoiLuong()));
 	    cb_DonViTinh.setSelectedItem(sp.getDonViTinh());
+	    
 	    tf_NhaCungCap.setText(sp.getNhaCungCap());
 	    tf_Gia.setText(String.valueOf(sp.getGia()));
 	    ta_ThanhPhan.setText(sp.getThanhPhan());
 	    ta_CongDung.setText(sp.getCongDung());
 	    tf_HinhAnh.setText(sp.getHinhAnhSP());
-	    cb_LoaiSP.setSelectedItem(sp.getLoaiSanPham().getMaLoaiSP());
+	    tf_giaNhap.setText(String.valueOf(sp.getGiaNhap()));
+	    String mlsp = sp.getLoaiSanPham().getMaLoaiSP();
+	    if(mlsp.equals("Thuoc")) {
+	    	cb_LoaiSP.setSelectedItem("Thuốc");
+	    }
+	    if(mlsp.equals("TPCN")) {
+	    	cb_LoaiSP.setSelectedItem("Thực Phẩm Chức Năng");
+	    }
+	    if(mlsp.equals("TBYT")) {
+	    	cb_LoaiSP.setSelectedItem("Thiết Bị Y Tế");
+	    }
+	    
+	    
 	    tf_thue.setText(sp.getThue()+"");
 	}
 

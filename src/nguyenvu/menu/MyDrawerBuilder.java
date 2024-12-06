@@ -2,6 +2,9 @@ package nguyenvu.menu;
 
 import java.awt.Color;
 
+
+
+
 import java.awt.Component;
 
 import javax.swing.Icon;
@@ -23,6 +26,7 @@ import gui.SanPhamDoiTra;
 import gui.TaiKhoanForNhanVien;
 import gui.TaiKhoan_GUI;
 import gui.ThongKeDoanhThu_GUI;
+import gui.ThongKeSanPham_GUI;
 import gui.ThongKeSanPham_GUI;
 import gui.TrangChu;
 import nguyenvu.model.ModelUser;
@@ -288,6 +292,8 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                         }
                         if (index[1] == 0) {
                             FormManager.showForm(new ThongKeDoanhThu_GUI());
+                        }
+                        if (index[1] == 2) {
                         }
                     }
                     if (index[0] == 9) {

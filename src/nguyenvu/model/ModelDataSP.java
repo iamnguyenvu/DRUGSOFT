@@ -1,4 +1,4 @@
-package entity;
+package nguyenvu.model;
 
 public class ModelDataSP {
 	private String tenSP;

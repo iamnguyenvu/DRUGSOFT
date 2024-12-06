@@ -53,6 +53,7 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 	private SanPham sanPham;
 	private JTextArea ta_ThanhPhan;
 	private JTextField tf_thue;
+	private JTextField tf_giaNhap;
 
 	/**
 	 * Create the panel.
@@ -91,21 +92,21 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		tf_soLuong.setBackground(new Color(255, 255, 255));
 		tf_soLuong.setColumns(10);
 		tf_soLuong.setBorder(border);
-		tf_soLuong.setBounds(20, 166, 299, 34);
+		tf_soLuong.setBounds(20, 166, 211, 34);
 		pnCenter.add(tf_soLuong);
 
-		JLabel lb_Gia = new JLabel("Giá");
+		JLabel lb_Gia = new JLabel("Giá Nhập");
 		lb_Gia.setForeground(new Color(0, 0, 0));
 		lb_Gia.setBackground(new Color(255, 255, 255));
 		lb_Gia.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_Gia.setBounds(405, 10, 46, 46);
+		lb_Gia.setBounds(322, 10, 86, 46);
 		pnCenter.add(lb_Gia);
 
 		tf_Gia = new JTextField();
 		tf_Gia.setForeground(new Color(0, 0, 0));
 		tf_Gia.setBackground(new Color(255, 255, 255));
 		tf_Gia.setColumns(10);
-		tf_Gia.setBounds(405, 66, 251, 34);
+		tf_Gia.setBounds(517, 66, 158, 34);
 		tf_Gia.setBorder(border);
 		pnCenter.add(tf_Gia);
 
@@ -113,7 +114,7 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		lb_HinhAnh.setForeground(new Color(0, 0, 0));
 		lb_HinhAnh.setBackground(new Color(255, 255, 255));
 		lb_HinhAnh.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_HinhAnh.setBounds(405, 110, 105, 46);
+		lb_HinhAnh.setBounds(322, 110, 105, 46);
 		pnCenter.add(lb_HinhAnh);
 
 		tf_HinhAnh = new JTextField();
@@ -121,10 +122,11 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		tf_HinhAnh.setBackground(new Color(255, 255, 255));
 		tf_HinhAnh.setColumns(10);
 		tf_HinhAnh.setBorder(border);
-		tf_HinhAnh.setBounds(405, 166, 173, 34);
+		tf_HinhAnh.setBounds(322, 166, 274, 34);
 		pnCenter.add(tf_HinhAnh);
 
 		btnChonHinhAnh = new JButton("Chọn");
+		btnChonHinhAnh.setBorder(border);
 		btnChonHinhAnh.setForeground(new Color(0, 0, 0));
 		btnChonHinhAnh.setBackground(new Color(255, 255, 255));
 		btnChonHinhAnh.addActionListener(new ActionListener() {
@@ -148,7 +150,7 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 			}
 		});
 		btnChonHinhAnh.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnChonHinhAnh.setBounds(581, 162, 75, 36);
+		btnChonHinhAnh.setBounds(606, 166, 69, 34);
 		pnCenter.add(btnChonHinhAnh);
 
 		tf_Tensp = new JTextField();
@@ -156,7 +158,7 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		tf_Tensp.setBackground(new Color(255, 255, 255));
 		tf_Tensp.setColumns(10);
 		tf_Tensp.setBorder(border);
-		tf_Tensp.setBounds(22, 66, 297, 34);
+		tf_Tensp.setBounds(22, 66, 209, 34);
 		pnCenter.add(tf_Tensp);
 
 		JLabel lb_soLuong = new JLabel("Số Lượng");
@@ -177,7 +179,7 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		JLabel lblCanhBaoGia = new JLabel("*");
 		lblCanhBaoGia.setForeground(new Color(255, 0, 0));
 		lblCanhBaoGia.setFont(new Font("Serif", Font.ITALIC, 12));
-		lblCanhBaoGia.setBounds(437, 28, 166, 13);
+		lblCanhBaoGia.setBounds(392, 28, 29, 13);
 		pnCenter.add(lblCanhBaoGia);
 
 		JLabel lbCanhBaoSoLuong = new JLabel("*");
@@ -189,8 +191,29 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		JLabel lblCui = new JLabel("* Có Đuôi .png hoặc .svg");
 		lblCui.setForeground(new Color(255, 0, 0));
 		lblCui.setFont(new Font("Serif", Font.ITALIC, 12));
-		lblCui.setBounds(484, 128, 166, 13);
+		lblCui.setBounds(392, 128, 166, 13);
 		pnCenter.add(lblCui);
+		
+		tf_giaNhap = new JTextField();
+		tf_giaNhap.setForeground(Color.BLACK);
+		tf_giaNhap.setColumns(10);
+		tf_giaNhap.setBackground(Color.WHITE);
+		tf_giaNhap.setBounds(322, 66, 158, 34);
+		tf_giaNhap.setBorder(border);
+		pnCenter.add(tf_giaNhap);
+		
+		JLabel lb_Gia_1 = new JLabel("Giá Bán");
+		lb_Gia_1.setForeground(Color.BLACK);
+		lb_Gia_1.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+		lb_Gia_1.setBackground(Color.WHITE);
+		lb_Gia_1.setBounds(517, 10, 86, 46);
+		pnCenter.add(lb_Gia_1);
+		
+		JLabel lblCanhBaoGia_1 = new JLabel("*");
+		lblCanhBaoGia_1.setForeground(Color.RED);
+		lblCanhBaoGia_1.setFont(new Font("Serif", Font.ITALIC, 12));
+		lblCanhBaoGia_1.setBounds(573, 29, 29, 13);
+		pnCenter.add(lblCanhBaoGia_1);
 
 		JLabel lb_ThemMoiSP = new JLabel("Thêm Mới Sản Phẩm");
 		lb_ThemMoiSP.setForeground(new Color(0, 0, 0));
@@ -551,9 +574,9 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 				double thue = Double.parseDouble(tf_thue.getText());
 				// Tạo đối tượng SanPham
 				LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
-
+				double giaNhap = Double.parseDouble(tf_giaNhap.getText());
 				SanPham_entity sp = new SanPham_entity(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh,
-						nhaCungCap, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong,thue);
+						nhaCungCap, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong,thue,giaNhap);
 
 				// Thêm sản phẩm vào bảng (cần đối tượng `sanPham` để gọi phương thức
 				// `addRowTable`)

@@ -1,5 +1,7 @@
 package nguyenvu.login;
 
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
 import java.util.Date;
 import java.util.Properties;
 import javax.mail.*;
