@@ -42,6 +42,7 @@ public class ProductSearchPanel extends javax.swing.JPanel{
         initComponents();
         setProductData(sp);
         addListeners();
+        setBackground(new Color(236,236,236));
     }
     
     private void addListeners() {
@@ -63,7 +64,7 @@ public class ProductSearchPanel extends javax.swing.JPanel{
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent e) {
-                setBackground(null);
+            setBackground(new Color(236,236,236));
             }
             
         });
@@ -86,6 +87,7 @@ public class ProductSearchPanel extends javax.swing.JPanel{
         lblTenSP.putClientProperty(FlatClientProperties.STYLE, ""
             + "font:bold +3");
         lblGiaDonViSP .setText(giaVaDonVi);
+        lblSlTon.setText(String.valueOf(sp.getSoLuong()));
     }
     
     
@@ -95,8 +97,12 @@ public class ProductSearchPanel extends javax.swing.JPanel{
         lblImgSP = new javax.swing.JLabel();
         lblTenSP = new javax.swing.JLabel();
         lblGiaDonViSP = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lblSlTon = new javax.swing.JLabel();
 
         setForeground(new java.awt.Color(204, 204, 204));
+
+        jLabel1.setText("Số lượng tồn:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -112,6 +118,10 @@ public class ProductSearchPanel extends javax.swing.JPanel{
                         .addGap(20, 20, 20))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblGiaDonViSP, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblSlTon, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -125,15 +135,20 @@ public class ProductSearchPanel extends javax.swing.JPanel{
                         .addContainerGap()
                         .addComponent(lblTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblGiaDonViSP, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblGiaDonViSP, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblSlTon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(10, 10, 10))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblGiaDonViSP;
     private javax.swing.JLabel lblImgSP;
+    private javax.swing.JLabel lblSlTon;
     private javax.swing.JLabel lblTenSP;
     // End of variables declaration//GEN-END:variables
 }

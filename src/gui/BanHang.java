@@ -88,11 +88,14 @@ public class BanHang extends SimpleForm {
     
     private JPopupMenu menuFilter;
     private FilterProductSearchPanel filterSearch;
+    private ArrayList<DonTam_entity> listDonTam;
 
     public BanHang(ModelUser user) {
         this.user = user;
         setPreferredSize(new Dimension(1020, 740));
+        
         initComponents();
+        
         dao = new BanHang_DAO();
         listProductSearch = new ListProductSearchPanel();
         menuProduct = new JPopupMenu();
@@ -134,8 +137,9 @@ public class BanHang extends SimpleForm {
         
         txtProductSearch.requestFocusInWindow();
         
+        listDonTam = new ArrayList<>();
         menuTempOrder = new JPopupMenu();
-        tempOrder = new DialogTempOrderProcess(menuTempOrder, this);
+        tempOrder = new DialogTempOrderProcess(menuTempOrder, this, listDonTam);
         menuTempOrder.add(tempOrder);
         menuTempOrder.setFocusable(false);
         
@@ -1062,7 +1066,9 @@ public class BanHang extends SimpleForm {
 
     private void btnTempOrderProcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTempOrderProcessActionPerformed
         // TODO add your handling code here:
-        menuTempOrder.setVisible(true);
+        menuTempOrder.removeAll();
+        tempOrder = new DialogTempOrderProcess(menuProduct, this, listDonTam);
+        menuTempOrder.add(tempOrder);
         tempOrder.setVisible(true);
         menuTempOrder.show(this, 100, 100);
     }//GEN-LAST:event_btnTempOrderProcessActionPerformed
@@ -1074,8 +1080,9 @@ public class BanHang extends SimpleForm {
 
     private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
         // TODO add your handling code here:
-        menuFilter.setVisible(true);
-        filterSearch.setVisible(true);
+        menuFilter.removeAll();
+        filterSearch = new FilterProductSearchPanel(menuFilter, this, table);
+        menuFilter.add(filterSearch);
         menuFilter.show(btnFilter, 0, btnFilter.getHeight());
     }//GEN-LAST:event_btnFilterActionPerformed
  
@@ -1343,9 +1350,11 @@ public class BanHang extends SimpleForm {
             );
             listSP.add(sanPham);
         }
+        
+        listDonTam.add(new DonTam_entity(sdt, tenKhachHang, listSP));
 
-        DonTam_entity donTam = new DonTam_entity(sdt, tenKhachHang, listSP);
-        tempOrder.themDonTam(donTam);
+        tempOrder.capNhatBangTemp();
+        refresh();
     }
     
     public void loadDonTam(DonTam_entity donTam) {
@@ -1372,6 +1381,8 @@ public class BanHang extends SimpleForm {
             model.addRow(rowData);
         }
         updateLblSoLuongSP();
+        
+        menuTempOrder.setVisible(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

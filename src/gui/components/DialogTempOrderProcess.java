@@ -23,11 +23,12 @@ public class DialogTempOrderProcess extends SimpleForm{
     private List<DonTam_entity> listDonTam;
     private BanHang banHang;
     
-    public DialogTempOrderProcess(JPopupMenu popupMenu, BanHang banHang) {
+    public DialogTempOrderProcess(JPopupMenu popupMenu, BanHang banHang, List<DonTam_entity> listDonTam) {
         this.banHang = banHang;
         this.popupMenu = popupMenu;
-        listDonTam = new ArrayList<>();
+        this.listDonTam = listDonTam;
         initComponents();
+        capNhatBangTemp();
     }
 
     /**
@@ -135,11 +136,18 @@ public class DialogTempOrderProcess extends SimpleForm{
         DonTam_entity selectedDonTam = getSelectedDonTam();
         if (selectedDonTam != null) {
             banHang.loadDonTam(selectedDonTam);
-            removeSelectedDonTam();
+            listDonTam.remove(selectedDonTam);
+            capNhatBangTemp();
+            
             popupMenu.setVisible(false);
             this.setVisible(false);
         } 
         else {
+            if(tableTemp.getRowCount() < 1) {
+                popupMenu.setVisible(false);
+                this.setVisible(false);
+                MessageAlerts.getInstance().showMessage("Lỗi", "Chọn đơn tạm để xử lý!", MessageAlerts.MessageType.ERROR);
+            }
             MessageAlerts.getInstance().showMessage("Lỗi", "Chọn đơn tạm để xử lý!", MessageAlerts.MessageType.ERROR);
         }
     }//GEN-LAST:event_btnProcessActionPerformed
