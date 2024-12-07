@@ -6,6 +6,8 @@ import com.raven.chart.Chart;
 import com.raven.chart.ModelChart;
 
 import nguyenvu.components.SimpleForm;
+import nguyenvu.model.ModelData;
+import nguyenvu.model.ModelDataSP;
 
 import java.awt.Color;
 import java.awt.Desktop;
@@ -52,8 +54,6 @@ import com.toedter.calendar.JDateChooser;
 
 import connectDB.connectDB;
 import dao.ThongKe_DAO;
-import entity.ModelData;
-import entity.ModelDataSP;
 import entity.SanPham_entity;
 
 import javax.swing.JRadioButton;
@@ -94,10 +94,10 @@ public class pnSanPhamHetHang extends SimpleForm implements ActionListener{
      */
     public pnSanPhamHetHang() {
     	tk_Dao = new ThongKe_DAO();
-		setPreferredSize(new Dimension(1500, 660));
+		setPreferredSize(new Dimension(1117, 668));
         initComponents();
         setBackground(new Color(240, 240, 240,0));
-        setLayout(null);
+        setLayout(new BorderLayout(0, 0));
         add(pnCenter);
         
         lblNewLabel = new JLabel("Danh Sách Sản Phẩm");
@@ -153,7 +153,7 @@ public class pnSanPhamHetHang extends SimpleForm implements ActionListener{
 
 		JScrollPane scp_SanPham = new JScrollPane(tb_SanPham);
 		scp_SanPham.setBackground(new Color(255, 255, 255));
-		scp_SanPham.setBounds(10, 122, 1480, 426);
+		scp_SanPham.setBounds(10, 122, 1086, 458);
 		pnCenter.add(scp_SanPham);
 		
 		docSanPhamSapHetHang();
@@ -163,7 +163,7 @@ public class pnSanPhamHetHang extends SimpleForm implements ActionListener{
         btnXuatFile.setBackground(new Color(255, 255, 255));
         btnXuatFile.setFont(new Font("Arial", Font.BOLD, 15));
         btnXuatFile.setBorder(new LineBorder(Color.BLACK, 1, true));
-        btnXuatFile.setBounds(1156, 572, 145, 40);
+        btnXuatFile.setBounds(791, 602, 145, 40);
         pnCenter.add(btnXuatFile);
         
         
@@ -179,21 +179,21 @@ public class pnSanPhamHetHang extends SimpleForm implements ActionListener{
         btnBaoCao.setForeground(Color.BLACK);
         btnBaoCao.setFont(new Font("Arial", Font.BOLD, 15));
         btnBaoCao.setBackground(Color.WHITE);
-        btnBaoCao.setBounds(1315, 572, 145, 40);
+        btnBaoCao.setBounds(946, 602, 145, 40);
         pnCenter.add(btnBaoCao);
         
         lblNewLabel_1 = new JLabel("Số Lượng :");
         lblNewLabel_1.setForeground(new Color(0, 0, 0));
         lblNewLabel_1.setBackground(new Color(255, 255, 255));
         lblNewLabel_1.setFont(new Font("Serif", Font.PLAIN, 18));
-        lblNewLabel_1.setBounds(10, 79, 103, 33);
+        lblNewLabel_1.setBounds(10, 60, 103, 33);
         pnCenter.add(lblNewLabel_1);
         
         tf_soLuong = new JTextField();
-        tf_soLuong.setFont(new Font("Serif", Font.PLAIN, 18));
+        tf_soLuong.setFont(new Font("Serif", Font.PLAIN, 20));
         tf_soLuong.setForeground(new Color(0, 0, 0));
         tf_soLuong.setBackground(new Color(255, 255, 255));
-        tf_soLuong.setBounds(101, 79, 44, 34);
+        tf_soLuong.setBounds(102, 59, 44, 34);
         tf_soLuong.setBorder(null);
         tf_soLuong.setText(tk_Dao.soSanPhamSapHetHang()+"");
         pnCenter.add(tf_soLuong);
@@ -203,13 +203,14 @@ public class pnSanPhamHetHang extends SimpleForm implements ActionListener{
         lblNewLabel_2.setForeground(new Color(0, 0, 0));
         lblNewLabel_2.setBackground(new Color(255, 255, 255));
         lblNewLabel_2.setFont(new Font("Serif", Font.PLAIN, 18));
-        lblNewLabel_2.setBounds(1143, 79, 103, 33);
+        lblNewLabel_2.setBounds(804, 60, 103, 33);
         pnCenter.add(lblNewLabel_2);
         
         cb_sp = new JComboBox();
+        cb_sp.setFont(new Font("Serif", Font.PLAIN, 15));
         cb_sp.setForeground(new Color(0, 0, 0));
         cb_sp.setBackground(new Color(255, 255, 255));
-        cb_sp.setBounds(1234, 79, 184, 34);
+        cb_sp.setBounds(912, 60, 184, 34);
         cb_sp.setBorder(new LineBorder(Color.BLACK, 1));
         cb_sp.addItem("Sản Phẩm Sắp Hết Hàng");
         cb_sp.addItem("Sản Phẩm Đã Hết Hàng");
@@ -230,7 +231,6 @@ public class pnSanPhamHetHang extends SimpleForm implements ActionListener{
         
         pnCenter = new JPanel();
         pnCenter.setBackground(new Color(255, 255, 255));
-        pnCenter.setBounds(10, 10, 1500, 640);
         pnCenter.setLayout(null);
     }
     public void docSanPhamDaHetHang() {
@@ -239,7 +239,7 @@ public class pnSanPhamHetHang extends SimpleForm implements ActionListener{
 		// Adding products to the table model
 				for (SanPham_entity product : products) {
 					dftb_SanPham.addRow(new Object[] { product.getMaSP(), product.getTenSP(), product.getSoLuong(),
-							product.getNgaySanXuat(), product.getNgayHetHan(), product.getKhoiLuong(), product.getDonViTinh(),
+							product.getKhoiLuong(), product.getDonViTinh(),
 							product.getNhaCungCap(), product.getGia(), product.getThanhPhan(), product.getCongDung(),
 							product.getHinhAnhSP(), product.getLoaiSanPham().getMaLoaiSP(),
 							// Add actions for Update and Delete as necessary
@@ -253,7 +253,7 @@ public class pnSanPhamHetHang extends SimpleForm implements ActionListener{
 		// Adding products to the table model
 				for (SanPham_entity product : products) {
 					dftb_SanPham.addRow(new Object[] { product.getMaSP(), product.getTenSP(), product.getSoLuong(),
-							product.getNgaySanXuat(), product.getNgayHetHan(), product.getKhoiLuong(), product.getDonViTinh(),
+							product.getKhoiLuong(), product.getDonViTinh(),
 							product.getNhaCungCap(), product.getGia(), product.getThanhPhan(), product.getCongDung(),
 							product.getHinhAnhSP(), product.getLoaiSanPham().getMaLoaiSP(),
 							// Add actions for Update and Delete as necessary

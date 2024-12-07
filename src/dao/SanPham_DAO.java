@@ -35,11 +35,6 @@ public class SanPham_DAO {
 	            String masp = rs.getString("maSP");
 	            String tensp = rs.getString("tenSP");
 	            int soLuong = rs.getInt("soLuong");
-	            Date ngaySX = rs.getDate("ngaySanXuat");
-	            Date ngayHH = rs.getDate("ngayHetHan");
-
-	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null;
-	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null;
 
 	            double khoiLuong = rs.getDouble("khoiLuong");
 	            String donViTinh = rs.getString("donViTinh");
@@ -50,9 +45,10 @@ public class SanPham_DAO {
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
 	            double thue = rs.getDouble("thue");
+	            double giaNhap = rs.getDouble("giaNhap");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue,giaNhap);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -79,10 +75,6 @@ public class SanPham_DAO {
 	            String tensp = rs.getString("tenSP");
 	            int soLuong = rs.getInt("soLuong");
 	            Date ngaySX = rs.getDate("ngaySanXuat");
-	            Date ngayHH = rs.getDate("ngayHetHan");
-
-	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null;
-	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null;
 
 	            double khoiLuong = rs.getDouble("khoiLuong");
 	            String donViTinh = rs.getString("donViTinh");
@@ -93,9 +85,10 @@ public class SanPham_DAO {
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
 	            double thue = rs.getDouble("thue");
+	            double giaNhap = rs.getDouble("giaNhap");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue,giaNhap);
 	            dssp.add(sp);
 	        }
 	    } catch (SQLException e) {
@@ -110,76 +103,72 @@ public class SanPham_DAO {
 	    return dssp;
 	}
 
-	// Phương thức để lấy danh sách sản phẩm theo loại và sắp xếp
-	public ArrayList<SanPham_entity> laySanPhamTheoLoaiVaSapXep(String loaiSanPham, boolean sapXepTen, boolean sapXepNgaySXTang) {
-	    ArrayList<SanPham_entity> dssp = new ArrayList<>();
-	    Connection con = connectDB.accessDataBase();
-	    if (con == null) {
-	        return null;
-	    }
-	    
-	    // Lọc theo loại sản phẩm và sắp xếp theo tên và ngày sản xuất
-	    String sql = "SELECT * FROM SanPham WHERE (? = 'Tất cả' OR MaLoaiSP = ?) ORDER BY tenSP " + (sapXepTen ? "ASC" : "DESC") 
-	        + ", ngaySanXuat " + (sapXepNgaySXTang ? "ASC" : "DESC");
-	    
-	    try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-	        // Cài đặt giá trị cho câu truy vấn
-	        pstmt.setString(1, loaiSanPham); // Loại sản phẩm
-	        pstmt.setString(2, loaiSanPham); // Điều kiện cho tất cả sản phẩm
-
-	        ResultSet rs = pstmt.executeQuery();
-
-	        while (rs.next()) {
-	            String masp = rs.getString("maSP");
-	            String tensp = rs.getString("tenSP");
-	            int soLuong = rs.getInt("soLuong");
-	            Date ngaySX = rs.getDate("ngaySanXuat");
-	            Date ngayHH = rs.getDate("ngayHetHan");
-
-	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null;
-	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null;
-
-	            double khoiLuong = rs.getDouble("khoiLuong");
-	            String donViTinh = rs.getString("donViTinh");
-	            String Nhacc = rs.getString("nhaCungCap");
-	            double gia = rs.getDouble("gia");
-	            String congDung = rs.getString("congDung");
-	            String thanhPhan = rs.getString("thanhPhan");
-	            String hinhAnhsp = rs.getString("hinhAnhSP");
-	            String maLoaiSP = rs.getString("maLoaiSP");
-	            double thue = rs.getDouble("thue");
-	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
-
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
-	            dssp.add(sp);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-
-	    return dssp;
-	}
+//	// Phương thức để lấy danh sách sản phẩm theo loại và sắp xếp
+//	public ArrayList<SanPham_entity> laySanPhamTheoLoaiVaSapXep(String loaiSanPham, boolean sapXepTen, boolean sapXepNgaySXTang) {
+//	    ArrayList<SanPham_entity> dssp = new ArrayList<>();
+//	    Connection con = connectDB.accessDataBase();
+//	    if (con == null) {
+//	        return null;
+//	    }
+//	    
+//	    // Lọc theo loại sản phẩm và sắp xếp theo tên và ngày sản xuất
+//	    String sql = "SELECT * FROM SanPham WHERE (? = 'Tất cả' OR MaLoaiSP = ?) ORDER BY tenSP " + (sapXepTen ? "ASC" : "DESC") 
+//	        + ", ngaySanXuat " + (sapXepNgaySXTang ? "ASC" : "DESC");
+//	    
+//	    try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+//	        // Cài đặt giá trị cho câu truy vấn
+//	        pstmt.setString(1, loaiSanPham); // Loại sản phẩm
+//	        pstmt.setString(2, loaiSanPham); // Điều kiện cho tất cả sản phẩm
+//
+//	        ResultSet rs = pstmt.executeQuery();
+//
+//	        while (rs.next()) {
+//	            String masp = rs.getString("maSP");
+//	            String tensp = rs.getString("tenSP");
+//	            int soLuong = rs.getInt("soLuong");
+//	            Date ngaySX = rs.getDate("ngaySanXuat");
+//
+//	            double khoiLuong = rs.getDouble("khoiLuong");
+//	            String donViTinh = rs.getString("donViTinh");
+//	            String Nhacc = rs.getString("nhaCungCap");
+//	            double gia = rs.getDouble("gia");
+//	            String congDung = rs.getString("congDung");
+//	            String thanhPhan = rs.getString("thanhPhan");
+//	            String hinhAnhsp = rs.getString("hinhAnhSP");
+//	            String maLoaiSP = rs.getString("maLoaiSP");
+//	            double thue = rs.getDouble("thue");
+//	            double giaNhap = rs.getDouble("giaNhap");
+//	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
+//
+//	            SanPham_entity sp = new SanPham_entity(masp, tensp,  khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue,giaNhap);
+//	            dssp.add(sp);
+//	        }
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//
+//	    return dssp;
+//	}
 
 	public boolean themSanPham(SanPham_entity sp) {
 	    Connection con = connectDB.accessDataBase();
 
-	    String sql = "INSERT INTO SanPham (maSP, tenSP, ngaySanXuat, ngayHetHan, nhaCungCap, gia, thanhPhan, congDung, hinhAnhSP, maLoaiSP, soLuong, khoiLuong, donViTinh) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	    String sql = "INSERT INTO SanPham (maSP, tenSP, nhaCungCap, gia,giaNhap, thanhPhan, congDung, hinhAnhSP, maLoaiSP, soLuong, khoiLuong, donViTinh) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
 	    try {
 	        PreparedStatement pst = con.prepareStatement(sql);
 	        pst.setString(1, sp.getMaSP());
 	        pst.setString(2, sp.getTenSP());
-	        pst.setDate(3, java.sql.Date.valueOf(sp.getNgaySanXuat())); // Chuyển đổi LocalDate sang sql.Date
-	        pst.setDate(4, java.sql.Date.valueOf(sp.getNgayHetHan()));
-	        pst.setString(5, sp.getNhaCungCap());
-	        pst.setDouble(6, sp.getGia());
-	        pst.setString(7, sp.getThanhPhan());
-	        pst.setString(8, sp.getCongDung());
-	        pst.setString(9, sp.getHinhAnhSP());
-	        pst.setString(10, sp.getLoaiSanPham().getMaLoaiSP());
-	        pst.setInt(11, sp.getSoLuong());
-	        pst.setDouble(12, sp.getKhoiLuong());
-	        pst.setString(13, sp.getDonViTinh());
+	        pst.setString(3, sp.getNhaCungCap());
+	        pst.setDouble(4, sp.getGia());
+	        pst.setDouble(5, sp.getGiaNhap());
+	        pst.setString(6, sp.getThanhPhan());
+	        pst.setString(7, sp.getCongDung());
+	        pst.setString(8, sp.getHinhAnhSP());
+	        pst.setString(9, sp.getLoaiSanPham().getMaLoaiSP());
+	        pst.setInt(10, sp.getSoLuong());
+	        pst.setDouble(11, sp.getKhoiLuong());
+	        pst.setString(12, sp.getDonViTinh());
 
 	        int rowInserted = pst.executeUpdate();
 
@@ -200,26 +189,21 @@ public class SanPham_DAO {
 	public boolean capNhatSanPham(SanPham_entity sp) {
 	    Connection con = connectDB.accessDataBase();
 
-	    String sql = "UPDATE SanPham SET tenSP = ?, soLuong = ?, ngaySanXuat = ?, ngayHetHan = ?, khoiLuong = ?, donViTinh = ?, nhaCungCap = ?, gia = ?, thanhPhan = ?, congDung = ?, hinhAnhSP = ?, maLoaiSP = ?,thue = ? WHERE maSP = ?";
+	    String sql = "UPDATE SanPham SET tenSP = ?, khoiLuong = ?, donViTinh = ?, nhaCungCap = ?, gia = ?, thanhPhan = ?, congDung = ?, hinhAnhSP = ?, maLoaiSP = ?,thue = ?,giaNhap = ? WHERE maSP = ?";
 	    
 	    try (PreparedStatement stmt = con.prepareStatement(sql)) {
 	        stmt.setString(1, sp.getTenSP());
-	        stmt.setInt(2, sp.getSoLuong());
-	        
-	        // Chuyển đổi LocalDate sang java.sql.Date
-	        stmt.setDate(3, Date.valueOf(sp.getNgaySanXuat())); // Ngày sản xuất
-	        stmt.setDate(4, Date.valueOf(sp.getNgayHetHan())); // Ngày hết hạn
-
-	        stmt.setDouble(5, sp.getKhoiLuong());
-	        stmt.setString(6, sp.getDonViTinh());
-	        stmt.setString(7, sp.getNhaCungCap());
-	        stmt.setDouble(8, sp.getGia());
-	        stmt.setString(9, sp.getThanhPhan());
-	        stmt.setString(10, sp.getCongDung());
-	        stmt.setString(11, sp.getHinhAnhSP());
-	        stmt.setString(12, sp.getLoaiSanPham().getMaLoaiSP());
-	        stmt.setDouble(13, sp.getThue());
-	        stmt.setString(14, sp.getMaSP()); // Điều kiện WHERE
+	        stmt.setDouble(2, sp.getKhoiLuong());
+	        stmt.setString(3, sp.getDonViTinh());
+	        stmt.setString(4, sp.getNhaCungCap());
+	        stmt.setDouble(5, sp.getGia());
+	        stmt.setString(6, sp.getThanhPhan());
+	        stmt.setString(7, sp.getCongDung());
+	        stmt.setString(8, sp.getHinhAnhSP());
+	        stmt.setString(9, sp.getLoaiSanPham().getMaLoaiSP());
+	        stmt.setDouble(10, sp.getThue());
+	        stmt.setDouble(11, sp.getGiaNhap());
+	        stmt.setString(12, sp.getMaSP()); // Điều kiện WHERE
 
 	        int rowUpdated = stmt.executeUpdate();
 	        return rowUpdated > 0; // Trả về true nếu có dòng được cập nhật
@@ -237,6 +221,7 @@ public class SanPham_DAO {
 	    }
 	}
 
+	
 
     // Get product price by maSP
     public SanPham_entity getThongTinSP(String maSP) {
@@ -253,11 +238,6 @@ public class SanPham_DAO {
             	String masp = rs.getString("maSP");
 	            String tensp = rs.getString("tenSP");
 	            int soLuong = rs.getInt("soLuong");
-	            Date ngaySX = rs.getDate("ngaySanXuat");
-	            Date ngayHH = rs.getDate("ngayHetHan");
-
-	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null;
-	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null;
 
 	            double khoiLuong = rs.getDouble("khoiLuong");
 	            String donViTinh = rs.getString("donViTinh");
@@ -268,9 +248,10 @@ public class SanPham_DAO {
 	            String hinhAnhsp = rs.getString("hinhAnhSP");
 	            String maLoaiSP = rs.getString("maLoaiSP");
 	            double thue = rs.getDouble("thue");
+	            double giaNhap = rs.getDouble("giaNhap");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue);
+	            sp = new SanPham_entity(masp, tensp, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue,giaNhap);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -391,4 +372,5 @@ public class SanPham_DAO {
 		    }
 		    return false;
 		}
+
 }

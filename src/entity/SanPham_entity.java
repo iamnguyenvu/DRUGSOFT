@@ -1,12 +1,11 @@
 package entity;
 
+import java.awt.Component;
 import java.time.LocalDate;
 
 public class SanPham_entity {
     private String maSP;              // Mã sản phẩm
     private String tenSP;             // Tên sản phẩm
-    private LocalDate ngaySanXuat;    // Ngày sản xuất
-    private LocalDate ngayHetHan;     // Ngày hết hạn
     private double khoiLuong;			// Khối lượng
     private String donViTinh; 			// Đơn vị tính
     private String nhaCungCap;        // Nhà cung cấp
@@ -15,13 +14,30 @@ public class SanPham_entity {
     private String congDung;           // Công dụng
     private String hinhAnhSP;         // Hình ảnh sản phẩm
     private LoaiSanPham_entity loaiSanPham;  // Loại sản phẩm
-    private int soLuong;
     private double thue;
+    private double giaNhap;
+    private int soLuong;
 	public SanPham_entity() {
 		super();
 	}
 	
-	
+	public SanPham_entity(String maSP, String tenSP, double khoiLuong, String donViTinh, String nhaCungCap, double gia,
+			String thanhPhan, String congDung, String hinhAnhSP, LoaiSanPham_entity loaiSanPham, double thue,
+			double giaNhap) {
+		super();
+		this.maSP = maSP;
+		this.tenSP = tenSP;
+		this.khoiLuong = khoiLuong;
+		this.donViTinh = donViTinh;
+		this.nhaCungCap = nhaCungCap;
+		this.gia = gia;
+		this.thanhPhan = thanhPhan;
+		this.congDung = congDung;
+		this.hinhAnhSP = hinhAnhSP;
+		this.loaiSanPham = loaiSanPham;
+		this.thue = thue;
+		this.giaNhap = giaNhap;
+	}
 	public double getThue() {
 		return thue;
 	}
@@ -31,14 +47,12 @@ public class SanPham_entity {
 		this.thue = thue;
 	}
 
-	public SanPham_entity(String maSP, String tenSP, LocalDate ngaySanXuat, LocalDate ngayHetHan, double khoiLuong,
+	public SanPham_entity(String maSP, String tenSP, double khoiLuong,
 			String donViTinh, String nhaCungCap, double gia, String thanhPhan, String congDung, String hinhAnhSP,
-			LoaiSanPham_entity loaiSanPham, int soLuong, double thue) {
+			LoaiSanPham_entity loaiSanPham,int soLuong, double thue,double giaNhap) {
 		super();
 		this.maSP = maSP;
 		this.tenSP = tenSP;
-		this.ngaySanXuat = ngaySanXuat;
-		this.ngayHetHan = ngayHetHan;
 		this.khoiLuong = khoiLuong;
 		this.donViTinh = donViTinh;
 		this.nhaCungCap = nhaCungCap;
@@ -47,8 +61,19 @@ public class SanPham_entity {
 		this.congDung = congDung;
 		this.hinhAnhSP = hinhAnhSP;
 		this.loaiSanPham = loaiSanPham;
-		this.soLuong = soLuong;
 		this.thue = thue;
+		this.giaNhap = giaNhap;
+		this.soLuong = soLuong;
+	}
+
+
+	public int getSoLuong() {
+		return soLuong;
+	}
+
+
+	public void setSoLuong(int soLuong) {
+		this.soLuong = soLuong;
 	}
 
 
@@ -68,18 +93,6 @@ public class SanPham_entity {
 	}
 	public void setTenSP(String tenSP) {
 		this.tenSP = tenSP;
-	}
-	public LocalDate getNgaySanXuat() {
-		return ngaySanXuat;
-	}
-	public void setNgaySanXuat(LocalDate ngaySanXuat) {
-		this.ngaySanXuat = ngaySanXuat;
-	}
-	public LocalDate getNgayHetHan() {
-		return ngayHetHan;
-	}
-	public void setNgayHetHan(LocalDate ngayHetHan) {
-		this.ngayHetHan = ngayHetHan;
 	}
 	public double getKhoiLuong() {
 		return khoiLuong;
@@ -129,13 +142,17 @@ public class SanPham_entity {
 	public void setLoaiSanPham(LoaiSanPham_entity loaiSanPham) {
 		this.loaiSanPham = loaiSanPham;
 	}
-	public int getSoLuong() {
-		return soLuong;
-	}
-	public void setSoLuong(int soLuong) {
-		this.soLuong = soLuong;
-	}
 	
+	public double getGiaNhap() {
+		return giaNhap;
+	}
+
+
+	public void setGiaNhap(double giaNhap) {
+		this.giaNhap = giaNhap;
+	}
+
+
 	public SanPham_entity(String hinhAnhSP, String maSP, String tenSP, String donViTinh, int soLuong, double gia) {
 		super();
 		this.hinhAnhSP = hinhAnhSP;
@@ -145,13 +162,7 @@ public class SanPham_entity {
 		this.soLuong = soLuong;
 		this.gia = gia;
 	}
-	@Override
-	public String toString() {
-		return "SanPham_entity [maSP=" + maSP + ", tenSP=" + tenSP + ", ngaySanXuat=" + ngaySanXuat + ", ngayHetHan="
-				+ ngayHetHan + ", khoiLuong=" + khoiLuong + ", donViTinh=" + donViTinh + ", nhaCungCap=" + nhaCungCap
-				+ ", gia=" + gia + ", thanhPhan=" + thanhPhan + ", congDung=" + congDung + ", hinhAnhSP=" + hinhAnhSP
-				+ ", loaiSanPham=" + loaiSanPham + ", soLuong=" + soLuong + "]";
-	}
+
 
     public SanPham_entity(String maSP, String tenSP, String donViTinh, double gia, String hinhAnhSP, int soLuong, double thue) {
         this.maSP = maSP;
@@ -183,6 +194,16 @@ public class SanPham_entity {
         this.gia = gia;
         this.hinhAnhSP = hinhAnhSP;
     }
+
+    
+
+	public Component toLowerCase() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
 
     
        

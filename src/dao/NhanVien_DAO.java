@@ -269,7 +269,25 @@ public class NhanVien_DAO {
 
         return result;
     }
+    
+    public ArrayList<String> getAllMaNhanVien() {
+        ArrayList<String> dsMaNV = new ArrayList<>();
+        String sql = "SELECT maNV FROM NhanVien";
 
+        try (Connection con = connectDB.accessDataBase();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                dsMaNV.add(rs.getString("maNV"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dsMaNV;
+    }
+
+    
     // public boolean insertEmployee(NhanVien_entity nhanVien) {
     // // TODO Auto-generated method stub
     // String sql = "INSERT INTO NhanVien(maNV, hotenNV, gioiTinh, sdt, cccd,
