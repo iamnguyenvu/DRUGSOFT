@@ -28,13 +28,6 @@ public class NhapHang_DAO {
             while (rs.next()) {
             	String masp = rs.getString("maSP");
 	            String tensp = rs.getString("tenSP");
-	            int soLuong = rs.getInt("soLuong");
-	            Date ngaySX = rs.getDate("ngaySanXuat");
-	            Date ngayHH = rs.getDate("ngayHetHan");
-
-	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null;
-	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null;
-
 	            double khoiLuong = rs.getDouble("khoiLuong");
 	            String donViTinh = rs.getString("donViTinh");
 	            String Nhacc = rs.getString("nhaCungCap");
@@ -47,7 +40,7 @@ public class NhapHang_DAO {
 	            double giaNhap = rs.getDouble("giaNhap");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue,giaNhap);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp,thue,giaNhap);
                 listSP.add(sp);
             }
         } catch (SQLException e) {
@@ -78,12 +71,6 @@ public class NhapHang_DAO {
             while (rs.next()) {
             	String masp = rs.getString("maSP");
 	            String tensp = rs.getString("tenSP");
-	            int soLuong = rs.getInt("soLuong");
-	            Date ngaySX = rs.getDate("ngaySanXuat");
-	            Date ngayHH = rs.getDate("ngayHetHan");
-
-	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null;
-	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null;
 
 	            double khoiLuong = rs.getDouble("khoiLuong");
 	            String donViTinh = rs.getString("donViTinh");
@@ -97,7 +84,7 @@ public class NhapHang_DAO {
 	            double giaNhap = rs.getDouble("giaNhap");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue,giaNhap);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp,thue,giaNhap);
                 listSP.add(sp);
             }
         } catch (SQLException e) {

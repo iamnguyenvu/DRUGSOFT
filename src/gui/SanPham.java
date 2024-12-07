@@ -416,7 +416,7 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 															List<SanPham_entity> filteredProducts = sp_dao.timKiemSanPham(searchText);
 															for (SanPham_entity product : filteredProducts) {
 																dftb_SanPham.addRow(new Object[] { product.getMaSP(), product.getTenSP(), product.getSoLuong(),
-																		product.getNgaySanXuat(), product.getNgayHetHan(), product.getKhoiLuong(),
+																		product.getKhoiLuong(),
 																		product.getDonViTinh(), product.getNhaCungCap(), product.getGia(),
 
 																		product.getThanhPhan(),
@@ -470,19 +470,19 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 	        docDuLieuVaoTable(currentPage, rowsPerPage);
 	    });
 
-	    btnPrevious.addActionListener(e -> {
-	        if (currentPage > 1) {
-	            currentPage--;
-	            docDuLieuVaoTable(currentPage, rowsPerPage);
-	        }
-	    });
+                btnPrevious.addActionListener(e -> {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        docDuLieuVaoTable(currentPage, rowsPerPage);
+                    }
+                });
 
-	    btnNext.addActionListener(e -> {
-	        if (currentPage < totalPages) {
-	            currentPage++;
-	            docDuLieuVaoTable(currentPage, rowsPerPage);
-	        }
-	    });
+                btnNext.addActionListener(e -> {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        docDuLieuVaoTable(currentPage, rowsPerPage);
+                    }
+                });
 
 	    btnLast.addActionListener(e -> {
 	        currentPage = totalPages;
@@ -580,15 +580,13 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 			headerRow.createCell(0).setCellValue("Mã sản phẩm");
 			headerRow.createCell(1).setCellValue("Tên sản phẩm");
 			headerRow.createCell(2).setCellValue("Giá");
-			headerRow.createCell(3).setCellValue("Ngày sản xuất");
-			headerRow.createCell(4).setCellValue("Ngày hết hạn");
-			headerRow.createCell(5).setCellValue("Khối lượng");
-			headerRow.createCell(6).setCellValue("Đơn vị tính");
-			headerRow.createCell(7).setCellValue("Nhà cung cấp");
-			headerRow.createCell(8).setCellValue("Thành phần");
-			headerRow.createCell(9).setCellValue("Công dụng");
-			headerRow.createCell(10).setCellValue("Hình ảnh");
-			headerRow.createCell(11).setCellValue("Loại Sản Phẩm");
+			headerRow.createCell(3).setCellValue("Khối lượng");
+			headerRow.createCell(4).setCellValue("Đơn vị tính");
+			headerRow.createCell(5).setCellValue("Nhà cung cấp");
+			headerRow.createCell(6).setCellValue("Thành phần");
+			headerRow.createCell(7).setCellValue("Công dụng");
+			headerRow.createCell(8).setCellValue("Hình ảnh");
+			headerRow.createCell(9).setCellValue("Loại Sản Phẩm");
 			
 			// Thêm dữ liệu vào sheet
 			int rowNum = 1;
@@ -597,15 +595,13 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 			    row.createCell(0).setCellValue(sp.getMaSP());
 			    row.createCell(1).setCellValue(sp.getTenSP());
 			    row.createCell(2).setCellValue(sp.getGia());
-			    row.createCell(3).setCellValue(sp.getNgaySanXuat().toString()); // Chuyển đổi LocalDate thành String
-			    row.createCell(4).setCellValue(sp.getNgayHetHan().toString());   // Chuyển đổi LocalDate thành String
-			    row.createCell(5).setCellValue(sp.getKhoiLuong());
-			    row.createCell(6).setCellValue(sp.getDonViTinh());
-			    row.createCell(7).setCellValue(sp.getNhaCungCap());
-			    row.createCell(8).setCellValue(sp.getThanhPhan());
-			    row.createCell(9).setCellValue(sp.getCongDung());
-			    row.createCell(10).setCellValue(sp.getHinhAnhSP());
-			    row.createCell(11).setCellValue(sp.getLoaiSanPham().getMaLoaiSP());
+			    row.createCell(3).setCellValue(sp.getKhoiLuong());
+			    row.createCell(4).setCellValue(sp.getDonViTinh());
+			    row.createCell(5).setCellValue(sp.getNhaCungCap());
+			    row.createCell(6).setCellValue(sp.getThanhPhan());
+			    row.createCell(7).setCellValue(sp.getCongDung());
+			    row.createCell(8).setCellValue(sp.getHinhAnhSP());
+			    row.createCell(9).setCellValue(sp.getLoaiSanPham().getMaLoaiSP());
 			}
 
 			// Hiển thị JFileChooser để chọn vị trí lưu file

@@ -124,7 +124,7 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
         lblNewLabel.setBounds(10, 10, 191, 40);
         pnCenter.add(lblNewLabel);
         
-        String[] columnNames = { "Mã Sản Phẩm", "Tên Sản Phẩm", "Số Lượng", "Ngày Sản Xuất", "Ngày Hết Hạn",
+        String[] columnNames = { "Mã Sản Phẩm", "Tên Sản Phẩm", "Số Lượng",
 				"Khối Lượng", "Đơn Vị Tính", "Nhà Cung Cấp", "Giá", "Thành Phần", "Công Dụng", "Hình Ảnh",
 				"Loại SP","Thuế"};
         
@@ -147,27 +147,23 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
 			tb_SanPham.getColumnModel().getColumn(2).setResizable(false);
 			tb_SanPham.getColumnModel().getColumn(2).setPreferredWidth(40);
 			tb_SanPham.getColumnModel().getColumn(3).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(3).setPreferredWidth(60);
+			tb_SanPham.getColumnModel().getColumn(3).setPreferredWidth(40);
 			tb_SanPham.getColumnModel().getColumn(4).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(4).setPreferredWidth(60);
+			tb_SanPham.getColumnModel().getColumn(4).setPreferredWidth(40);
 			tb_SanPham.getColumnModel().getColumn(5).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(5).setPreferredWidth(40);
+			tb_SanPham.getColumnModel().getColumn(5).setPreferredWidth(80);
 			tb_SanPham.getColumnModel().getColumn(6).setResizable(false);
 			tb_SanPham.getColumnModel().getColumn(6).setPreferredWidth(40);
 			tb_SanPham.getColumnModel().getColumn(7).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(7).setPreferredWidth(80);
+			tb_SanPham.getColumnModel().getColumn(7).setPreferredWidth(100);
 			tb_SanPham.getColumnModel().getColumn(8).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(8).setPreferredWidth(40);
+			tb_SanPham.getColumnModel().getColumn(8).setPreferredWidth(100);
 			tb_SanPham.getColumnModel().getColumn(9).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(9).setPreferredWidth(100);
+			tb_SanPham.getColumnModel().getColumn(9).setPreferredWidth(60);
 			tb_SanPham.getColumnModel().getColumn(10).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(10).setPreferredWidth(100);
+			tb_SanPham.getColumnModel().getColumn(10).setPreferredWidth(40);
 			tb_SanPham.getColumnModel().getColumn(11).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(11).setPreferredWidth(60);
-			tb_SanPham.getColumnModel().getColumn(12).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(12).setPreferredWidth(40);
-			tb_SanPham.getColumnModel().getColumn(12).setResizable(false);
-			tb_SanPham.getColumnModel().getColumn(12).setPreferredWidth(40);
+			tb_SanPham.getColumnModel().getColumn(11).setPreferredWidth(40);
 		}
 
 		JScrollPane scp_SanPham = new JScrollPane(tb_SanPham);
@@ -257,7 +253,7 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
         for (SanPham_entity product : products) {
             dftb_SanPham.addRow(new Object[] {
                 product.getMaSP(), product.getTenSP(), product.getSoLuong(),
-                product.getNgaySanXuat(), product.getNgayHetHan(), product.getKhoiLuong(), 
+                product.getKhoiLuong(), 
                 product.getDonViTinh(), product.getNhaCungCap(), product.getGia(), 
                 product.getThanhPhan(), product.getCongDung(), product.getHinhAnhSP(), 
                 product.getLoaiSanPham().getMaLoaiSP(),product.getThue()
@@ -272,7 +268,7 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
         for (SanPham_entity product : products) {
             dftb_SanPham.addRow(new Object[] {
                 product.getMaSP(), product.getTenSP(), product.getSoLuong(),
-                product.getNgaySanXuat(), product.getNgayHetHan(), product.getKhoiLuong(), 
+                product.getKhoiLuong(), 
                 product.getDonViTinh(), product.getNhaCungCap(), product.getGia(), 
                 product.getThanhPhan(), product.getCongDung(), product.getHinhAnhSP(), 
                 product.getLoaiSanPham().getMaLoaiSP(),product.getThue()

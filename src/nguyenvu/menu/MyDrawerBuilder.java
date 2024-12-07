@@ -16,6 +16,8 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import gui.BanHang;
+import gui.BaoCaoDoanhThu;
+import gui.BaoCaoSanPham;
 import gui.DoiTra;
 import gui.HoaDon;
 import gui.NhapHang;
@@ -149,8 +151,8 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item.Label("QUẢN LÝ"),
             new Item("Bán hàng", "email.svg"),
             new Item("Đổi trả", "chat.svg"),
-            new Item("Nhập Hàng", "chat.svg"),
-            new Item("Quản Lý Nhập Hàng", "chat.svg"),
+            new Item("Nhập Hàng", "nhapHang.svg"),
+            new Item("Quản Lý Nhập Hàng", "quanLyNhapHang.svg"),
             new Item("Sản phẩm", "calendar.svg")
             .subMenu("Sản phẩm bán hàng")
             .subMenu("Sản phẩm đổi trả"),
@@ -249,6 +251,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     
                     if (index[0] == 2) {
                         FormManager.showForm(doiTra);
+//                    	FormManager.showForm(new NhapHang());
                     }
                     if (index[0] == 3) {
                     	FormManager.showForm(new NhapHang());
@@ -293,6 +296,14 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                             FormManager.showForm(new ThongKeDoanhThu_GUI());
                         }
                         if (index[1] == 2) {
+                        }
+                    }
+                    if (index[0] == 11) {
+                        if (index[1] == 0) {
+                            FormManager.showForm(new BaoCaoDoanhThu());
+                        }
+                        if (index[1] == 1) {
+                            FormManager.showForm(new BaoCaoSanPham());
                         }
                     }
                 }

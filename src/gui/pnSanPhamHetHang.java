@@ -239,7 +239,7 @@ public class pnSanPhamHetHang extends SimpleForm implements ActionListener{
 		// Adding products to the table model
 				for (SanPham_entity product : products) {
 					dftb_SanPham.addRow(new Object[] { product.getMaSP(), product.getTenSP(), product.getSoLuong(),
-							product.getNgaySanXuat(), product.getNgayHetHan(), product.getKhoiLuong(), product.getDonViTinh(),
+							product.getKhoiLuong(), product.getDonViTinh(),
 							product.getNhaCungCap(), product.getGia(), product.getThanhPhan(), product.getCongDung(),
 							product.getHinhAnhSP(), product.getLoaiSanPham().getMaLoaiSP(),
 							// Add actions for Update and Delete as necessary
@@ -253,7 +253,7 @@ public class pnSanPhamHetHang extends SimpleForm implements ActionListener{
 		// Adding products to the table model
 				for (SanPham_entity product : products) {
 					dftb_SanPham.addRow(new Object[] { product.getMaSP(), product.getTenSP(), product.getSoLuong(),
-							product.getNgaySanXuat(), product.getNgayHetHan(), product.getKhoiLuong(), product.getDonViTinh(),
+							product.getKhoiLuong(), product.getDonViTinh(),
 							product.getNhaCungCap(), product.getGia(), product.getThanhPhan(), product.getCongDung(),
 							product.getHinhAnhSP(), product.getLoaiSanPham().getMaLoaiSP(),
 							// Add actions for Update and Delete as necessary

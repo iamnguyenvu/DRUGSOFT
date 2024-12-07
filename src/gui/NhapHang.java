@@ -622,8 +622,8 @@ public class NhapHang extends SimpleForm {
         	    SanPham_entity sp = new SanPham_entity(maSanPham);
         	    
         	    
-        	    ChiTietNhapHang_entity ctnh = new ChiTietNhapHang_entity(nh, sp, soLuong, thanhTien);
-        	    chiTietNhapHang_DAO.insert(ctnh); 
+//        	    ChiTietNhapHang_entity ctnh = new ChiTietNhapHang_entity(nh, sp, soLuong, thanhTien);
+//        	    chiTietNhapHang_DAO.insert(ctnh); 
         	    nhapHang_DAO.UpdateQuantity(maSanPham, soLuong);
             MessageAlerts.getInstance().showMessage(
                 "Thông báo",
@@ -672,8 +672,8 @@ public class NhapHang extends SimpleForm {
         	    double thanhTien = (double) table.getValueAt(row, 8); 
         	    
         	    SanPham_entity sp = new SanPham_entity(maSanPham);
-        	    ChiTietNhapHang_entity ctnh = new ChiTietNhapHang_entity(nh, sp, soLuong, thanhTien);
-        	    chiTietNhapHang_DAO.insert(ctnh); 
+//        	    ChiTietNhapHang_entity ctnh = new ChiTietNhapHang_entity(nh, sp, soLuong, thanhTien);
+//        	    chiTietNhapHang_DAO.insert(ctnh); 
         	    nhapHang_DAO.UpdateQuantity(maSanPham, soLuong);
             MessageAlerts.getInstance().showMessage(
                 "Thông báo",
