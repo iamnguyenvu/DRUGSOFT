@@ -120,7 +120,7 @@ public class TrangChu_DAO {
         ArrayList<SanPham_entity> listSP = new ArrayList<>();
 
         try {
-            ps = con.prepareStatement("select * from SanPham\n" +
+            ps = con.prepareStatement("select sp.maSP,tenSP,donViTinh,gia,hinhAnhSP FROM SanPham sp join ChiTietNhapHang ctnh on sp.maSP = ctnh.maSP\n" +
                 "where DATEDIFF(DAY, GETDATE(), ngayHetHan) < 30");
             rs = ps.executeQuery();
 

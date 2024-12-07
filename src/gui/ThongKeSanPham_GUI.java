@@ -259,28 +259,28 @@ public class ThongKeSanPham_GUI extends SimpleForm implements ActionListener{
                 pnChart.repaint();
             }
         });
-        btnSPHetHan.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pnChart.removeAll();
-                cb_SelectedTime.setVisible(false);
-            		pnChart.add(new pnSanPhamHetHan());
-                // Cập nhật lại giao diện
-                pnChart.revalidate();
-                pnChart.repaint();
-            }
-        });
-        btnSPHetHang.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pnChart.removeAll();
-                cb_SelectedTime.setVisible(false);
-            		pnChart.add(new pnSanPhamHetHan());
-                // Cập nhật lại giao diện
-                pnChart.revalidate();
-                pnChart.repaint();
-            }
-        });
+//        btnSPHetHan.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                pnChart.removeAll();
+//                cb_SelectedTime.setVisible(false);
+//            		pnChart.add(new pnSanPhamHetHan());
+//                // Cập nhật lại giao diện
+//                pnChart.revalidate();
+//                pnChart.repaint();
+//            }
+//        });
+//        btnSPHetHang.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                pnChart.removeAll();
+//                cb_SelectedTime.setVisible(false);
+//            		pnChart.add(new pnSanPhamHetHan());
+//                // Cập nhật lại giao diện
+//                pnChart.revalidate();
+//                pnChart.repaint();
+//            }
+//        });
     }
 	@Override
 	public void actionPerformed(ActionEvent e) {

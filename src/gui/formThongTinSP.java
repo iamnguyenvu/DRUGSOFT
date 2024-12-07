@@ -54,8 +54,6 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 	public JTextField tf_NhaCungCap;
 	private Border border;
 	public JTextField cb_DonViTinh;
-	public JDateChooser dcNgaySanXuat;
-	public JDateChooser dcNgayHetHan;
 	public JTextArea ta_CongDung;
 	public JTextField cb_LoaiSP;
 	private SanPham sanPham;
@@ -112,22 +110,6 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 		tf_soLuong.setBounds(20, 166, 261, 34);
 		pnCenter.add(tf_soLuong);
 
-		JLabel lb_Gia = new JLabel("Giá Bán");
-		lb_Gia.setForeground(new Color(0, 0, 0));
-		lb_Gia.setBackground(new Color(0, 0, 0));
-		lb_Gia.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_Gia.setBounds(524, 10, 63, 46);
-		pnCenter.add(lb_Gia);
-
-		tf_Gia = new JTextField();
-		tf_Gia.setEditable(false);
-		tf_Gia.setForeground(new Color(0, 0, 0));
-		tf_Gia.setBackground(new Color(255, 255, 255));
-		tf_Gia.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		tf_Gia.setColumns(10);
-		tf_Gia.setBounds(524, 66, 132, 34);
-		pnCenter.add(tf_Gia);
-
 		JLabel lb_HinhAnh = new JLabel("Hình Ảnh");
 		lb_HinhAnh.setForeground(new Color(0, 0, 0));
 		lb_HinhAnh.setBackground(new Color(0, 0, 0));
@@ -150,7 +132,7 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 		tf_Tensp.setBackground(new Color(255, 255, 255));
 		tf_Tensp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		tf_Tensp.setColumns(10);
-		tf_Tensp.setBounds(22, 66, 259, 34);
+		tf_Tensp.setBounds(20, 66, 261, 34);
 		pnCenter.add(tf_Tensp);
 
 		JLabel lb_soLuong = new JLabel("Số Lượng");
@@ -160,21 +142,21 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 		lb_soLuong.setBounds(20, 110, 105, 46);
 		pnCenter.add(lb_soLuong);
 		
-		JLabel lb_Gia_1 = new JLabel("Giá Nhập");
-		lb_Gia_1.setForeground(Color.BLACK);
-		lb_Gia_1.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_Gia_1.setBackground(Color.BLACK);
-		lb_Gia_1.setBounds(371, 10, 63, 46);
-		pnCenter.add(lb_Gia_1);
+		JLabel lb_DonViTinh_1 = new JLabel("Thuế");
+		lb_DonViTinh_1.setBounds(371, 10, 105, 46);
+		pnCenter.add(lb_DonViTinh_1);
+		lb_DonViTinh_1.setForeground(Color.BLACK);
+		lb_DonViTinh_1.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+		lb_DonViTinh_1.setBackground(Color.BLACK);
 		
-		tf_giaNhap = new JTextField();
-		tf_giaNhap.setForeground(Color.BLACK);
-		tf_giaNhap.setEditable(false);
-		tf_giaNhap.setColumns(10);
-		tf_giaNhap.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		tf_giaNhap.setBackground(Color.WHITE);
-		tf_giaNhap.setBounds(371, 66, 132, 34);
-		pnCenter.add(tf_giaNhap);
+		tf_thue = new JTextField();
+		tf_thue.setBounds(371, 66, 144, 34);
+		pnCenter.add(tf_thue);
+		tf_thue.setEditable(false);
+		tf_thue.setForeground(Color.BLACK);
+		tf_thue.setColumns(10);
+		tf_thue.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		tf_thue.setBackground(Color.WHITE);
 
 		JLabel lb_ThemMoiSP = new JLabel("Thông Tin Sản Phẩm");
 		lb_ThemMoiSP.setForeground(new Color(0, 0, 0));
@@ -190,77 +172,44 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 		pnContent.add(pn_Ngay);
 		pn_Ngay.setLayout(null);
 
-		dcNgayHetHan = new JDateChooser();
-		dcNgayHetHan.setDateFormatString("dd-MM-yyyy");
-		dcNgayHetHan.setBackground(new Color(255, 255, 255));
-		dcNgayHetHan.setForeground(new Color(0, 0, 0));
-		dcNgayHetHan.getDateEditor().getUiComponent().setBackground(Color.WHITE);
-		dcNgayHetHan.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		dcNgayHetHan.setBounds(414, 101, 254, 34);
-		// Đặt màu nền và màu chữ cho trường văn bản
-        JTextComponent dateTextField1 = (JTextComponent) dcNgayHetHan.getDateEditor().getUiComponent();
-        dateTextField1.setBackground(Color.WHITE);
-        dateTextField1.setForeground(Color.BLACK);
-        dateTextField1.setDisabledTextColor(Color.BLACK);
-
-        // Vô hiệu hóa thành phần chọn ngày nhưng giữ nền sáng
-        dcNgayHetHan.getDateEditor().getUiComponent().setEnabled(false);
-        dcNgayHetHan.getCalendarButton().setEnabled(false); // Vô hiệu hóa nút chọn lịch
-        dcNgayHetHan.setEnabled(false); // Vô hiệu hóa cả thành phần JDateChooser
-
-        // Đảm bảo màu nền không bị tối
-        ((JTextComponent) dcNgayHetHan.getDateEditor().getUiComponent()).setDisabledTextColor(Color.BLACK);
-		
-		pn_Ngay.add(dcNgayHetHan);
-
-		JLabel lbNgayHetHan = new JLabel("Ngày Hết Hạn");
-		lbNgayHetHan.setForeground(new Color(0, 0, 0));
-		lbNgayHetHan.setBackground(new Color(0, 0, 0));
-		lbNgayHetHan.setBounds(414, 45, 105, 46);
-		pn_Ngay.add(lbNgayHetHan);
-		lbNgayHetHan.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-
-		dcNgaySanXuat = new JDateChooser();
-		dcNgaySanXuat.setDateFormatString("dd-MM-yyyy");
-		dcNgaySanXuat.setBackground(new Color(255, 255, 255));
-		dcNgaySanXuat.setForeground(new Color(0, 0, 0));
-		dcNgaySanXuat.getDateEditor().getUiComponent().setBackground(Color.WHITE);
-		dcNgaySanXuat.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		dcNgaySanXuat.setBounds(24, 101, 287, 34);
-		 // Đặt màu nền và màu chữ cho trường văn bản
-        JTextComponent dateTextField = (JTextComponent) dcNgaySanXuat.getDateEditor().getUiComponent();
-        dateTextField.setBackground(Color.WHITE);
-        dateTextField.setForeground(Color.BLACK);
-        dateTextField.setDisabledTextColor(Color.BLACK);
-
-        // Vô hiệu hóa thành phần chọn ngày nhưng giữ nền sáng
-        dcNgaySanXuat.getDateEditor().getUiComponent().setEnabled(false);
-        dcNgaySanXuat.getCalendarButton().setEnabled(false); // Vô hiệu hóa nút chọn lịch
-        dcNgaySanXuat.setEnabled(false); // Vô hiệu hóa cả thành phần JDateChooser
-
-        // Đảm bảo màu nền không bị tối
-        ((JTextComponent) dcNgaySanXuat.getDateEditor().getUiComponent()).setDisabledTextColor(Color.BLACK);
-		pn_Ngay.add(dcNgaySanXuat);
-
-		JLabel lbNgaySanXuat = new JLabel("Ngày Sản Xuất");
-		lbNgaySanXuat.setForeground(new Color(0, 0, 0));
-		lbNgaySanXuat.setBackground(new Color(0, 0, 0));
-		lbNgaySanXuat.setBounds(24, 45, 105, 46);
-		pn_Ngay.add(lbNgaySanXuat);
-		lbNgaySanXuat.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-
 		JLabel lb_ngay = new JLabel("Thời Gian");
 		lb_ngay.setForeground(new Color(0, 0, 0));
 		lb_ngay.setBackground(new Color(0, 0, 0));
 		lb_ngay.setFont(new Font("Serif", Font.PLAIN, 20));
 		lb_ngay.setBounds(24, 10, 105, 34);
 		pn_Ngay.add(lb_ngay);
-
-		JLabel lbCanhBaoNHH = new JLabel("*");
-		lbCanhBaoNHH.setForeground(new Color(255, 0, 0));
-		lbCanhBaoNHH.setFont(new Font("Serif", Font.ITALIC, 12));
-		lbCanhBaoNHH.setBounds(522, 61, 184, 17);
-		pn_Ngay.add(lbCanhBaoNHH);
+		
+		tf_giaNhap = new JTextField();
+		tf_giaNhap.setBounds(24, 93, 247, 34);
+		pn_Ngay.add(tf_giaNhap);
+		tf_giaNhap.setForeground(Color.BLACK);
+		tf_giaNhap.setEditable(false);
+		tf_giaNhap.setColumns(10);
+		tf_giaNhap.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		tf_giaNhap.setBackground(Color.WHITE);
+		
+		JLabel lb_Gia_1 = new JLabel("Giá Nhập");
+		lb_Gia_1.setBounds(24, 48, 63, 46);
+		pn_Ngay.add(lb_Gia_1);
+		lb_Gia_1.setForeground(Color.BLACK);
+		lb_Gia_1.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+		lb_Gia_1.setBackground(Color.BLACK);
+		
+				tf_Gia = new JTextField();
+				tf_Gia.setBounds(375, 93, 272, 34);
+				pn_Ngay.add(tf_Gia);
+				tf_Gia.setEditable(false);
+				tf_Gia.setForeground(new Color(0, 0, 0));
+				tf_Gia.setBackground(new Color(255, 255, 255));
+				tf_Gia.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				tf_Gia.setColumns(10);
+				
+						JLabel lb_Gia = new JLabel("Giá Bán");
+						lb_Gia.setBounds(375, 37, 63, 46);
+						pn_Ngay.add(lb_Gia);
+						lb_Gia.setForeground(new Color(0, 0, 0));
+						lb_Gia.setBackground(new Color(0, 0, 0));
+						lb_Gia.setFont(new Font("Times New Roman", Font.PLAIN, 17));
 
 		JPanel pn_KhoHang = new JPanel();
 		pn_KhoHang.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -289,14 +238,14 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 		tf_KhoiLuong.setBackground(new Color(255, 255, 255));
 		tf_KhoiLuong.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		tf_KhoiLuong.setColumns(10);
-		tf_KhoiLuong.setBounds(24, 104, 144, 34);
+		tf_KhoiLuong.setBounds(24, 104, 248, 34);
 		pn_KhoHang.add(tf_KhoiLuong);
 
 		JLabel lb_DonViTinh = new JLabel("Đơn Vị Tính");
 		lb_DonViTinh.setForeground(new Color(0, 0, 0));
 		lb_DonViTinh.setBackground(new Color(0, 0, 0));
 		lb_DonViTinh.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_DonViTinh.setBounds(287, 48, 105, 46);
+		lb_DonViTinh.setBounds(378, 48, 105, 46);
 		pn_KhoHang.add(lb_DonViTinh);
 
 		cb_DonViTinh = new JTextField();
@@ -305,15 +254,8 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 		cb_DonViTinh.setForeground(new Color(0, 0, 0));
 		cb_DonViTinh.setBackground(new Color(255, 255, 255));
 		cb_DonViTinh.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		cb_DonViTinh.setBounds(287, 102, 127, 34);
+		cb_DonViTinh.setBounds(378, 102, 261, 34);
 		pn_KhoHang.add(cb_DonViTinh);
-		
-		JLabel lb_DonViTinh_1 = new JLabel("Thuế");
-		lb_DonViTinh_1.setForeground(Color.BLACK);
-		lb_DonViTinh_1.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_DonViTinh_1.setBackground(Color.BLACK);
-		lb_DonViTinh_1.setBounds(530, 48, 105, 46);
-		pn_KhoHang.add(lb_DonViTinh_1);
 		
 		
 
@@ -346,15 +288,6 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 		cb_LoaiSP.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		cb_LoaiSP.setBounds(20, 90, 271, 34);
 		pn_PhanLoai.add(cb_LoaiSP);
-		
-		tf_thue = new JTextField();
-		tf_thue.setEditable(false);
-		tf_thue.setForeground(Color.BLACK);
-		tf_thue.setColumns(10);
-		tf_thue.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		tf_thue.setBackground(Color.WHITE);
-		tf_thue.setBounds(529, 104, 144, 34);
-		pn_KhoHang.add(tf_thue);
 
 		JLabel lb_Nhacc = new JLabel("Nhà Cung Cấp");
 		lb_Nhacc.setForeground(new Color(0, 0, 0));
@@ -437,8 +370,6 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 		maSP = sp.getMaSP();
 	    tf_Tensp.setText(sp.getTenSP());
 	    tf_soLuong.setText(String.valueOf(sp.getSoLuong()));
-	    dcNgaySanXuat.setDate(java.sql.Date.valueOf(sp.getNgaySanXuat()));
-	    dcNgayHetHan.setDate(java.sql.Date.valueOf(sp.getNgayHetHan()));
 	    tf_KhoiLuong.setText(String.valueOf(sp.getKhoiLuong()));
 	    cb_DonViTinh.setText(sp.getDonViTinh());
 	    
@@ -530,21 +461,6 @@ public class formThongTinSP extends SimpleForm implements ActionListener {
 	}
 
 
-	public JDateChooser getDcNgaySanXuat() {
-		return dcNgaySanXuat;
-	}
-
-	public void setDcNgaySanXuat(JDateChooser dcNgaySanXuat) {
-		this.dcNgaySanXuat = dcNgaySanXuat;
-	}
-
-	public JDateChooser getDcNgayHetHan() {
-		return dcNgayHetHan;
-	}
-
-	public void setDcNgayHetHan(JDateChooser dcNgayHetHan) {
-		this.dcNgayHetHan = dcNgayHetHan;
-	}
 
 	public JTextArea getTa_CongDung() {
 		return ta_CongDung;

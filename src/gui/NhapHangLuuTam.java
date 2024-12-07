@@ -618,8 +618,8 @@ public class NhapHangLuuTam extends SimpleForm {
         	    int soLuong = (int) table.getValueAt(row, 5); // Quantity
         	    double thanhTien = (double) table.getValueAt(row, 8); 
         	    SanPham_entity sp = new SanPham_entity(maSanPham);
-        	    ChiTietNhapHang_entity ctnh = new ChiTietNhapHang_entity(nh, sp, soLuong, thanhTien);
-        	    chiTietNhapHang_DAO.insert(ctnh); 
+//        	    ChiTietNhapHang_entity ctnh = new ChiTietNhapHang_entity(nh, sp, soLuong, thanhTien);
+//        	    chiTietNhapHang_DAO.insert(ctnh); 
         	    nhapHang_DAO.UpdateQuantity(maSanPham, soLuong);
             MessageAlerts.getInstance().showMessage(
                 "Thông báo",

@@ -151,8 +151,8 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item.Label("QUẢN LÝ"),
             new Item("Bán hàng", "email.svg"),
             new Item("Đổi trả", "chat.svg"),
-            new Item("Nhập Hàng", "chat.svg"),
-            new Item("Quản Lý Nhập Hàng", "chat.svg"),
+            new Item("Nhập Hàng", "nhapHang.svg"),
+            new Item("Quản Lý Nhập Hàng", "quanLyNhapHang.svg"),
             new Item("Sản phẩm", "calendar.svg")
             .subMenu("Sản phẩm bán hàng")
             .subMenu("Sản phẩm đổi trả"),
