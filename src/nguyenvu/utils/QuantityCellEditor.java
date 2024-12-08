@@ -7,6 +7,7 @@ package nguyenvu.utils;
 import dao.BanHang_DAO;
 
 import gui.BanHang;
+import gui.DoiTra;
 import gui.NhapHang;
 
 import java.awt.Component;
@@ -29,10 +30,12 @@ public class QuantityCellEditor extends DefaultCellEditor {
     private JSpinner input;
     
     private JTable table;
+    private JTable tableExchange;
     private int row;
     private BanHang banHang;
     private BanHang_DAO dao;
-	private NhapHang nhapHang;
+    private NhapHang nhapHang;
+    private DoiTra doiTra;
     
 
     public QuantityCellEditor(BanHang banHang) {
@@ -56,6 +59,35 @@ public class QuantityCellEditor extends DefaultCellEditor {
                     double newTotal = pricePerUnit * quantity;
                     table.setValueAt(newTotal, row, 7);
                     banHang.updateLblSoLuongSP();
+                }
+            }
+        });
+
+    }
+    
+    public QuantityCellEditor(DoiTra doiTra, JTable tableExchange) {
+        super(new JCheckBox());
+        this.doiTra = doiTra;
+        this.tableExchange = tableExchange;
+        dao = new BanHang_DAO();
+        input = new JSpinner();
+        SpinnerNumberModel numberModel = (SpinnerNumberModel) input.getModel();
+        numberModel.setMinimum(1);
+        numberModel.setMaximum(50);
+        JSpinner.NumberEditor editor = (JSpinner.NumberEditor) input.getEditor();
+        DefaultFormatter formatter = (DefaultFormatter) editor.getTextField().getFormatter();
+        formatter.setCommitsOnValidEdit(true);
+        editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
+        input.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (tableExchange != null) {
+                    int quantity = (int) input.getValue();
+                    double pricePerUnit = (double) tableExchange.getValueAt(row, 6);
+                    double newTotal = pricePerUnit * quantity;
+                    tableExchange.setValueAt(newTotal, row, 7);
+                    doiTra.updatePnTraHang();
+                    doiTra.updateLblSoLuongSP();
                 }
             }
         });
@@ -104,6 +136,9 @@ public class QuantityCellEditor extends DefaultCellEditor {
 
         if (quantity > maxAllowedQuantity) {
             quantity = maxAllowedQuantity;
+            
+            ((SpinnerNumberModel) input.getModel()).setMaximum(maxAllowedQuantity); 
+            
             String message = (quantity == 50) 
                     ? "Số lượng tối đa cho phép là 50!" 
                     : "Vượt quá số lượng tồn kho!";

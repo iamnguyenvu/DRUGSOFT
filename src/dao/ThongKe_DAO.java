@@ -185,7 +185,67 @@ public class ThongKe_DAO {
 	    return doanhThuThang;
 	}
 	// Hàm lấy danh sách sản phẩm bán chạy
-
+//	public ArrayList<SanPham_entity> layDanhSachSanPham(java.util.Date startDate, java.util.Date endDate, String isBanChay) throws SQLException {
+//	    ArrayList<SanPham_entity> productList = new ArrayList<>();
+//	    
+//	    Connection connection = connectDB.accessDataBase();
+//
+//	    StringBuilder sql = new StringBuilder();
+//	    sql.append("SELECT cthd.maSP, sp.tenSP, sp.soLuong, sp.ngaySanXuat, ");
+//	    sql.append("sp.ngayHetHan, sp.khoiLuong, sp.donViTinh, sp.nhaCungCap, ");
+//	    sql.append("sp.gia, sp.thanhPhan, sp.congDung, sp.hinhAnhSP, sp.maLoaiSP, ");
+//	    sql.append("SUM(cthd.soLuongSanPham) AS tongSoLuongBan ");
+//	    sql.append("FROM ChiTietHoaDon cthd ");
+//	    sql.append("JOIN SanPham sp ON cthd.maSP = sp.maSP ");
+//	    sql.append("JOIN HoaDon hd ON cthd.maHD = hd.maHD ");
+//	    sql.append("WHERE hd.ngayLapHD BETWEEN ? AND ? ");
+//	    sql.append("GROUP BY cthd.maSP, sp.tenSP, sp.soLuong, sp.ngaySanXuat, ");
+//	    sql.append("sp.ngayHetHan, sp.khoiLuong, sp.donViTinh, sp.nhaCungCap, ");
+//	    sql.append("sp.gia, sp.thanhPhan, sp.congDung, sp.hinhAnhSP, sp.maLoaiSP ");
+//
+//	    // Thay đổi ORDER BY dựa trên lựa chọn
+//	    if (isBanChay.equals("Sản Phẩm Bán Chạy")) {
+//	        sql.append("ORDER BY tongSoLuongBan DESC;");
+//	    } else {
+//	        sql.append("ORDER BY tongSoLuongBan;");
+//	    }
+//
+//	    PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+//	    if(startDate == null && endDate == null ) {
+//	    	getAllSanPham();
+//	    }
+//	    preparedStatement.setDate(1, new java.sql.Date(startDate.getTime()));
+//	    preparedStatement.setDate(2, new java.sql.Date(endDate.getTime()));
+//
+//	    ResultSet resultSet = preparedStatement.executeQuery();
+//
+//	    // Lấy kết quả từ ResultSet
+//	    while (resultSet.next()) {
+//	        SanPham_entity product = new SanPham_entity();
+//	        product.setMaSP(resultSet.getString("maSP"));
+//	        product.setTenSP(resultSet.getString("tenSP"));
+//	        product.setSoLuong(resultSet.getInt("soLuong"));
+//	        product.setKhoiLuong(resultSet.getDouble("khoiLuong"));
+//	        product.setDonViTinh(resultSet.getString("donViTinh"));
+//	        product.setNhaCungCap(resultSet.getString("nhaCungCap"));
+//	        product.setGia(resultSet.getDouble("gia"));
+//	        product.setThanhPhan(resultSet.getString("thanhPhan"));
+//	        product.setCongDung(resultSet.getString("congDung"));
+//	        product.setHinhAnhSP(resultSet.getString("hinhAnhSP"));
+//	        
+//	        String maLoaiSP = resultSet.getString("maLoaiSP");
+//	        LoaiSanPham_entity lsp = new LoaiSanPham_entity(maLoaiSP);
+//	        product.setLoaiSanPham(lsp);
+//	        productList.add(product);
+//	    }
+//
+//	    // Đóng kết nối
+//	    resultSet.close();
+//	    preparedStatement.close();
+//	    connection.close();
+//
+//	    return productList;
+//	}
 	public ArrayList<SanPham_entity> getAllSanPhamHetHan() {
 	    ArrayList<SanPham_entity> dssp = new ArrayList<SanPham_entity>();
 	    Connection con = connectDB.accessDataBase();
@@ -676,11 +736,17 @@ public class ThongKe_DAO {
 	    Connection connection = connectDB.accessDataBase();
 
 	    StringBuilder sql = new StringBuilder();
-	    sql.append("SELECT FORMAT(ngayLapHD, 'MM/yyyy') AS thang,SUM(tongTien) AS tongDoanhThu,SUM(sp.giaNhap * soLuong) AS tongChiPhi,(SUM(tongTien) - SUM(sp.giaNhap * soLuong)) AS loiNhuan ");
-	    sql.append("FROM HoaDon hd Join ChiTietHoaDon cthd on hd.maHD = cthd.maHD Join SanPham sp on cthd.maSP = sp.maSP ");
+	    sql.append("SELECT FORMAT(ngayLapHD, 'MM/yyyy') AS thang, ");
+	    sql.append("SUM(tongTien) AS tongDoanhThu, ");
+	    sql.append("SUM((sp.giaNhap * cthd.soLuong) * (1 + sp.thue / 100)) AS tongChiPhi, ");
+	    sql.append("(SUM(tongTien) - SUM((sp.giaNhap * cthd.soLuong) * (1 + sp.thue / 100))) AS loiNhuan ");
+	    sql.append("FROM HoaDon hd ");
+	    sql.append("JOIN ChiTietHoaDon cthd ON hd.maHD = cthd.maHD ");
+	    sql.append("JOIN SanPham sp ON cthd.maSP = sp.maSP ");
 	    sql.append("WHERE ngayLapHD >= ? AND ngayLapHD <= ? ");
 	    sql.append("GROUP BY FORMAT(ngayLapHD, 'MM/yyyy') ");
 	    sql.append("ORDER BY FORMAT(ngayLapHD, 'MM/yyyy');");
+
 
 
 	    try {
