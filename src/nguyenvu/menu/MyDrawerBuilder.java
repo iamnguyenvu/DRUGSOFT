@@ -21,6 +21,7 @@ import gui.BaoCaoSanPham;
 import gui.DoiTra;
 import gui.HoaDon;
 import gui.NhapHang;
+import gui.QuanLyNhapHang;
 import gui.DonDoiTra;
 import gui.SanPham;
 import gui.SanPhamDoiTra;
@@ -255,6 +256,9 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     }
                     if (index[0] == 3) {
                     	FormManager.showForm(new NhapHang());
+                    }
+                    if (index[0] == 4) {
+                    	FormManager.showForm(new QuanLyNhapHang());
                     }
                     
                     if (index[0] == 6) {

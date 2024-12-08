@@ -151,6 +151,41 @@ public class NhapHang_DAO {
 	        }
 	    }
 	}
+    public ArrayList<NhapHang_entity> getALLNHAPHANG() {
+        Connection con = connectDB.accessDataBase();
+        if(con == null) return null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<NhapHang_entity> listSP = new ArrayList<>();
+        try {
+            ps = con.prepareStatement("SELECT * FROM NhapHang");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+            	String maNH = rs.getString("maNhapHang");
+            	LocalDate ngayNhapHang = rs.getDate("ngayNhapHang").toLocalDate();
+
+	            double  tongTien = rs.getDouble("tongTien");
+	            String ghiChi = rs.getString("ghiChu");
+	            String trangThai = rs.getString("trangThai");
+	            String httt = rs.getString("phuongThucThanhToan");
+
+	            NhapHang_entity nh = new NhapHang_entity(maNH, ngayNhapHang, tongTien, ghiChi, trangThai, httt);
+                listSP.add(nh);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return listSP;
+    }
 
 
 }
