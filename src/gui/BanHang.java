@@ -388,12 +388,12 @@ public class BanHang extends SimpleForm {
             }
         });
 
-        btnSuggest1.setText("[1]");
+        btnSuggest1.setText("N/A");
         btnSuggest1.setEnabled(false);
 
         lbl7.setText("Tiền thừa");
 
-        btnSuggest2.setText("[2]");
+        btnSuggest2.setText("N/A");
         btnSuggest2.setEnabled(false);
         btnSuggest2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -401,7 +401,7 @@ public class BanHang extends SimpleForm {
             }
         });
 
-        btnSuggest3.setText("[3]");
+        btnSuggest3.setText("N/A");
         btnSuggest3.setEnabled(false);
         btnSuggest3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -413,13 +413,13 @@ public class BanHang extends SimpleForm {
 
         cbbPhuongThucThanhToan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền mặt", "Chuyển khoản", "Thẻ" }));
 
-        btnSuggest4.setText("[4]");
+        btnSuggest4.setText("N/A");
         btnSuggest4.setEnabled(false);
 
-        btnSuggest5.setText("[5]");
+        btnSuggest5.setText("N/A");
         btnSuggest5.setEnabled(false);
 
-        btnSuggest6.setText("[6]");
+        btnSuggest6.setText("N/A");
         btnSuggest6.setEnabled(false);
 
         txtTienKhachDua.setBackground(new Color(0, 0, 0, 0)

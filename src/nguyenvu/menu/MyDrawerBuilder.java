@@ -27,6 +27,7 @@ import gui.SanPhamDoiTra;
 import gui.ThongKeDoanhThu_GUI;
 import gui.ThongKeSanPham_GUI;
 import gui.ThongKeSanPham_GUI;
+import gui.ThongKeTongQuan;
 import gui.TrangChu;
 import nguyenvu.model.ModelUser;
 import raven.drawer.component.DrawerPanel;
@@ -296,6 +297,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                             FormManager.showForm(new ThongKeDoanhThu_GUI());
                         }
                         if (index[1] == 2) {
+                            FormManager.showForm(new ThongKeTongQuan());
                         }
                     }
                     if (index[0] == 11) {
