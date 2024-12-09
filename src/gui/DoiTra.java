@@ -90,9 +90,9 @@ public class DoiTra extends SimpleForm {
     private ModelUser user;
     private int giamTru;
     
-    private double totalAmount = 0.0;
-    private double totalCost = 0.0;
-    private double totalAmountToPay = 0.0;
+    private double tongTienHoan = 0;
+    private double tongTienMua = 0;
+    private boolean isKhachPhaiTra = false;
 
     public DoiTra(ModelUser user) {
         this.user = user;
@@ -133,7 +133,7 @@ public class DoiTra extends SimpleForm {
         pnRightContent = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btnDoiTra = new javax.swing.JButton();
-        btnChonTatCa = new javax.swing.JButton();
+        btnXoaTatCa = new javax.swing.JButton();
         btnLamMoi = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -269,6 +269,7 @@ public class DoiTra extends SimpleForm {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin đổi trả", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(11, 101, 136))); // NOI18N
 
         btnDoiTra.setBackground(new java.awt.Color(1, 201, 16));
+        btnDoiTra.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnDoiTra.setForeground(new java.awt.Color(255, 255, 255));
         btnDoiTra.setText("Đổi trả (F1)");
         btnDoiTra.addActionListener(new java.awt.event.ActionListener() {
@@ -277,18 +278,20 @@ public class DoiTra extends SimpleForm {
             }
         });
 
-        btnChonTatCa.setBackground(new java.awt.Color(183, 218, 246));
-        btnChonTatCa.setForeground(new java.awt.Color(255, 255, 255));
-        btnChonTatCa.setText("Chọn tất cả (F3)");
-        btnChonTatCa.addActionListener(new java.awt.event.ActionListener() {
+        btnXoaTatCa.setBackground(new java.awt.Color(183, 218, 246));
+        btnXoaTatCa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnXoaTatCa.setForeground(new java.awt.Color(255, 255, 255));
+        btnXoaTatCa.setText("Xóa tất cả sản phẩm đổi mới (F4)");
+        btnXoaTatCa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChonTatCaActionPerformed(evt);
+                btnXoaTatCaActionPerformed(evt);
             }
         });
 
         btnLamMoi.setBackground(new java.awt.Color(183, 218, 246));
+        btnLamMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLamMoi.setForeground(new java.awt.Color(255, 255, 255));
-        btnLamMoi.setText("Làm mới (F4)");
+        btnLamMoi.setText("Làm mới (F5)");
         btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLamMoiActionPerformed(evt);
@@ -425,44 +428,46 @@ public class DoiTra extends SimpleForm {
                 .addContainerGap()
                 .addGroup(pnKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnKhachTraLayout.createSequentialGroup()
-                        .addComponent(lbl8, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbl8, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblTienThua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnKhachTraLayout.createSequentialGroup()
-                        .addGap(0, 6, Short.MAX_VALUE)
-                        .addGroup(pnKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pnKhachTraLayout.createSequentialGroup()
-                                .addComponent(lblKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTienKhachDua, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(pnKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnKhachTraLayout.createSequentialGroup()
                                 .addGroup(pnKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnSuggest1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnSuggest4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(16, 16, 16)
+                                .addGap(8, 8, 8)
                                 .addGroup(pnKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnSuggest2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnSuggest5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(16, 16, 16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(pnKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnSuggest6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnSuggest3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(pnKhachTraLayout.createSequentialGroup()
-                                .addComponent(lblPhuongThucThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbbPhuongThucThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnKhachTraLayout.createSequentialGroup()
-                                .addComponent(lbl5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(2, 2, 2)
-                                .addComponent(lblKhachPhaiTra, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(pnKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnKhachTraLayout.createSequentialGroup()
+                                    .addComponent(lblPhuongThucThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(cbbPhuongThucThanhToan, 0, 159, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnKhachTraLayout.createSequentialGroup()
+                                    .addGroup(pnKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(lbl5, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                                        .addComponent(lblKhachDua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(pnKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(lblKhachPhaiTra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtTienKhachDua, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)))))
+                        .addGap(22, 22, 22))))
         );
         pnKhachTraLayout.setVerticalGroup(
             pnKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnKhachTraLayout.createSequentialGroup()
-                .addGroup(pnKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblKhachPhaiTra, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbl5, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(lblKhachPhaiTra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -485,7 +490,7 @@ public class DoiTra extends SimpleForm {
                 .addGroup(pnKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         lbl5.putClientProperty(FlatClientProperties.STYLE, ""
@@ -510,33 +515,30 @@ public class DoiTra extends SimpleForm {
         pnMuaHang.setLayout(pnMuaHangLayout);
         pnMuaHangLayout.setHorizontalGroup(
             pnMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnKhachTra, javax.swing.GroupLayout.PREFERRED_SIZE, 357, Short.MAX_VALUE)
             .addGroup(pnMuaHangLayout.createSequentialGroup()
-                .addGroup(pnMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnMuaHangLayout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(pnKhachTra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(jLabel9)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(pnMuaHangLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(pnMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnMuaHangLayout.createSequentialGroup()
-                        .addComponent(lbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblSoLuongSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnMuaHangLayout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(lbl4, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblDiemThuong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnMuaHangLayout.createSequentialGroup()
+                        .addComponent(lbl3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblVAT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnMuaHangLayout.createSequentialGroup()
                         .addComponent(lbl2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnMuaHangLayout.createSequentialGroup()
-                        .addComponent(lbl3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblVAT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(lblSoLuongSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pnMuaHangLayout.setVerticalGroup(
             pnMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -575,45 +577,45 @@ public class DoiTra extends SimpleForm {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnMuaHang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbl7, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lbl7, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtNote))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(81, 81, 81)
-                                        .addComponent(lblTienHoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNote))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lblTongTienTra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lblTongTienGoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lblPhiTraHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lblTongTienHoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                                .addGap(81, 81, 81)
+                                .addComponent(lblTienHoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblTongTienHoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblPhiTraHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblTongTienTra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblTongTienGoc, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 31, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(pnMuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -636,11 +638,11 @@ public class DoiTra extends SimpleForm {
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTongTienHoan, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnMuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnMuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNote, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -665,9 +667,10 @@ public class DoiTra extends SimpleForm {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnChonTatCa, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnXoaTatCa, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLamMoi, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
+                        .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(btnDoiTra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -676,23 +679,19 @@ public class DoiTra extends SimpleForm {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnChonTatCa, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXoaTatCa, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDoiTra, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDoiTra, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         //btnThanhToan.putClientProperty(FlatClientProperties., value);
         btnDoiTra.putClientProperty(FlatClientProperties.STYLE, ""
             + "font:bold +6");
-        btnChonTatCa.putClientProperty(FlatClientProperties.STYLE, ""
-            + "font:bold +2");
-        btnLamMoi.putClientProperty(FlatClientProperties.STYLE, ""
-            + "font:bold +4");
 
         pnCustomer.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin khách hàng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(11, 101, 136))); // NOI18N
 
@@ -807,13 +806,19 @@ public class DoiTra extends SimpleForm {
             table.getColumnModel().getColumn(6).setResizable(false);
             table.getColumnModel().getColumn(6).setPreferredWidth(100);
             table.getColumnModel().getColumn(7).setResizable(false);
+            table.getColumnModel().getColumn(7).setPreferredWidth(120);
             table.getColumnModel().getColumn(8).setResizable(false);
+            table.getColumnModel().getColumn(8).setPreferredWidth(60);
             table.getColumnModel().getColumn(9).setResizable(false);
-            table.getColumnModel().getColumn(9).setPreferredWidth(60);
+            table.getColumnModel().getColumn(9).setPreferredWidth(0);
         }
         table.getColumnModel().getColumn(4).setMinWidth(0);
         table.getColumnModel().getColumn(4).setMaxWidth(0);
         table.getColumnModel().getColumn(4).setWidth(0);
+
+        table.getColumnModel().getColumn(9).setMinWidth(0);
+        table.getColumnModel().getColumn(9).setMaxWidth(0);
+        table.getColumnModel().getColumn(9).setWidth(0);
 
         //table.setTableHeader(null);
         DefaultTableModel model1 = (DefaultTableModel) table.getModel();
@@ -837,62 +842,6 @@ public class DoiTra extends SimpleForm {
         table.getColumnModel().getColumn(8).setCellRenderer(centerRenderer);
         table.getColumnModel().getColumn(9).setCellRenderer(centerRenderer);
 
-        table.getColumnModel().getColumn(9).setCellEditor(new DefaultCellEditor(new JCheckBox()));
-
-        table.getColumnModel().getColumn(9).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JCheckBox checkBox = new JCheckBox();
-                if (value != null) {
-                    checkBox.setSelected((Boolean) value);
-                }
-                checkBox.setBackground(table.getBackground());
-                checkBox.addItemListener(e -> {
-
-                    Object quantityObj = table.getValueAt(row, 3);
-                    Object priceObj = table.getValueAt(row, 5);
-                    int quantity = quantityObj != null ? (int) quantityObj : 0;
-                    double price = priceObj != null ? (double) priceObj : 0.0;
-                    double rowTotal = quantity * price;
-
-                    if (checkBox.isSelected()) {
-                        totalAmount += rowTotal;
-                    } else {
-                        totalAmount -= rowTotal;
-                    }
-
-                    updateCostsAndAmount(row, rowTotal);
-                });
-                return checkBox;
-            }
-        });
-
-        table.getColumnModel().getColumn(9).getCellEditor().addCellEditorListener(new javax.swing.event.CellEditorListener() {
-            @Override
-            public void editingStopped(javax.swing.event.ChangeEvent e) {
-                int row = table.getSelectedRow();
-                System.out.println("Editing stopped at row: " + row);
-                Object quantityObj = table.getValueAt(row, 3);
-                Object priceObj = table.getValueAt(row, 5);
-                int quantity = quantityObj != null ? (int) quantityObj : 0;
-                double price = priceObj != null ? (double) priceObj : 0.0;
-
-                double rowTotal = quantity * price;
-                JCheckBox checkBox = (JCheckBox) ((DefaultCellEditor) table.getCellEditor(row, 9)).getComponent();
-                if (checkBox.isSelected()) {
-                    totalAmount += rowTotal;
-                } else {
-                    totalAmount -= rowTotal;
-                }
-
-                updateCostsAndAmount(row, rowTotal);
-            }
-
-            @Override
-            public void editingCanceled(javax.swing.event.ChangeEvent e) {
-            }
-        });
-
         String[] statuses = { "100%", "95%", "90%", "85%", "80%", "75%", "70%" };
         JComboBox<String> statusComboBox = new JComboBox<>(statuses);
         statusComboBox.setPreferredSize(new Dimension(statusComboBox.getPreferredSize().width, 20));
@@ -903,20 +852,14 @@ public class DoiTra extends SimpleForm {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    String selectedStatus = (String) statusComboBox.getSelectedItem();
-                    double statusPercentage = getPercentageFromStatus(selectedStatus);
+                    int row = table.getEditingRow();
+                    int column = table.getEditingColumn();
 
-                    int row = table.getSelectedRow();
-                    Object quantityObj = table.getValueAt(row, 3);
-                    Object priceObj = table.getValueAt(row, 5);
-                    int quantity = quantityObj != null ? (int) quantityObj : 0;
-                    double price = priceObj != null ? (double) priceObj : 0.0;
+                    Object selectedStatus = statusComboBox.getSelectedItem();
 
-                    double rowTotal = quantity * price;
-
-                    double rowCost = rowTotal * (1 - statusPercentage);
-
-                    updateCostsAndAmount(row, rowCost);
+                    if (row != -1 && column != -1) {
+                        table.setValueAt(selectedStatus, row, column);
+                    }
                     updatePnTraHang();
                 }
             }
@@ -945,6 +888,9 @@ public class DoiTra extends SimpleForm {
                 return comboBox;
             }
         });
+
+        DoiTraQuantityCellEditor editor = new DoiTraQuantityCellEditor(this);
+        table.getColumnModel().getColumn(3).setCellEditor(editor);
 
         jScrollPane16.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sản phẩm đổi mới", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(11, 101, 136))); // NOI18N
 
@@ -1191,27 +1137,16 @@ public class DoiTra extends SimpleForm {
         }
     }//GEN-LAST:event_btnDoiTraActionPerformed
    
-    private void btnChonTatCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonTatCaActionPerformed
+    private void btnXoaTatCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaTatCaActionPerformed
         // TODO add your handling code here:
         
-        if(table.getRowCount() > 0) {
+        if(tableExchange.getRowCount() > 0) {
             DefaultTableModel model = (DefaultTableModel) tableExchange.getModel();
             model.setRowCount(0);
-            
-            for(int i = 0; i < table.getRowCount(); ++i) {
-                Object[] rowData = new Object[]{
-                    table.getValueAt(i, 0),
-                    table.getValueAt(i, 1),
-                    table.getValueAt(i, 2),
-                    table.getValueAt(i, 3),
-                };
-                model.addRow(rowData);
-            }
-            updateInfor();
+            updateLblSoLuongSP();
         }
-        else MessageAlerts.getInstance().showMessage("Lỗi", "Không có sản phẩm trong đơn!", MessageAlerts.MessageType.ERROR);
         
-    }//GEN-LAST:event_btnChonTatCaActionPerformed
+    }//GEN-LAST:event_btnXoaTatCaActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
@@ -1349,18 +1284,18 @@ public class DoiTra extends SimpleForm {
                     0,
                     cthd.getSoLuongSanPham(),
                     cthd.getThanhTien(),
-                    cthd.getThanhTien()
+                    0,
+                    "",
+                    "100%"
                 };
                 model.addRow(rowData);
-                
-                DoiTraQuantityCellEditor editor = new DoiTraQuantityCellEditor(this);
-                editor.setMaxQuantity(cthd.getSoLuongSanPham());
-                table.getColumnModel().getColumn(3).setCellEditor(editor);
             }
         }
     }
     
     private void refresh() {
+        tongTienHoan = 0;
+        tongTienMua = 0;
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         DefaultTableModel model1 = (DefaultTableModel) tableExchange.getModel();
@@ -1371,6 +1306,11 @@ public class DoiTra extends SimpleForm {
         kh = null;
         hd = null;
         lblTienHoan.setText("");
+        lblTongTienTra.setText("");
+        lblPhiTraHang.setText("");
+        lblTongTienHoan.setText("");
+        pnMuaHang.setVisible(false);
+        pnKhachTra.setVisible(false);
     }
 
     private double calculateTotalAmount() {
@@ -1402,7 +1342,7 @@ public class DoiTra extends SimpleForm {
         bindKeyToFocus(txtHoaDonSearch, KeyEvent.VK_F2);
         bindKeyToFocus(txtProductSearch, KeyEvent.VK_F3);
         bindButtonKey(btnDoiTra, KeyEvent.VK_F1);
-        bindButtonKey(btnChonTatCa, KeyEvent.VK_F4);
+        bindButtonKey(btnXoaTatCa, KeyEvent.VK_F4);
         bindButtonKey(btnLamMoi, KeyEvent.VK_F5);
     }
      
@@ -1430,15 +1370,6 @@ public class DoiTra extends SimpleForm {
        });
     }
     
-    private void addStyleBtn(JComponent btn) {
-        btn.putClientProperty(FlatClientProperties.STYLE, ""
-            + "font: bold +1");
-    }
-    
-    public void updateInfor() {
-        
-    }
-    
     public void addProductToTable(SanPham_entity sp) {
         for (int i = 0; i < tableExchange.getRowCount(); i++) {
             String existingMaSP = (String) tableExchange.getValueAt(i, 2);
@@ -1460,7 +1391,7 @@ public class DoiTra extends SimpleForm {
                 table.setValueAt(price * (existingQuantity + 1), i, 7);
                 menuProduct.setVisible(false);
                 txtProductSearch.requestFocusInWindow();
-//                updateLblSoLuongSP();
+                updateLblSoLuongSP();
                 return;
             }
         }
@@ -1494,14 +1425,14 @@ public class DoiTra extends SimpleForm {
     }
     
     private void updateVAT() {
-        if(table.getRowCount() > 0) {
+        if(tableExchange.getRowCount() > 0) {
             double sumVAT = 0;
-            for (int i = 0; i < table.getRowCount(); ++i) {
-                Integer quantity = (Integer) table.getValueAt(i, 5);
-                Double price = (Double) table.getValueAt(i, 6);
+            for (int i = 0; i < tableExchange.getRowCount(); ++i) {
+                Integer quantity = (Integer) tableExchange.getValueAt(i, 5);
+                Double price = (Double) tableExchange.getValueAt(i, 6);
 
                 if (quantity != null && price != null) {
-                    double taxPercentage  = banHangDao.getSP((String) table.getValueAt(i, 2)).getThue();
+                    double taxPercentage  = banHangDao.getSP((String) tableExchange.getValueAt(i, 2)).getThue();
                     double taxAmount = taxPercentage / 100;
 
                     sumVAT += taxAmount * quantity * price;
@@ -1532,17 +1463,44 @@ public class DoiTra extends SimpleForm {
                 giamTru = coefDT > 0 ? coefDT * 1000 : 0;
             }
             lblDiemThuong.setText(String.valueOf(df.format(giamTru)));
+            //set lable khach phai tra
             lblKhachPhaiTra.setText(String.valueOf(df.format(sumThanhTien - giamTru)));
+            
+            tongTienMua = sumThanhTien - giamTru;
+            
+            if(tongTienMua > tongTienHoan) {
+                isKhachPhaiTra = true;
+                pnKhachTra.setVisible(true);
+                double tienPhaiTra = tongTienMua - tongTienHoan;
+                lblKhachPhaiTra.setText(df.format(tienPhaiTra));
+                updateSuggestButton();
+                lbl7.setVisible(false);
+                lblTienHoan.setVisible(false);
+                updateTienThua();
+            }
+            else {
+                isKhachPhaiTra = false;
+                pnKhachTra.setVisible(false);
+                lbl7.setVisible(true);
+                lblTienHoan.setVisible(true);
+                defaultButton();
+                lblTienHoan.setText(df.format(tongTienHoan - tongTienMua));
+            }
         } else {
             lblSoLuongSP.setText("");
             lblTongTien.setText("");
             lblDiemThuong.setText("");
             lblKhachPhaiTra.setText("");
             lblVAT.setText("");
+            pnMuaHang.setVisible(false);
+            pnKhachTra.setVisible(false);
+            pnMuaHang.repaint();
         }
         
-        updateSuggestButton();
-        updateTienThua();
+        
+        
+        pnKhachTra.setVisible(isKhachPhaiTra);
+        pnMuaHang.repaint();
         updateVAT();
     }
     
@@ -1593,28 +1551,45 @@ public class DoiTra extends SimpleForm {
             }
         }
     }
-    
-    private void updateCostsAndAmount(int row, double rowCost) {
-        Object checkBoxValue = table.getValueAt(row, 9);
-        if (checkBoxValue != null && (Boolean) checkBoxValue) {
-            totalCost += rowCost;
-        } else {
-            totalCost -= rowCost;
-        }
 
-        totalAmountToPay = totalAmount - totalCost;
-        System.out.println("totalAmountToPay: " + totalAmountToPay);
-        updatePnTraHang();
-    }
 
     
     public void updatePnTraHang() {
+        double totalAmount = 0.0; 
+        double totalReturnFee = 0.0;
+        
+        for (int i = 0; i < table.getRowCount(); i++) {
+            int quantity = (int) table.getValueAt(i, 3);
+
+            double price = (double) table.getValueAt(i, 5);
+
+            double rowTotal = quantity * price;
+            totalAmount += rowTotal;
+
+            String selectedStatus = (String) table.getValueAt(i, 8);
+            double statusPercentage = 1.0;
+            if (selectedStatus != null) {
+                statusPercentage = getPercentageFromStatus(selectedStatus);
+            }
+            System.out.println("statusPercentage " + statusPercentage);
+
+            double returnFee = rowTotal * (1.0 - statusPercentage);
+            totalReturnFee += returnFee;
+
+            table.setValueAt(rowTotal, i, 6);
+        }
+        lblTongTienGoc.setText(df.format(totalAmount));
         lblTongTienTra.setText(df.format(totalAmount));
-        lblPhiTraHang.setText(df.format(totalCost));
-        lblTongTienHoan.setText(df.format(totalAmountToPay));
+        lblPhiTraHang.setText(df.format(totalReturnFee));
+        lblTongTienHoan.setText(df.format(totalAmount - totalReturnFee));
+        
+        tongTienHoan = totalAmount - totalReturnFee;
     }
     
     private double getPercentageFromStatus(String status) {
+        if (status == null) {
+            return 1.0;
+        }
         switch (status) {
             case "100%": return 1.0;
             case "95%": return 0.95;
@@ -1630,7 +1605,6 @@ public class DoiTra extends SimpleForm {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnChonTatCa;
     private javax.swing.JButton btnDoiTra;
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnScanBarcode;
@@ -1642,6 +1616,7 @@ public class DoiTra extends SimpleForm {
     private javax.swing.JButton btnSuggest4;
     private javax.swing.JButton btnSuggest5;
     private javax.swing.JButton btnSuggest6;
+    private javax.swing.JButton btnXoaTatCa;
     private javax.swing.JComboBox<String> cbbPhuongThucThanhToan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

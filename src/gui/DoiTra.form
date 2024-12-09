@@ -16,7 +16,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,3,5,0,0,5,-28"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-5,0,0,5,-38"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -228,9 +228,10 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="btnChonTatCa" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="btnXoaTatCa" min="-2" pref="240" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="btnLamMoi" pref="157" max="32767" attributes="0"/>
+                                  <Component id="btnLamMoi" min="-2" pref="118" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Component id="btnDoiTra" max="32767" attributes="0"/>
                           </Group>
@@ -243,14 +244,14 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" pref="400" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="406" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="btnChonTatCa" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="btnXoaTatCa" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                               <Component id="btnLamMoi" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnDoiTra" min="-2" pref="70" max="-2" attributes="0"/>
+                          <Component id="btnDoiTra" min="-2" pref="64" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -261,6 +262,9 @@
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="10" green="c9" red="1" type="rgb"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Segoe UI" size="14" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -274,39 +278,39 @@
                     <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="//btnThanhToan.putClientProperty(FlatClientProperties., value);&#xa;btnDoiTra.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +6&quot;);"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnChonTatCa">
+                <Component class="javax.swing.JButton" name="btnXoaTatCa">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f6" green="da" red="b7" type="rgb"/>
                     </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Segoe UI" size="12" style="1"/>
+                    </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n t&#x1ea5;t c&#x1ea3; (F3)"/>
+                    <Property name="text" type="java.lang.String" value="X&#xf3;a t&#x1ea5;t c&#x1ea3; s&#x1ea3;n ph&#x1ea9;m &#x111;&#x1ed5;i m&#x1edb;i (F4)"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnChonTatCaActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaTatCaActionPerformed"/>
                   </Events>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="btnChonTatCa.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +2&quot;);"/>
-                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnLamMoi">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f6" green="da" red="b7" type="rgb"/>
                     </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Segoe UI" size="12" style="1"/>
+                    </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="L&#xe0;m m&#x1edb;i (F4)"/>
+                    <Property name="text" type="java.lang.String" value="L&#xe0;m m&#x1edb;i (F5)"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLamMoiActionPerformed"/>
                   </Events>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="btnLamMoi.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;font:bold +4&quot;);"/>
-                  </AuxValues>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane1">
 
@@ -317,61 +321,60 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
                               <Group type="102" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="pnMuaHang" alignment="1" max="32767" attributes="0"/>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="jLabel1" max="32767" attributes="0"/>
+                                              <Component id="lbl7" pref="87" max="32767" attributes="0"/>
+                                          </Group>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="jLabel1" max="32767" attributes="0"/>
-                                                      <Component id="lbl7" pref="87" max="32767" attributes="0"/>
-                                                  </Group>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" attributes="0">
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="txtNote" max="32767" attributes="0"/>
-                                                      </Group>
-                                                      <Group type="102" attributes="0">
-                                                          <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
-                                                          <Component id="lblTienHoan" max="32767" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="txtNote" max="32767" attributes="0"/>
                                               </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" attributes="0">
-                                                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                          <Component id="lblTongTienTra" max="32767" attributes="0"/>
-                                                      </Group>
-                                                      <Group type="102" attributes="0">
-                                                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                          <Component id="lblTongTienGoc" max="32767" attributes="0"/>
-                                                      </Group>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                          <Component id="lblPhiTraHang" max="32767" attributes="0"/>
-                                                      </Group>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jLabel8" min="-2" pref="123" max="-2" attributes="0"/>
-                                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                          <Component id="lblTongTienHoan" max="32767" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                                                  <Component id="lblTienHoan" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel8" min="-2" pref="123" max="-2" attributes="0"/>
+                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                  <Component id="lblTongTienHoan" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="lblPhiTraHang" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="lblTongTienTra" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="lblTongTienGoc" min="-2" pref="168" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace min="0" pref="31" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="pnMuaHang" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -400,11 +403,11 @@
                                       <Component id="lblTongTienHoan" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="pnMuaHang" min="-2" max="-2" attributes="0"/>
+                                  <Component id="pnMuaHang" min="-2" pref="493" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="txtNote" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="jLabel1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="jLabel1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
@@ -526,24 +529,14 @@
                           <Layout>
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="pnKhachTra" alignment="0" pref="357" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Component id="pnKhachTra" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lbl1" min="-2" pref="174" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="lblSoLuongSP" max="32767" attributes="0"/>
-                                          </Group>
                                           <Group type="102" attributes="0">
                                               <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
                                               <Component id="lbl4" min="-2" pref="174" max="-2" attributes="0"/>
@@ -551,14 +544,19 @@
                                               <Component id="lblDiemThuong" max="32767" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
+                                              <Component id="lbl3" min="-2" pref="174" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="lblVAT" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
                                               <Component id="lbl2" min="-2" pref="174" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="lblTongTien" max="32767" attributes="0"/>
                                           </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lbl3" min="-2" pref="174" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Component id="lbl1" min="-2" pref="174" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="lblVAT" max="32767" attributes="0"/>
+                                              <Component id="lblSoLuongSP" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -692,46 +690,50 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
-                                                  <Component id="lbl8" min="-2" pref="162" max="-2" attributes="0"/>
+                                                  <Component id="lbl8" min="-2" pref="157" max="-2" attributes="0"/>
                                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Component id="lblTienThua" min="-2" pref="190" max="-2" attributes="0"/>
-                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <Component id="lblTienThua" max="32767" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="1" attributes="0">
-                                                  <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="lblKhachDua" min="-2" pref="172" max="-2" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="txtTienKhachDua" pref="195" max="32767" attributes="0"/>
-                                                      </Group>
+                                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" alignment="0" attributes="0">
                                                           <Group type="103" groupAlignment="0" attributes="0">
                                                               <Component id="btnSuggest1" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                                                               <Component id="btnSuggest4" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                                                           </Group>
-                                                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                                                           <Group type="103" groupAlignment="0" attributes="0">
                                                               <Component id="btnSuggest2" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                                                               <Component id="btnSuggest5" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                                                           </Group>
-                                                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                                          <EmptySpace max="-2" attributes="0"/>
                                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                               <Component id="btnSuggest6" alignment="0" max="32767" attributes="0"/>
                                                               <Component id="btnSuggest3" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="lblPhuongThucThanhToan" min="-2" pref="174" max="-2" attributes="0"/>
-                                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                          <Component id="cbbPhuongThucThanhToan" min="-2" pref="178" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="lbl5" max="32767" attributes="0"/>
-                                                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                                                          <Component id="lblKhachPhaiTra" min="-2" pref="183" max="-2" attributes="0"/>
+                                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                                          <Group type="102" alignment="0" attributes="0">
+                                                              <Component id="lblPhuongThucThanhToan" min="-2" pref="174" max="-2" attributes="0"/>
+                                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                              <Component id="cbbPhuongThucThanhToan" pref="159" max="32767" attributes="0"/>
+                                                          </Group>
+                                                          <Group type="102" alignment="0" attributes="0">
+                                                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                                                  <Component id="lbl5" pref="172" max="32767" attributes="0"/>
+                                                                  <Component id="lblKhachDua" max="32767" attributes="0"/>
+                                                              </Group>
+                                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                                  <Component id="lblKhachPhaiTra" max="32767" attributes="0"/>
+                                                                  <Component id="txtTienKhachDua" pref="161" max="32767" attributes="0"/>
+                                                              </Group>
+                                                          </Group>
                                                       </Group>
                                                   </Group>
+                                                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -740,9 +742,9 @@
                                 <DimensionLayout dim="1">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="lbl5" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
-                                              <Component id="lblKhachPhaiTra" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="lbl5" pref="40" max="32767" attributes="0"/>
+                                              <Component id="lblKhachPhaiTra" max="32767" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
@@ -771,7 +773,7 @@
                                               <Component id="lbl8" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                                               <Component id="lblTienThua" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -1068,7 +1070,7 @@
                     <Property name="cellSelectionEnabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="false" type="code"/>
                     </Property>
-                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="table.getColumnModel().getColumn(4).setMinWidth(0); &#xa;table.getColumnModel().getColumn(4).setMaxWidth(0);&#xa;table.getColumnModel().getColumn(4).setWidth(0);  &#xa;&#xa;&#xa;//table.setTableHeader(null);&#xa;DefaultTableModel model1 = (DefaultTableModel) table.getModel();&#xa;DefaultTableModel model2 = (DefaultTableModel) tableExchange.getModel();&#xa;&#xa;table.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());&#xa;&#xa;table.getTableHeader().setDefaultRenderer(new HeaderRenderer());&#xa;table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));&#xa;table.getTableHeader().setBackground(new Color(11,101,136));&#xa;table.getTableHeader().setForeground(Color.WHITE);&#xa;&#xa;DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();&#xa;centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);&#xa;centerRenderer.setVerticalAlignment(SwingConstants.CENTER);&#xa;&#xa;table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(8).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(9).setCellRenderer(centerRenderer);&#xa;&#xa;table.getColumnModel().getColumn(9).setCellEditor(new DefaultCellEditor(new JCheckBox()));&#xa;&#xa;table.getColumnModel().getColumn(9).setCellRenderer(new DefaultTableCellRenderer() {&#xa;    @Override&#xa;    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {&#xa;        JCheckBox checkBox = new JCheckBox();&#xa;        if (value != null) {&#xa;            checkBox.setSelected((Boolean) value);&#xa;        }&#xa;        checkBox.setBackground(table.getBackground());&#xa;        checkBox.addItemListener(e -&gt; {&#xa;&#xa;            Object quantityObj = table.getValueAt(row, 3);&#xa;            Object priceObj = table.getValueAt(row, 5);&#xa;            int quantity = quantityObj != null ? (int) quantityObj : 0;&#xa;            double price = priceObj != null ? (double) priceObj : 0.0;&#xa;            double rowTotal = quantity * price;&#xa;&#xa;            if (checkBox.isSelected()) {&#xa;                totalAmount += rowTotal;&#xa;            } else {&#xa;                totalAmount -= rowTotal;&#xa;            }&#xa;&#xa;            updateCostsAndAmount(row, rowTotal);&#xa;        });&#xa;        return checkBox;&#xa;    }&#xa;});&#xa;&#xa;table.getColumnModel().getColumn(9).getCellEditor().addCellEditorListener(new javax.swing.event.CellEditorListener() {&#xa;    @Override&#xa;    public void editingStopped(javax.swing.event.ChangeEvent e) {&#xa;        int row = table.getSelectedRow();&#xa;        System.out.println(&quot;Editing stopped at row: &quot; + row);&#xa;        Object quantityObj = table.getValueAt(row, 3);&#xa;        Object priceObj = table.getValueAt(row, 5);&#xa;        int quantity = quantityObj != null ? (int) quantityObj : 0;&#xa;        double price = priceObj != null ? (double) priceObj : 0.0;&#xa;&#xa;        double rowTotal = quantity * price;&#xa;        JCheckBox checkBox = (JCheckBox) ((DefaultCellEditor) table.getCellEditor(row, 9)).getComponent();&#xa;        if (checkBox.isSelected()) {&#xa;            totalAmount += rowTotal;&#xa;        } else {&#xa;            totalAmount -= rowTotal;&#xa;        }&#xa;&#xa;        updateCostsAndAmount(row, rowTotal);&#xa;    }&#xa;&#xa;    @Override&#xa;    public void editingCanceled(javax.swing.event.ChangeEvent e) {&#xa;    }&#xa;});&#xa;&#xa;&#xa;String[] statuses = { &quot;100%&quot;, &quot;95%&quot;, &quot;90%&quot;, &quot;85%&quot;, &quot;80%&quot;, &quot;75%&quot;, &quot;70%&quot; };&#xa;JComboBox&lt;String&gt; statusComboBox = new JComboBox&lt;&gt;(statuses);&#xa;statusComboBox.setPreferredSize(new Dimension(statusComboBox.getPreferredSize().width, 20));&#xa;&#xa;table.getColumnModel().getColumn(8).setCellEditor(new DefaultCellEditor(statusComboBox));&#xa;&#xa;statusComboBox.addItemListener(new ItemListener() {&#xa;    @Override&#xa;    public void itemStateChanged(ItemEvent e) {&#xa;        if (e.getStateChange() == ItemEvent.SELECTED) {&#xa;            String selectedStatus = (String) statusComboBox.getSelectedItem();&#xa;            double statusPercentage = getPercentageFromStatus(selectedStatus);&#xa;&#xa;            int row = table.getSelectedRow();&#xa;            Object quantityObj = table.getValueAt(row, 3);&#xa;            Object priceObj = table.getValueAt(row, 5);&#xa;            int quantity = quantityObj != null ? (int) quantityObj : 0;&#xa;            double price = priceObj != null ? (double) priceObj : 0.0;&#xa;&#xa;            double rowTotal = quantity * price;&#xa;&#xa;            double rowCost = rowTotal * (1 - statusPercentage);&#xa;&#xa;&#xa;            updateCostsAndAmount(row, rowCost);&#xa;            updatePnTraHang();&#xa;        }&#xa;    }&#xa;});&#xa;&#xa;table.getColumnModel().getColumn(8).setCellRenderer(new DefaultTableCellRenderer() {&#xa;    @Override&#xa;    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {&#xa;        JComboBox&lt;String&gt; comboBox = new JComboBox&lt;&gt;(statuses);&#xa;&#xa;        comboBox.setPreferredSize(new Dimension(comboBox.getPreferredSize().width, 30));&#xa;        &#xa;        if (value != null) {&#xa;            comboBox.setSelectedItem(value);&#xa;        }&#xa;&#xa;        comboBox.setRenderer(new DefaultListCellRenderer() {&#xa;            @Override&#xa;            public Component getListCellRendererComponent(JList&lt;?&gt; list, Object value, int index, boolean isSelected, boolean cellHasFocus) {&#xa;                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);&#xa;                setHorizontalAlignment(CENTER);&#xa;                return c;&#xa;            }&#xa;        });&#xa;&#xa;        return comboBox;&#xa;    }&#xa;});">
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="table.getColumnModel().getColumn(4).setMinWidth(0); &#xa;table.getColumnModel().getColumn(4).setMaxWidth(0);&#xa;table.getColumnModel().getColumn(4).setWidth(0);  &#xa;&#xa;table.getColumnModel().getColumn(9).setMinWidth(0); &#xa;table.getColumnModel().getColumn(9).setMaxWidth(0);&#xa;table.getColumnModel().getColumn(9).setWidth(0); &#xa;&#xa;&#xa;//table.setTableHeader(null);&#xa;DefaultTableModel model1 = (DefaultTableModel) table.getModel();&#xa;DefaultTableModel model2 = (DefaultTableModel) tableExchange.getModel();&#xa;&#xa;table.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());&#xa;&#xa;table.getTableHeader().setDefaultRenderer(new HeaderRenderer());&#xa;table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));&#xa;table.getTableHeader().setBackground(new Color(11,101,136));&#xa;table.getTableHeader().setForeground(Color.WHITE);&#xa;&#xa;DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();&#xa;centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);&#xa;centerRenderer.setVerticalAlignment(SwingConstants.CENTER);&#xa;&#xa;table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(8).setCellRenderer(centerRenderer);&#xa;table.getColumnModel().getColumn(9).setCellRenderer(centerRenderer);&#xa;&#xa;String[] statuses = { &quot;100%&quot;, &quot;95%&quot;, &quot;90%&quot;, &quot;85%&quot;, &quot;80%&quot;, &quot;75%&quot;, &quot;70%&quot; };&#xa;JComboBox&lt;String&gt; statusComboBox = new JComboBox&lt;&gt;(statuses);&#xa;statusComboBox.setPreferredSize(new Dimension(statusComboBox.getPreferredSize().width, 20));&#xa;&#xa;table.getColumnModel().getColumn(8).setCellEditor(new DefaultCellEditor(statusComboBox));&#xa;&#xa;statusComboBox.addItemListener(new ItemListener() {&#xa;    @Override&#xa;    public void itemStateChanged(ItemEvent e) {&#xa;        if (e.getStateChange() == ItemEvent.SELECTED) {&#xa;            int row = table.getEditingRow();&#xa;            int column = table.getEditingColumn();&#xa;&#xa;            Object selectedStatus = statusComboBox.getSelectedItem();&#xa;&#xa;            if (row != -1 &amp;&amp; column != -1) {&#xa;                table.setValueAt(selectedStatus, row, column);&#xa;            }&#xa;            updatePnTraHang();&#xa;        }&#xa;    }&#xa;});&#xa;&#xa;table.getColumnModel().getColumn(8).setCellRenderer(new DefaultTableCellRenderer() {&#xa;    @Override&#xa;    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {&#xa;        JComboBox&lt;String&gt; comboBox = new JComboBox&lt;&gt;(statuses);&#xa;&#xa;        comboBox.setPreferredSize(new Dimension(comboBox.getPreferredSize().width, 30));&#xa;        &#xa;        if (value != null) {&#xa;            comboBox.setSelectedItem(value);&#xa;        }&#xa;&#xa;        comboBox.setRenderer(new DefaultListCellRenderer() {&#xa;            @Override&#xa;            public Component getListCellRendererComponent(JList&lt;?&gt; list, Object value, int index, boolean isSelected, boolean cellHasFocus) {&#xa;                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);&#xa;                setHorizontalAlignment(CENTER);&#xa;                return c;&#xa;            }&#xa;        });&#xa;&#xa;        return comboBox;&#xa;    }&#xa;});&#xa;&#xa;&#xa;DoiTraQuantityCellEditor editor = new DoiTraQuantityCellEditor(this);&#xa;table.getColumnModel().getColumn(3).setCellEditor(editor);">
                       <TableColumnModel selectionModel="0">
                         <Column maxWidth="-1" minWidth="-1" prefWidth="50" resizable="false">
                           <Title/>
@@ -1105,17 +1107,17 @@
                           <Editor/>
                           <Renderer/>
                         </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="120" resizable="false">
                           <Title/>
                           <Editor/>
                           <Renderer/>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="60" resizable="false">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="0" resizable="false">
                           <Title/>
                           <Editor/>
                           <Renderer/>

@@ -47,7 +47,7 @@ public class AddButtonEditor extends DefaultCellEditor{
                         if(existingMaSP.equals((String) model2.getValueAt(i, 1))) {
                             if((int) model2.getValueAt(i, 3) < (int) model1.getValueAt(row, 3)) {
                                 model2.setValueAt((int) model2.getValueAt(i, 3) + 1, i, 3);
-                                doiTra.updateInfor();
+//                                doiTra.updateInfor();
                             }
                             else {
                                 MessageAlerts.getInstance().showMessage("Lỗi", 
@@ -64,7 +64,7 @@ public class AddButtonEditor extends DefaultCellEditor{
                         1
                     };
                     model2.addRow(rowData);
-                    doiTra.updateInfor();
+//                    doiTra.updateInfor();
                 }
                 fireEditingStopped();
             }
