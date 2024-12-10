@@ -20,12 +20,14 @@ import gui.BaoCaoDoanhThu;
 import gui.BaoCaoSanPham;
 import gui.DoiTra;
 import gui.HoaDon;
+import gui.HoaDonDoiTra;
 import gui.NhapHang;
 import gui.QuanLyNhapHang;
 import gui.DonDoiTra;
 import gui.SanPham;
 import gui.SanPhamDoiTra;
 import gui.ThongKeDoanhThu_GUI;
+import gui.ThongKeNhanVien_GUI;
 import gui.ThongKeSanPham_GUI;
 import gui.ThongKeSanPham_GUI;
 import gui.ThongKeTongQuan;
@@ -61,12 +63,14 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     private DoiTra doiTra;
     private SanPhamDoiTra sanPhamDoiTra;
     private TrangChu trangChu;
+    private ThongKeDoanhThu_GUI thongKeDoanhThu;
 
     public void setUser(ModelUser user) {
         this.user = user;
         trangChu = new TrangChu(user);
         banHang = new BanHang(user);
         doiTra = new DoiTra(user);
+        thongKeDoanhThu = new ThongKeDoanhThu_GUI(user);
         sanPhamDoiTra = new SanPhamDoiTra();
         SimpleHeaderData headerData = header.getSimpleHeaderData();
         headerData.setTitle(user.getName());
@@ -153,18 +157,23 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item.Label("QUẢN LÝ"),
             new Item("Bán hàng", "email.svg"),
             new Item("Đổi trả", "chat.svg"),
-            new Item("Nhập Hàng", "nhapHang.svg"),
-            new Item("Quản Lý Nhập Hàng", "quanLyNhapHang.svg"),
+            new Item("Nhập Hàng", "nhapHang.svg")
+            .subMenu("Nhập Hàng Hóa")
+            .subMenu("Quản Lý Nhập Hàng"),
             new Item("Sản phẩm", "calendar.svg")
             .subMenu("Sản phẩm bán hàng")
             .subMenu("Sản phẩm đổi trả"),
-            new Item("Hóa đơn", "forms.svg"),
+         
+            new Item("Hóa đơn", "forms.svg")
+            .subMenu("Hóa đơn bán hàng")
+            .subMenu("Hóa đơn đổi trả"),
             new Item("Khách hàng", "ui.svg"),
             new Item("Nhân viên", "icon.svg"),        
             new Item("Tài khoản", "key.svg"),
             new Item("Thống kê", "chart.svg")
             .subMenu("Thống kê doanh thu")
             .subMenu("Thống kê sản phẩm")
+            .subMenu("Thống kê nhân viên")
             .subMenu("Thống kê tổng quan"),
             new Item("Báo cáo", "page.svg")
             .subMenu("Báo cáo doanh thu")
@@ -253,38 +262,36 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     
                     if (index[0] == 2) {
                         FormManager.showForm(doiTra);
-//                    	FormManager.showForm(new NhapHang());
                     }
-                    if (index[0] == 3) {
-                    	FormManager.showForm(new NhapHang());
-                    }
-                    if (index[0] == 4) {
-                    	FormManager.showForm(new QuanLyNhapHang());
-                    }
+
                     
                     if (index[0] == 6) {
-                        FormManager.showForm(new HoaDon());
-                    }
-                    
-                    if (index[0] == 7) {
                     	FormManager.showForm(new gui.KhachHang_GUI());
                     }
                     
-                    if (index[0] == 8) {
+                    if (index[0] == 7) {
                     	FormManager.showForm(new gui.NhanVien());
                     }
                     
-                    if (index[0] == 9) {
+                    if (index[0] == 8) {
                     	FormManager.showForm(new gui.TaiKhoan_GUI());
                     }
                     
-                    if (index[0] == 12) {
+                    if (index[0] == 11) {
                         // logout
                         FormManager.logout();
                     }
                 } 
                 else if (index.length == 2) {
-                    if (index[0] == 5) {
+                	if (index[0] == 3) {
+                        if (index[1] == 0) {
+                            FormManager.showForm(new NhapHang());
+                        }
+                        if (index[1] == 1) {
+                            FormManager.showForm(new QuanLyNhapHang());
+                        }
+                    }
+                    if (index[0] == 4) {
                         if (index[1] == 0) {
                             FormManager.showForm(new SanPham());
                         }
@@ -292,15 +299,26 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                             FormManager.showForm(sanPhamDoiTra);
                         }
                     }
+                    if (index[0] == 5) {
+                        if (index[1] == 0) {
+                            FormManager.showForm(new HoaDon());
+                        }
+                        if (index[1] == 1) {
+                            FormManager.showForm(new HoaDonDoiTra());
+                        }
+                    }
                     
-                    if (index[0] == 10) {
+                    if (index[0] == 9) {
                         if (index[1] == 1) {
                             FormManager.showForm(new ThongKeSanPham_GUI());
                         }
                         if (index[1] == 0) {
-                            FormManager.showForm(new ThongKeDoanhThu_GUI());
+                            FormManager.showForm(thongKeDoanhThu);
                         }
                         if (index[1] == 2) {
+                            FormManager.showForm(new ThongKeNhanVien_GUI());
+                        }
+                        if (index[1] == 3) {
                             FormManager.showForm(new ThongKeTongQuan());
                         }
                     }

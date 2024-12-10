@@ -8,14 +8,21 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import dao.NhapHang_DAO;
 import entity.NhapHang_entity;
+import entity.SanPham_entity;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import nguyenvu.components.SimpleForm;
+import nguyenvu.utils.ButtonEditor;
+import nguyenvu.utils.ButtonRenderer;
 import nguyenvu.utils.HeaderRenderer;
 import nguyenvu.utils.RoundedTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 public class QuanLyNhapHang extends SimpleForm {
     
@@ -32,10 +39,6 @@ public class QuanLyNhapHang extends SimpleForm {
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel1.setBounds(20, 60, 248, 30);
-        jButton7 = new javax.swing.JButton(new FlatSVGIcon("gui/icon/print.svg", 0.35f));
-        jButton7.setBounds(1202, 100, 120, 40);
-        jButton8 = new javax.swing.JButton(new FlatSVGIcon("gui/icon/export.svg", 0.3f));
-        jButton8.setBounds(1340, 100, 120, 40);
         setPreferredSize(new java.awt.Dimension(1470, 730));
         pnHeader.setBackground(new java.awt.Color(11, 101, 136));
         pnHeader.setPreferredSize(new java.awt.Dimension(1470, 50));
@@ -81,19 +84,8 @@ public class QuanLyNhapHang extends SimpleForm {
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(11, 101, 136));
         jLabel1.setText("Quản Lý Nhập Hàng");
-
-
-        jButton7.setBackground(new java.awt.Color(255, 0, 0));
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Lưu Tạm");
-
-        jButton8.setBackground(new java.awt.Color(51, 204, 0));
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Đã Thanh Toán");
         setLayout(null);
         add(jLabel1);
-        add(jButton7);
-        add(jButton8);
         add(pnHeader);
         
         pnTable = new JPanel();
@@ -113,9 +105,10 @@ public class QuanLyNhapHang extends SimpleForm {
                         "Mã nhập hàng ", "Ngày nhập hàng", "Tổng tiền", "Phương thức thanh toán", "Trạng thái", "Thao tác"
                     }
                 ) {
-                    boolean[] canEdit = new boolean [] {
-                        false, false, false, false, false, false, false, false, true
-                    };
+                	boolean[] canEdit = new boolean [] {
+                		    false, false, false, false, false, true
+                		};
+
         
                     public boolean isCellEditable(int rowIndex, int columnIndex) {
                         return canEdit [columnIndex];
@@ -137,6 +130,11 @@ public class QuanLyNhapHang extends SimpleForm {
                 jButton6 = new javax.swing.JButton(new FlatSVGIcon("gui/icon/last-page.svg", 0.03f));
                 jButton6.setBounds(220, 513, 60, 33);
                 pnTable.add(jButton6);
+                
+                panel = new JPanel();
+                panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+                panel.setBounds(1202, 100, 258, 255);
+                add(panel);
                 table.getTableHeader().setDefaultRenderer(new HeaderRenderer());
                 table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));
                 table.getTableHeader().setBackground(new Color(11,101,136));
@@ -158,6 +156,30 @@ public class QuanLyNhapHang extends SimpleForm {
                         loadDataToTable();
         pnHeader.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:0,0,0,0,$Component.borderColor,,20");
+        
+        
+        table.getColumn("Thao tác").setCellRenderer(new ButtonRenderer("Xem"));
+        table.getColumn("Thao tác").setCellEditor(new ButtonEditor("Xem", e -> {
+		    try {
+		        int row = Integer.parseInt(e.getActionCommand().split("_")[1]);
+		        String maNH = (String) table.getValueAt(row, 0);
+		        NhapHang_entity nh = nhapHang_DAO.searcNhapHang(maNH);
+		        
+
+		        // Hiển thị form cập nhật sản phẩm
+		        FormXemChiTietNhapHang updateForm = new FormXemChiTietNhapHang();
+		        updateForm.AddDataToLable(nh);
+
+		        JDialog dialog = new JDialog();
+		        dialog.getContentPane().add(updateForm);
+		        dialog.setSize(1193, 680);
+		        dialog.setLocationRelativeTo(null);
+		        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		        dialog.setVisible(true);
+		    } catch (Exception ex) {
+		        JOptionPane.showMessageDialog(null, "Lỗi cập nhật sản phẩm: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+		    }
+		}));
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -181,8 +203,6 @@ public class QuanLyNhapHang extends SimpleForm {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnHeader;
@@ -190,5 +210,6 @@ public class QuanLyNhapHang extends SimpleForm {
     private javax.swing.JTextField txtSearch;
     private JPanel pnTable;
     private NhapHang_DAO nhapHang_DAO;
+    private JPanel panel;
     // End of variables declaration//GEN-END:variables
 }

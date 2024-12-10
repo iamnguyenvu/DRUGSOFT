@@ -145,8 +145,7 @@ public class ThongKeSanPham_GUI extends SimpleForm implements ActionListener{
         cb_SelectedTime.addItem("90 Ngày Qua");
         cb_SelectedTime.addItem("365 Ngày Qua");
         cb_SelectedTime.addItem("Toàn Thời Gian");
-        cb_SelectedTime.addItem("2024");
-        cb_SelectedTime.addItem("2023");
+        cb_SelectedTime.addItem("Năm Hiện Tại");
         cb_SelectedTime.setFont(new Font("Serif", Font.PLAIN, 17));
         cb_SelectedTime.setBounds(10, 10, 297, 78);
         pnController.add(cb_SelectedTime);
@@ -172,10 +171,8 @@ public class ThongKeSanPham_GUI extends SimpleForm implements ActionListener{
                 	    pnChart.add(new ThongKeSPBanChay(365));
                 	} else if (selectedTime.equals("Toàn Thời Gian")) {
                 	    pnChart.add(new ThongKeSPBanChay(0));
-                	} else if (selectedTime.equals("2024")) {
-                	    pnChart.add(new ThongKeSPBanChay(2024));
-                	} else if (selectedTime.equals("2023")) {
-                	    pnChart.add(new ThongKeSPBanChay(2023));
+                	} else if (selectedTime.equals("Năm Hiện Tại")) {
+                	    pnChart.add(new ThongKeSPBanChay(1));
                 	}
 //                    else if (selectedTime.equals("Tùy Chỉnh")) {
 //                    	showCustomDateRange();
@@ -192,11 +189,9 @@ public class ThongKeSanPham_GUI extends SimpleForm implements ActionListener{
                 	    pnChart.add(new ThongKeSPBanCham(365));
                 	} else if (selectedTime.equals("Toàn Thời Gian")) {
                 	    pnChart.add(new ThongKeSPBanCham(0));
-                	} else if (selectedTime.equals("2024")) {
-                	    pnChart.add(new ThongKeSPBanCham(2024));
-                	} else if (selectedTime.equals("2023")) {
-                	    pnChart.add(new ThongKeSPBanCham(2023));
-                	}
+                	} else if (selectedTime.equals("Năm Hiện Tại")) {
+                	    pnChart.add(new ThongKeSPBanCham(1));
+                	} 
                 }
 
                 // Cập nhật lại giao diện
@@ -222,10 +217,8 @@ public class ThongKeSanPham_GUI extends SimpleForm implements ActionListener{
             	    pnChart.add(new ThongKeSPBanChay(365));
             	} else if (selectedTime.equals("Toàn Thời Gian")) {
             	    pnChart.add(new ThongKeSPBanChay(0));
-            	} else if (selectedTime.equals("2024")) {
-            	    pnChart.add(new ThongKeSPBanChay(2024));
-            	} else if (selectedTime.equals("2023")) {
-            	    pnChart.add(new ThongKeSPBanChay(2023));
+            	} else if (selectedTime.equals("Năm Hiện Tại")) {
+            	    pnChart.add(new ThongKeSPBanChay(1));
             	}
 
                 // Cập nhật lại giao diện
@@ -249,11 +242,9 @@ public class ThongKeSanPham_GUI extends SimpleForm implements ActionListener{
             	    pnChart.add(new ThongKeSPBanCham(365));
             	} else if (selectedTime.equals("Toàn Thời Gian")) {
             	    pnChart.add(new ThongKeSPBanCham(0));
-            	} else if (selectedTime.equals("2024")) {
-            	    pnChart.add(new ThongKeSPBanCham(2024));
-            	} else if (selectedTime.equals("2023")) {
-            	    pnChart.add(new ThongKeSPBanCham(2023));
-            	}
+            	} else if (selectedTime.equals("Năm Hiện Tại")) {
+            	    pnChart.add(new ThongKeSPBanCham(1));
+            	} 
                 // Cập nhật lại giao diện
                 pnChart.revalidate();
                 pnChart.repaint();

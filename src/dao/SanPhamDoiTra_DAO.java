@@ -27,15 +27,16 @@ public class SanPhamDoiTra_DAO {
 
     // Method to add a return product to the database
     public boolean addSanPhamDoiTra(SanPhamDoiTra sanPhamDoiTra) {
-        String query = "INSERT INTO SanPhamDoiTra (maSP, maHD, soLuong, vanDe, ngayDoiTra, trangThai) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO SanPhamDoiTra ( MaDT, maSP, soLuong, chietKhau, thanhTien, loaiDoiTra, trangThai) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, sanPhamDoiTra.getMaSP());
-            ps.setString(2, sanPhamDoiTra.getMaHD());
+        	 ps.setString(1, sanPhamDoiTra.getMaDT());
+            ps.setString(2, sanPhamDoiTra.getMaSP());
             ps.setInt(3, sanPhamDoiTra.getSoLuong());
-            ps.setString(4, sanPhamDoiTra.getVanDe());
-            ps.setDate(5, java.sql.Date.valueOf(sanPhamDoiTra.getNgayDoiTra()));
-            ps.setString(6, sanPhamDoiTra.isTrangThai() ? "Xác nhận" : "Đang chờ duyệt");
-
+            ps.setDouble(4, sanPhamDoiTra.getChietKhau());
+            ps.setDouble(5, sanPhamDoiTra.getThanhTien());
+            ps.setString(6, sanPhamDoiTra.getLoaiDoiTra());
+            ps.setString(7, sanPhamDoiTra.getTrangThai());
+//
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error adding return product", e);
@@ -43,21 +44,31 @@ public class SanPhamDoiTra_DAO {
         return false;
     }
 
+    
     // Method to get all return products
     public List<SanPhamDoiTra> getAllSanPhamDoiTra() {
-        List<SanPhamDoiTra> list = new ArrayList<>();
-        String query = "SELECT * FROM SanPhamDoiTra";
+    	List<SanPhamDoiTra> list = new ArrayList<>();
+        String query = "SELECT maDT, sp.maSP, spdt.soLuong, chietKhau, thanhTien, loaiDoiTra, trangThai\r\n"
+        		+ "FROM SanPham sp join [dbo].[SanPhamDoiTra]  spdt on sp.maSP = spdt.maSP";
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(query)) {
 
             while (rs.next()) {
                 SanPhamDoiTra spdt = new SanPhamDoiTra();
+                spdt.setMaDT(rs.getString("MaDT"));
                 spdt.setMaSP(rs.getString("maSP"));
-                spdt.setMaHD(rs.getString("maHD"));
                 spdt.setSoLuong(rs.getInt("soLuong"));
-                spdt.setVanDe(rs.getString("vanDe"));
-                spdt.setNgayDoiTra(rs.getDate("ngayDoiTra").toLocalDate());
-                spdt.setTrangThai(rs.getString("trangThai").equals("Xác nhận"));
+                spdt.setChietKhau(rs.getDouble("chietKhau"));
+                spdt.setThanhTien(rs.getDouble("thanhTien"));
+//                spdt.setNgayDoiTra(rs.getDate("ngayDoiTra").toLocalDate());
+//                spdt.setTrangThai(rs.getString("trangThai").equals("Xác nhận"));
+                spdt.setLoaiDoiTra(rs.getString("loaiDoiTra"));
+                spdt.setTrangThai(rs.getString("trangThai"));
+
+                // Lấy tên sản phẩm từ bảng SanPham
+                String tenSP = getTenSanPhamByMaSP(spdt.getMaSP());
+                spdt.setTenSP(tenSP);
+
                 list.add(spdt);
             }
         } catch (SQLException e) {
@@ -67,20 +78,24 @@ public class SanPhamDoiTra_DAO {
     }
 
     // Method to get a specific return product by ID
-    public SanPhamDoiTra getSanPhamDoiTraByID(String maSP, String maHD) {
-        String query = "SELECT * FROM SanPhamDoiTra WHERE maSP = ? AND maHD = ?";
+    public SanPhamDoiTra getSanPhamDoiTraByID(String maSP, String MaDT) {
+        String query = "SELECT * FROM SanPhamDoiTra WHERE maSP = ? AND MaDT = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, maSP);
-            ps.setString(2, maHD);
+            ps.setString(1, MaDT);
+            ps.setString(2, maSP);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     SanPhamDoiTra spdt = new SanPhamDoiTra();
-                    spdt.setMaSP(rs.getString("maSP"));
-                    spdt.setMaHD(rs.getString("maHD"));
+                    spdt.setMaDT(rs.getString("MaDT"));
+                    spdt.setMaSP(rs.getString("MaSP"));
                     spdt.setSoLuong(rs.getInt("soLuong"));
-                    spdt.setVanDe(rs.getString("vanDe"));
-                    spdt.setNgayDoiTra(rs.getDate("ngayDoiTra").toLocalDate());
-                    spdt.setTrangThai(rs.getString("trangThai").equals("Xác nhận"));
+                    //spdt.setVanDe(rs.getString("vanDe"));
+                    spdt.setChietKhau(rs.getDouble("chietKhau"));
+                    spdt.setThanhTien(rs.getDouble("thanhTien"));
+//                    spdt.setNgayDoiTra(rs.getDate("ngayDoiTra").toLocalDate());
+//                    spdt.setTrangThai(rs.getString("trangThai").equals("Xác nhận"));
+                    spdt.setLoaiDoiTra(rs.getString("loaiDoiTra"));
+                    spdt.setTrangThai(rs.getString("trangThai"));
                     return spdt;
                 }
             }
@@ -89,14 +104,30 @@ public class SanPhamDoiTra_DAO {
         }
         return null;
     }
+    public String getTenSanPhamByMaSP(String maSP) {
+        String tenSP = null;
+        String query = "SELECT tenSP FROM SanPham WHERE maSP = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, maSP);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    tenSP = rs.getString("tenSP");
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error fetching product name for maSP: " + maSP, e);
+        }
+        return tenSP;
+    }
+
 
     // Method to update the status of a return product
-    public boolean updateTrangThai(String maSP, String maHD, String trangThaiMoi) {
-        String query = "UPDATE SanPhamDoiTra SET trangThai = ? WHERE maSP = ? AND maHD = ?";
+    public boolean updateTrangThai(String maSP, String MaDT, String trangThaiMoi) {
+        String query = "UPDATE SanPhamDoiTra SET loaiDoiTra = ? WHERE maSP = ? AND MaDT = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, trangThaiMoi);
-            ps.setString(2, maSP);
-            ps.setString(3, maHD);
+            ps.setString(2, MaDT);
+            ps.setString(3, maSP);
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -106,11 +137,11 @@ public class SanPhamDoiTra_DAO {
     }
 
     // Method to delete a return product
-    public boolean deleteSanPhamDoiTra(String maSP, String maHD) {
-        String query = "DELETE FROM SanPhamDoiTra WHERE maSP = ? AND maHD = ?";
+    public boolean deleteSanPhamDoiTra(String maSP, String MaDT) {
+        String query = "DELETE FROM SanPhamDoiTra WHERE maSP = ? AND MaDT = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, maSP);
-            ps.setString(2, maHD);
+           ps.setString(1, MaDT);
+            ps.setString(2, maSP);
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -121,17 +152,16 @@ public class SanPhamDoiTra_DAO {
 
     // Method to start a transaction for multiple updates
     public boolean processSanPhamDoiTraTransaction(List<SanPhamDoiTra> sanPhamDoiTraList) {
-        String query = "INSERT INTO SanPhamDoiTra (maSP, maHD, soLuong, vanDe, ngayDoiTra, trangThai) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO SanPhamDoiTra (maSP, MaDT, soLuong, chietKhau, thanhTien, loaiDoiTra) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             connection.setAutoCommit(false); // Start transaction
             try (PreparedStatement ps = connection.prepareStatement(query)) {
                 for (SanPhamDoiTra spdt : sanPhamDoiTraList) {
-                    ps.setString(1, spdt.getMaSP());
-                    ps.setString(2, spdt.getMaHD());
-                    ps.setInt(3, spdt.getSoLuong());
-                    ps.setString(4, spdt.getVanDe());
-                    ps.setDate(5, java.sql.Date.valueOf(spdt.getNgayDoiTra()));
-                    ps.setString(6, spdt.isTrangThai() ? "Xác nhận" : "Đang chờ duyệt");
+                	ps.setString(1, spdt.getMaDT());
+                    ps.setString(2, spdt.getMaSP());
+                    ps.setDouble(3, spdt.getChietKhau());
+                    ps.setDouble(4, spdt.getThanhTien());
+                    ps.setString(6, spdt.getLoaiDoiTra());
                     ps.addBatch();
                 }
                 int[] results = ps.executeBatch();
@@ -156,25 +186,24 @@ public class SanPhamDoiTra_DAO {
 
     // Method to load SanPhamDoiTra data to JTable
     public void loadSanPhamDoiTraToTable(JTable table) {
-        // Get all return products
-        List<SanPhamDoiTra> sanPhamDoiTraList = getAllSanPhamDoiTra();
-        
-        // Create DefaultTableModel to set data into the table
+        // Lấy danh sách sản phẩm đổi trả từ DAO
+        List<SanPhamDoiTra> list = getAllSanPhamDoiTra();
+
+        // Lấy mô hình bảng từ JTable
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        
-        // Clear previous data in the table
-        model.setRowCount(0);
-        
-        // Add data from the list into the table
-        for (SanPhamDoiTra spdt : sanPhamDoiTraList) {
-            Object[] rowData = new Object[] {
-                spdt.getMaHD(), // Mã hóa đơn
-                spdt.getMaSP(), // Mã sản phẩm
-                spdt.getSoLuong(), // Số lượng
-                spdt.getVanDe(), // Vấn đề
-                spdt.getNgayDoiTra(), // Ngày đổi trả
-                spdt.isTrangThai() ? "Xác nhận" : "Đang chờ duyệt", // Trạng thái
-                "Thao tác" // Thao tác (you can add buttons or actions here)
+        model.setRowCount(0); // Xóa tất cả các dòng hiện có
+
+        // Duyệt qua danh sách và thêm từng dòng vào bảng
+        for (SanPhamDoiTra spdt : list) {
+            Object[] rowData = {
+            	spdt.getMaDT(),
+                spdt.getMaSP(),
+                spdt.getTenSP(),
+                spdt.getSoLuong(),
+                spdt.getChietKhau(),
+              //  spdt.getTinhTrang()
+                spdt.getThanhTien(),
+                spdt.getLoaiDoiTra()
             };
             model.addRow(rowData);
         }
@@ -188,16 +217,19 @@ public class SanPhamDoiTra_DAO {
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, "%" + maSP + "%");  // Search with pattern (the % allows substring matching)
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    SanPhamDoiTra sp = new SanPhamDoiTra(
-                        rs.getString("maHD"),
-                      //  rs.getString("hinhAnh"),
-                        rs.getString("maSP"),
-                        rs.getInt("soLuong"),
-                        rs.getString("vanDe"),
-                        rs.getDate("ngayDoiTra").toLocalDate(),
-                        rs.getString("trangThai").equals("Xác nhận")
-                    );
+				while (rs.next()) {
+					SanPhamDoiTra sp = new SanPhamDoiTra();
+					sp.setMaDT(rs.getString("MaDT"));
+					sp.setMaSP(rs.getString("maSP"));
+					
+					sp.setSoLuong(rs.getInt("soLuong"));
+					// sp.setVanDe(rs.getString("vanDe"));
+					sp.setChietKhau(rs.getDouble("chietKhau"));
+					sp.setThanhTien(rs.getDouble("thanhTien"));
+					sp.setLoaiDoiTra(rs.getString("loaiDoiTra"));
+                	
+
+//                    );
                     result.add(sp);
                 }
             }
