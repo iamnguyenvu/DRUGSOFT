@@ -5,7 +5,8 @@
 package gui;
 
 import bill.BillDTManeger;
-import bill.FieldBillDT;
+import bill.FieldBillDoi;
+import bill.FieldBillDoiTra;
 import bill.ParameterBillDT;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
@@ -25,6 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -325,7 +327,7 @@ public class DoiTra extends SimpleForm {
 
         lblPhiTraHang.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Tổng tiền hoàn trả");
 
         lblTongTienHoan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -593,10 +595,10 @@ public class DoiTra extends SimpleForm {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblTongTienHoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblTongTienHoan, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
@@ -668,8 +670,8 @@ public class DoiTra extends SimpleForm {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnXoaTatCa, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(btnDoiTra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -1014,8 +1016,8 @@ public class DoiTra extends SimpleForm {
         txtProductSearch.putClientProperty(FlatClientProperties.STYLE, ""
             + "showClearButton: true");
         txtProductSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "[F3] Thêm sản phẩm đổi mới");
-        btnScanQrcode.setIcon(new FlatSVGIcon("gui/icon/scan.svg", 0.5f));
-        btnScanQrcode.setHorizontalAlignment(SwingConstants.LEFT);
+        btnScanBarcode.setIcon(new FlatSVGIcon("gui/icon/scan.svg", 0.5f));
+        btnScanBarcode.setHorizontalAlignment(SwingConstants.LEFT);
 
         javax.swing.GroupLayout pnLeftContentLayout = new javax.swing.GroupLayout(pnLeftContent);
         pnLeftContent.setLayout(pnLeftContentLayout);
@@ -1073,8 +1075,13 @@ public class DoiTra extends SimpleForm {
 
     private void btnDoiTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiTraActionPerformed
         // TODO add your handling code here:
-        if(table.getRowCount() < 1 || tableExchange.getRowCount() < 1) {
-            MessageAlerts.getInstance().showMessage("Lỗi", "Chưa thêm sản phẩm vào đơn!", MessageAlerts.MessageType.ERROR);
+        int sumSLTra = 0;
+        for(int i = 0; i < table.getRowCount(); i++) {
+            sumSLTra += (int) table.getValueAt(i, 3);
+        }
+        
+        if(sumSLTra < 1) {
+            MessageAlerts.getInstance().showMessage("Lỗi", "Chưa thêm sản phẩm đổi trả!", MessageAlerts.MessageType.ERROR);
             return;
         }
         
@@ -1086,20 +1093,32 @@ public class DoiTra extends SimpleForm {
             String ghiChu = txtNote.getText();
             String invoiceCode = doiTraDao.generateInvoiceCode();
             String date = getCurrentDate();
-            double totalAmount = 0;
-            
            
-            
-            List<FieldBillDT> fields = new ArrayList<>();
+            List<FieldBillDoiTra> fields = new ArrayList<>();
         
-            DefaultTableModel model = (DefaultTableModel) tableExchange.getModel();
-            for (int i = 0; i < model.getRowCount(); i++) {
-                String productName = (String) model.getValueAt(i, 2); // tenSP
-                int quantity = (int) model.getValueAt(i, 3);           // soLuong
-                double unitPrice = doiTraDao.getSP((String) model.getValueAt(i, 1)).getGia();    // donGia
+            DefaultTableModel model1 = (DefaultTableModel) table.getModel();
+            DefaultTableModel model2 = (DefaultTableModel) tableExchange.getModel();
+            
+            for (int i = 0; i < model1.getRowCount(); i++) {
+                int quantity = (int) model1.getValueAt(i, 3);           // soLuong
+                if(quantity > 0) {
+                    String productName = (String) model1.getValueAt(i, 2); // tenSP
+                    double unitPrice = doiTraDao.getSP((String) model1.getValueAt(i, 1)).getGia();    // donGia
+                    double totalPrice = quantity * unitPrice;   // thanhTien
+                    String tinhTrang = String.valueOf(table.getValueAt(i, 8));
+
+                    fields.add(new FieldBillDoiTra(productName, quantity, unitPrice, totalPrice, tinhTrang, "Trả"));
+                }
+            }
+            
+            for(int i = 0; i < model2.getRowCount(); i++) {
+                int quantity = (int) model2.getValueAt(i, 5);           // soLuong
+                String productName = (String) model2.getValueAt(i, 3); // tenSP
+                double unitPrice = doiTraDao.getSP((String) model2.getValueAt(i, 2)).getGia();    // donGia
                 double totalPrice = quantity * unitPrice;   // thanhTien
 
-                fields.add(new FieldBillDT(productName, quantity, unitPrice, totalPrice));
+
+                fields.add(new FieldBillDoiTra(productName, quantity, unitPrice, totalPrice, "", "Đổi"));
             }
             
             String ptThanhToan = (String) hd.getHinhThucThanhToan();
@@ -1107,30 +1126,50 @@ public class DoiTra extends SimpleForm {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
             LocalDateTime issueDate = LocalDateTime.parse(date, formatter);
             
-            HoaDon_entity hd = new HoaDon_entity(invoiceCode, issueDate, totalAmount, 0, ptThanhToan, true, kh.getSdtKH(), employeeId, "", ghiChu);
+//            HoaDon_entity hd = new HoaDon_entity(invoiceCode, issueDate, totalAmount, 0, ptThanhToan, true, kh.getSdtKH(), employeeId, "", ghiChu);
             
-            if(!doiTraDao.createHD(hd)) {
-                MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);
-                refresh();
-                return;
-            } else {
-                for (int i = 0; i < tableExchange.getRowCount(); ++i) {
-                    String maSP = (String) tableExchange.getValueAt(i, 1);
-                    int quantity = (int) model.getValueAt(i, 3); 
-                    
-                    double totalValue = 0;
- 
-                    if(!BanHang_DAO.createCTHD(new ChiTietHoaDon(invoiceCode, maSP,
-                        (int) table.getValueAt(i, 3), totalValue))) {
-                        System.out.println("Lỗi insert cthd");
-                    }
-                    
-                }
-                
-                ParameterBillDT billData = new ParameterBillDT(date, employeeName, kh.getTenKH(), 
-                    kh.getSdtKH(), totalAmount, "Đổi trả sản phẩm", ghiChu, invoiceCode, GenerateCode.generateQrcode(invoiceCode), fields); 
-                BillDTManeger.getInstance().printBill(billData);
+//            if(!doiTraDao.createHDDT(hd)) {
+//                MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);
+//                refresh();
+//                return;
+//            } else {
+//                for (int i = 0; i < tableExchange.getRowCount(); ++i) {
+//                    String maSP = (String) tableExchange.getValueAt(i, 1);
+//                    int quantity = (int) model.getValueAt(i, 3); 
+//                    
+//                    double totalValue = 0;
+// 
+//                    if(!BanHang_DAO.createCTHD(new ChiTietHoaDon(invoiceCode, maSP,
+//                        (int) table.getValueAt(i, 3), totalValue))) {
+//                        System.out.println("Lỗi insert cthd");
+//                    }
+//                    
+//                }
+//                
+//                
+//            }
+            double tongTienHangTra = parseDoubleSafely(lblTongTienTra.getText());
+            double tongPhiTraHang = parseDoubleSafely(lblPhiTraHang.getText());
+            double tienHoan = parseDoubleSafely(lblTienHoan.getText());
+            double tongTienDoi = parseDoubleSafely(lblKhachPhaiTra.getText());;
+            double giamTru = parseDoubleSafely(lblDiemThuong.getText());
+            double thanhToan = 0;
+            
+            if(isKhachPhaiTra) {
+                thanhToan = parseDoubleSafely(lblKhachPhaiTra.getText());
+                tienHoan = parseDoubleSafely(lblTongTienHoan.getText());
             }
+            
+            System.out.println(new File("FieldBillTra_Subreport.jasper").getAbsolutePath());
+
+                        
+            ParameterBillDT billData = new ParameterBillDT(date, employeeName, kh.getTenKH(), 
+                    kh.getSdtKH(), tongTienHangTra, tongPhiTraHang, tienHoan, 
+                    tongTienDoi, giamTru,thanhToan,
+                    ghiChu, invoiceCode, GenerateCode.generateQrcode(invoiceCode), 
+                    fields); 
+            BillDTManeger.getInstance().printBill(billData);
+            
             refresh();
         } catch (Exception e){
             e.printStackTrace();
@@ -1463,7 +1502,7 @@ public class DoiTra extends SimpleForm {
                 giamTru = coefDT > 0 ? coefDT * 1000 : 0;
             }
             lblDiemThuong.setText(String.valueOf(df.format(giamTru)));
-            //set lable khach phai tra
+            //set label khach phai tra
             lblKhachPhaiTra.setText(String.valueOf(df.format(sumThanhTien - giamTru)));
             
             tongTienMua = sumThanhTien - giamTru;
@@ -1571,7 +1610,7 @@ public class DoiTra extends SimpleForm {
             if (selectedStatus != null) {
                 statusPercentage = getPercentageFromStatus(selectedStatus);
             }
-            System.out.println("statusPercentage " + statusPercentage);
+//            System.out.println("statusPercentage " + statusPercentage);
 
             double returnFee = rowTotal * (1.0 - statusPercentage);
             totalReturnFee += returnFee;
@@ -1599,6 +1638,17 @@ public class DoiTra extends SimpleForm {
             case "75%": return 0.75;
             case "70%": return 0.70;
             default: return 1.0;
+        }
+    }
+    
+    private double parseDoubleSafely(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return 0;
+        }
+        try {
+            return Double.parseDouble(text.replace(",", ""));
+        } catch (NumberFormatException e) {
+            return 0;
         }
     }
 

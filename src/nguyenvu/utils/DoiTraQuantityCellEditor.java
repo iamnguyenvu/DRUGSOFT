@@ -45,11 +45,11 @@ public class DoiTraQuantityCellEditor extends DefaultCellEditor{
             public void stateChanged(ChangeEvent e) {
                 if (table != null) {
                     int quantity = (int) input.getValue();
-                    System.out.println("quantity " + quantity);
+//                    System.out.println("quantity " + quantity);
                     double price = (double) table.getValueAt(row, 5);
-                    System.out.println("price " + price);
+//                    System.out.println("price " + price);
                     double totalPrice = quantity * price;
-                    System.out.println("totalPrice " + totalPrice);
+//                    System.out.println("totalPrice " + totalPrice);
                     table.setValueAt(totalPrice, row, 6);
                     
                     doiTra.updatePnTraHang();

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[1470, 1137]"/>
+    </Property>
+  </Properties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -17,14 +22,14 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
-          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
           <Component id="pnHeader" alignment="0" max="32767" attributes="0"/>
+          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Component id="pnCustomer" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="pnTransaction" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="54" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -38,9 +43,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="pnTransaction" min="-2" max="-2" attributes="0"/>
-                  <Component id="pnCustomer" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="pnCustomer" max="32767" attributes="0"/>
+                  <Component id="pnTransaction" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -198,10 +203,10 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jPanel8" max="32767" attributes="0"/>
                       <Component id="jPanel6" max="32767" attributes="0"/>
+                      <Component id="jPanel8" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -225,20 +230,12 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel7" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="1308" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lineChart2" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
+                  <Component id="lineChart1" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jPanel7" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -248,7 +245,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="lineChart2" pref="301" max="32767" attributes="0"/>
+                      <Component id="lineChart1" pref="301" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -263,13 +260,13 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblValues" max="32767" attributes="0"/>
+                              <Component id="lblValuesSumDoanhThu" max="32767" attributes="0"/>
                               <Component id="jLabel7" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="lbllIcon" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbllIconDoanhThu" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblChange" min="-2" pref="60" max="-2" attributes="0"/>
+                          <Component id="lblChangeDoanhThu" min="-2" pref="60" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -281,9 +278,9 @@
                           <Component id="jLabel7" min="-2" pref="21" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblChange" max="32767" attributes="0"/>
-                              <Component id="lbllIcon" max="32767" attributes="0"/>
-                              <Component id="lblValues" pref="30" max="32767" attributes="0"/>
+                              <Component id="lblChangeDoanhThu" max="32767" attributes="0"/>
+                              <Component id="lbllIconDoanhThu" max="32767" attributes="0"/>
+                              <Component id="lblValuesSumDoanhThu" pref="30" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -299,7 +296,7 @@
                     <Property name="text" type="java.lang.String" value="T&#x1ed4;NG DOANH THU"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblValues">
+                <Component class="javax.swing.JLabel" name="lblValuesSumDoanhThu">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="18" style="1"/>
@@ -310,12 +307,12 @@
                     <Property name="text" type="java.lang.String" value="8,888,888,888.0"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lbllIcon">
+                <Component class="javax.swing.JLabel" name="lbllIconDoanhThu">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="icon"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblChange">
+                <Component class="javax.swing.JLabel" name="lblChangeDoanhThu">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="change"/>
                   </Properties>
@@ -327,7 +324,10 @@
                 <Property name="text" type="java.lang.String" value="Doanh thu theo th&#x1edd;i gian"/>
               </Properties>
             </Component>
-            <Component class="raven.chart.line.LineChart" name="lineChart2">
+            <Component class="raven.chart.line.LineChart" name="lineChart1">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lineChart1.setChartType(ChartType.LINE);"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -344,7 +344,7 @@
                       <Component id="pieChart1" min="-2" pref="458" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="pieChart2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="619" max="32767" attributes="0"/>
+                      <EmptySpace pref="585" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -387,10 +387,7 @@
                   <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="chart1" pref="731" max="32767" attributes="0"/>
-              </Group>
+              <Component id="chart1" alignment="1" pref="680" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -417,11 +414,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="jLabel9" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="lblValuesCustomer" min="-2" pref="80" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblIconCustomer" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel12" min="-2" pref="60" max="-2" attributes="0"/>
+                              <Component id="lblChangeCustomer" min="-2" pref="60" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -434,9 +431,9 @@
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel9" max="32767" attributes="0"/>
-                          <Component id="jLabel11" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabel12" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblValuesCustomer" max="32767" attributes="0"/>
+                          <Component id="lblIconCustomer" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblChangeCustomer" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -448,7 +445,7 @@
                 <Property name="text" type="java.lang.String" value="T&#x1ed4;NG S&#x1ed0; KH&#xc1;CH H&#xc0;NG M&#x1eda;I"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel9">
+            <Component class="javax.swing.JLabel" name="lblValuesCustomer">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
@@ -459,12 +456,12 @@
                 <Property name="text" type="java.lang.String" value="jLabel9"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel11">
+            <Component class="javax.swing.JLabel" name="lblIconCustomer">
               <Properties>
                 <Property name="text" type="java.lang.String" value="icon"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel12">
+            <Component class="javax.swing.JLabel" name="lblChangeCustomer">
               <Properties>
                 <Property name="text" type="java.lang.String" value="change"/>
               </Properties>
@@ -494,11 +491,7 @@
                   <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="lineChart3" pref="708" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
+              <Component id="lineChart2" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -508,7 +501,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="lineChart3" pref="292" max="32767" attributes="0"/>
+                  <Component id="lineChart2" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -525,11 +518,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="jLabel23" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="lblValuesTransactions" min="-2" pref="80" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblIconTransactions" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel25" min="-2" pref="60" max="-2" attributes="0"/>
+                              <Component id="lblChangeTransactions" min="-2" pref="60" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -542,9 +535,9 @@
                       <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel23" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabel24" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabel25" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblValuesTransactions" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblIconTransactions" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblChangeTransactions" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -556,7 +549,7 @@
                 <Property name="text" type="java.lang.String" value="T&#x1ed4;NG S&#x1ed0; GIAO D&#x1eca;CH"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel23">
+            <Component class="javax.swing.JLabel" name="lblValuesTransactions">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
@@ -567,12 +560,12 @@
                 <Property name="text" type="java.lang.String" value="jLabel9"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel24">
+            <Component class="javax.swing.JLabel" name="lblIconTransactions">
               <Properties>
                 <Property name="text" type="java.lang.String" value="icon"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel25">
+            <Component class="javax.swing.JLabel" name="lblChangeTransactions">
               <Properties>
                 <Property name="text" type="java.lang.String" value="change"/>
               </Properties>
@@ -584,7 +577,7 @@
             <Property name="text" type="java.lang.String" value="Giao d&#x1ecb;ch theo th&#x1edd;i gian"/>
           </Properties>
         </Component>
-        <Component class="raven.chart.line.LineChart" name="lineChart3">
+        <Component class="raven.chart.line.LineChart" name="lineChart2">
         </Component>
       </SubComponents>
     </Container>
