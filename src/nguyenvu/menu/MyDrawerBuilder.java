@@ -17,6 +17,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import gui.BanHang;
 import gui.BaoCaoDoanhThu;
+import gui.BaoCaoDoanhThu_GUI;
 import gui.BaoCaoSanPham;
 import gui.DoiTra;
 import gui.HoaDon;
@@ -300,7 +301,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     }
                     if (index[0] == 11) {
                         if (index[1] == 0) {
-                            FormManager.showForm(new BaoCaoDoanhThu());
+                            FormManager.showForm(new BaoCaoDoanhThu_GUI());
                         }
                         if (index[1] == 1) {
                             FormManager.showForm(new BaoCaoSanPham());
