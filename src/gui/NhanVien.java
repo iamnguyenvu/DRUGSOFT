@@ -1,4 +1,4 @@
-package gui;
+ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -34,6 +34,7 @@ public class NhanVien extends SimpleForm implements ActionListener {
     private JComboBox<String> cb_LocTheoLoai; // Filter ComboBox
     private JRadioButton radio_NhhTangdan; // Sort ascending
     private JRadioButton radio_NhhGiamdan; // Sort descending
+	private JTable table;
 
     public NhanVien() {
         connectDB.accessDataBase(); // Connect to database
@@ -74,10 +75,15 @@ public class NhanVien extends SimpleForm implements ActionListener {
         pnCenter.setLayout(null);
 
         // Table setup
-        String[] columnNames = {"Mã nhân viên", "Tên nhân viên", "Ngày sinh", "Địa chỉ", "Số điện thoại", "CCCD", "Ngày vào làm", "Trạng thái", "Giới tính", "Hình ảnh", "Mã loại NV"};
+        String[] columnNames = {"Mã nhân viên", "Tên nhân viên", "Ngày sinh", "Địa chỉ", "Số điện thoại","Email", "CCCD", "Ngày vào làm", "Trạng thái", "Giới tính", "Hình ảnh", "Mã loại NV"};
         dftb_NhanVien = new DefaultTableModel(columnNames, 0);
         tb_NhanVien = new JTable(dftb_NhanVien);
-        tb_NhanVien.setBackground(Color.WHITE);
+        //tb_NhanVien.setBackground(Color.WHITE);
+        
+     // Đổi màu nền tiêu đề thành màu RGB(11, 101, 136) và màu chữ thành trắng
+        tb_NhanVien.getTableHeader().setBackground(new Color(11, 101, 136));  // Nền màu RGB(11, 101, 136)
+        tb_NhanVien.getTableHeader().setForeground(Color.WHITE);  // Chữ màu trắng
+
         tb_NhanVien.setRowHeight(60);
         tb_NhanVien.getTableHeader().setReorderingAllowed(false);
 
@@ -85,31 +91,33 @@ public class NhanVien extends SimpleForm implements ActionListener {
         scp_NhanVien.setBounds(0, 22, 1100, 688);
         pnCenter.add(scp_NhanVien);
 
-        // Thêm MouseListener để mở thông tin chi tiết nhân viên khi nhấp đúp
-        tb_NhanVien.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int selectedRow = tb_NhanVien.getSelectedRow();
-                
-                if (selectedRow != -1) {
-                    // Retrieve data from the selected row
-                    String maNV = tb_NhanVien.getValueAt(selectedRow, 0).toString();
-                    String hoTenNV = tb_NhanVien.getValueAt(selectedRow, 1).toString();
-                    String ngaySinh = tb_NhanVien.getValueAt(selectedRow, 2).toString();  // Convert LocalDate to String if needed
-                    String diaChi = tb_NhanVien.getValueAt(selectedRow, 3).toString();
-                    String sdt = tb_NhanVien.getValueAt(selectedRow, 4).toString();
-                    String cccd = tb_NhanVien.getValueAt(selectedRow, 5).toString();
-                    String ngayVaoLam = tb_NhanVien.getValueAt(selectedRow, 6).toString(); // Convert LocalDate to String if needed
-                    boolean trangThai = (boolean) tb_NhanVien.getValueAt(selectedRow, 7);  // Assuming this is a boolean
-                    String gioiTinh = tb_NhanVien.getValueAt(selectedRow, 8).toString();
-                    String hinhAnhNV = tb_NhanVien.getValueAt(selectedRow, 9).toString();
-                    String maLoaiNV = tb_NhanVien.getValueAt(selectedRow, 10).toString();
 
-                    // Open the XemThongTinNhanVien frame with the selected employee's details
-                    new XemThongTinNhanVien(maNV, hoTenNV, ngaySinh, diaChi, sdt, cccd, ngayVaoLam, trangThai, gioiTinh, hinhAnhNV, maLoaiNV);
-                }
-            }
-        });
+
+//        // Thêm MouseListener để mở thông tin chi tiết nhân viên khi nhấp đúp
+//        tb_NhanVien.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void XemThongTinNhanVien(MouseEvent e) {
+//                int selectedRow = tb_NhanVien.getSelectedRow();
+//                
+//                if (selectedRow != -1) {
+//                    // Retrieve data from the selected row
+//                    String maNV = tb_NhanVien.getValueAt(selectedRow, 0).toString();
+//                    String hoTenNV = tb_NhanVien.getValueAt(selectedRow, 1).toString();
+//                    String ngaySinh = tb_NhanVien.getValueAt(selectedRow, 2).toString();  // Convert LocalDate to String if needed
+//                    String diaChi = tb_NhanVien.getValueAt(selectedRow, 3).toString();
+//                   String sdt = tb_NhanVien.getValueAt(selectedRow, 4).toString();
+//                    String cccd = tb_NhanVien.getValueAt(selectedRow, 5).toString();
+//                    String ngayVaoLam = tb_NhanVien.getValueAt(selectedRow, 6).toString(); // Convert LocalDate to String if needed
+//                    boolean trangThai = (boolean) tb_NhanVien.getValueAt(selectedRow, 7);  // Assuming this is a boolean
+//                    String gioiTinh = tb_NhanVien.getValueAt(selectedRow, 8).toString();
+//                    String hinhAnhNV = tb_NhanVien.getValueAt(selectedRow, 9).toString();
+//                    String maLoaiNV = tb_NhanVien.getValueAt(selectedRow, 10).toString();
+//
+//                    // Open the XemThongTinNhanVien frame with the selected employee's details
+//                    new XemThongTinNhanVien(maNV, hoTenNV, ngaySinh, diaChi, sdt, cccd, ngayVaoLam, trangThai, gioiTinh, hinhAnhNV, maLoaiNV);
+//                }
+//            }
+//        });
 
         
         // Filter panel
@@ -135,13 +143,44 @@ public class NhanVien extends SimpleForm implements ActionListener {
         pnCenter.add(btn_tim);
 
         // Add action buttons
-        JButton btnNewButton = new JButton("Xem");
-        btnNewButton.setBounds(1130, 363, 276, 39);
-        btnNewButton.addActionListener(e -> {
-            textField_tim.setVisible(true);
-            btn_tim.setVisible(true);
-        });
-        pnCenter.add(btnNewButton);
+//        JButton btnNewButton = new JButton("Xem");
+//        btnNewButton.setBounds(1130, 363, 276, 39);
+//        btnNewButton.addActionListener(e -> {
+//            textField_tim.setVisible(true);
+//            btn_tim.setVisible(true);
+//        });
+//        pnCenter.add(btnNewButton);
+       JButton btnNewButton = new JButton("Xem");
+       btnNewButton.setBounds(1130, 363, 276, 39);
+       btnNewButton.addActionListener(e -> {
+    	   textField_tim.setVisible(true);
+         btn_tim.setVisible(true);
+    	    // Kiểm tra xem người dùng đã chọn hàng trong bảng chưa
+    	    int selectedRow = tb_NhanVien.getSelectedRow(); // Sử dụng tb_NhanVien thay vì table
+    	    if (selectedRow != -1) {
+    	        // Lấy dữ liệu từ hàng được chọn
+    	        String maNV = tb_NhanVien.getValueAt(selectedRow, 0).toString(); // Cột 0: Mã nhân viên
+    	        String hoTenNV = tb_NhanVien.getValueAt(selectedRow, 1).toString(); // Cột 1: Họ tên
+    	        String ngaySinh = tb_NhanVien.getValueAt(selectedRow, 2).toString(); // Cột 2: Ngày sinh
+    	        String diaChi = tb_NhanVien.getValueAt(selectedRow, 3).toString(); // Cột 3: Địa chỉ
+    	        String sdt = tb_NhanVien.getValueAt(selectedRow, 4).toString(); // Cột 4: SĐT
+    	        String email = tb_NhanVien.getValueAt(selectedRow, 5).toString(); // Cột 5: Email
+    	        String cccd = tb_NhanVien.getValueAt(selectedRow, 6).toString(); // Cột 6: CCCD
+    	        String ngayVaoLam = tb_NhanVien.getValueAt(selectedRow, 7).toString(); // Cột 7: Ngày vào làm
+    	        Boolean trangThai = (Boolean) tb_NhanVien.getValueAt(selectedRow, 8); // Cột 8: Trạng thái
+    	        String gioiTinh = tb_NhanVien.getValueAt(selectedRow, 9).toString(); // Cột 9: Giới tính
+    	        String hinhAnhNV = tb_NhanVien.getValueAt(selectedRow, 10).toString(); // Cột 10: Hình ảnh
+    	        String maLoaiNV = tb_NhanVien.getValueAt(selectedRow, 11).toString(); // Cột 11: Mã loại NV
+
+    	        // Hiển thị cửa sổ chi tiết
+    	       // new XemThongTinNhanVien(maNV, hoTenNV, ngaySinh, diaChi, sdt, email, cccd, ngayVaoLam, trangThai, gioiTinh, hinhAnhNV, maLoaiNV);
+    	        new XemThongTinNhanVien(maNV, hoTenNV, ngaySinh, diaChi, sdt, email, cccd, trangThai, ngayVaoLam, gioiTinh, hinhAnhNV, maLoaiNV); }
+    	        else {
+    	        // Thông báo nếu chưa chọn hàng
+    	        JOptionPane.showMessageDialog(this, "Vui lòng chọn một nhân viên!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+    	    }
+    	});
+       pnCenter.add(btnNewButton);
 
         JButton btn_them = new JButton("Thêm");
         btn_them.setBounds(1130, 413, 89, 23);
@@ -161,7 +200,34 @@ public class NhanVien extends SimpleForm implements ActionListener {
         btnSua.addActionListener(e -> {
         textField_tim.setVisible(true);
         btn_tim.setVisible(true);
-        });
+       
+     	    // Kiểm tra xem người dùng đã chọn hàng trong bảng chưa
+     	    int selectedRow = tb_NhanVien.getSelectedRow(); // Sử dụng tb_NhanVien thay vì table
+     	    if (selectedRow != -1) {
+     	        // Lấy dữ liệu từ hàng được chọn
+     	        String maNV = tb_NhanVien.getValueAt(selectedRow, 0).toString(); // Cột 0: Mã nhân viên
+     	        String hoTenNV = tb_NhanVien.getValueAt(selectedRow, 1).toString(); // Cột 1: Họ tên
+     	        String ngaySinh = tb_NhanVien.getValueAt(selectedRow, 2).toString(); // Cột 2: Ngày sinh
+     	        String diaChi = tb_NhanVien.getValueAt(selectedRow, 3).toString(); // Cột 3: Địa chỉ
+     	        String sdt = tb_NhanVien.getValueAt(selectedRow, 4).toString(); // Cột 4: SĐT
+     	        String email = tb_NhanVien.getValueAt(selectedRow, 5).toString(); // Cột 5: Email
+     	        String cccd = tb_NhanVien.getValueAt(selectedRow, 6).toString(); // Cột 6: CCCD
+     	        String ngayVaoLam = tb_NhanVien.getValueAt(selectedRow, 7).toString(); // Cột 7: Ngày vào làm
+     	        Boolean trangThai = (Boolean) tb_NhanVien.getValueAt(selectedRow, 8); // Cột 8: Trạng thái
+     	        String gioiTinh = tb_NhanVien.getValueAt(selectedRow, 9).toString(); // Cột 9: Giới tính
+     	        String hinhAnhNV = tb_NhanVien.getValueAt(selectedRow, 10).toString(); // Cột 10: Hình ảnh
+     	        String maLoaiNV = tb_NhanVien.getValueAt(selectedRow, 11).toString(); // Cột 11: Mã loại NV
+
+     	        // Hiển thị cửa sổ chi tiết
+     	       // new XemThongTinNhanVien(maNV, hoTenNV, ngaySinh, diaChi, sdt, email, cccd, ngayVaoLam, trangThai, gioiTinh, hinhAnhNV, maLoaiNV);
+     	       new CapNhatNhanVien(maNV, hoTenNV, ngaySinh, diaChi, sdt, email, cccd, ngayVaoLam, trangThai, gioiTinh, hinhAnhNV, maLoaiNV).setVisible(true);
+ }
+     	        else {
+     	        // Thông báo nếu chưa chọn hàng
+     	        JOptionPane.showMessageDialog(this, "Vui lòng chọn một nhân viên!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+     	    }
+     	});
+       
         pnCenter.add(btnSua);
         
         
@@ -222,10 +288,48 @@ public class NhanVien extends SimpleForm implements ActionListener {
         return pnLoc;
     }
 
-    private Object filterNhanVien() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    private void filterNhanVien() {
+        // Lấy giá trị được chọn từ ComboBox
+        String selectedLoai = (String) cb_LocTheoLoai.getSelectedItem();
+        
+        // Xóa dữ liệu hiện tại trong bảng
+        dftb_NhanVien.setRowCount(0);
+        
+        // Gọi phương thức DAO để lấy danh sách nhân viên phù hợp
+        List<NhanVien_entity> filteredNhanVienList;
+        
+        if (selectedLoai.equals("Tất cả")) {
+            // Lấy tất cả nhân viên nếu chọn "Tất cả"
+            filteredNhanVienList = nv_dao.getAllNhanVien();
+        } else {
+            // Lấy danh sách nhân viên theo loại (Quản lý hoặc Nhân viên)
+            filteredNhanVienList = nv_dao.getNhanVienTheoLoai(selectedLoai, selectedLoai);
+        }
+
+        // Đổ dữ liệu vào bảng
+        for (NhanVien_entity nv : filteredNhanVienList) {
+            dftb_NhanVien.addRow(new Object[]{
+                nv.getMaNV(),
+                nv.getHoTenNV(),
+                nv.getNgaySinh(),
+                nv.getDiaChi(),
+                nv.getSdt(),
+                nv.getEmail(),
+                nv.getCccd(),
+                nv.getNgayVaoLam(),
+                nv.isTrangThai(),
+                nv.getGioiTinh(),
+                nv.getHinhAnhNV(),
+                nv.getMaLoaiNV()
+            });
+        }
+
+        // Hiển thị thông báo nếu không có dữ liệu nào được tìm thấy
+        if (filteredNhanVienList.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên nào phù hợp!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
 
 	private void loadNhanVienData() {
         dftb_NhanVien.setRowCount(0);
@@ -238,6 +342,7 @@ public class NhanVien extends SimpleForm implements ActionListener {
                 nv.getNgaySinh(),
                 nv.getDiaChi(),
                 nv.getSdt(),
+                nv.getEmail(),
                 nv.getCccd(),
                 nv.getNgayVaoLam(),
                 nv.isTrangThai(),
@@ -268,6 +373,7 @@ public class NhanVien extends SimpleForm implements ActionListener {
 	            nv.getNgaySinh(),
 	            nv.getDiaChi(),
 	            nv.getSdt(),
+	            nv.getEmail(),
 	            nv.getCccd(),
 	            nv.getNgayVaoLam(),
 	            nv.isTrangThai(),
@@ -296,6 +402,7 @@ public class NhanVien extends SimpleForm implements ActionListener {
 	            nv.getNgaySinh().toString(),  // Chuyển LocalDate sang String nếu cần
 	            nv.getDiaChi(),
 	            nv.getSdt(),
+	            nv.getEmail(),
 	            nv.getCccd(),
 	            nv.getNgayVaoLam().toString(), // Chuyển LocalDate sang String nếu cần
 	            nv.isTrangThai(),
@@ -357,6 +464,17 @@ public class NhanVien extends SimpleForm implements ActionListener {
 //             themNhanVienFrame.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên để sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    private void XemThongTinNhanVien() {
+        int selectedRow = tb_NhanVien.getSelectedRow();
+        if (selectedRow != -1) {
+            String maNV = (String) dftb_NhanVien.getValueAt(selectedRow, 0);
+//             Open update dialog and pass employee ID
+//             themNV themNhanVienFrame = new themNV(maNV);
+//             themNhanVienFrame.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên để xem!", "Thông báo", JOptionPane.WARNING_MESSAGE);
         }
     }
 

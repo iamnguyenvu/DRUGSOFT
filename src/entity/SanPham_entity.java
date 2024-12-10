@@ -21,6 +21,16 @@ public class SanPham_entity {
 		super();
 	}
 	
+
+	
+	public SanPham_entity(String maSP, String tenSP) {
+		super();
+		this.maSP = maSP;
+		this.tenSP = tenSP;
+	}
+
+
+
 	public SanPham_entity(String maSP, String tenSP, double khoiLuong, String donViTinh, String nhaCungCap, double gia,
 			String thanhPhan, String congDung, String hinhAnhSP, LoaiSanPham_entity loaiSanPham, double thue,
 			double giaNhap) {

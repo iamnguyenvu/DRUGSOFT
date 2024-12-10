@@ -10,6 +10,7 @@ import nguyenvu.model.DoanhSoBanHangModalData;
 import nguyenvu.model.ModalDataSoLuongGiaoDich;
 import nguyenvu.model.ModelData;
 import nguyenvu.model.ModelDataSP;
+import nguyenvu.model.ModelUser;
 import raven.alerts.MessageAlerts;
 
 import java.awt.Color;
@@ -67,11 +68,12 @@ public class DoanhSoBanHang extends SimpleForm{
     private Chart chart;
 	private JPanel pnCenter;
 	private ThongKe_DAO tk_Dao;
-
+	private ModelUser user;
 	/**
      * Creates new form Main
      */
-    public DoanhSoBanHang(int time) {
+    public DoanhSoBanHang(int time,ModelUser user) {
+    	this.user = user;
     	tk_Dao = new ThongKe_DAO();
 		setPreferredSize(new Dimension(1041, 668));
         initComponents();
@@ -83,15 +85,16 @@ public class DoanhSoBanHang extends SimpleForm{
         chart.addLegend("Doanh Thu", new Color(245, 189, 135));
         chart.addLegend("Chi Phí", new Color(135, 189, 245));
         chart.addLegend("Lợi Nhuận", new Color(189, 135, 245));
-        themData(time);
+        themData(time,user.getUserName());
         chart.start();
     }
     /**
      * @wbp.parser.constructor
      */
-    public DoanhSoBanHang(java.sql.Date ngayBatDau, java.sql.Date ngayKetThuc) {
+    public DoanhSoBanHang(java.sql.Date ngayBatDau, java.sql.Date ngayKetThuc,ModelUser user) {
+    	this.user = user;
     	tk_Dao = new ThongKe_DAO();
-		setPreferredSize(new Dimension(1041, 668));
+		setPreferredSize(new Dimension(1093, 668));
         initComponents();
         setBackground(new Color(240, 240, 240,0));
         setLayout(null);
@@ -101,7 +104,7 @@ public class DoanhSoBanHang extends SimpleForm{
         chart.addLegend("Doanh Thu", new Color(245, 189, 135));
         chart.addLegend("Chi Phí", new Color(135, 189, 245));
         chart.addLegend("Lợi Nhuận", new Color(189, 135, 245));
-        themData(ngayBatDau, ngayKetThuc);
+        themData(ngayBatDau, ngayKetThuc,user.getUserName());
         chart.start();
     }
 
@@ -109,20 +112,20 @@ public class DoanhSoBanHang extends SimpleForm{
     private void initComponents() {
         
         pnCenter = new JPanel();
+        pnCenter.setBounds(0, 0, 1093, 668);
         pnCenter.setBackground(new Color(240, 240, 240,0));
-        pnCenter.setBounds(0, 0, 1500, 668);
         pnCenter.setLayout(null);
                 
                         chart = new com.raven.chart.Chart();
                         chart.setBackground(new Color(255, 255, 255));
-                        chart.setBounds(0, 0, 1040, 668);
+                        chart.setBounds(0, 0, 1092, 668);
                         pnCenter.add(chart);
                         
                                 chart.setFont(new Font("Arial", Font.PLAIN, 12));
     }
 
-    public void themData(int time) {
-    	java.util.List<DoanhSoBanHangModalData> lists = tk_Dao.layDoanhSoBanHangTQTheoThoiGian(time);
+    public void themData(int time,String userID) {
+    	java.util.List<DoanhSoBanHangModalData> lists = tk_Dao.layDoanhSoBanHangTQTheoThoiGian(time,userID);
             chart.clear();
             for (DoanhSoBanHangModalData data : lists) {
             	ModelChart mdChart = new ModelChart(data.getThang(),new double[] {data.getTongDoanhThu(),data.getTongChiPhi(),data.getLoiNhuan()});
@@ -130,9 +133,9 @@ public class DoanhSoBanHang extends SimpleForm{
             }
             chart.start();
     }
-    public void themData(java.sql.Date ngayBatDau,java.sql.Date ngayKetThuc) {
+    public void themData(java.sql.Date ngayBatDau,java.sql.Date ngayKetThuc,String userID) {
     	java.util.List<DoanhSoBanHangModalData> lists = new ArrayList<DoanhSoBanHangModalData>();
-    		 lists = tk_Dao.layDoanhSoBanHangTQTheoThoiGian(ngayBatDau, ngayKetThuc);
+    		 lists = tk_Dao.layDoanhSoBanHangTQTheoThoiGian(ngayBatDau, ngayKetThuc,userID);
        
             chart.clear();
             for (DoanhSoBanHangModalData data : lists) {
