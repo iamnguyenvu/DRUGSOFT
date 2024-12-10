@@ -214,7 +214,7 @@ public class ThongKeTongQuan extends SimpleForm {
         jLabel7.setText("TỔNG DOANH THU");
 
         lblValuesSumDoanhThu.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblValuesSumDoanhThu.setForeground(new java.awt.Color(96, 196, 235));
+        lblValuesSumDoanhThu.setForeground(new java.awt.Color(0, 204, 51));
         lblValuesSumDoanhThu.setText("8,888,888,888.0");
 
         lblChangeDoanhThu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -590,7 +590,7 @@ public class ThongKeTongQuan extends SimpleForm {
         lineChart2.getChartColor().addColor(Color.decode("#efff1f"), Color.decode("#8FDBF9"));
         lineChart2.startAnimation();
         
-        lblValuesSumDoanhThu.setText(df.format(sumCurrentDoanhThu) + "VND");
+        lblValuesSumDoanhThu.setText(df.format(sumCurrentDoanhThu) + " VND");
         
         double percent;
         if (sumPrevDoanhThu == 0) {
@@ -620,7 +620,7 @@ public class ThongKeTongQuan extends SimpleForm {
             lblChangeDoanhThu.setForeground(new Color(51,204,0));
         } 
         else {
-            lbllIconDoanhThu.setIcon(createIcon("gui/icon/arrow-down.svg", 0.5f));
+            lbllIconDoanhThu.setIcon(createIcon("gui/icon/arrow-down.svg", 0.4f));
             lblChangeDoanhThu.setForeground(new Color(255,0,0));
         }
     }
