@@ -711,6 +711,7 @@ public class ThongKeTongQuan extends SimpleForm {
         
         for (ModelKhachHangMoi data : datas) {
             sumQuantity += data.getSoLuong();
+            System.out.println("data.getSoLuong(): " + data.getSoLuong());
             chart1.addData(new com.raven.chart.ModelChart(String.valueOf(data.getDate()), new double[] {data.getSoLuong()}));
         }
         
