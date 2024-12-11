@@ -48,22 +48,20 @@ import java.awt.Insets;
 import java.awt.Label;
 import java.awt.CardLayout;
 
-public class ThongKeDoanhThu_GUI extends SimpleForm implements ActionListener{
+public class ThongKeNhanVien_GUI extends SimpleForm implements ActionListener{
 
     private static final long serialVersionUID = 1L;
 	private JComboBox cb_SelectedTime;
-	private JRadioButton radio_DoanhSoBHTQ;
 	private JPanel pnChart;
-	private JRadioButton radio_SoLuongGDTQ;
-	private ModelUser user;
+	private JRadioButton radio_DoanhSoBHNV;
+	private JRadioButton radio_SoLuongGDNV;
 //	private int YearCur;
 //	private int YearPre;
 
     /**
      * Create the panel.
      */
-    public ThongKeDoanhThu_GUI(ModelUser user) {
-    	this.user = user;
+    public ThongKeNhanVien_GUI() {
         setPreferredSize(new Dimension(1470, 730));
         setLayout(new BorderLayout(0, 0));
         
@@ -91,7 +89,7 @@ public class ThongKeDoanhThu_GUI extends SimpleForm implements ActionListener{
         JPanel pnController = new JPanel();
         pnController.setLayout(null);
         pnController.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        pnController.setBounds(1103, 62, 357, 367);
+        pnController.setBounds(1103, 62, 357, 374);
         pnCenter.add(pnController);
         
         cb_SelectedTime = new JComboBox();
@@ -107,23 +105,23 @@ public class ThongKeDoanhThu_GUI extends SimpleForm implements ActionListener{
         cb_SelectedTime.addItem("Tùy Chỉnh");
         JPanel panel = new JPanel();
         panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-        panel.setBounds(10, 201, 325, 151);
+        panel.setBounds(10, 201, 325, 162);
         pnController.add(panel);
         panel.setLayout(null);
         
-        radio_DoanhSoBHTQ = new JRadioButton("Doanh Số Bán Hàng Tổng Quan");
-        radio_DoanhSoBHTQ.setBounds(6, 6, 267, 66);
-        radio_DoanhSoBHTQ.setFont(new Font("Serif", Font.PLAIN, 18));
-        panel.add(radio_DoanhSoBHTQ);
+        radio_DoanhSoBHNV = new JRadioButton("Doanh Số Bán Hàng Nhân Viên");
+        radio_DoanhSoBHNV.setBounds(6, 6, 261, 66);
+        radio_DoanhSoBHNV.setFont(new Font("Serif", Font.PLAIN, 18));
+        panel.add(radio_DoanhSoBHNV);
         
-        radio_SoLuongGDTQ = new JRadioButton("Số Lượng Giao Dich Tổng Quan");
-        radio_SoLuongGDTQ.setBounds(1, 72, 267, 66);
-        radio_SoLuongGDTQ.setFont(new Font("Serif", Font.PLAIN, 18));
-        panel.add(radio_SoLuongGDTQ);
+        radio_SoLuongGDNV = new JRadioButton("Số Lượng Giao Dịch Nhân Viên");
+        radio_SoLuongGDNV.setBounds(6, 74, 263, 71);
+        radio_SoLuongGDNV.setFont(new Font("Serif", Font.PLAIN, 18));
+        panel.add(radio_SoLuongGDNV);
         
         ButtonGroup btnGroup = new ButtonGroup();
-        btnGroup.add(radio_DoanhSoBHTQ);
-        btnGroup.add(radio_SoLuongGDTQ);
+        btnGroup.add(radio_DoanhSoBHNV);
+        btnGroup.add(radio_SoLuongGDNV);
         
         JPanel panel_2 = new JPanel();
         panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -149,73 +147,67 @@ public class ThongKeDoanhThu_GUI extends SimpleForm implements ActionListener{
                 pnChart.removeAll();
 
                 // Kiểm tra xem radio nào được chọn và cập nhật giao diện tương ứng
-                if (radio_DoanhSoBHTQ.isSelected()) {
-                    if (selectedTime.equals("7 Ngày Qua")) {
-                        pnChart.add(new DoanhSoBanHang(7,user));
+                if (radio_DoanhSoBHNV.isSelected()) {
+                	if (selectedTime.equals("7 Ngày Qua")) {
+                        pnChart.add(new ThongKeDoanhSoBanHangCuaNhanVien(7));
                     } else if (selectedTime.equals("30 Ngày Qua")) {
-                        pnChart.add(new DoanhSoBanHang(30,user));
+                        pnChart.add(new ThongKeDoanhSoBanHangCuaNhanVien(30));
                     } else if (selectedTime.equals("90 Ngày Qua")) {
-                        pnChart.add(new DoanhSoBanHang(90,user));
-                    }else if (selectedTime.equals("365 Ngày Qua")) {
-                        pnChart.add(new DoanhSoBanHang(365,user));
-                    }else if (selectedTime.equals("Toàn Thời Gian")) {
-                        pnChart.add(new DoanhSoBanHang(0,user));
-                    }else if (selectedTime.equals("Năm Hiện Tại")) {
-                        pnChart.add(new DoanhSoBanHang(1,user));
-                    }else if (selectedTime.equals("Tùy Chỉnh")) {
-                    	showCustomDateRange();
-                    }
-                    else {
-                        pnChart.add(new DoanhSoBanHang(7,user)); // Mặc định (tất cả thời gian)
-                    }
-                } 
-                else if (radio_SoLuongGDTQ.isSelected()) {
-                    if (selectedTime.equals("7 Ngày Qua")) {
-                        pnChart.add(new ThongKeSoLuongGiaoDichTongQuan(7,user));
-                    } else if (selectedTime.equals("30 Ngày Qua")) {
-                        pnChart.add(new ThongKeSoLuongGiaoDichTongQuan(30,user));
-                    } else if (selectedTime.equals("90 Ngày Qua")) {
-                        pnChart.add(new ThongKeSoLuongGiaoDichTongQuan(90,user));
+                        pnChart.add(new ThongKeDoanhSoBanHangCuaNhanVien(90));
                     } else if (selectedTime.equals("365 Ngày Qua")) {
-                        pnChart.add(new ThongKeSoLuongGiaoDichTongQuan(365,user));
+                        pnChart.add(new ThongKeDoanhSoBanHangCuaNhanVien(365));
                     } else if (selectedTime.equals("Toàn Thời Gian")) {
-                        pnChart.add(new ThongKeSoLuongGiaoDichTongQuan(0,user));
+                        pnChart.add(new ThongKeDoanhSoBanHangCuaNhanVien(0));
                     }else if (selectedTime.equals("Năm Hiện Tại")) {
-                        pnChart.add(new ThongKeSoLuongGiaoDichTongQuan(1,user));
+                        pnChart.add(new ThongKeDoanhSoBanHangCuaNhanVien(1));
                     }else if (selectedTime.equals("Tùy Chỉnh")) {
                     	showCustomDateRange();
                     }else {
-                        pnChart.add(new ThongKeSoLuongGiaoDichTongQuan(7,user)); // Mặc định (tất cả thời gian)
+                        pnChart.add(new ThongKeDoanhSoBanHangCuaNhanVien(7)); 
                     }
                 }
-               
+                else if (radio_SoLuongGDNV.isSelected()) {
+                	if (selectedTime.equals("7 Ngày Qua")) {
+                        pnChart.add(new ThongKeSoLuongGiaoDichCuaNhanVien(7));
+                    } else if (selectedTime.equals("30 Ngày Qua")) {
+                        pnChart.add(new ThongKeSoLuongGiaoDichCuaNhanVien(30));
+                    } else if (selectedTime.equals("90 Ngày Qua")) {
+                        pnChart.add(new ThongKeSoLuongGiaoDichCuaNhanVien(90));
+                    } else if (selectedTime.equals("365 Ngày Qua")) {
+                        pnChart.add(new ThongKeSoLuongGiaoDichCuaNhanVien(365));
+                    } else if (selectedTime.equals("Toàn Thời Gian")) {
+                        pnChart.add(new ThongKeSoLuongGiaoDichCuaNhanVien(0));
+                    }else if (selectedTime.equals("Năm Hiện Tại")) {
+                        pnChart.add(new ThongKeSoLuongGiaoDichCuaNhanVien(1));
+                    }else if (selectedTime.equals("Tùy Chỉnh")) {
+                    	showCustomDateRange();
+                    }else {
+                        pnChart.add(new ThongKeSoLuongGiaoDichCuaNhanVien(7)); 
+                    }
+                }
 
                 // Cập nhật lại giao diện
                 pnChart.revalidate();
                 pnChart.repaint();
             }
         });
-
-        // Thêm ActionListener cho radio_DoanhSoBHTQ
-        radio_DoanhSoBHTQ.addActionListener(new ActionListener() {
-            @Override
+        radio_DoanhSoBHNV.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                pnChart.removeAll();
-                pnChart.add(new DoanhSoBanHang(7,user));
-
-                // Cập nhật lại giao diện
+                pnChart.removeAll(); // Xóa thành phần cũ
+                pnChart.setLayout(new CardLayout(0, 0));
+                pnChart.add(new ThongKeDoanhSoBanHangCuaNhanVien(7));
                 pnChart.revalidate();
                 pnChart.repaint();
             }
         });
-
-
-        radio_SoLuongGDTQ.addActionListener(e -> {
-            pnChart.removeAll(); // Xóa thành phần cũ
-            pnChart.setLayout(new CardLayout(0, 0));
-            pnChart.add(new ThongKeSoLuongGiaoDichTongQuan(1,user));
-            pnChart.revalidate();
-            pnChart.repaint();
+        radio_SoLuongGDNV.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                pnChart.removeAll(); // Xóa thành phần cũ
+                pnChart.setLayout(new CardLayout(0, 0));
+                pnChart.add(new ThongKeSoLuongGiaoDichCuaNhanVien(7));
+                pnChart.revalidate();
+                pnChart.repaint();
+            }
         });
         
         
@@ -290,11 +282,11 @@ public class ThongKeDoanhThu_GUI extends SimpleForm implements ActionListener{
 	                cb_SelectedTime.setSelectedItem(customDateRange);
 	                cb_SelectedTime.setEditable(false);
 
-	                if(radio_DoanhSoBHTQ.isSelected()) {
-	                	pnChart.add(new DoanhSoBanHang(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()),user));
+	                if(radio_DoanhSoBHNV.isSelected()) {
+	                	pnChart.add(new ThongKeDoanhSoBanHangCuaNhanVien(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime())));
 	                }
-	                if(radio_SoLuongGDTQ.isSelected()) {
-	                	pnChart.add(new ThongKeSoLuongGiaoDichTongQuan(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime()),user));
+	                if(radio_SoLuongGDNV.isSelected()) {
+	                	pnChart.add(new ThongKeSoLuongGiaoDichCuaNhanVien(new java.sql.Date(startDate.getTime()), new java.sql.Date(endDate.getTime())));
 	                }
 
 	                dialog.dispose();

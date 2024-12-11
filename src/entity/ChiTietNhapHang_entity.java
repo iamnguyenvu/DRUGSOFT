@@ -12,6 +12,7 @@ public class ChiTietNhapHang_entity {
 	public ChiTietNhapHang_entity() {
 		super();
 	}
+	
 	public ChiTietNhapHang_entity(NhapHang_entity nhapHang, SanPham_entity sanPham, LocalDate ngaySanXuat,
 			LocalDate ngayHetHan, int soLuong, double thanhTien) {
 		super();
