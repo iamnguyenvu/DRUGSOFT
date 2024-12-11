@@ -40,7 +40,7 @@ import entity.ChiTietNhapHang_entity;
 import entity.HoaDonDoiTra_entity;
 import entity.LoaiSanPham_entity;
 import entity.NhapHang_entity;
-import entity.SanPhamDoiTra;
+import entity.ChiTietHoaDonDoiTra_entity;
 import entity.SanPham_entity;
 import nguyenvu.components.SimpleForm;
 import nguyenvu.utils.HeaderRenderer;
@@ -136,7 +136,7 @@ public class FormXemChiTietHoaDonDoiTra extends SimpleForm implements ActionList
 		panel.add(lblTienTraLai);
 
 		
-		String[] columnNames = { "Mã Đổi Trả", "Tên Sản Phẩm", "Số Lượng", "Chiết Khấu", "Thành Tiền", "Loại Đổi Trả","Trạng Thái"};
+		String[] columnNames = { "Mã Đổi Trả", "Tên Sản Phẩm", "Số Lượng", "Chiết Khấu", "Thành Tiền", "Loại Đổi Trả"};
 
 		dftb = new DefaultTableModel(columnNames, 0); // columnNames là mảng chứa tên cột
 		
@@ -252,15 +252,15 @@ public class FormXemChiTietHoaDonDoiTra extends SimpleForm implements ActionList
     private void loadDataToTable(String key) {
         // Lấy mô hình của bảng
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        ArrayList<SanPhamDoiTra> list = hddt_DAO.timKiemSPDT(key);
+        ArrayList<ChiTietHoaDonDoiTra_entity> list = hddt_DAO.timKiemCTHĐT(key);
         
         // Xóa dữ liệu cũ
         model.setRowCount(0);
 
         // Duyệt qua danh sách và thêm từng dòng vào bảng
 //        "Mã Nhập Hàng", "Mã Sản Phẩm", "Ngày Sản Xuất", "Ngày Hết Hạn", "Số Lượng", "Thành Tiền
-        for (SanPhamDoiTra data : list) {
-            model.addRow(new Object[] {data.getMaDT(),data.getTenSP(),data.getSoLuong(),data.getChietKhau(),data.getThanhTien(),data.getLoaiDoiTra(),data.getTrangThai()});
+        for (ChiTietHoaDonDoiTra_entity data : list) {
+            model.addRow(new Object[] {data.getMaDT(),data.getTenSP(),data.getSoLuong(),data.getChietKhau(),data.getThanhTien(),data.getLoaiDoiTra()});
         }
     }
 

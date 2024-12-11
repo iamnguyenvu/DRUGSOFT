@@ -8,7 +8,7 @@ import connectDB.connectDB;
 import entity.HoaDonDoiTra_entity;
 import entity.HoaDon_entity;
 import entity.NhapHang_entity;
-import entity.SanPhamDoiTra;
+import entity.ChiTietHoaDonDoiTra_entity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -111,13 +111,12 @@ public class HoaDonDoiTra_DAO {
         }
         return null;
     }
-    public ArrayList<SanPhamDoiTra> timKiemSPDT(String key) {
-        ArrayList<SanPhamDoiTra> listSP = new ArrayList<>();
+    public ArrayList<ChiTietHoaDonDoiTra_entity> timKiemCTHĐT(String key) {
+        ArrayList<ChiTietHoaDonDoiTra_entity> listSP = new ArrayList<>();
         
-        String sql = "SELECT spdt.maDT, tenSP,spdt.soLuong,ngayDoiTra,chietKhau,thanhTien,loaiDoiTra,trangThai\r\n"
-        		+ "FROM SanPhamDoiTra spdt JOIN HoaDonDoiTra hddt on spdt.maDT = hddt.maDT \r\n"
-        		+ "JOIN SanPham sp on sp.maSP = spdt.maSP\r\n"
-        		+ "where spdt.maDT = ?";
+        String sql = "SELECT maDT, sp.tenSP,cthd.soLuong,chietKhau,thanhTien,loaiDoiTra\r\n"
+        		+ "FROM ChiTietHoaDonDoiTra cthd join SanPham sp on cthd.maSP = sp.maSP\r\n"
+        		+ "where maDT = ?";
         try (Connection con = connectDB.accessDataBase();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -126,15 +125,13 @@ public class HoaDonDoiTra_DAO {
             try (ResultSet rs = ps.executeQuery()) {
             	while (rs.next()) {
                     String maDT = rs.getString("maDT");
-                    String maSP = rs.getString("tenSP");
+//                    String maSP = rs.getString("maSP");
+                    String tenSP = rs.getString("tenSP");
                     int soLuong = rs.getInt("soLuong");
-                    LocalDateTime ngayDoiTra = rs.getTimestamp("ngayDoiTra").toLocalDateTime();
                     double chietKhau = rs.getDouble("chietKhau");
                     double thanhTien = rs.getDouble("thanhTien");
-                    String loaiDoiTra = rs.getString("loaiDoiTra");
-                    String trangThai = rs.getString("trangThai");
-
-                    SanPhamDoiTra spdt = new SanPhamDoiTra(maDT, soLuong, maSP, trangThai, chietKhau, thanhTien, loaiDoiTra);
+                    String loaidoitra = rs.getString("loaiDoiTra");
+                    ChiTietHoaDonDoiTra_entity spdt = new ChiTietHoaDonDoiTra_entity(maDT, tenSP, soLuong, chietKhau, thanhTien, loaidoitra);
                     listSP.add(spdt);
                 }
             }
@@ -148,8 +145,8 @@ public class HoaDonDoiTra_DAO {
 
     	int tongSoLuong = 0;
         String sql = "SELECT SUM(soLuong) AS tongSoLuong\r\n"
-        		+ "FROM SanPhamDoiTra\r\n"
-        		+ "WHERE [loaiDoiTra]  = 'TraSanPham' AND maDT = ?";
+        		+ "FROM ChiTietHoaDonDoiTra\r\n"
+        		+ "WHERE [loaiDoiTra] = 'TraSanPham' AND maDT = ?";
         try (Connection con = connectDB.accessDataBase();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -170,7 +167,7 @@ public class HoaDonDoiTra_DAO {
 
     	int tongSoLuong = 0;
         String sql = "SELECT SUM(soLuong) AS tongSoLuong\r\n"
-        		+ "FROM SanPhamDoiTra\r\n"
+        		+ "FROM ChiTietHoaDonDoiTra\r\n"
         		+ "WHERE [loaiDoiTra]  = 'MuaSanPham' AND maDT = ?";
         try (Connection con = connectDB.accessDataBase();
              PreparedStatement ps = con.prepareStatement(sql)) {
