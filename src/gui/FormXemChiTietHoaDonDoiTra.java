@@ -260,7 +260,7 @@ public class FormXemChiTietHoaDonDoiTra extends SimpleForm implements ActionList
         // Duyệt qua danh sách và thêm từng dòng vào bảng
 //        "Mã Nhập Hàng", "Mã Sản Phẩm", "Ngày Sản Xuất", "Ngày Hết Hạn", "Số Lượng", "Thành Tiền
         for (SanPhamDoiTra_entity data : list) {
-            model.addRow(new Object[] {data.getMaDT(),data.getTenSP(),data.getSoLuong(),data.getChietKhau(),data.getThanhTien(),data.getLoaiDoiTra(),data.getTrangThai()});
+//            model.addRow(new Object[] {data.getMaDT(),data.getTenSP(),data.getSoLuong(),data.getThanhTien(),,data.getTrangThai()});
         }
     }
 

@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import raven.chart.ModelChart;
 import nguyenvu.components.SimpleForm;
+import nguyenvu.model.ModelKhachHangMoi;
 import nguyenvu.model.ModelLineChart;
 import nguyenvu.model.ModelTopKhachHang;
 import nguyenvu.model.ModelTopNhanVien;
@@ -68,6 +69,7 @@ public class ThongKeTongQuan extends SimpleForm {
                     
                     setDataLineChart(ThongKeTongQuan_DAO.DateRange.CUSTOM, dates[0], dates[1]);
                     setDataPieChart(ThongKeTongQuan_DAO.DateRange.CUSTOM, dates[0], dates[1]);
+                    setDataChart(ThongKeTongQuan_DAO.DateRange.CUSTOM, dates[0], dates[1]);
 
                 } else {
                     System.out.println("No dates selected!");
@@ -77,6 +79,7 @@ public class ThongKeTongQuan extends SimpleForm {
         
         setDataLineChart(ThongKeTongQuan_DAO.DateRange.LAST_30_DAYS, null, null);
         setDataPieChart(ThongKeTongQuan_DAO.DateRange.LAST_30_DAYS, null, null);
+        setDataChart(ThongKeTongQuan_DAO.DateRange.LAST_30_DAYS, null, null);
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -656,7 +659,7 @@ public class ThongKeTongQuan extends SimpleForm {
             lblIconTransactions.setIcon(createIcon("gui/icon/minus-gray.svg", 0.7f));
             lblChangeTransactions.setForeground(Color.GRAY);
         }
-        else if(percent > 0) {
+        else if(percentGiaoDich > 0) {
             lblIconTransactions.setIcon(createIcon("gui/icon/arrow-up.svg", 0.8f));
             lblChangeTransactions.setForeground(new Color(51,204,0));
         } 
@@ -698,6 +701,59 @@ public class ThongKeTongQuan extends SimpleForm {
         pieChart3.setDataset(dataset3);
         pieChart3.startAnimation();
     }
+    
+    private void setDataChart(ThongKeTongQuan_DAO.DateRange dateRange, LocalDate startDate, LocalDate endDate) {
+        ArrayList<ModelKhachHangMoi> datas = ThongKeTongQuan_DAO.getChartDataKhachHangMoi(dateRange, startDate, endDate);
+        ArrayList<ModelKhachHangMoi> prevDatas = ThongKeTongQuan_DAO.getChartPrevDataKhachHangMoi(dateRange, startDate, endDate);
+        
+        int sumQuantity = 0;
+        int sumPrevQuantity = 0;
+        
+        for (ModelKhachHangMoi data : datas) {
+            sumQuantity += data.getSoLuong();
+            chart1.addData(new com.raven.chart.ModelChart(String.valueOf(data.getDate()), new double[] {data.getSoLuong()}));
+        }
+        
+        for (ModelKhachHangMoi prevData : prevDatas) {
+            sumPrevQuantity += prevData.getSoLuong();  
+        }
+        
+        lblValuesCustomer.setText(df.format(sumQuantity));
+        
+        double percent;
+        if (sumPrevQuantity == 0) {
+            if (sumQuantity > 0) {
+                percent = 100; 
+            } else {
+                percent = 0; 
+            }
+        } else {
+            percent = ((sumQuantity - sumPrevQuantity) / sumPrevQuantity) * 100;
+        }
+        
+        System.out.println("Current Total Customer: " + sumQuantity);
+        System.out.println("Previous Total Customer: " + sumPrevQuantity);
+        System.err.println("Percent: " + percent);
+        
+
+        lblChangeCustomer.setText(df.format(Math.abs(sumPrevQuantity)) + "%");
+        
+        if(percent == 0) {
+            lblIconCustomer.setIcon(createIcon("gui/icon/minus-gray.svg", 0.7f));
+            lblChangeCustomer.setForeground(Color.GRAY);
+        }
+        else if(percent > 0) {
+            lblIconCustomer.setIcon(createIcon("gui/icon/arrow-up.svg", 0.8f));
+            lblChangeCustomer.setForeground(new Color(51,204,0));
+        } 
+        else {
+            lblIconCustomer.setIcon(createIcon("gui/icon/arrow-down.svg", 0.4f));
+            lblChangeCustomer.setForeground(new Color(255,0,0));
+        }
+        
+        chart1.start();
+    }
+    
     
     private Icon createIcon(String path, float scale) {
         FlatSVGIcon icon = new FlatSVGIcon(path, scale);
