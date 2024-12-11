@@ -16,6 +16,7 @@ public class ChiTietHoaDonDoiTra_entity {
 	
 
 
+
 	public String getMaSP() {
 		return maSP;
 	}
@@ -97,6 +98,7 @@ public class ChiTietHoaDonDoiTra_entity {
 		this.loaiDoiTra = loaiDoiTra;
 	}
 
+	
 	
 	
 	

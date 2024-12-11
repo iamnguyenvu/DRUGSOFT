@@ -11,26 +11,30 @@ import java.time.LocalDateTime;
  * @author HP
  */
 public class ModelSellTransaction {
-    private String role;
+    private String phanQuyen;
     private String tenNV;
-    private String type;
+    private String loaiHoaDon;
     private double thanhTien;
+    private double tienTraLai;
+    private double tienKhachTraThem;
     private LocalDateTime date;
 
-    public ModelSellTransaction(String role, String tenNV, String type, double thanhTien, LocalDateTime date) {
-        this.role = role;
+    public ModelSellTransaction(String phanQuyen, String tenNV, String loaiHoaDon, double thanhTien, double tienTraLai, double tienKhachTraThem, LocalDateTime date) {
+        this.phanQuyen = phanQuyen;
         this.tenNV = tenNV;
-        this.type = type;
+        this.loaiHoaDon = loaiHoaDon;
         this.thanhTien = thanhTien;
+        this.tienTraLai = tienTraLai;
+        this.tienKhachTraThem = tienKhachTraThem;
         this.date = date;
     }
 
-    public String getRole() {
-        return role;
+    public String getPhanQuyen() {
+        return phanQuyen;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setPhanQuyen(String phanQuyen) {
+        this.phanQuyen = phanQuyen;
     }
 
     public String getTenNV() {
@@ -41,12 +45,12 @@ public class ModelSellTransaction {
         this.tenNV = tenNV;
     }
 
-    public String getType() {
-        return type;
+    public String getLoaiHoaDon() {
+        return loaiHoaDon;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setLoaiHoaDon(String loaiHoaDon) {
+        this.loaiHoaDon = loaiHoaDon;
     }
 
     public double getThanhTien() {
@@ -57,6 +61,22 @@ public class ModelSellTransaction {
         this.thanhTien = thanhTien;
     }
 
+    public double getTienTraLai() {
+        return tienTraLai;
+    }
+
+    public void setTienTraLai(double tienTraLai) {
+        this.tienTraLai = tienTraLai;
+    }
+
+    public double getTienKhachTraThem() {
+        return tienKhachTraThem;
+    }
+
+    public void setTienKhachTraThem(double tienKhachTraThem) {
+        this.tienKhachTraThem = tienKhachTraThem;
+    }
+
     public LocalDateTime getDate() {
         return date;
     }
@@ -64,7 +84,7 @@ public class ModelSellTransaction {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
-    
+
     
     
 }

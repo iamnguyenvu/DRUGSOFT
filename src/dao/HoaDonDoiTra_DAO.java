@@ -9,6 +9,7 @@ import entity.HoaDonDoiTra_entity;
 import entity.HoaDon_entity;
 import entity.NhapHang_entity;
 import entity.ChiTietHoaDonDoiTra_entity;
+import entity.SanPhamDoiTra_entity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -68,8 +69,11 @@ public class HoaDonDoiTra_DAO {
             	LocalDateTime ngayDoiTra = rs.getTimestamp("ngayDoiTra").toLocalDateTime();
 	            double  tienTraLai = rs.getDouble("tienTraLai");
 	            double  tienKhachTraThem = rs.getDouble("tienKhachTraThem");
+	            String hhht = rs.getString("hinhThucThanhToan");
+	            String ghiChu = rs.getString("ghiChu");
+	            String maNV = rs.getString("maNV");
 
-	            HoaDonDoiTra_entity hd = new HoaDonDoiTra_entity(maDT, maHD, ngayDoiTra, tienTraLai, tienKhachTraThem);
+	            HoaDonDoiTra_entity hd = new HoaDonDoiTra_entity(maDT, maHD, ngayDoiTra, tienTraLai, tienKhachTraThem, hhht, ghiChu, maNV);
                 listSP.add(hd);
             }
         } catch (SQLException e) {
@@ -97,13 +101,17 @@ public class HoaDonDoiTra_DAO {
 
             try (ResultSet rs = ps.executeQuery()) {
             	while (rs.next()) {
-                    String maDT = rs.getString("maDT");
-                    String maHD = rs.getString("maHD");
-                    LocalDateTime ngayDoiTra = rs.getTimestamp("ngayDoiTra").toLocalDateTime();
-                    double tienTraLai = rs.getDouble("tienTraLai");
-                    double tienKhachTraThem = rs.getDouble("tienKhachTraThem");
+                	String maDT = rs.getString("maDT");
+                	String maHD = rs.getString("maHD");
+                	LocalDateTime ngayDoiTra = rs.getTimestamp("ngayDoiTra").toLocalDateTime();
+    	            double  tienTraLai = rs.getDouble("tienTraLai");
+    	            double  tienKhachTraThem = rs.getDouble("tienKhachTraThem");
+    	            String hhht = rs.getString("hinhThucThanhToan");
+    	            String ghiChu = rs.getString("ghiChu");
+    	            String maNV = rs.getString("maNV");
 
-                    return new HoaDonDoiTra_entity(maDT, maHD, ngayDoiTra, tienTraLai, tienKhachTraThem);
+    	            HoaDonDoiTra_entity hd = new HoaDonDoiTra_entity(maDT, maHD, ngayDoiTra, tienTraLai, tienKhachTraThem, hhht, ghiChu, maNV);
+                    return hd;
                 }
             }
         } catch (SQLException e) {
@@ -113,7 +121,7 @@ public class HoaDonDoiTra_DAO {
     }
     public ArrayList<ChiTietHoaDonDoiTra_entity> timKiemCTHĐT(String key) {
         ArrayList<ChiTietHoaDonDoiTra_entity> listSP = new ArrayList<>();
-        
+
         String sql = "SELECT maDT, sp.tenSP,cthd.soLuong,chietKhau,thanhTien,loaiDoiTra\r\n"
         		+ "FROM ChiTietHoaDonDoiTra cthd join SanPham sp on cthd.maSP = sp.maSP\r\n"
         		+ "where maDT = ?";
@@ -127,11 +135,13 @@ public class HoaDonDoiTra_DAO {
                     String maDT = rs.getString("maDT");
 //                    String maSP = rs.getString("maSP");
                     String tenSP = rs.getString("tenSP");
+
                     int soLuong = rs.getInt("soLuong");
                     double chietKhau = rs.getDouble("chietKhau");
                     double thanhTien = rs.getDouble("thanhTien");
                     String loaidoitra = rs.getString("loaiDoiTra");
                     ChiTietHoaDonDoiTra_entity spdt = new ChiTietHoaDonDoiTra_entity(maDT, tenSP, soLuong, chietKhau, thanhTien, loaidoitra);
+
                     listSP.add(spdt);
                 }
             }
