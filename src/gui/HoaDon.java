@@ -121,7 +121,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		        List<HoaDon_entity> filter = hd_Dao.timKiem(searchText); // Assume this method exists
 		        for (HoaDon_entity hd : filter) {
 		            df_HoaDon.addRow(new Object[]{
-		                hd.getMaHD(),hd.getNgayLapHD(),hd.getTongTien(),hd.getTienGiam(),hd.getHinhThucThanhToan(),hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành",hd.getSdtKH(),hd.getMaNV(),hd.getMaLoaiHoaDon()
+		                hd.getMaHD(),hd.getNgayLapHD(),hd.getTongTien(),hd.getTienGiam(),hd.getHinhThucThanhToan(),hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành",hd.getSdtKH(),hd.getMaNV()
 		                // Add actions for Update and Delete as necessary
 		            });
 		        }
@@ -138,7 +138,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		pnContent.add(pnCenter);
 		pnCenter.setLayout(null);
 		
-		String []collName = {"Mã Hóa Đơn","Ngày Lập","Tổng Tiền","Tiền Giảm","Hình Thức Thanh Toán","Trạng Thái","Mã Khách Hàng","Mã Nhân Viên","Mã Loại HD","Ghi Chú"};
+		String []collName = {"Mã Hóa Đơn","Ngày Lập","Tổng Tiền","Tiền Giảm","Hình Thức Thanh Toán","Trạng Thái","Mã Khách Hàng","Mã Nhân Viên","Ghi Chú"};
 				
 		df_HoaDon = new DefaultTableModel(collName, 0);
 		tb_HoaDon = new JTable(df_HoaDon);
@@ -245,7 +245,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 	private void docDuLieuVaoTable() {
 		List<HoaDon_entity> dshd = hd_Dao.getALLHoaDon();
 		for (HoaDon_entity hd : dshd) {
-			df_HoaDon.addRow(new Object[] {hd.getMaHD(),hd.getNgayLapHD(),hd.getTongTien(),hd.getTienGiam(),hd.getHinhThucThanhToan(),hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành",hd.getSdtKH(),hd.getMaNV(),hd.getMaLoaiHoaDon()});
+			df_HoaDon.addRow(new Object[] {hd.getMaHD(),hd.getNgayLapHD(),hd.getTongTien(),hd.getTienGiam(),hd.getHinhThucThanhToan(),hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành",hd.getSdtKH(),hd.getMaNV()});
 		}
 	}
 	private void locHoaDon() {
@@ -296,7 +296,6 @@ public class HoaDon extends SimpleForm implements ActionListener{
 	            hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành", // Hiển thị trạng thái bằng chuỗi
 	            hd.getSdtKH(),
 	            hd.getMaNV(),
-	            hd.getMaLoaiHoaDon()
 	        });
 	    }
 	}

@@ -8,6 +8,7 @@ public class HoaDonDoiTra_entity {
 	private LocalDateTime ngayDoiTra;
 	private double tienTraLai;
 	private double tienKhachtraThem;
+        
 	public HoaDonDoiTra_entity(String maDT, String maHD, LocalDateTime ngayDoiTra, double tienTraLai,
 			double tienKhachtraThem) {
 		super();
