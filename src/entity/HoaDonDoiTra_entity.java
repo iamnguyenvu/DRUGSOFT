@@ -27,29 +27,6 @@ public class HoaDonDoiTra_entity {
 		this.maNV = maNV;
 	}
 	
-	public String getHinhThucThanhToan() {
-		return hinhThucThanhToan;
-	}
-
-	public void setHinhThucThanhToan(String hinhThucThanhToan) {
-		this.hinhThucThanhToan = hinhThucThanhToan;
-	}
-
-	public String getGhiChu() {
-		return ghiChu;
-	}
-
-	public void setGhiChu(String ghiChu) {
-		this.ghiChu = ghiChu;
-	}
-
-	public String getMaNV() {
-		return maNV;
-	}
-
-	public void setMaNV(String maNV) {
-		this.maNV = maNV;
-	}
 
 	public String getMaDT() {
 		return maDT;
@@ -81,6 +58,32 @@ public class HoaDonDoiTra_entity {
 	public void setTienKhachtraThem(double tienKhachtraThem) {
 		this.tienKhachtraThem = tienKhachtraThem;
 	}
+
+    public String getHinhThucThanhToan() {
+        return hinhThucThanhToan;
+    }
+
+    public void setHinhThucThanhToan(String hinhThucThanhToan) {
+        this.hinhThucThanhToan = hinhThucThanhToan;
+    }
+
+    public String getGhiChu() {
+        return ghiChu;
+    }
+
+    public void setGhiChu(String ghiChu) {
+        this.ghiChu = ghiChu;
+    }
+
+    public String getMaNV() {
+        return maNV;
+    }
+
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
+    }
+        
+        
 	
 	
 }

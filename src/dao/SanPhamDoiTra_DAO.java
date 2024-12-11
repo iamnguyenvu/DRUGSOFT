@@ -95,7 +95,6 @@ public class SanPhamDoiTra_DAO {
 	        ResultSet rs = st.executeQuery(sql);
 	        while (rs.next()) {
             	SanPhamDoiTra_entity spdt = new SanPhamDoiTra_entity();
-
                 spdt.setMaDT(rs.getString("MaDT"));
                 spdt.setMaSP(rs.getString("maSP"));
                 spdt.setSoLuong(rs.getInt("soLuong"));
@@ -181,14 +180,12 @@ public class SanPhamDoiTra_DAO {
         return false;
     }
 
-
     public boolean processSanPhamDoiTraTransaction(List<ChiTietHoaDonDoiTra_entity> sanPhamDoiTraList) {
         String query = "INSERT INTO SanPhamDoiTra (maSP, MaDT, soLuong, chietKhau, thanhTien, loaiDoiTra) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             connection.setAutoCommit(false); // Start transaction
             try (PreparedStatement ps = connection.prepareStatement(query)) {
                 for (ChiTietHoaDonDoiTra_entity spdt : sanPhamDoiTraList) {
-
                 	ps.setString(1, spdt.getMaDT());
                     ps.setString(2, spdt.getMaSP());
                     ps.setDouble(3, spdt.getChietKhau());
@@ -292,7 +289,9 @@ public class SanPhamDoiTra_DAO {
 					
 					sp.setSoLuong(rs.getInt("soLuong"));
 					// sp.setVanDe(rs.getString("vanDe"));
+					sp.setChietKhau(rs.getDouble("chietKhau"));
 					sp.setThanhTien(rs.getDouble("thanhTien"));
+					sp.setLoaiDoiTra(rs.getString("loaiDoiTra"));
                 	
 
 //                    );

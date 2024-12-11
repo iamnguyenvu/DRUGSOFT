@@ -40,6 +40,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Action;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -477,6 +480,7 @@ public class SanPhamDoiTra extends SimpleForm {
         					.addGap(18)
         					.addComponent(jButton8, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
         					.addGap(10))))
+
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
@@ -498,11 +502,25 @@ public class SanPhamDoiTra extends SimpleForm {
         				.addComponent(btnFirst, 0, 0, Short.MAX_VALUE)
         				.addComponent(btnNext, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         			.addContainerGap(129, Short.MAX_VALUE))
+
         );
         this.setLayout(layout);
 
         pnHeader.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:0,0,0,0,$Component.borderColor,,20");
+    }
+
+    private void loadDataToTable() {
+        // Lấy mô hình của bảng
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        ArrayList<SanPhamDoiTra_entity> list = spdt_DAO.getAllSanPhamDoiTra();
+        // Xóa dữ liệu cũ
+        model.setRowCount(0);
+
+        // Duyệt qua danh sách và thêm từng dòng vào bảng"Mã đổi trả ", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Thành tiền", "Trạng thái", "Thao tác"
+        for (SanPhamDoiTra_entity data : list) {
+            model.addRow(new Object[] {data.getMaDT(),data.getMaSP(),data.getTenSP(),data.getSoLuong(),data.getThanhTien(),data.getTrangThai()});
+        }
     }
 
 //    private void loadDataToTable() {
