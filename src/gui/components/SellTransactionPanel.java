@@ -25,23 +25,31 @@ public class SellTransactionPanel extends javax.swing.JPanel{
     }
     
     public void setData(ModelSellTransaction data ) {
-        setColoredTextByLength(lblInfor, data.getRole(), data.getTenNV(), data.getType(), data.getThanhTien(), data.getDate(), lblIcon);
+        setColoredTextByLength(lblInfor, lblIcon, data);
         LocalDateTime invoiceDate = data.getDate(); 
         LocalDateTime now = LocalDateTime.now();
         long numberDay = ChronoUnit.DAYS.between(invoiceDate, now);
         lblCalDate.setText(numberDay + " ngày trước");
     }
     
-    public void setColoredTextByLength(JLabel label, String role, String tenNV, String type, Double thanhTien, LocalDateTime date, JLabel icon) {
+    public void setColoredTextByLength(JLabel label, JLabel icon, ModelSellTransaction data) {
+        String phanQuyen = data.getPhanQuyen();
+        String tenNV = data.getTenNV();
+        String loaiHoaDon = data.getLoaiHoaDon();
+        double thanhTien = data.getThanhTien();
+        double tienTraLai = data.getTienTraLai();
+        double tienKhachTraThem = data.getTienKhachTraThem();
+        LocalDateTime date = data.getDate();
+        
         DecimalFormat df = new DecimalFormat("#,##0.##");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         StringBuilder htmlText = new StringBuilder("<html>");
 
-        htmlText.append(String.format("<span style='color: black;'>%s</span> ", role));
+        htmlText.append(String.format("<span style='color: black;'>%s</span> ", phanQuyen));
         htmlText.append(String.format("<span style='color: #0B6588; font-weight: bold;'>%s</span> ", tenNV));
 
-        switch(type) {
-            case "BanSanPham":
+        switch(loaiHoaDon) {
+            case "Ban":
                 icon.setIcon(new FlatSVGIcon("gui/icon/sell.svg", 0.5f));
                 ((CircleLabel) icon).setBackground(new Color(11,101,136));
                 htmlText.append("<span style='color: black;'>đã tạo hóa đơn</span> ");
@@ -49,21 +57,21 @@ public class SellTransactionPanel extends javax.swing.JPanel{
                 htmlText.append("<span style='color: black;'>trị giá</span> ");
                 htmlText.append(String.format("<span style='color: black;font-weight: bold;'>%sđ</span> ", df.format(thanhTien)));
                 break;
-            case "DoiSanPham":
-                icon.setIcon(new FlatSVGIcon("gui/icon/exchange.svg", 0.5f));
+            case "DoiTra":
+                icon.setIcon(new FlatSVGIcon("gui/icon/refund.svg", 0.08f));
                 ((CircleLabel) icon).setBackground(new Color(255,102,51));
                 lblIcon.setBackground(new Color(255,102,51));
                 htmlText.append("<span style='color: black;'>đã tạo đơn</span> ");
-                htmlText.append("<span style='color: #0B6588;font-weight: bold;'>đổi sản phẩm</span> ");
-                break;
-            case "TraSanPham":
-                icon.setIcon(new FlatSVGIcon("gui/icon/refund.svg", 0.08f));
-                ((CircleLabel) icon).setBackground(new Color(255,51,51));
-                lblIcon.setBackground(new Color(255,51,51));
-                htmlText.append("<span style='color: black;'>đã tạo đơn</span> ");
-                htmlText.append("<span style='color: #0B6588;font-weight: bold;'>trả sản phẩm</span> ");
-                htmlText.append("<span style='color: black;'>hoàn</span> ");
-                htmlText.append(String.format("<span style='color: black;font-weight: bold;'>%sđ</span> ", df.format(thanhTien)));
+                htmlText.append("<span style='color: #0B6588;font-weight: bold;'>đổi trả sản phẩm</span> ");
+                
+                if(tienKhachTraThem > 0) {
+                    htmlText.append("<span style='color: black;'>khách bù thêm</span> ");
+                    htmlText.append(String.format("<span style='color: black;font-weight: bold;'>%sđ</span> ", df.format(tienKhachTraThem)));
+                }
+                else {
+                    htmlText.append("<span style='color: black;'>hoàn</span> ");
+                    htmlText.append(String.format("<span style='color: black;font-weight: bold;'>%sđ</span> ", df.format(tienTraLai)));
+                }
                 break;
             default:
                 htmlText.append("<span style='color: black;'>thực hiện giao dịch</span> ");

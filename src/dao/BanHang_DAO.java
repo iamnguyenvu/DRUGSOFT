@@ -122,7 +122,7 @@ public class BanHang_DAO {
         PreparedStatement stmt = null;
         int n = 0;
         try {
-                stmt = con.prepareStatement("INSERT INTO HoaDon VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                stmt = con.prepareStatement("INSERT INTO HoaDon VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 stmt.setString(1, hd.getMaHD());
                 stmt.setTimestamp(2, Timestamp.valueOf(hd.getNgayLapHD()));
                 stmt.setDouble(3, hd.getTongTien());
@@ -132,7 +132,6 @@ public class BanHang_DAO {
                 stmt.setString(7, hd.getGhiChu());
                 stmt.setString(8, hd.getSdtKH());
                 stmt.setString(9, hd.getMaNV());
-                stmt.setString(10, hd.getMaLoaiHoaDon());
                 n = stmt.executeUpdate();
         } catch (SQLException e) {
                 // TODO: handle exception

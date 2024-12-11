@@ -921,7 +921,7 @@ public class BanHang extends SimpleForm {
 
             LocalDateTime issueDate = LocalDateTime.parse(getCurrentDate(), formatter);
             
-            HoaDon_entity hd = new HoaDon_entity(invoiceCode, issueDate, thanhToan, discount, ptThanhToan, true, customerPhone, employeeId, "BanSanPham", ghiChu);
+            HoaDon_entity hd = new HoaDon_entity(invoiceCode, issueDate, thanhToan, discount, ptThanhToan, true, customerPhone, employeeId, ghiChu);
             if(!dao.createHD(hd)) {
                 MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);
                 return;

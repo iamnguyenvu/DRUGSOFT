@@ -43,17 +43,52 @@ public class ThongKeTongQuan_DAO {
         ArrayList<ModelLineChart> listData = new ArrayList<>();
 
         try {
-            ps = con.prepareStatement("select FORMAT(ngayLapHD, 'yyyy-MM-dd') AS ngay, \n" +
-            "	SUM(DISTINCT (tongTien - tienGiam)) as doanhThu, \n" +
-            "	SUM(giaNhap * CTHD.soLuongSanPham) as chiPhi, \n" +
-            "	SUM((thue * gia / 100) * CTHD.soLuongSanPham) as tongThue,\n" +
-            "	COUNT(DISTINCT CASE WHEN maLoaiHD = 'BanSanPham' THEN HD.maHD ELSE NULL END) AS slDonBan, \n" +
-            "    COUNT(DISTINCT CASE WHEN maLoaiHD = 'DoiSanPham' THEN HD.maHD ELSE NULL END) AS slDonDoi,\n" +
-            "    COUNT(DISTINCT CASE WHEN maLoaiHD = 'TraSanPham' THEN HD.maHD ELSE NULL END) AS slDonTra,\n" +
-            "    SUM(CTHD.soLuongSanPham) AS tongSoSPDaBan\n" +
-            "from HoaDon HD join ChiTietHoaDon CTHD on HD.maHD = CTHD.maHD join SanPham SP on CTHD.maSP = SP.maSP\n" +
-            "where ngayLapHD between ? and ?\n" +
-            "group by FORMAT(ngayLapHD, 'yyyy-MM-dd')");
+            ps = con.prepareStatement("SELECT \n" +
+                "    FORMAT(ngayLapHD, 'yyyy-MM-dd') AS ngay,\n" +
+                "    SUM(DISTINCT (tongTien - tienGiam)) AS doanhThu,\n" +
+                "    SUM(giaNhap * soLuongSanPham) AS chiPhi,\n" +
+                "    SUM((thue * gia / 100) * soLuongSanPham) AS tongThue,\n" +
+                "    \n" +
+                "    COUNT(DISTINCT CASE WHEN LoaiHoaDon = 'Ban' THEN 1 ELSE NULL END) AS slDonBan,\n" +
+                "    \n" +
+                "    COUNT(DISTINCT CASE WHEN LoaiHoaDon = 'DoiTra' THEN 1 ELSE NULL END) AS slDonDoiTra,\n" +
+                "    \n" +
+                "    SUM(soLuongSanPham) AS tongSoSPDaBan\n" +
+                "FROM (\n" +
+                "    SELECT \n" +
+                "        HD.maHD, \n" +
+                "        HD.ngayLapHD, \n" +
+                "        HD.tongTien, \n" +
+                "        HD.tienGiam, \n" +
+                "        SP.giaNhap, \n" +
+                "        SP.gia, \n" +
+                "        CTHD.soLuongSanPham, \n" +
+                "        SP.thue, \n" +
+                "        'Ban' AS LoaiHoaDon\n" +
+                "    FROM HoaDon HD\n" +
+                "    JOIN ChiTietHoaDon CTHD ON HD.maHD = CTHD.maHD\n" +
+                "    JOIN SanPham SP ON CTHD.maSP = SP.maSP\n" +
+                "    WHERE HD.ngayLapHD BETWEEN ? AND ?\n" +
+                "    \n" +
+                "    UNION ALL\n" +
+                "   \n" +
+                "    SELECT \n" +
+                "        HDDT.maHD, \n" +
+                "        HD.ngayLapHD, \n" +
+                "        HD.tongTien, \n" +
+                "        HD.tienGiam, \n" +
+                "        SP.giaNhap, \n" +
+                "        SP.gia, \n" +
+                "        CTHD.soLuongSanPham, \n" +
+                "        SP.thue, \n" +
+                "        'DoiTra' AS LoaiHoaDon\n" +
+                "    FROM HoaDonDoiTra HDDT\n" +
+                "    JOIN HoaDon HD ON HD.maHD = HDDT.maHD\n" +
+                "    JOIN ChiTietHoaDon CTHD ON HD.maHD = CTHD.maHD\n" +
+                "    JOIN SanPham SP ON CTHD.maSP = SP.maSP\n" +
+                "    WHERE HD.ngayLapHD BETWEEN ? AND ?\n" +
+                ") AS combined_results\n" +
+                "GROUP BY FORMAT(ngayLapHD, 'yyyy-MM-dd')");
             
             LocalDate finalStartDate = startDate;
             LocalDate finalEndDate = endDate;
@@ -92,6 +127,8 @@ public class ThongKeTongQuan_DAO {
             
             ps.setDate(1, java.sql.Date.valueOf(finalStartDate)); 
             ps.setDate(2, java.sql.Date.valueOf(finalEndDate));
+            ps.setDate(3, java.sql.Date.valueOf(finalStartDate)); 
+            ps.setDate(4, java.sql.Date.valueOf(finalEndDate));
             rs = ps.executeQuery();
             
             while (rs.next()) {
@@ -101,8 +138,7 @@ public class ThongKeTongQuan_DAO {
                         rs.getDouble("chiPhi"), 
                         rs.getDouble("tongThue"), 
                         rs.getInt("slDonBan"), 
-                        rs.getInt("slDonDoi"), 
-                        rs.getInt("slDonTra"), 
+                        rs.getInt("slDonDoiTra"),
                         rs.getInt("tongSoSPDaBan")
                 ));
             }
@@ -130,17 +166,52 @@ public class ThongKeTongQuan_DAO {
         ArrayList<ModelLineChart> listData = new ArrayList<>();
 
         try {
-            ps = con.prepareStatement("select FORMAT(ngayLapHD, 'yyyy-MM-dd') AS ngay, \n" +
-            "	SUM(DISTINCT (tongTien - tienGiam)) as doanhThu, \n" +
-            "	SUM(giaNhap * CTHD.soLuongSanPham) as chiPhi, \n" +
-            "	SUM((thue * gia / 100) * CTHD.soLuongSanPham) as tongThue,\n" +
-            "	COUNT(DISTINCT CASE WHEN maLoaiHD = 'BanSanPham' THEN HD.maHD ELSE NULL END) AS slDonBan, \n" +
-            "    COUNT(DISTINCT CASE WHEN maLoaiHD = 'DoiSanPham' THEN HD.maHD ELSE NULL END) AS slDonDoi,\n" +
-            "    COUNT(DISTINCT CASE WHEN maLoaiHD = 'TraSanPham' THEN HD.maHD ELSE NULL END) AS slDonTra,\n" +
-            "    SUM(CTHD.soLuongSanPham) AS tongSoSPDaBan\n" +
-            "from HoaDon HD join ChiTietHoaDon CTHD on HD.maHD = CTHD.maHD join SanPham SP on CTHD.maSP = SP.maSP\n" +
-            "where ngayLapHD between ? and ?\n" +
-            "group by FORMAT(ngayLapHD, 'yyyy-MM-dd')");
+           ps = con.prepareStatement("SELECT \n" +
+                "    FORMAT(ngayLapHD, 'yyyy-MM-dd') AS ngay,\n" +
+                "    SUM(DISTINCT (tongTien - tienGiam)) AS doanhThu,\n" +
+                "    SUM(giaNhap * soLuongSanPham) AS chiPhi,\n" +
+                "    SUM((thue * gia / 100) * soLuongSanPham) AS tongThue,\n" +
+                "    \n" +
+                "    COUNT(DISTINCT CASE WHEN LoaiHoaDon = 'Ban' THEN 1 ELSE NULL END) AS slDonBan,\n" +
+                "    \n" +
+                "    COUNT(DISTINCT CASE WHEN LoaiHoaDon = 'DoiTra' THEN 1 ELSE NULL END) AS slDonDoiTra,\n" +
+                "    \n" +
+                "    SUM(soLuongSanPham) AS tongSoSPDaBan\n" +
+                "FROM (\n" +
+                "    SELECT \n" +
+                "        HD.maHD, \n" +
+                "        HD.ngayLapHD, \n" +
+                "        HD.tongTien, \n" +
+                "        HD.tienGiam, \n" +
+                "        SP.giaNhap, \n" +
+                "        SP.gia, \n" +
+                "        CTHD.soLuongSanPham, \n" +
+                "        SP.thue, \n" +
+                "        'Ban' AS LoaiHoaDon\n" +
+                "    FROM HoaDon HD\n" +
+                "    JOIN ChiTietHoaDon CTHD ON HD.maHD = CTHD.maHD\n" +
+                "    JOIN SanPham SP ON CTHD.maSP = SP.maSP\n" +
+                "    WHERE HD.ngayLapHD BETWEEN ? AND ?\n" +
+                "    \n" +
+                "    UNION ALL\n" +
+                "   \n" +
+                "    SELECT \n" +
+                "        HDDT.maHD, \n" +
+                "        HD.ngayLapHD, \n" +
+                "        HD.tongTien, \n" +
+                "        HD.tienGiam, \n" +
+                "        SP.giaNhap, \n" +
+                "        SP.gia, \n" +
+                "        CTHD.soLuongSanPham, \n" +
+                "        SP.thue, \n" +
+                "        'DoiTra' AS LoaiHoaDon\n" +
+                "    FROM HoaDonDoiTra HDDT\n" +
+                "    JOIN HoaDon HD ON HD.maHD = HDDT.maHD\n" +
+                "    JOIN ChiTietHoaDon CTHD ON HD.maHD = CTHD.maHD\n" +
+                "    JOIN SanPham SP ON CTHD.maSP = SP.maSP\n" +
+                "    WHERE HD.ngayLapHD BETWEEN ? AND ?\n" +
+                ") AS combined_results\n" +
+                "GROUP BY FORMAT(ngayLapHD, 'yyyy-MM-dd')");
             
             LocalDate prevStartDate = LocalDate.now();
             LocalDate prevEndDate = endDate != null ? endDate : LocalDate.now();
@@ -198,6 +269,8 @@ public class ThongKeTongQuan_DAO {
 
             ps.setDate(1, java.sql.Date.valueOf(prevStartDate));
             ps.setDate(2, java.sql.Date.valueOf(prevEndDate));
+            ps.setDate(3, java.sql.Date.valueOf(prevStartDate));
+            ps.setDate(4, java.sql.Date.valueOf(prevEndDate));
             rs = ps.executeQuery();
             
             while (rs.next()) {
@@ -207,8 +280,7 @@ public class ThongKeTongQuan_DAO {
                         rs.getDouble("chiPhi"), 
                         rs.getDouble("tongThue"), 
                         rs.getInt("slDonBan"), 
-                        rs.getInt("slDonDoi"), 
-                        rs.getInt("slDonTra"), 
+                        rs.getInt("slDonDoiTra"),
                         rs.getInt("tongSoSPDaBan")
                 ));
             }
@@ -236,11 +308,17 @@ public class ThongKeTongQuan_DAO {
         ArrayList<ModelTopSanPham> listData = new ArrayList<>();
 
         try {
-            ps = con.prepareStatement("select top 10 count(CTHD.maSP) as soLuong, CTHD.maSP, SP.tenSP\n" +
-                "from HoaDon HD join ChiTietHoaDon CTHD on HD.maHD = CTHD.maHD join SanPham SP on CTHD.maSP = SP.maSP\n" +
-                "where ngayLapHD between ? and ? and maLoaiHD = 'BanSanPham'\n" +
-                "group by CTHD.maSP, SP.tenSP\n" +
-                "order by soLuong desc");
+            ps = con.prepareStatement("SELECT TOP 10 \n" +
+                "    COUNT(CTHD.maSP) AS soLuong, \n" +
+                "    CTHD.maSP, \n" +
+                "    SP.tenSP\n" +
+                "FROM HoaDon HD\n" +
+                "JOIN ChiTietHoaDon CTHD ON HD.maHD = CTHD.maHD\n" +
+                "JOIN SanPham SP ON CTHD.maSP = SP.maSP\n" +
+                "WHERE HD.ngayLapHD BETWEEN ? AND ?\n" +
+                "  AND HD.maHD IS NOT NULL\n" +
+                "GROUP BY CTHD.maSP, SP.tenSP\n" +
+                "ORDER BY soLuong DESC");
             
             LocalDate finalStartDate = startDate;
             LocalDate finalEndDate = endDate;
@@ -312,13 +390,15 @@ public class ThongKeTongQuan_DAO {
         ArrayList<ModelTopNhanVien> listData = new ArrayList<>();
 
         try {
-            ps = con.prepareStatement("select top 10 \n" +
-                "	NV.maNV, NV.hotenNV,\n" +
-                "	sum(distinct tongTien - tienGiam) as doanhSo\n" +
-                "from HoaDon HD join NhanVien NV on HD.maNV = NV.maNV\n" +
-                "where ngayLapHD between ? and ? and maLoaiHD = 'BanSanPham'\n" +
-                "group by NV.maNV, NV.hotenNV\n" +
-                "order by sum(distinct tongTien - tienGiam) desc");
+            ps = con.prepareStatement("SELECT TOP 10 \n" +
+                "    NV.maNV, \n" +
+                "    NV.hotenNV,\n" +
+                "    SUM(distinct HD.tongTien - HD.tienGiam) AS doanhSo\n" +
+                "FROM HoaDon HD \n" +
+                "JOIN NhanVien NV ON HD.maNV = NV.maNV\n" +
+                "WHERE HD.ngayLapHD BETWEEN ? AND ?\n" +
+                "GROUP BY NV.maNV, NV.hotenNV\n" +
+                "ORDER BY doanhSo DESC");
 
             LocalDate finalStartDate = startDate;
             LocalDate finalEndDate = endDate;
@@ -390,13 +470,15 @@ public class ThongKeTongQuan_DAO {
         ArrayList<ModelTopKhachHang> listData = new ArrayList<>();
 
         try {
-            ps = con.prepareStatement("select top 10 \n" +
-                "	KH.sdtKH, KH.tenKH,\n" +
-                "	sum(distinct tongTien - tienGiam) as tongTienMua\n" +
-                "from HoaDon HD join KhachHang KH on HD.sdtKH = KH.sdtKH\n" +
-                "where ngayLapHD between ? and ? and maLoaiHD = 'BanSanPham'\n" +
-                "group by KH.sdtKH, KH.tenKH\n" +
-                "order by sum(distinct tongTien - tienGiam) desc");
+            ps = con.prepareStatement("SELECT TOP 10 \n" +
+                "    KH.sdtKH, \n" +
+                "    KH.tenKH,\n" +
+                "    SUM(distinct HD.tongTien - HD.tienGiam) AS tongTienMua\n" +
+                "FROM HoaDon HD \n" +
+                "JOIN KhachHang KH ON HD.sdtKH = KH.sdtKH\n" +
+                "WHERE HD.ngayLapHD BETWEEN ? AND ?\n" +
+                "GROUP BY KH.sdtKH, KH.tenKH\n" +
+                "ORDER BY tongTienMua DESC");
 
             LocalDate finalStartDate = startDate;
             LocalDate finalEndDate = endDate;

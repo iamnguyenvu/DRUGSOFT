@@ -40,7 +40,7 @@ import entity.ChiTietNhapHang_entity;
 import entity.HoaDonDoiTra_entity;
 import entity.LoaiSanPham_entity;
 import entity.NhapHang_entity;
-import entity.SanPhamDoiTra;
+import entity.SanPhamDoiTra_entity;
 import entity.SanPham_entity;
 import nguyenvu.components.SimpleForm;
 import nguyenvu.utils.HeaderRenderer;
@@ -252,14 +252,14 @@ public class FormXemChiTietHoaDonDoiTra extends SimpleForm implements ActionList
     private void loadDataToTable(String key) {
         // Lấy mô hình của bảng
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        ArrayList<SanPhamDoiTra> list = hddt_DAO.timKiemSPDT(key);
+        ArrayList<SanPhamDoiTra_entity> list = hddt_DAO.timKiemSPDT(key);
         
         // Xóa dữ liệu cũ
         model.setRowCount(0);
 
         // Duyệt qua danh sách và thêm từng dòng vào bảng
 //        "Mã Nhập Hàng", "Mã Sản Phẩm", "Ngày Sản Xuất", "Ngày Hết Hạn", "Số Lượng", "Thành Tiền
-        for (SanPhamDoiTra data : list) {
+        for (SanPhamDoiTra_entity data : list) {
             model.addRow(new Object[] {data.getMaDT(),data.getTenSP(),data.getSoLuong(),data.getChietKhau(),data.getThanhTien(),data.getLoaiDoiTra(),data.getTrangThai()});
         }
     }

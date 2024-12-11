@@ -336,8 +336,7 @@ public class ThongKeTongQuan extends SimpleForm {
         lblValuesCustomer.setForeground(new java.awt.Color(96, 196, 235));
         lblValuesCustomer.setText("jLabel9");
 
-        lblIconCustomer.setText("icon");
-
+        lblChangeCustomer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblChangeCustomer.setText("change");
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
@@ -349,20 +348,20 @@ public class ThongKeTongQuan extends SimpleForm {
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(lblValuesCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblValuesCustomer)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblIconCustomer)
+                        .addComponent(lblIconCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblChangeCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(524, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblValuesCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblValuesCustomer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                     .addComponent(lblIconCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblChangeCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
@@ -399,8 +398,7 @@ public class ThongKeTongQuan extends SimpleForm {
         lblValuesTransactions.setForeground(new java.awt.Color(96, 196, 235));
         lblValuesTransactions.setText("jLabel9");
 
-        lblIconTransactions.setText("icon");
-
+        lblChangeTransactions.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblChangeTransactions.setText("change");
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
@@ -412,9 +410,9 @@ public class ThongKeTongQuan extends SimpleForm {
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel22)
                     .addGroup(jPanel17Layout.createSequentialGroup()
-                        .addComponent(lblValuesTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblValuesTransactions)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblIconTransactions)
+                        .addComponent(lblIconTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblChangeTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -424,8 +422,8 @@ public class ThongKeTongQuan extends SimpleForm {
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addComponent(jLabel22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblValuesTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblValuesTransactions, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                     .addComponent(lblIconTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblChangeTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
@@ -481,9 +479,9 @@ public class ThongKeTongQuan extends SimpleForm {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE))
-                .addContainerGap(86, Short.MAX_VALUE))
+                    .addComponent(pnCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+                    .addComponent(pnTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         pnHeader.putClientProperty(FlatClientProperties.STYLE, ""
@@ -508,6 +506,7 @@ public class ThongKeTongQuan extends SimpleForm {
         DefaultCategoryDataset categoryDataset2 = new DefaultCategoryDataset<>();
         
         double sumCurrentDoanhThu = 0;
+        int sumGiaoDich = 0;
         
         for (ModelLineChart data : currentData) {
             sumCurrentDoanhThu += data.getDoanhThu();
@@ -519,7 +518,10 @@ public class ThongKeTongQuan extends SimpleForm {
             categoryDataset.addValue(data.getThue(), "Thuế", date);
             categoryDataset.addValue(data.getDoanhThu() - data.getChiPhi() - data.getThue(), "Lợi nhuận", date);
             
+            sumGiaoDich += data.getSlDonBan() + data.getSlDonDoiTra();
+            
             categoryDataset2.addValue(data.getSlDonBan(), "Đơn bán sản phẩm", date);
+            categoryDataset2.addValue(data.getSlDonDoiTra(), "Đơn đổi trả sản phẩm", date);
         }
 
 
@@ -548,10 +550,13 @@ public class ThongKeTongQuan extends SimpleForm {
 //            i++;
 //        }
         
+
         double sumPrevDoanhThu = 0;
+        int sumPrevGiaoDich = 0;
         
         for(ModelLineChart data : prevData) {
             sumPrevDoanhThu += data.getDoanhThu();
+            sumPrevGiaoDich += data.getSlDonBan() + data.getSlDonDoiTra();
         }
         
         LocalDate dateStart = currentData.get(0).getNgay();
@@ -622,6 +627,42 @@ public class ThongKeTongQuan extends SimpleForm {
         else {
             lbllIconDoanhThu.setIcon(createIcon("gui/icon/arrow-down.svg", 0.4f));
             lblChangeDoanhThu.setForeground(new Color(255,0,0));
+        }
+        
+        
+        //Transactions
+        lblValuesTransactions.setText(df.format(sumGiaoDich));
+        
+        
+        double percentGiaoDich;
+        if (sumPrevGiaoDich == 0) {
+            if (sumGiaoDich > 0) {
+                percentGiaoDich = 100; 
+            } else {
+                percentGiaoDich = 0; 
+            }
+        } else {
+            percentGiaoDich = ((sumGiaoDich - sumPrevGiaoDich) / sumPrevGiaoDich) * 100;
+        }
+        
+        System.out.println("Current Total GiaoDich: " + sumGiaoDich);
+        System.out.println("Previous Total GiaoDich: " + sumPrevGiaoDich);
+        System.err.println("Percent: " + percentGiaoDich);
+        
+
+        lblChangeTransactions.setText(df.format(Math.abs(percentGiaoDich)) + "%");
+        
+        if(percentGiaoDich == 0) {
+            lblIconTransactions.setIcon(createIcon("gui/icon/minus-gray.svg", 0.7f));
+            lblChangeTransactions.setForeground(Color.GRAY);
+        }
+        else if(percent > 0) {
+            lblIconTransactions.setIcon(createIcon("gui/icon/arrow-up.svg", 0.8f));
+            lblChangeTransactions.setForeground(new Color(51,204,0));
+        } 
+        else {
+            lblIconTransactions.setIcon(createIcon("gui/icon/arrow-down.svg", 0.4f));
+            lblChangeTransactions.setForeground(new Color(255,0,0));
         }
     }
     

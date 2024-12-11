@@ -3,7 +3,7 @@ package dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import entity.SanPhamDoiTra;
+import entity.SanPhamDoiTra_entity;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,7 +26,7 @@ public class SanPhamDoiTra_DAO {
     }
 
     // Method to add a return product to the database
-    public boolean addSanPhamDoiTra(SanPhamDoiTra sanPhamDoiTra) {
+    public boolean addSanPhamDoiTra(SanPhamDoiTra_entity sanPhamDoiTra) {
         String query = "INSERT INTO SanPhamDoiTra ( MaDT, maSP, soLuong, chietKhau, thanhTien, loaiDoiTra, trangThai) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
         	 ps.setString(1, sanPhamDoiTra.getMaDT());
@@ -46,15 +46,15 @@ public class SanPhamDoiTra_DAO {
 
     
     // Method to get all return products
-    public List<SanPhamDoiTra> getAllSanPhamDoiTra() {
-    	List<SanPhamDoiTra> list = new ArrayList<>();
+    public List<SanPhamDoiTra_entity> getAllSanPhamDoiTra() {
+    	List<SanPhamDoiTra_entity> list = new ArrayList<>();
         String query = "SELECT maDT, sp.maSP, spdt.soLuong, chietKhau, thanhTien, loaiDoiTra, trangThai\r\n"
         		+ "FROM SanPham sp join [dbo].[SanPhamDoiTra]  spdt on sp.maSP = spdt.maSP";
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(query)) {
 
             while (rs.next()) {
-                SanPhamDoiTra spdt = new SanPhamDoiTra();
+                SanPhamDoiTra_entity spdt = new SanPhamDoiTra_entity();
                 spdt.setMaDT(rs.getString("MaDT"));
                 spdt.setMaSP(rs.getString("maSP"));
                 spdt.setSoLuong(rs.getInt("soLuong"));
@@ -78,14 +78,14 @@ public class SanPhamDoiTra_DAO {
     }
 
     // Method to get a specific return product by ID
-    public SanPhamDoiTra getSanPhamDoiTraByID(String maSP, String MaDT) {
+    public SanPhamDoiTra_entity getSanPhamDoiTraByID(String maSP, String MaDT) {
         String query = "SELECT * FROM SanPhamDoiTra WHERE maSP = ? AND MaDT = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, MaDT);
             ps.setString(2, maSP);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    SanPhamDoiTra spdt = new SanPhamDoiTra();
+                    SanPhamDoiTra_entity spdt = new SanPhamDoiTra_entity();
                     spdt.setMaDT(rs.getString("MaDT"));
                     spdt.setMaSP(rs.getString("MaSP"));
                     spdt.setSoLuong(rs.getInt("soLuong"));
@@ -151,12 +151,12 @@ public class SanPhamDoiTra_DAO {
     }
 
     // Method to start a transaction for multiple updates
-    public boolean processSanPhamDoiTraTransaction(List<SanPhamDoiTra> sanPhamDoiTraList) {
+    public boolean processSanPhamDoiTraTransaction(List<SanPhamDoiTra_entity> sanPhamDoiTraList) {
         String query = "INSERT INTO SanPhamDoiTra (maSP, MaDT, soLuong, chietKhau, thanhTien, loaiDoiTra) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             connection.setAutoCommit(false); // Start transaction
             try (PreparedStatement ps = connection.prepareStatement(query)) {
-                for (SanPhamDoiTra spdt : sanPhamDoiTraList) {
+                for (SanPhamDoiTra_entity spdt : sanPhamDoiTraList) {
                 	ps.setString(1, spdt.getMaDT());
                     ps.setString(2, spdt.getMaSP());
                     ps.setDouble(3, spdt.getChietKhau());
@@ -187,14 +187,14 @@ public class SanPhamDoiTra_DAO {
     // Method to load SanPhamDoiTra data to JTable
     public void loadSanPhamDoiTraToTable(JTable table) {
         // Lấy danh sách sản phẩm đổi trả từ DAO
-        List<SanPhamDoiTra> list = getAllSanPhamDoiTra();
+        List<SanPhamDoiTra_entity> list = getAllSanPhamDoiTra();
 
         // Lấy mô hình bảng từ JTable
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0); // Xóa tất cả các dòng hiện có
 
         // Duyệt qua danh sách và thêm từng dòng vào bảng
-        for (SanPhamDoiTra spdt : list) {
+        for (SanPhamDoiTra_entity spdt : list) {
             Object[] rowData = {
             	spdt.getMaDT(),
                 spdt.getMaSP(),
@@ -209,8 +209,8 @@ public class SanPhamDoiTra_DAO {
         }
     }
 
-    public List<SanPhamDoiTra> searchSanPhamByMaSP(String maSP) {
-        List<SanPhamDoiTra> result = new ArrayList<>();
+    public List<SanPhamDoiTra_entity> searchSanPhamByMaSP(String maSP) {
+        List<SanPhamDoiTra_entity> result = new ArrayList<>();
         // Perform query with the product code (maSP)
         String sql = "SELECT * FROM SanPhamDoiTra WHERE maSP LIKE ?";
 
@@ -218,15 +218,13 @@ public class SanPhamDoiTra_DAO {
             ps.setString(1, "%" + maSP + "%");  // Search with pattern (the % allows substring matching)
             try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
-					SanPhamDoiTra sp = new SanPhamDoiTra();
+					SanPhamDoiTra_entity sp = new SanPhamDoiTra_entity();
 					sp.setMaDT(rs.getString("MaDT"));
 					sp.setMaSP(rs.getString("maSP"));
 					
 					sp.setSoLuong(rs.getInt("soLuong"));
 					// sp.setVanDe(rs.getString("vanDe"));
-					sp.setChietKhau(rs.getDouble("chietKhau"));
 					sp.setThanhTien(rs.getDouble("thanhTien"));
-					sp.setLoaiDoiTra(rs.getString("loaiDoiTra"));
                 	
 
 //                    );

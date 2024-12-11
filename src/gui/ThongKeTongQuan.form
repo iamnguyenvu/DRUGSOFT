@@ -44,10 +44,10 @@
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="pnCustomer" max="32767" attributes="0"/>
-                  <Component id="pnTransaction" pref="377" max="32767" attributes="0"/>
+                  <Component id="pnCustomer" pref="385" max="32767" attributes="0"/>
+                  <Component id="pnTransaction" pref="385" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="86" max="32767" attributes="0"/>
+              <EmptySpace pref="96" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -436,14 +436,14 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="lblValuesCustomer" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="lblValuesCustomer" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="lblIconCustomer" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblIconCustomer" min="-2" pref="28" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblChangeCustomer" min="-2" pref="60" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="524" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -452,9 +452,9 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="lblValuesCustomer" max="32767" attributes="0"/>
-                          <Component id="lblIconCustomer" alignment="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblValuesCustomer" alignment="1" pref="28" max="32767" attributes="0"/>
+                          <Component id="lblIconCustomer" max="32767" attributes="0"/>
                           <Component id="lblChangeCustomer" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -479,12 +479,12 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblIconCustomer">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="icon"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblChangeCustomer">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="change"/>
               </Properties>
             </Component>
@@ -545,9 +545,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="lblValuesTransactions" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="lblValuesTransactions" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="lblIconTransactions" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblIconTransactions" min="-2" pref="30" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblChangeTransactions" min="-2" pref="60" max="-2" attributes="0"/>
                           </Group>
@@ -561,9 +561,9 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="lblValuesTransactions" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblIconTransactions" alignment="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblValuesTransactions" alignment="1" pref="28" max="32767" attributes="0"/>
+                          <Component id="lblIconTransactions" max="32767" attributes="0"/>
                           <Component id="lblChangeTransactions" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -588,12 +588,12 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblIconTransactions">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="icon"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblChangeTransactions">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="change"/>
               </Properties>
             </Component>
