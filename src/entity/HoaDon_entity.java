@@ -19,7 +19,6 @@ public class HoaDon_entity {
     private String maNV;               // Nhân viên
     private String ghiChu;
 
-        
     
 
     public HoaDon_entity(DateTimeFormatter formatter, String maHD, LocalDateTime ngayLapHD, double tongTien,

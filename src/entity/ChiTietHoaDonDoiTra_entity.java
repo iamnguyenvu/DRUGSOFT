@@ -15,16 +15,7 @@ public class ChiTietHoaDonDoiTra_entity {
 	}
 	
 
-	public ChiTietHoaDonDoiTra_entity(String maSP, String maDT, int soLuong,
-			double chietKhau, double thanhTien, String loaiDoiTra) {
-		super();
-		this.maSP = maSP;
-		this.maDT = maDT;
-		this.soLuong = soLuong;
-		this.chietKhau = chietKhau;
-		this.thanhTien = thanhTien;
-		this.loaiDoiTra = loaiDoiTra;
-	}
+
 
 	public String getMaSP() {
 		return maSP;
@@ -95,6 +86,20 @@ public class ChiTietHoaDonDoiTra_entity {
 		this.loaiDoiTra = loaiDoiTra;
 	}
 
+
+	public ChiTietHoaDonDoiTra_entity(String maDT, String tenSP, int soLuong, double chietKhau, double thanhTien,
+			String loaiDoiTra) {
+		super();
+		this.maDT = maDT;
+		this.tenSP = tenSP;
+		this.soLuong = soLuong;
+		this.chietKhau = chietKhau;
+		this.thanhTien = thanhTien;
+		this.loaiDoiTra = loaiDoiTra;
+	}
+
+	
+	
 	
 	
     

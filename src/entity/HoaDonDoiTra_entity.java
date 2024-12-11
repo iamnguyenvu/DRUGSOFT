@@ -26,6 +26,8 @@ public class HoaDonDoiTra_entity {
 		this.ghiChu = ghiChu;
 		this.maNV = maNV;
 	}
+	
+
 	public String getMaDT() {
 		return maDT;
 	}

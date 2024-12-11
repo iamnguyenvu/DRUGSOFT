@@ -180,7 +180,6 @@ public class SanPhamDoiTra_DAO {
         return false;
     }
 
-    // Method to start a transaction for multiple updates
     public boolean processSanPhamDoiTraTransaction(List<ChiTietHoaDonDoiTra_entity> sanPhamDoiTraList) {
         String query = "INSERT INTO SanPhamDoiTra (maSP, MaDT, soLuong, chietKhau, thanhTien, loaiDoiTra) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -235,6 +234,44 @@ public class SanPhamDoiTra_DAO {
             };
             model.addRow(rowData);
         }
+    }
+
+    public ArrayList<SanPhamDoiTra_entity> timKiemSanPham(String searchKey) {
+        ArrayList<SanPhamDoiTra_entity> dssp = new ArrayList<SanPhamDoiTra_entity>();
+        Connection con = connectDB.accessDataBase();
+        if (con == null) {
+            return null;
+        }
+        String sql = "select maDT, spdt.maSP, tenSP, spdt.soLuong, spdt.thanhTien, trangThai from SanPhamDoiTra spdt join SanPham sp on spdt.maSP = sp.maSP WHERE maDT LIKE ? OR tenSP LIKE ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + searchKey + "%");
+            ps.setString(2, "%" + searchKey + "%");
+            
+            // Corrected line:
+            ResultSet rs = ps.executeQuery(); // Remove the sql parameter here
+            
+            while (rs.next()) {
+                SanPhamDoiTra_entity spdt = new SanPhamDoiTra_entity();
+                spdt.setMaDT(rs.getString("MaDT"));
+                spdt.setMaSP(rs.getString("maSP"));
+                spdt.setSoLuong(rs.getInt("soLuong"));
+                spdt.setThanhTien(rs.getDouble("thanhTien"));
+                spdt.setTrangThai(rs.getString("trangThai"));
+                spdt.setTenSP(rs.getString("tenSP"));
+
+                dssp.add(spdt);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return dssp;
     }
 
     public List<ChiTietHoaDonDoiTra_entity> searchSanPhamByMaSP(String maSP) {
