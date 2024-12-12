@@ -13,6 +13,8 @@ import entity.NhapHang_entity;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import nguyenvu.components.SimpleForm;
@@ -45,12 +47,22 @@ public class HoaDonDoiTra extends SimpleForm {
     	hddt_DAO = new HoaDonDoiTra_DAO();
         initComponents();
     }
+    private void timKiemSanPham() {
+    	String key = txtSearch.getText();
+    	if(key.equals("")||key.equals(null)) {
+    		loadDataToTable();
+    	}
+    	HoaDonDoiTra_entity data = hddt_DAO.timKiem(key);
+    	DefaultTableModel model = (DefaultTableModel) table.getModel();
+    	model.setRowCount(0);
+    	model.addRow(new Object[] {data.getMaDT(),data.getMaHD(),data.getNgayDoiTra(),data.getTienTraLai(),data.getTienKhachtraThem()});
+    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         pnHeader = new javax.swing.JPanel();
         txtSearch = new RoundedTextField(40);
-        jButton1 = new javax.swing.JButton();
+        btnTimKiem = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
@@ -64,10 +76,18 @@ public class HoaDonDoiTra extends SimpleForm {
         pnHeader.setBackground(new java.awt.Color(11, 101, 136));
         pnHeader.setPreferredSize(new java.awt.Dimension(1470, 50));
 
-        jButton1.setBackground(new java.awt.Color(11, 101, 136));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Tìm kiếm");
-        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnTimKiem.setBackground(new java.awt.Color(11, 101, 136));
+        btnTimKiem.setForeground(new java.awt.Color(255, 255, 255));
+        btnTimKiem.setText("Tìm kiếm");
+        btnTimKiem.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnTimKiem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				timKiemSanPham();
+				
+			}
+		});
 
         javax.swing.GroupLayout pnHeaderLayout = new javax.swing.GroupLayout(pnHeader);
         pnHeaderLayout.setHorizontalGroup(
@@ -76,7 +96,7 @@ public class HoaDonDoiTra extends SimpleForm {
         			.addGap(20)
         			.addComponent(txtSearch, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+        			.addComponent(btnTimKiem, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
         			.addContainerGap(1004, Short.MAX_VALUE))
         );
         pnHeaderLayout.setVerticalGroup(
@@ -84,7 +104,7 @@ public class HoaDonDoiTra extends SimpleForm {
         		.addGroup(pnHeaderLayout.createSequentialGroup()
         			.addContainerGap()
         			.addGroup(pnHeaderLayout.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(jButton1, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+        				.addComponent(btnTimKiem, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         				.addComponent(txtSearch, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
         			.addContainerGap())
         );
@@ -218,7 +238,7 @@ public class HoaDonDoiTra extends SimpleForm {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

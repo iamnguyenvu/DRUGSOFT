@@ -4,20 +4,19 @@ public class ChiTietHoaDon {
     private String maHD; // Mã chi tiết hóa đơn
     private String maSP;
     private int soLuongSanPham; // Số lượng sản phẩm
-    private double thanhTien;
+    private double gia;
 
     private String tenSP;
     // Constructor mặc định
     public ChiTietHoaDon() {
     }
     
-
-    public ChiTietHoaDon(String maHD, String maSP, int soLuongSanPham, double thanhTien, String tenSP) {
+    public ChiTietHoaDon(String maHD, String maSP, int soLuongSanPham, double gia, String tenSP) {
 		super();
 		this.maHD = maHD;
 		this.maSP = maSP;
 		this.soLuongSanPham = soLuongSanPham;
-		this.thanhTien = thanhTien;
+		this.gia = gia;
 		this.tenSP = tenSP;
 	}
 
@@ -36,7 +35,7 @@ public class ChiTietHoaDon {
         this.maHD = maHD;
         this.maSP = maSP;
         this.soLuongSanPham = soLuongSanPham;
-        this.thanhTien = thanhTien;
+        this.gia = gia;
     }
 
     public String getMaHD() {
@@ -63,16 +62,13 @@ public class ChiTietHoaDon {
         this.soLuongSanPham = soLuongSanPham;
     }
 
-    public double getThanhTien() {
-        return thanhTien;
+    public double getGia() {
+        return gia;
     }
 
-    public void setThanhTien(double thanhTien) {
-        this.thanhTien = thanhTien;
+    public void setGia(double gia) {
+        this.gia = gia;
     }
 
-    @Override
-    public String toString() {
-        return "ChiTietHoaDon{" + "maHD=" + maHD + ", maSP=" + maSP + ", soLuongSanPham=" + soLuongSanPham + ", thanhTien=" + thanhTien + '}';
-    }
+   
 }

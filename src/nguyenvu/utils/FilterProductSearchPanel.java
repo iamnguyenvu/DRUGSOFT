@@ -152,7 +152,7 @@ public class FilterProductSearchPanel extends SimpleForm {
                     cthd.getSoLuongSanPham(), // soLuong 
 
                     sp.getGia(), // donGia
-                    cthd.getThanhTien()
+                    cthd.getSoLuongSanPham() * sp.getGia()
                 };
                 model.addRow(rowData);
             }

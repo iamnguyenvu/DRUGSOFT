@@ -101,8 +101,6 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
 	private JTable table;
 	private DefaultTableModel dftb_SanPham;
 	private JTable tb_SanPham;
-	private JButton btnBaoCao;
-	private JButton btnXuatFile;
 	private JTextField tf_soLuong;
 	private JComboBox cb_sp;
 
@@ -170,27 +168,7 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
 		scp_SanPham.setBackground(new Color(255, 255, 255));
 		scp_SanPham.setBounds(10, 132, 1088, 444);
 		pnCenter.add(scp_SanPham);
-		docDataVaoTableDaHetHan();
-        btnXuatFile = new JButton("Xuất File Excel");
-        btnXuatFile.setBackground(new Color(255, 255, 255));
-        btnXuatFile.setForeground(new Color(0, 0, 0));
-//        btnXuatFile.setBackground(Color.CYAN);
-        btnXuatFile.setFont(new Font("Arial", Font.BOLD, 15));
-        btnXuatFile.setBorder(new LineBorder(Color.BLACK, 1, true));
-        btnXuatFile.setBounds(798, 598, 145, 40);
-        pnCenter.add(btnXuatFile);
-        
-        
-        btnXuatFile.addActionListener(this);
-        
-        btnBaoCao = new JButton("In Báo Cáo");
-        btnBaoCao.setBorder(new LineBorder(Color.BLACK, 1, true));
-        btnBaoCao.addActionListener(this);
-        btnBaoCao.setForeground(Color.BLACK);
-        btnBaoCao.setFont(new Font("Arial", Font.BOLD, 15));
-        btnBaoCao.setBackground(Color.WHITE);
-        btnBaoCao.setBounds(953, 598, 145, 40);
-        pnCenter.add(btnBaoCao);
+		docDataVaoTableSapHetHan();
         
         JLabel lblSLng = new JLabel("Số Lượng :");
         lblSLng.setForeground(Color.BLACK);
@@ -456,52 +434,52 @@ public class pnSanPhamHetHan extends SimpleForm implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
-		if(o.equals(btnXuatFile)) {
-			try {
-				JFileChooser fileChoose = new JFileChooser();
-				fileChoose.showSaveDialog(this);
-				File saveFile = fileChoose.getSelectedFile();
-				if(saveFile != null) {
-					saveFile = new File(saveFile.toString()+".xlsx");
-					Workbook wb = new XSSFWorkbook();
-					Sheet sheet = wb.createSheet("Product");
-					Row rowCol = sheet.createRow(0);
-					for(int i = 0; i < tb_SanPham.getColumnCount(); i ++) {
-						Cell cell = rowCol.createCell(i);
-						cell.setCellValue(tb_SanPham.getColumnName(i));
-					}
-					for(int j = 0; j < tb_SanPham.getRowCount();j++) {
-						Row row = sheet.createRow(j);
-						for( int k = 0; k < tb_SanPham.getColumnCount();k++) {
-							Cell cell = row.createCell(k);
-							if(tb_SanPham.getValueAt(j, k)!= null) {
-								cell.setCellValue(tb_SanPham.getValueAt(j, k).toString());
-							}
-						}
-					}
-					FileOutputStream out = new FileOutputStream(new File(saveFile.toString()));
-					wb.write(out);
-					wb.close();
-					out.close();
-					openFile(saveFile.toString());
-				}else {
-					JOptionPane.showMessageDialog(null,"Error");
-				}
-			} catch (HeadlessException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-		}
-		else if (o.equals(btnBaoCao)) {
-			xuatBaoCaoRaWord();
-	    }
+//		if(o.equals(btnXuatFile)) {
+//			try {
+//				JFileChooser fileChoose = new JFileChooser();
+//				fileChoose.showSaveDialog(this);
+//				File saveFile = fileChoose.getSelectedFile();
+//				if(saveFile != null) {
+//					saveFile = new File(saveFile.toString()+".xlsx");
+//					Workbook wb = new XSSFWorkbook();
+//					Sheet sheet = wb.createSheet("Product");
+//					Row rowCol = sheet.createRow(0);
+//					for(int i = 0; i < tb_SanPham.getColumnCount(); i ++) {
+//						Cell cell = rowCol.createCell(i);
+//						cell.setCellValue(tb_SanPham.getColumnName(i));
+//					}
+//					for(int j = 0; j < tb_SanPham.getRowCount();j++) {
+//						Row row = sheet.createRow(j);
+//						for( int k = 0; k < tb_SanPham.getColumnCount();k++) {
+//							Cell cell = row.createCell(k);
+//							if(tb_SanPham.getValueAt(j, k)!= null) {
+//								cell.setCellValue(tb_SanPham.getValueAt(j, k).toString());
+//							}
+//						}
+//					}
+//					FileOutputStream out = new FileOutputStream(new File(saveFile.toString()));
+//					wb.write(out);
+//					wb.close();
+//					out.close();
+//					openFile(saveFile.toString());
+//				}else {
+//					JOptionPane.showMessageDialog(null,"Error");
+//				}
+//			} catch (HeadlessException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			} catch (FileNotFoundException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//			
+//		}
+//		else if (o.equals(btnBaoCao)) {
+//			xuatBaoCaoRaWord();
+//	    }
 		
 
 	}

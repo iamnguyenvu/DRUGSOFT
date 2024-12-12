@@ -82,8 +82,6 @@ public class pnSanPhamHetHang extends SimpleForm implements ActionListener{
 	private JTable table;
 	private DefaultTableModel dftb_SanPham;
 	private JTable tb_SanPham;
-	private JButton btnBaoCao;
-	private JButton btnXuatFile;
 	private JLabel lblNewLabel_1;
 	private JTextField tf_soLuong;
 	private JLabel lblNewLabel_2;
@@ -158,30 +156,6 @@ public class pnSanPhamHetHang extends SimpleForm implements ActionListener{
 		
 		docSanPhamSapHetHang();
         
-        btnXuatFile = new JButton("Xuất File Excel");
-        btnXuatFile.setForeground(new Color(0, 0, 0));
-        btnXuatFile.setBackground(new Color(255, 255, 255));
-        btnXuatFile.setFont(new Font("Arial", Font.BOLD, 15));
-        btnXuatFile.setBorder(new LineBorder(Color.BLACK, 1, true));
-        btnXuatFile.setBounds(791, 602, 145, 40);
-        pnCenter.add(btnXuatFile);
-        
-        
-        btnXuatFile.addActionListener(this);
-        
-        btnBaoCao = new JButton("In Báo Cáo");
-        btnBaoCao.setBorder(new LineBorder(Color.BLACK, 1, true));
-        btnBaoCao.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		xuatBaoCaoRaWord();
-        	}
-        });
-        btnBaoCao.setForeground(Color.BLACK);
-        btnBaoCao.setFont(new Font("Arial", Font.BOLD, 15));
-        btnBaoCao.setBackground(Color.WHITE);
-        btnBaoCao.setBounds(946, 602, 145, 40);
-        pnCenter.add(btnBaoCao);
-        
         lblNewLabel_1 = new JLabel("Số Lượng :");
         lblNewLabel_1.setForeground(new Color(0, 0, 0));
         lblNewLabel_1.setBackground(new Color(255, 255, 255));
@@ -193,7 +167,7 @@ public class pnSanPhamHetHang extends SimpleForm implements ActionListener{
         tf_soLuong.setFont(new Font("Serif", Font.PLAIN, 20));
         tf_soLuong.setForeground(new Color(0, 0, 0));
         tf_soLuong.setBackground(new Color(255, 255, 255));
-        tf_soLuong.setBounds(102, 59, 44, 34);
+        tf_soLuong.setBounds(102, 59, 54, 34);
         tf_soLuong.setBorder(null);
         tf_soLuong.setText(tk_Dao.soSanPhamSapHetHang()+"");
         pnCenter.add(tf_soLuong);
@@ -278,173 +252,50 @@ public class pnSanPhamHetHang extends SimpleForm implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
-		if(o.equals(btnXuatFile)) {
-			try {
-				JFileChooser fileChoose = new JFileChooser();
-				fileChoose.showSaveDialog(this);
-				File saveFile = fileChoose.getSelectedFile();
-				if(saveFile != null) {
-					saveFile = new File(saveFile.toString()+".xlsx");
-					Workbook wb = new XSSFWorkbook();
-					Sheet sheet = wb.createSheet("Product");
-					Row rowCol = sheet.createRow(0);
-					for(int i = 0; i < tb_SanPham.getColumnCount(); i ++) {
-						Cell cell = rowCol.createCell(i);
-						cell.setCellValue(tb_SanPham.getColumnName(i));
-					}
-					for(int j = 0; j < tb_SanPham.getRowCount();j++) {
-						Row row = sheet.createRow(j);
-						for( int k = 0; k < tb_SanPham.getColumnCount();k++) {
-							Cell cell = row.createCell(k);
-							if(tb_SanPham.getValueAt(j, k)!= null) {
-								cell.setCellValue(tb_SanPham.getValueAt(j, k).toString());
-							}
-						}
-					}
-					FileOutputStream out = new FileOutputStream(new File(saveFile.toString()));
-					wb.write(out);
-					wb.close();
-					out.close();
-					openFile(saveFile.toString());
-				}else {
-					JOptionPane.showMessageDialog(null,"Error");
-				}
-			} catch (HeadlessException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-		}
+//		if(o.equals(btnXuatFile)) {
+//			try {
+//				JFileChooser fileChoose = new JFileChooser();
+//				fileChoose.showSaveDialog(this);
+//				File saveFile = fileChoose.getSelectedFile();
+//				if(saveFile != null) {
+//					saveFile = new File(saveFile.toString()+".xlsx");
+//					Workbook wb = new XSSFWorkbook();
+//					Sheet sheet = wb.createSheet("Product");
+//					Row rowCol = sheet.createRow(0);
+//					for(int i = 0; i < tb_SanPham.getColumnCount(); i ++) {
+//						Cell cell = rowCol.createCell(i);
+//						cell.setCellValue(tb_SanPham.getColumnName(i));
+//					}
+//					for(int j = 0; j < tb_SanPham.getRowCount();j++) {
+//						Row row = sheet.createRow(j);
+//						for( int k = 0; k < tb_SanPham.getColumnCount();k++) {
+//							Cell cell = row.createCell(k);
+//							if(tb_SanPham.getValueAt(j, k)!= null) {
+//								cell.setCellValue(tb_SanPham.getValueAt(j, k).toString());
+//							}
+//						}
+//					}
+//					FileOutputStream out = new FileOutputStream(new File(saveFile.toString()));
+//					wb.write(out);
+//					wb.close();
+//					out.close();
+//					openFile(saveFile.toString());
+//				}else {
+//					JOptionPane.showMessageDialog(null,"Error");
+//				}
+//			} catch (HeadlessException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			} catch (FileNotFoundException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//			
+//		}
 
-	}
-	public void xuatBaoCaoRaWord() {
-	    XWPFDocument document = new XWPFDocument();
-	    
-	    // Tạo tiêu đề báo cáo
-	    XWPFParagraph title = document.createParagraph();
-	    title.setAlignment(ParagraphAlignment.CENTER);
-	    XWPFRun titleRun = title.createRun();
-	    titleRun.setText("CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM");
-	    titleRun.addBreak();
-	    titleRun.setText("Độc Lập - Tự Do - Hạnh Phúc");
-	    titleRun.addBreak();
-	    titleRun.addBreak();
-	    titleRun.setText("Hiệu Thuốc Bán Lẻ An Tâm");
-	    titleRun.addBreak();
-	    titleRun.addBreak();
-	    if (cb_sp.getSelectedItem().equals("Sản Phẩm Sắp Hết Hàng")) {
-	    	titleRun.setText("Báo Cáo Sản Phẩm Sắp Hết Hàng");
-        } else if (cb_sp.getSelectedItem().equals("Sản Phẩm Đã Hết Hàng")) {
-        	titleRun.setText("Báo Cáo Sản Phẩm Đã Hết Hàng");
-        }
-	    
-	    titleRun.addBreak();
-	    titleRun.setBold(true);
-	    titleRun.setFontSize(16);
-
-	    // Thêm thông tin phụ
-	    XWPFParagraph subTitle = document.createParagraph();
-	    subTitle.setAlignment(ParagraphAlignment.RIGHT); // Căn phải đoạn văn bản
-	    XWPFRun subTitleRun = subTitle.createRun();
-	    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-	    subTitleRun.setText("Ngày lập báo cáo: " + sdf.format(new Date()));
-	    subTitleRun.setFontSize(12);
-
-	    // Thêm phần "Kính Gửi" và thông tin khác với căn trái và không in đậm
-	    XWPFParagraph content = document.createParagraph();
-	    content.setAlignment(ParagraphAlignment.LEFT); // Căn trái đoạn văn bản
-	    XWPFRun contentRun = content.createRun();
-	    contentRun.setText("Kính Gửi:");
-	    contentRun.addBreak();
-	    contentRun.setText("Họ Tên Nhân Viên:");
-	    contentRun.addBreak();
-	    if (cb_sp.getSelectedItem().equals("Sản Phẩm Sắp Hết Hàng")) {
-	    	contentRun.setText("Lý Do: Báo cáo danh sách sản phẩm sắp hết hàng");
-        } else if (cb_sp.getSelectedItem().equals("Sản Phẩm Đã Hết Hàng")) {
-        	contentRun.setText("Lý Do: Báo cáo danh sách sản phẩm đã hết hàng");
-        }
-	    contentRun.addBreak();
-	    contentRun.setText("Danh Sách Sản Phẩm:");
-	    contentRun.setFontSize(12); // Không in đậm, giữ font chữ nhỏ hơn
-	
-
-	    // Tạo bảng trong Word
-	    XWPFTable table = document.createTable();
-
-	 // Thêm hàng tiêu đề cho bảng
-	    XWPFTableRow headerRow = table.getRow(0);
-	    headerRow.getCell(0).setText("STT"); // Thêm cột STT
-	    headerRow.addNewTableCell().setText("Mã Sản Phẩm");
-	    headerRow.addNewTableCell().setText("Tên Sản Phẩm");
-	    headerRow.addNewTableCell().setText("Số Lượng");
-	    headerRow.addNewTableCell().setText("Ngày Sản Xuất");
-	    headerRow.addNewTableCell().setText("Ngày Hết Hạn");
-	    headerRow.addNewTableCell().setText("Khối Lượng");
-	    headerRow.addNewTableCell().setText("Đơn Vị Tính");
-	    headerRow.addNewTableCell().setText("Nhà Cung Cấp");
-	    headerRow.addNewTableCell().setText("Giá");
-	    headerRow.addNewTableCell().setText("Loại SP");
-	    headerRow.addNewTableCell().setText("Thuế");
-
-	    headerRow.getCell(0).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(3000)); 
-	    headerRow.getCell(1).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(5000));
-	    headerRow.getCell(2).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000)); 
-	    headerRow.getCell(3).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(5000));
-	    headerRow.getCell(4).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000)); 
-	    headerRow.getCell(5).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000));
-	    headerRow.getCell(6).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000)); 
-	    headerRow.getCell(7).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(700));
-	    headerRow.getCell(8).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000)); 
-	    headerRow.getCell(9).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000));
-	    headerRow.getCell(10).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000));
-	    headerRow.getCell(11).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(7000));
-	    // Thêm dữ liệu sản phẩm vào bảng
-	    for (int i = 0; i < tb_SanPham.getRowCount(); i++) {
-	        XWPFTableRow row = table.createRow();
-	        row.getCell(0).setText(String.valueOf(i + 1)); // Thêm STT (bắt đầu từ 1)
-	        row.getCell(1).setText(tb_SanPham.getValueAt(i, 0).toString());
-	        row.getCell(2).setText(tb_SanPham.getValueAt(i, 1).toString());
-	        row.getCell(3).setText(tb_SanPham.getValueAt(i, 2).toString());
-	        row.getCell(4).setText(tb_SanPham.getValueAt(i, 3).toString());
-	        row.getCell(5).setText(tb_SanPham.getValueAt(i, 4).toString());
-	        row.getCell(6).setText(tb_SanPham.getValueAt(i, 5).toString());
-	        row.getCell(7).setText(tb_SanPham.getValueAt(i, 6).toString());
-	        row.getCell(8).setText(tb_SanPham.getValueAt(i, 7).toString());
-	        row.getCell(9).setText(tb_SanPham.getValueAt(i, 8).toString());
-	        row.getCell(10).setText(tb_SanPham.getValueAt(i, 9).toString());
-	        row.getCell(11).setText(tb_SanPham.getValueAt(i, 10).toString());
-	    }
-
-
-	    // Tạo hộp thoại lưu file
-	    JFileChooser fileChooser = new JFileChooser();
-	    fileChooser.setDialogTitle("Chọn vị trí lưu báo cáo");
-	    if (cb_sp.getSelectedItem().equals("Sản Phẩm Sắp Hết Hàng")) {
-	    	fileChooser.setSelectedFile(new File("BaoCaoSanPhamSapHetHang.docx"));
-        } else if (cb_sp.getSelectedItem().equals("Sản Phẩm Đã Hết Hàng")) {
-        	fileChooser.setSelectedFile(new File("BaoCaoSanPhamDaHetHang.docx"));
-        }
-	    
-	    int userSelection = fileChooser.showSaveDialog(null);
-
-	    if (userSelection == JFileChooser.APPROVE_OPTION) {
-	        File fileToSave = fileChooser.getSelectedFile();
-	        
-	        // Lưu tài liệu ra file Word
-	        try (FileOutputStream out = new FileOutputStream(fileToSave)) {
-	            document.write(out);
-	            JOptionPane.showMessageDialog(null, "Báo cáo đã được xuất thành công!");
-	        } catch (IOException e) {
-	            JOptionPane.showMessageDialog(null, "Lỗi khi lưu báo cáo: " + e.getMessage());
-	            e.printStackTrace();
-	        }
-	    }
 	}
 
 }

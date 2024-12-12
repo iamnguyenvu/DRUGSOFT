@@ -153,7 +153,7 @@ public class BanHang_DAO {
         try {
                 stmt = con.prepareStatement("INSERT INTO ChiTietHoaDon VALUES(?, ?, ?, ?)");
                 stmt.setInt(1, cthd.getSoLuongSanPham());
-                stmt.setDouble(2, cthd.getThanhTien());
+                stmt.setDouble(2, cthd.getGia());
                 stmt.setString(3, cthd.getMaHD());
                 stmt.setString(4, cthd.getMaSP());
                 n = stmt.executeUpdate();
@@ -269,12 +269,12 @@ public class BanHang_DAO {
         ResultSet rs = null;
         ArrayList<ChiTietHoaDon> listCTHD = new ArrayList<>();
         try {
-            ps = con.prepareStatement("SELECT maHD, maSP, soLuongSanPham, thanhTien FROM ChiTietHoaDon WHERE maHD LIKE ?");
+            ps = con.prepareStatement("SELECT maHD, maSP, soLuongSanPham, gia FROM ChiTietHoaDon WHERE maHD LIKE ?");
             ps.setString(1, maHD);
             rs = ps.executeQuery();
             while (rs.next()) {
                 listCTHD.add(new ChiTietHoaDon(rs.getString("maHD"), 
-                        rs.getString("maSP"), rs.getInt("soLuongSanPham"), rs.getDouble("thanhTien")));
+                        rs.getString("maSP"), rs.getInt("soLuongSanPham"), rs.getDouble("gia")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

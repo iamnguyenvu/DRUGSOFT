@@ -83,8 +83,8 @@ public class DoanhSoBanHang extends SimpleForm{
         
         Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
         chart.addLegend("Doanh Thu", new Color(245, 189, 135));
-        chart.addLegend("Chi Phí", new Color(135, 189, 245));
-        chart.addLegend("Lợi Nhuận", new Color(189, 135, 245));
+//        chart.addLegend("Chi Phí", new Color(135, 189, 245));
+//        chart.addLegend("Lợi Nhuận", new Color(189, 135, 245));
         themData(time,user.getUserName());
         chart.start();
     }
@@ -102,8 +102,8 @@ public class DoanhSoBanHang extends SimpleForm{
         
         Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
         chart.addLegend("Doanh Thu", new Color(245, 189, 135));
-        chart.addLegend("Chi Phí", new Color(135, 189, 245));
-        chart.addLegend("Lợi Nhuận", new Color(189, 135, 245));
+//        chart.addLegend("Chi Phí", new Color(135, 189, 245));
+//        chart.addLegend("Lợi Nhuận", new Color(189, 135, 245));
         themData(ngayBatDau, ngayKetThuc,user.getUserName());
         chart.start();
     }
@@ -128,7 +128,7 @@ public class DoanhSoBanHang extends SimpleForm{
     	java.util.List<DoanhSoBanHangModalData> lists = tk_Dao.layDoanhSoBanHangTQTheoThoiGian(time,userID);
             chart.clear();
             for (DoanhSoBanHangModalData data : lists) {
-            	ModelChart mdChart = new ModelChart(data.getThang(),new double[] {data.getTongDoanhThu(),data.getTongChiPhi(),data.getLoiNhuan()});
+            	ModelChart mdChart = new ModelChart(data.getThang(),new double[] {data.getTongDoanhThu()});
                 chart.addData(mdChart);
             }
             chart.start();
@@ -139,7 +139,7 @@ public class DoanhSoBanHang extends SimpleForm{
        
             chart.clear();
             for (DoanhSoBanHangModalData data : lists) {
-            	ModelChart mdChart = new ModelChart(data.getThang(),new double[] {data.getTongDoanhThu(),data.getTongChiPhi(),data.getLoiNhuan()});
+            	ModelChart mdChart = new ModelChart(data.getThang(),new double[] {data.getTongDoanhThu()});
                 chart.addData(mdChart);
             }
             chart.start();

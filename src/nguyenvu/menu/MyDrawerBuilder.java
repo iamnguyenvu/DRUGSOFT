@@ -16,8 +16,8 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import gui.BanHang;
-import gui.BaoCaoDoanhThu;
-import gui.BaoCaoSanPham;
+import gui.BaoCaoDoanhThu_GUI;
+import gui.BaoCaoSanPham_GUI;
 import gui.DoiTra;
 import gui.HoaDon;
 import gui.HoaDonDoiTra;
@@ -216,11 +216,9 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     // non user admin going to hide
                     boolean act
                             = 
-                            checkMenu(index, new int[]{6}) && 
-                            checkMenu(index, new int[]{7}) &&
-                            checkMenu(index, new int[]{8, 0})&&
-                            checkMenu(index, new int[]{8, 2})&&
-                            checkMenu(index, new int[]{9, 0});
+                            checkMenu(index, new int[]{7}) && 
+                            checkMenu(index, new int[]{8}) &&
+                            checkMenu(index, new int[]{9, 3});
                     return act;
                 }
                 return true;
@@ -274,7 +272,11 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     }
                     
                     if (index[0] == 8) {
-                    	FormManager.showForm(new gui.TaiKhoan_GUI());
+                    	if (user.getRole() == 1) { // Quản lý
+                                FormManager.showForm(new gui.TaiKhoan_GUI());
+                            } else { // Nhân viên
+                                FormManager.showForm(new gui.TaiKhoanForNhanVien());
+                            }
                     }
                     
                     if (index[0] == 11) {
@@ -322,12 +324,12 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                             FormManager.showForm(new ThongKeTongQuan());
                         }
                     }
-                    if (index[0] == 11) {
+                    if (index[0] == 10) {
                         if (index[1] == 0) {
-                            FormManager.showForm(new BaoCaoDoanhThu());
+                            FormManager.showForm(new BaoCaoDoanhThu_GUI());
                         }
                         if (index[1] == 1) {
-                            FormManager.showForm(new BaoCaoSanPham());
+                            FormManager.showForm(new BaoCaoSanPham_GUI());
                         }
                     }
                 }

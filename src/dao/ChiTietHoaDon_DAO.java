@@ -40,7 +40,6 @@ public class ChiTietHoaDon_DAO {
     
     public List<Object[]> getBaoCaoDoanhThu() {
     List<Object[]> danhSach = new ArrayList<>();
-
     String sql = "SELECT \n" +
                  "    hd.ngayLapHD AS NgayLapHoaDon,\n" +
                  "    nv.hoTenNV AS TenNhanVien,\n" +

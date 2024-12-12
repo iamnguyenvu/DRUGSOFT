@@ -34,8 +34,6 @@ public class NhanVien extends SimpleForm implements ActionListener {
     private JComboBox<String> cb_LocTheoLoai; // Filter ComboBox
     private JRadioButton radio_NhhTangdan; // Sort ascending
     private JRadioButton radio_NhhGiamdan; // Sort descending
-	private JTable table;
-
     public NhanVien() {
         connectDB.accessDataBase(); // Connect to database
         nv_dao = new NhanVien_DAO(); // Initialize DAO
@@ -189,10 +187,8 @@ public class NhanVien extends SimpleForm implements ActionListener {
 
         JButton btnXoa = new JButton("Xóa");
         btnXoa.setBounds(1221, 413, 89, 23);
-        btnXoa.addActionListener(e -> {
-            textField_tim.setVisible(true);
-            btn_tim.setVisible(true);
-            });
+        
+
         pnCenter.add(btnXoa);
 
         JButton btnSua = new JButton("Sửa");
@@ -236,7 +232,28 @@ public class NhanVien extends SimpleForm implements ActionListener {
         btn_reset.setBounds(1220, 506, 146, 23);
         btn_reset.addActionListener(e -> loadNhanVienData());
         pnCenter.add(btn_reset);
-
+        btnXoa.addActionListener(e -> {
+            int selected = tb_NhanVien.getSelectedRow();
+            if (selected == -1) {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần xóa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            int confirm = JOptionPane.showConfirmDialog(
+                    null, 
+                    "Bạn có chắc chắn muốn xóa nhân viên này?", 
+                    "Xác nhận xóa", 
+                    JOptionPane.YES_NO_OPTION
+            );
+            
+            if (confirm == JOptionPane.YES_OPTION) {
+                DefaultTableModel model = (DefaultTableModel) tb_NhanVien.getModel();
+                String maNV = (String) tb_NhanVien.getValueAt(selected, 0);
+                nv_dao.deleteNhanVien(maNV);
+                model.removeRow(selected);
+                JOptionPane.showMessageDialog(null, "Xóa nhân viên thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
         return pnCenter;
     }
 

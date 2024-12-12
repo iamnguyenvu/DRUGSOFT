@@ -297,7 +297,7 @@ public class XemChiTiet extends JFrame {
                         chiTiet.getSoLuongSanPham(),
 //                        SanPham_DAO.getDonGiaSanPhamByMaSP(maSP),
                       
-                        String.format("%.2f VND", chiTiet.getThanhTien())
+                        String.format("%.2f VND", chiTiet.getGia())
                 });
             }
         }
