@@ -17,13 +17,26 @@ public class HoaDon_entity {
     private boolean trangThai;                // Trạng thái hóa đơn
     private String sdtKH;             // Khách hàng
     private String maNV;               // Nhân viên
-    private String maLoaiHoaDon;           // Loại hóa đơn
     private String ghiChu;
 
-    public HoaDon_entity(String mahd2, LocalDate lcNgayLapHD, double tongTien2, double tienGiam2, String hinhThucThanhToan2, boolean trangThai2, KhachHang_entity kh, NhanVien_entity nv, LoaiHoaDon_entity lhd) {
-    }
+    
 
-    public DateTimeFormatter getFormatter() {
+    public HoaDon_entity(DateTimeFormatter formatter, String maHD, LocalDateTime ngayLapHD, double tongTien,
+			double tienGiam, String hinhThucThanhToan, boolean trangThai, String sdtKH, String maNV, String ghiChu) {
+		super();
+		this.formatter = formatter;
+		this.maHD = maHD;
+		this.ngayLapHD = ngayLapHD;
+		this.tongTien = tongTien;
+		this.tienGiam = tienGiam;
+		this.hinhThucThanhToan = hinhThucThanhToan;
+		this.trangThai = trangThai;
+		this.sdtKH = sdtKH;
+		this.maNV = maNV;
+		this.ghiChu = ghiChu;
+	}
+
+	public DateTimeFormatter getFormatter() {
         return formatter;
     }
 
@@ -95,13 +108,6 @@ public class HoaDon_entity {
         this.maNV = maNV;
     }
 
-    public String getMaLoaiHoaDon() {
-        return maLoaiHoaDon;
-    }
-
-    public void setMaLoaiHoaDon(String maLoaiHoaDon) {
-        this.maLoaiHoaDon = maLoaiHoaDon;
-    }
 
     public String getGhiChu() {
         return ghiChu;
@@ -112,7 +118,7 @@ public class HoaDon_entity {
     }
 
     public HoaDon_entity(String maHD, LocalDateTime ngayLapHD, double tongTien, double tienGiam,
-            String hinhThucThanhToan, boolean trangThai, String sdtKH, String maNV, String maLoaiHoaDon,
+            String hinhThucThanhToan, boolean trangThai, String sdtKH, String maNV,
             String ghiChu) {
         super();
         this.maHD = maHD;
@@ -123,7 +129,6 @@ public class HoaDon_entity {
         this.trangThai = trangThai;
         this.sdtKH = sdtKH;
         this.maNV = maNV;
-        this.maLoaiHoaDon = maLoaiHoaDon;
         this.ghiChu = ghiChu;
     }
 

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import connectDB.connectDB;
 import entity.HoaDon_entity;
 import entity.KhachHang_entity;
-import entity.LoaiHoaDon_entity;
 import entity.NhanVien_entity;
 import java.util.List;
 
@@ -40,13 +39,11 @@ public class HoaDon_DAO {
 	            boolean trangThai = rs.getBoolean("trangThai");
 	            String maKH = rs.getString("sdtKH");
 	            String maNV = rs.getString("maNV");
-	            String maLoaiHD = rs.getString("maLoaiHD");
 	            String ghiChu = rs.getString("ghiChu");
 	            KhachHang_entity kh = new KhachHang_entity(maKH);
 	            NhanVien_entity nv = new NhanVien_entity(maNV);
-	            LoaiHoaDon_entity lhd = new LoaiHoaDon_entity(maLoaiHD);
 	            
-	            HoaDon_entity hd = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, maKH, maNV, maLoaiHD, ghiChu);
+	            HoaDon_entity hd = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, maKH, maNV, ghiChu);
 	            dshd.add(hd);
 	        }
 	    } catch (SQLException e) {
@@ -77,13 +74,11 @@ public class HoaDon_DAO {
 			            boolean trangThai = rs.getBoolean("trangThai");
 			            String maKH = rs.getString("sdtKH");
 			            String maNV = rs.getString("maNV");
-			            String maLoaiHD = rs.getString("maLoaiHD");
 			            String ghiChu = rs.getString("ghiChu");
 			            KhachHang_entity kh = new KhachHang_entity(maKH);
 			            NhanVien_entity nv = new NhanVien_entity(maNV);
-			            LoaiHoaDon_entity lhd = new LoaiHoaDon_entity(maLoaiHD);
 			            
-			            HoaDon_entity hd = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, maKH, maNV, maLoaiHD, ghiChu);
+			            HoaDon_entity hd = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, maKH, maNV, ghiChu);
 			            dssp.add(hd);
 		        }
 		    } catch (SQLException e) {

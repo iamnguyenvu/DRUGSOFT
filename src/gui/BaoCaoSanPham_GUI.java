@@ -173,7 +173,7 @@ public class BaoCaoSanPham_GUI extends SimpleForm {
 
         xuatPDF.setBackground(new java.awt.Color(255, 0, 0));
         xuatPDF.setForeground(new java.awt.Color(255, 255, 255));
-        xuatPDF.setText("In PDF");
+        xuatPDF.setText("Xuất PDF");
         xuatPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 xuatPDFActionPerformed(evt);
@@ -205,7 +205,7 @@ public class BaoCaoSanPham_GUI extends SimpleForm {
             }
         });
 
-        rSanPhamSapHetHang.setText("Sản phẩm hết hàng");
+        rSanPhamSapHetHang.setText("Sản phẩm sắp hết hàng");
         rSanPhamSapHetHang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSanPhamSapHetHangActionPerformed(evt);
@@ -230,7 +230,7 @@ public class BaoCaoSanPham_GUI extends SimpleForm {
                     .addComponent(rSanPhamHetHan)
                     .addComponent(rSanPhamSapHetHang)
                     .addComponent(rSanPhamBanChay))
-                .addContainerGap(162, Short.MAX_VALUE))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

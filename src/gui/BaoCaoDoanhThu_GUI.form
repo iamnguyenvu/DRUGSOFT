@@ -260,6 +260,9 @@
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="table.setRowHeight(60);&#xa;        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();&#xa;&#x9;&#x9;centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);&#xa;&#x9;&#x9;for (int i = 0; i &lt; table.getColumnCount(); i++) {&#xa;&#x9;&#x9;    table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);&#xa;&#x9;&#x9;}"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

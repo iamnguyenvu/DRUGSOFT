@@ -17,21 +17,19 @@ public class ModelLineChart {
     private double chiPhi;
     private double thue;
     private int slDonBan;
-    private int slDonDoi;
-    private int slDonTra;
+    private int slDonDoiTra;
     private int tongSP;
 
     public ModelLineChart() {
     }
 
-    public ModelLineChart(LocalDate ngay, double doanhThu, double chiPhi, double thue, int slDonBan, int slDonDoi, int slDonTra, int tongSP) {
+    public ModelLineChart(LocalDate ngay, double doanhThu, double chiPhi, double thue, int slDonBan, int slDonDoiTra, int tongSP) {
         this.ngay = ngay;
         this.doanhThu = doanhThu;
         this.chiPhi = chiPhi;
         this.thue = thue;
         this.slDonBan = slDonBan;
-        this.slDonDoi = slDonDoi;
-        this.slDonTra = slDonTra;
+        this.slDonDoiTra = slDonDoiTra;
         this.tongSP = tongSP;
     }
 
@@ -75,20 +73,12 @@ public class ModelLineChart {
         this.slDonBan = slDonBan;
     }
 
-    public int getSlDonDoi() {
-        return slDonDoi;
+    public int getSlDonDoiTra() {
+        return slDonDoiTra;
     }
 
-    public void setSlDonDoi(int slDonDoi) {
-        this.slDonDoi = slDonDoi;
-    }
-
-    public int getSlDonTra() {
-        return slDonTra;
-    }
-
-    public void setSlDonTra(int slDonTra) {
-        this.slDonTra = slDonTra;
+    public void setSlDonDoiTra(int slDonDoiTra) {
+        this.slDonDoiTra = slDonDoiTra;
     }
 
     public int getTongSP() {
@@ -99,4 +89,5 @@ public class ModelLineChart {
         this.tongSP = tongSP;
     }
 
+    
 }

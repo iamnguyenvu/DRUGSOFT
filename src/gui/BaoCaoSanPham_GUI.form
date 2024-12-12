@@ -126,7 +126,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="In PDF"/>
+        <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t PDF"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="xuatPDFActionPerformed"/>
@@ -172,7 +172,7 @@
                       <Component id="rSanPhamSapHetHang" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="rSanPhamBanChay" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="162" max="32767" attributes="0"/>
+                  <EmptySpace pref="146" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -211,7 +211,7 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="rSanPhamSapHetHang">
           <Properties>
-            <Property name="text" type="java.lang.String" value="S&#x1ea3;n ph&#x1ea9;m h&#x1ebf;t h&#xe0;ng"/>
+            <Property name="text" type="java.lang.String" value="S&#x1ea3;n ph&#x1ea9;m s&#x1eaf;p h&#x1ebf;t h&#xe0;ng"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSanPhamSapHetHangActionPerformed"/>

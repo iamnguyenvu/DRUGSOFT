@@ -55,12 +55,59 @@ public class TrangChu_DAO {
         ResultSet rs = null;
         ArrayList<ModelSellTransaction> list = new ArrayList<>();
         try {
-            ps = con.prepareStatement("SELECT TOP 10 LNV.tenLoaiNV, NV.hotenNV, thanhTien = tongTien - tienGiam, HD.ngayLapHD, HD.maLoaiHD\n" +
-                "FROM HoaDon HD JOIN NhanVien NV ON HD.maNV = NV.maNV JOIN LoaiNhanVien LNV ON NV.maLoaiNV = LNV.maLoaiNV\n" +
+            ps = con.prepareStatement("WITH HoaDonCTE AS (\n" +
+                "    SELECT LNV.tenLoaiNV, NV.hotenNV, \n" +
+                "           thanhTien = HD.tongTien - HD.tienGiam,\n" +
+                "           HD.ngayLapHD, 'Ban' AS LoaiHoaDon,\n" +
+                "           ROW_NUMBER() OVER (ORDER BY HD.ngayLapHD DESC) AS row_num\n" +
+                "    FROM HoaDon HD\n" +
+                "    JOIN NhanVien NV ON HD.maNV = NV.maNV\n" +
+                "    JOIN LoaiNhanVien LNV ON NV.maLoaiNV = LNV.maLoaiNV\n" +
+                "),\n" +
+                "HoaDonDoiTraCTE AS (\n" +
+                "    SELECT LNV.tenLoaiNV, NV.hotenNV, \n" +
+                "           tienTraLai, tienKhachTraThem, \n" +
+                "           HD.ngayLapHD, 'DoiTra' AS LoaiHoaDon,\n" +
+                "           ROW_NUMBER() OVER (ORDER BY HD.ngayLapHD DESC) AS row_num\n" +
+                "    FROM HoaDonDoiTra HDDT\n" +
+                "    JOIN HoaDon HD ON HDDT.maHD = HD.maHD\n" +
+                "    JOIN NhanVien NV ON HD.maNV = NV.maNV\n" +
+                "    JOIN LoaiNhanVien LNV ON NV.maLoaiNV = LNV.maLoaiNV\n" +
+                ")\n" +
+                "SELECT tenLoaiNV, hotenNV, \n" +
+                "       CASE \n" +
+                "           WHEN LoaiHoaDon = 'Ban' THEN thanhTien\n" +
+                "           ELSE 0\n" +
+                "       END AS thanhTien, \n" +
+                "       CASE \n" +
+                "           WHEN LoaiHoaDon = 'DoiTra' THEN tienTraLai\n" +
+                "           ELSE 0\n" +
+                "       END AS tienTraLai,  \n" +
+                "       CASE \n" +
+                "           WHEN LoaiHoaDon = 'DoiTra' THEN tienKhachTraThem\n" +
+                "           ELSE 0\n" +
+                "       END AS tienKhachTraThem, \n" +
+                "       ngayLapHD, LoaiHoaDon\n" +
+                "FROM (\n" +
+                "    SELECT tenLoaiNV, hotenNV, thanhTien, 0 AS tienTraLai, 0 AS tienKhachTraThem, ngayLapHD, 'Ban' AS LoaiHoaDon, row_num\n" +
+                "    FROM HoaDonCTE\n" +
+                "    WHERE row_num <= 10\n" +
+                "    UNION ALL\n" +
+                "    SELECT tenLoaiNV, hotenNV, 0 AS thanhTien, tienTraLai, tienKhachTraThem, ngayLapHD, 'DoiTra' AS LoaiHoaDon, row_num\n" +
+                "    FROM HoaDonDoiTraCTE\n" +
+                "    WHERE row_num <= 10\n" +
+                ") AS combined_results\n" +
                 "ORDER BY ngayLapHD DESC");
             rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new ModelSellTransaction(rs.getString("tenLoaiNV") ,rs.getString("hotenNV"), rs.getString("maLoaiHD"), rs.getDouble("thanhTien"), rs.getTimestamp("ngayLapHD").toLocalDateTime())); 
+                list.add(new ModelSellTransaction(
+                        rs.getString("tenLoaiNV") ,
+                        rs.getString("hotenNV"), 
+                        rs.getString("loaiHoaDon"), 
+                        rs.getDouble("thanhTien"), 
+                        rs.getDouble("tienTraLai"), 
+                        rs.getDouble("tienKhachTraThem"), 
+                        rs.getTimestamp("ngayLapHD").toLocalDateTime())); 
             }
         } catch (SQLException e) {
             e.printStackTrace();

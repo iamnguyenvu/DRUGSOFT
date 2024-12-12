@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/BaoCaoSanPhamBanChay_DAO.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/entity/BaoCaoSanPhamHetHang_enity.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/dao/BaoCaoSanPhamHetHan_DAO.java</file>
@@ -17,6 +18,13 @@
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/Panel_BaoCaoSanPhamHetHang.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/nguyenvu/menu/MyDrawerBuilder.java</file>
             <file>file:/C:/Programmer/NetBean/DRUGSOFT/src/gui/BaoCaoDoanhThu_GUI.java</file>
+=======
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/forms/StatisticalForm.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/dao/ThongKeTongQuan_DAO.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/nguyenvu/model/ModelTopKhachHang.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/gui/ThongKeTongQuan.java</file>
+            <file>file:/D:/Download/PTUD/DRUGSOFT/src/dao/SanPhamDoiTra_DAO.java</file>
+>>>>>>> 9322c8ee34e9fea64bf4e76efa3531c3efa2c563
         </group>
     </open-files>
 </project-private>

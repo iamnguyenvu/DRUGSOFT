@@ -1155,7 +1155,7 @@ public class DoiTra extends SimpleForm {
             double giamTru = parseDoubleSafely(lblDiemThuong.getText());
             double thanhToan = 0;
             
-            if(isKhachPhaiTra) {
+            if(isKhachPhaiTra) {    
                 thanhToan = parseDoubleSafely(lblKhachPhaiTra.getText());
                 tienHoan = parseDoubleSafely(lblTongTienHoan.getText());
             }

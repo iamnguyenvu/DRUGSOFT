@@ -8,15 +8,26 @@ public class HoaDonDoiTra_entity {
 	private LocalDateTime ngayDoiTra;
 	private double tienTraLai;
 	private double tienKhachtraThem;
+	private String hinhThucThanhToan;
+	private String ghiChu;
+	private String maNV;
+        
+	
+	
 	public HoaDonDoiTra_entity(String maDT, String maHD, LocalDateTime ngayDoiTra, double tienTraLai,
-			double tienKhachtraThem) {
+			double tienKhachtraThem, String hinhThucThanhToan, String ghiChu, String maNV) {
 		super();
 		this.maDT = maDT;
 		this.maHD = maHD;
 		this.ngayDoiTra = ngayDoiTra;
 		this.tienTraLai = tienTraLai;
 		this.tienKhachtraThem = tienKhachtraThem;
+		this.hinhThucThanhToan = hinhThucThanhToan;
+		this.ghiChu = ghiChu;
+		this.maNV = maNV;
 	}
+	
+
 	public String getMaDT() {
 		return maDT;
 	}
@@ -47,6 +58,32 @@ public class HoaDonDoiTra_entity {
 	public void setTienKhachtraThem(double tienKhachtraThem) {
 		this.tienKhachtraThem = tienKhachtraThem;
 	}
+
+    public String getHinhThucThanhToan() {
+        return hinhThucThanhToan;
+    }
+
+    public void setHinhThucThanhToan(String hinhThucThanhToan) {
+        this.hinhThucThanhToan = hinhThucThanhToan;
+    }
+
+    public String getGhiChu() {
+        return ghiChu;
+    }
+
+    public void setGhiChu(String ghiChu) {
+        this.ghiChu = ghiChu;
+    }
+
+    public String getMaNV() {
+        return maNV;
+    }
+
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
+    }
+        
+        
 	
 	
 }

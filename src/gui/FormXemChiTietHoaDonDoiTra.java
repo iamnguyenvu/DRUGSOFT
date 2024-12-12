@@ -40,7 +40,7 @@ import entity.ChiTietNhapHang_entity;
 import entity.HoaDonDoiTra_entity;
 import entity.LoaiSanPham_entity;
 import entity.NhapHang_entity;
-import entity.SanPhamDoiTra;
+import entity.ChiTietHoaDonDoiTra_entity;
 import entity.SanPham_entity;
 import nguyenvu.components.SimpleForm;
 import nguyenvu.utils.HeaderRenderer;
@@ -72,6 +72,9 @@ public class FormXemChiTietHoaDonDoiTra extends SimpleForm implements ActionList
 	private JLabel lblTongSoLuongDoi;
 	private JLabel lblTienKhachTraThem;
 	private JLabel lblTongSoLuongTra;
+	private JTextField tfGhiChu;
+	private JLabel lblNhanVien;
+	private JLabel lblHTTT;
 
 	public FormXemChiTietHoaDonDoiTra() {
 		hddt_DAO = new HoaDonDoiTra_DAO();
@@ -116,12 +119,12 @@ public class FormXemChiTietHoaDonDoiTra extends SimpleForm implements ActionList
 		lblMaHD.setFont(new Font("Serif", Font.PLAIN, 15));
 		
 		JLabel lblNew = new JLabel("Ngày Đổi Trả:");
-		lblNew.setBounds(10, 128, 90, 13);
+		lblNew.setBounds(783, 23, 90, 13);
 		panel.add(lblNew);
 		lblNew.setFont(new Font("Serif", Font.PLAIN, 15));
 		
 		lblNgayDoiTra = new JLabel("New label");
-		lblNgayDoiTra.setBounds(159, 128, 116, 13);
+		lblNgayDoiTra.setBounds(968, 20, 116, 13);
 		panel.add(lblNgayDoiTra);
 		lblNgayDoiTra.setFont(new Font("Serif", Font.PLAIN, 15));
 		
@@ -136,7 +139,7 @@ public class FormXemChiTietHoaDonDoiTra extends SimpleForm implements ActionList
 		panel.add(lblTienTraLai);
 
 		
-		String[] columnNames = { "Mã Đổi Trả", "Tên Sản Phẩm", "Số Lượng", "Chiết Khấu", "Thành Tiền", "Loại Đổi Trả","Trạng Thái"};
+		String[] columnNames = { "Mã Đổi Trả", "Tên Sản Phẩm", "Số Lượng", "Chiết Khấu", "Thành Tiền", "Loại Đổi Trả"};
 
 		dftb = new DefaultTableModel(columnNames, 0); // columnNames là mảng chứa tên cột
 		
@@ -161,14 +164,14 @@ public class FormXemChiTietHoaDonDoiTra extends SimpleForm implements ActionList
 						table.getColumnModel().getColumn(5).setPreferredWidth(40); // Cập Nhật
 						
 						JScrollPane scp = new JScrollPane(table);
-						scp.setBounds(10, 221, 1083, 328);
+						scp.setBounds(10, 221, 735, 328);
 						panel.add(scp);
 						scp.setBackground(new Color(240, 240, 240,0));
 						
 						JPanel panel_2 = new JPanel();
 						panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
 						panel_2.setBackground(new Color(255, 255, 255));
-						panel_2.setBounds(737, 11, 356, 130);
+						panel_2.setBounds(755, 221, 356, 130);
 						panel.add(panel_2);
 						panel_2.setLayout(null);
 						
@@ -212,6 +215,43 @@ public class FormXemChiTietHoaDonDoiTra extends SimpleForm implements ActionList
 						lblTienKhachTraThem.setBounds(531, 82, 116, 13);
 						panel.add(lblTienKhachTraThem);
 						
+						JLabel lblNewLabel_1_1 = new JLabel("Nhân Viên:");
+						lblNewLabel_1_1.setFont(new Font("Serif", Font.PLAIN, 15));
+						lblNewLabel_1_1.setBounds(10, 130, 90, 13);
+						panel.add(lblNewLabel_1_1);
+						
+						lblNhanVien = new JLabel("Nhân Viên:");
+						lblNhanVien.setFont(new Font("Serif", Font.PLAIN, 15));
+						lblNhanVien.setBounds(154, 127, 90, 13);
+						panel.add(lblNhanVien);
+						
+						JPanel panel_1 = new JPanel();
+						panel_1.setBorder(new TitledBorder(null, "Ghi Ch\u00FA", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+						panel_1.setBackground(new Color(255, 255, 255));
+						panel_1.setBounds(762, 395, 342, 128);
+						panel.add(panel_1);
+						panel_1.setLayout(null);
+						
+						tfGhiChu = new JTextField();
+						tfGhiChu.setBounds(5, 34, 333, 87);
+						panel_1.add(tfGhiChu);
+						tfGhiChu.setColumns(10);
+						
+						JPanel panel_4_1 = new JPanel();
+						panel_4_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+						panel_4_1.setBounds(707, 18, 1, 118);
+						panel.add(panel_4_1);
+						
+						JLabel lblHnhThcThanh = new JLabel("Hình Thức Thanh Toán:");
+						lblHnhThcThanh.setFont(new Font("Serif", Font.PLAIN, 15));
+						lblHnhThcThanh.setBounds(785, 80, 155, 13);
+						panel.add(lblHnhThcThanh);
+						
+						lblHTTT = new JLabel("Ngày Đổi Trả:");
+						lblHTTT.setFont(new Font("Serif", Font.PLAIN, 15));
+						lblHTTT.setBounds(970, 78, 90, 13);
+						panel.add(lblHTTT);
+						
 						JPanel pnHeading = new JPanel();
 						pnHeading.setLayout(null);
 						pnHeading.setBackground(new Color(11, 101, 136));
@@ -247,22 +287,23 @@ public class FormXemChiTietHoaDonDoiTra extends SimpleForm implements ActionList
 		lblTienKhachTraThem.setText(hddt.getTienKhachtraThem()+"");
 		lblTongSoLuongDoi.setText(hddt_DAO.soLuongSPTra(hddt.getMaDT())+"");
 		lblTongSoLuongTra.setText(hddt_DAO.soLuongSPMua(hddt.getMaDT())+"");
+		lblNhanVien.setText(hddt.getMaNV());
+		lblHTTT.setText(hddt.getHinhThucThanhToan());
+		tfGhiChu.setText(hddt.getGhiChu());
 		loadDataToTable(hddt.getMaDT());
 	}
     private void loadDataToTable(String key) {
         // Lấy mô hình của bảng
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        ArrayList<SanPhamDoiTra> list = hddt_DAO.timKiemSPDT(key);
+        ArrayList<ChiTietHoaDonDoiTra_entity> list = hddt_DAO.timKiemCTHĐT(key);
         
         // Xóa dữ liệu cũ
         model.setRowCount(0);
 
         // Duyệt qua danh sách và thêm từng dòng vào bảng
 //        "Mã Nhập Hàng", "Mã Sản Phẩm", "Ngày Sản Xuất", "Ngày Hết Hạn", "Số Lượng", "Thành Tiền
-        for (SanPhamDoiTra data : list) {
-            model.addRow(new Object[] {data.getMaDT(),data.getTenSP(),data.getSoLuong(),data.getChietKhau(),data.getThanhTien(),data.getLoaiDoiTra(),data.getTrangThai()});
+        for (ChiTietHoaDonDoiTra_entity data : list) {
+            model.addRow(new Object[] {data.getMaDT(),data.getTenSP(),data.getSoLuong(),data.getChietKhau(),data.getThanhTien(),data.getLoaiDoiTra()});
         }
     }
-
-	
 }

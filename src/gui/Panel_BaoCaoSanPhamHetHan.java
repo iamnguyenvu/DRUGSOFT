@@ -44,6 +44,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import nguyenvu.components.SimpleForm;
 
 
@@ -120,6 +122,12 @@ public class Panel_BaoCaoSanPhamHetHan extends javax.swing.JPanel {
                 "Mã sản phẩm", "Tên sản phẩm", "Loại sản phẩm", "Giá", "Tổng số lượng bán"
             }
         ));
+        table.setRowHeight(60);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		for (int i = 0; i < table.getColumnCount(); i++) {
+		    table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+		}
         jScrollPane1.setViewportView(table);
 
         btnFirst.setIcon(new FlatSVGIcon("gui/icon/first-page.svg",0.02f));
