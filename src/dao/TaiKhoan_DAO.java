@@ -213,5 +213,33 @@ public boolean changePassword(String tenDangNhap, String currentPassword, String
         return false;
     }
 }
+// Phương thức tìm kiếm tài khoản theo trang thái và phân quyền
+public ArrayList<TaiKhoan_entity> getTaiKhoanByTrangThaiAndPhanQuyen(boolean trangThai, boolean phanQuyen) {
+    ArrayList<TaiKhoan_entity> dsTaiKhoan = new ArrayList<>();
+    String sql = "SELECT * FROM TaiKhoan WHERE trangThai = ? AND phanQuyen = ?";
+
+    try (Connection con = connectDB.accessDataBase();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+
+        // Gán các tham số cho PreparedStatement
+        ps.setBoolean(1, trangThai);
+        ps.setBoolean(2, phanQuyen);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            // Duyệt kết quả trả về và thêm vào danh sách
+            while (rs.next()) {
+                String tenTK = rs.getString("tenDangNhap");
+                String mK = rs.getString("matKhau");
+                boolean pQ = rs.getBoolean("phanQuyen");
+                boolean tt = rs.getBoolean("trangThai");
+
+                dsTaiKhoan.add(new TaiKhoan_entity(tenTK, mK, pQ, tt));
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return dsTaiKhoan;
+}
 
 }
