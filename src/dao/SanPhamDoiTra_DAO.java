@@ -37,11 +37,11 @@ public class SanPhamDoiTra_DAO {
         ResultSet rs = null;
         SanPhamDoiTra_entity sp = null;
         try {
-            ps = con.prepareStatement("select maDT,spdt.maSP,tenSP,spdt.soLuong,spdt.thanhTien,trangThai,[tinhTrang],[vanDe] from SanPhamDoiTra spdt join SanPham sp on spdt.maSP = sp.maSP WHERE maDT = ?");
+            ps = con.prepareStatement("select maDT,spdt.maSP,tenSP,spdt.soLuong,spdt.donGia,trangThai,[tinhTrang],[vanDe] from SanPhamDoiTra spdt join SanPham sp on spdt.maSP = sp.maSP WHERE maDT = ?");
             ps.setString(1, maDT);
             rs = ps.executeQuery();
             if (rs.next()) {
-
+            	String maDT1 = rs.getString("maDT");
             	String maSP = rs.getString("maSP");
             	int soLuong = rs.getInt("soLuong");
             	double gia = rs.getDouble("donGia");
@@ -49,7 +49,7 @@ public class SanPhamDoiTra_DAO {
             	String tenSP = rs.getString("tenSP");
             	double tinhTrang = rs.getDouble("tinhTrang");
             	String vanDe = rs.getString("vanDe");
-	            sp = new SanPhamDoiTra_entity(maDT, maSP, soLuong, gia, trangThai,tenSP,vanDe,tinhTrang);
+	            sp = new SanPhamDoiTra_entity(maDT1, maSP, soLuong, gia, trangThai,tenSP,vanDe,tinhTrang);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -245,7 +245,7 @@ public class SanPhamDoiTra_DAO {
         if (con == null) {
             return null;
         }
-        String sql = "select maDT, spdt.maSP, tenSP, spdt.soLuong, spdt.thanhTien, trangThai from SanPhamDoiTra spdt join SanPham sp on spdt.maSP = sp.maSP WHERE maDT LIKE ? OR tenSP LIKE ?";
+        String sql = "select maDT, spdt.maSP, tenSP, spdt.soLuong, spdt.donGia, trangThai,tinhTrang,vanDe from SanPhamDoiTra spdt join SanPham sp on spdt.maSP = sp.maSP WHERE maDT LIKE ? OR tenSP LIKE ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, "%" + searchKey + "%");

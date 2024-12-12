@@ -158,25 +158,11 @@ public class HoaDonDoiTra extends SimpleForm {
 		        JOptionPane.showMessageDialog(null, "Lỗi cập nhật sản phẩm: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
 		    }
         }));
-        
-        JPanel panel = new JPanel();
-        panel.setBorder(new TitledBorder(null, "L\u1ECDc", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
         loadDataToTable();
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(layout.createSequentialGroup()
-        			.addGap(20)
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE)
-        					.addContainerGap(1229, Short.MAX_VALUE))
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 1164, Short.MAX_VALUE)
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 276, GroupLayout.PREFERRED_SIZE)
-        					.addGap(4))))
         		.addComponent(pnHeader, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         		.addGroup(layout.createSequentialGroup()
         			.addContainerGap()
@@ -188,6 +174,12 @@ public class HoaDonDoiTra extends SimpleForm {
         			.addPreferredGap(ComponentPlacement.UNRELATED)
         			.addComponent(jButton6, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
         			.addContainerGap(1176, Short.MAX_VALUE))
+        		.addGroup(layout.createSequentialGroup()
+        			.addGap(20)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 1440, Short.MAX_VALUE)
+        				.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap())
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
@@ -196,29 +188,15 @@ public class HoaDonDoiTra extends SimpleForm {
         			.addPreferredGap(ComponentPlacement.UNRELATED)
         			.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.UNRELATED)
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-        						.addComponent(jButton3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        						.addComponent(jButton6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        						.addComponent(jButton4, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-        						.addComponent(jButton5, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        					.addGap(79))
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-        					.addContainerGap())))
+        			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        				.addComponent(jButton3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(jButton6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(jButton4, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+        				.addComponent(jButton5, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        			.addGap(79))
         );
-        panel.setLayout(null);
-        
-        JLabel lblNewLabel = new JLabel("Ngày Đổi Trả");
-        lblNewLabel.setBounds(10, 40, 118, 32);
-        panel.add(lblNewLabel);
-        
-        JComboBox comboBox = new JComboBox();
-        comboBox.setBounds(138, 46, 128, 26);
-        panel.add(comboBox);
         this.setLayout(layout);
 
         pnHeader.putClientProperty(FlatClientProperties.STYLE, ""

@@ -6,9 +6,134 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import connectDB.connectDB;
+import entity.ChiTietHoaDon;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 public class ChiTietHoaDon_DAO {
+	
+	public List<ChiTietHoaDon> getChiTietHoaDonByMaHD(String maHD) {
+        List<ChiTietHoaDon> chiTietList = new ArrayList<>();
+        try (Connection conn = connectDB.accessDataBase()) {
+            String sql = "SELECT sp.maSP, cthd.soLuongSanPham, sp.gia,tenSP FROM ChiTietHoaDon cthd JOIN SanPham sp on cthd.maSP = sp.maSP WHERE maHD = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, maHD);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String maSP = rs.getString("maSP");
+                int soLuong = rs.getInt("soLuongSanPham");
+                double thanhTien = rs.getDouble("gia");
 
+                // Lấy tên sản phẩm từ SanPham_DAO
+                String tenSP = rs.getString("tenSP");;
+
+                // Tạo đối tượng ChiTietHoaDon (kèm tên sản phẩm)
+                ChiTietHoaDon chiTiet = new ChiTietHoaDon(maHD, maSP, soLuong, thanhTien, tenSP);
+                chiTietList.add(chiTiet);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return chiTietList;
+    }
+    
+    public List<Object[]> getBaoCaoDoanhThu() {
+    List<Object[]> danhSach = new ArrayList<>();
+
+    String sql = "SELECT \n" +
+                 "    hd.ngayLapHD AS NgayLapHoaDon,\n" +
+                 "    nv.hoTenNV AS TenNhanVien,\n" +
+                 "    cthd.maHD AS MaHoaDon,\n" +
+                 "    kh.tenKH AS TenKhachHang,\n" +
+                 "    cthd.thanhTien AS ThanhTien,\n" +
+                 "    SUM(cthd.soLuongSanPham * sp.gia * sp.thue / 100) AS TienThue,\n" +
+                 "    hd.tongTien AS TongTien,\n" +
+                 "    SUM(cthd.soLuongSanPham * sp.giaNhap) AS GiaVon,\n" +
+                 "    (SUM(cthd.soLuongSanPham * sp.gia) - SUM(cthd.soLuongSanPham * sp.giaNhap)) AS LoiNhuan\n" +
+                 "FROM ChiTietHoaDon cthd\n" +
+                 "JOIN HoaDon hd ON cthd.maHD = hd.maHD\n" +
+                 "JOIN SanPham sp ON cthd.maSP = sp.maSP\n" +
+                 "JOIN NhanVien nv ON hd.maNV = nv.maNV\n" +
+                 "JOIN KhachHang kh ON hd.sdtKH = kh.sdtKH\n" +
+                 "GROUP BY \n" +
+                 "    nv.hoTenNV, \n" +
+                 "    kh.tenKH, \n" +
+                 "    hd.ngayLapHD, \n" +
+                 "    sp.thue, \n" +
+                 "    hd.tongTien,\n" +
+                 "    cthd.thanhTien,\n" +
+                 "    cthd.maHD\n" +
+                 "ORDER BY hd.ngayLapHD DESC;";
+
+    try (Connection conn = connectDB.accessDataBase();
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+
+        while (rs.next()) {
+            // Thêm từng hàng dữ liệu vào danh sách
+            danhSach.add(new Object[] {
+                rs.getString("NgayLapHoaDon"),
+                rs.getString("TenNhanVien"),
+                rs.getString("MaHoaDon"),
+                rs.getString("TenKhachHang"),
+                rs.getDouble("ThanhTien"),
+                rs.getDouble("TienThue"),
+                rs.getDouble("TongTien"),
+                rs.getDouble("GiaVon"),
+                rs.getDouble("LoiNhuan")
+            });
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return danhSach;
+}
+
+
+
+    
+    public void loadBaoCaoDoanhThu(DefaultTableModel tableModel) {
+        Connection con = connectDB.accessDataBase();
+        if (con == null) return;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement(
+                "SELECT hd.ngayLap, nv.tenNV, hd.maHD, kh.tenKH, hd.thanhTien, hd.thueVAT, hd.tongTien, hd.giaVon, (hd.tongTien - hd.giaVon) AS loiNhuan " +
+                "FROM HoaDon hd " +
+                "JOIN NhanVien nv ON hd.maNV = nv.maNV " +
+                "JOIN KhachHang kh ON hd.maKH = kh.maKH");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Object[] rowData = {
+                    tableModel.getRowCount() + 1, // STT tự động tăng
+                    rs.getDate("ngayLap"),
+                    rs.getString("tenNV"),
+                    rs.getString("maHD"),
+                    rs.getString("tenKH"),
+                    rs.getDouble("thanhTien"),
+                    rs.getDouble("thueVAT"),
+                    rs.getDouble("tongTien"),
+                    rs.getDouble("giaVon"),
+                    rs.getDouble("loiNhuan")
+                };
+                tableModel.addRow(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
     // Get details of ChiTietHoaDon by maCTHD
     public String getChiTietHoaDonInfo(String maCTHD) {
 //        Connection con = connectDB.accessDataBase();

@@ -122,7 +122,7 @@ public class HoaDonDoiTra_DAO {
     public ArrayList<ChiTietHoaDonDoiTra_entity> timKiemCTHĐT(String key) {
         ArrayList<ChiTietHoaDonDoiTra_entity> listSP = new ArrayList<>();
 
-        String sql = "SELECT maDT, sp.tenSP,cthd.soLuong,chietKhau,thanhTien,loaiDoiTra\r\n"
+        String sql = "SELECT maDT, sp.tenSP,cthd.soLuong,chietKhau,sp.gia,loaiDoiTra\r\n"
         		+ "FROM ChiTietHoaDonDoiTra cthd join SanPham sp on cthd.maSP = sp.maSP\r\n"
         		+ "where maDT = ?";
         try (Connection con = connectDB.accessDataBase();
@@ -138,7 +138,7 @@ public class HoaDonDoiTra_DAO {
 
                     int soLuong = rs.getInt("soLuong");
                     double chietKhau = rs.getDouble("chietKhau");
-                    double thanhTien = rs.getDouble("thanhTien");
+                    double thanhTien = rs.getDouble("gia");
                     String loaidoitra = rs.getString("loaiDoiTra");
                     ChiTietHoaDonDoiTra_entity spdt = new ChiTietHoaDonDoiTra_entity(maDT, tenSP, soLuong, chietKhau, thanhTien, loaidoitra);
 

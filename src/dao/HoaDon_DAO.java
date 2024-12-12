@@ -149,4 +149,55 @@ public class HoaDon_DAO {
 //        return tongTien;
         return 1000000; // Hardcoded example
     }
+    public HoaDon_entity getHoaDonByMa(String maHD) {
+        Connection con = connectDB.accessDataBase();
+        if (con == null) {
+            return null;
+        }
+
+        String sql = "SELECT * FROM HoaDon WHERE maHD = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, maHD);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                // Retrieve values from the result set
+                String mahd = rs.getString("maHD");
+                Timestamp ngayLapHD = rs.getTimestamp("ngayLapHD");
+                LocalDateTime lcNgayLapHD = (ngayLapHD != null) ? ngayLapHD.toLocalDateTime() : null;
+                double tongTien = rs.getDouble("tongTien");
+                double tienGiam = rs.getDouble("tienGiam");
+                String hinhThucThanhToan = rs.getString("hinhThucThanhToan");
+                boolean trangThai = rs.getBoolean("trangThai");
+                String maKH = rs.getString("sdtKH");
+                String maNV = rs.getString("maNV");
+                String ghiChu = rs.getString("ghiChu");
+
+                // Create associated entities (KhachHang_entity, NhanVien_entity, LoaiHoaDon_entity)
+                KhachHang_entity kh = new KhachHang_entity(maKH);
+                NhanVien_entity nv = new NhanVien_entity(maNV);
+
+                // Create and return HoaDon_entity object
+                HoaDon_entity hoaDon = new HoaDon_entity(mahd, lcNgayLapHD, tongTien, tienGiam, hinhThucThanhToan, trangThai, maKH, maNV, ghiChu);
+                return hoaDon;
+            } else {
+                return null; // Return null if no record is found
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null; // Return null in case of an error
+        } finally {
+            try {
+                if (con != null) con.close(); // Close the connection
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
 }
+
+

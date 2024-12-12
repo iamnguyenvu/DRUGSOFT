@@ -74,7 +74,6 @@ public class SanPham_DAO {
 	            String masp = rs.getString("maSP");
 	            String tensp = rs.getString("tenSP");
 	            int soLuong = rs.getInt("soLuong");
-	            Date ngaySX = rs.getDate("ngaySanXuat");
 
 	            double khoiLuong = rs.getDouble("khoiLuong");
 	            String donViTinh = rs.getString("donViTinh");
