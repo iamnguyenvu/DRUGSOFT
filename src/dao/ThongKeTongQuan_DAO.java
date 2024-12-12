@@ -46,51 +46,69 @@ public class ThongKeTongQuan_DAO {
 
         try {
             ps = con.prepareStatement("SELECT \n" +
-                "    FORMAT(ngayLapHD, 'yyyy-MM-dd') AS ngay,\n" +
-                "    SUM(DISTINCT (tongTien - tienGiam)) AS doanhThu,\n" +
-                "    SUM(giaNhap * soLuongSanPham) AS chiPhi,\n" +
-                "    SUM((thue * gia / 100) * soLuongSanPham) AS tongThue,\n" +
-                "    \n" +
-                "    COUNT(DISTINCT CASE WHEN LoaiHoaDon = 'Ban' THEN 1 ELSE NULL END) AS slDonBan,\n" +
-                "    \n" +
-                "    COUNT(DISTINCT CASE WHEN LoaiHoaDon = 'DoiTra' THEN 1 ELSE NULL END) AS slDonDoiTra,\n" +
-                "    \n" +
-                "    SUM(soLuongSanPham) AS tongSoSPDaBan\n" +
+                "    ngay,\n" +
+                "    SUM( (tongTien - tienGiam)) AS doanhThu,\n" +
+                "    SUM(chiPhi) AS chiPhi,\n" +
+                "    SUM(tongThue) AS tongThue,\n" +
+                "    slDonBan,\n" +
+                "    SUM(slDonDoiTra) as slDonDoiTra,\n" +
+                "    SUM(tongSLSP) AS tongSoSPDaBan\n" +
                 "FROM (\n" +
                 "    SELECT \n" +
-                "        HD.maHD, \n" +
-                "        HD.ngayLapHD, \n" +
-                "        HD.tongTien, \n" +
-                "        HD.tienGiam, \n" +
-                "        SP.giaNhap, \n" +
-                "        SP.gia, \n" +
-                "        CTHD.soLuongSanPham, \n" +
-                "        SP.thue, \n" +
+                "        FORMAT(ngayLapHD, 'yyyy-MM-dd') as ngay, \n" +
+                "		count(distinct HD.maHD) as slDonBan ,\n" +
+                "		slDonDoiTra = 0,\n" +
+                "        sum(CTHD.soLuongSanPham * CTHD.gia) as tongTien, \n" +
+                "		sum(distinct tienGiam) as tienGiam,\n" +
+                "		SUM(giaNhap * soLuongSanPham) as chiPhi,\n" +
+                "        SUM((SP.thue * SP.gia / 100) * soLuongSanPham) as tongThue, \n" +
+                "        SUM(CTHD.soLuongSanPham) as tongSLSP, \n" +
                 "        'Ban' AS LoaiHoaDon\n" +
                 "    FROM HoaDon HD\n" +
                 "    JOIN ChiTietHoaDon CTHD ON HD.maHD = CTHD.maHD\n" +
                 "    JOIN SanPham SP ON CTHD.maSP = SP.maSP\n" +
-                "    WHERE HD.ngayLapHD BETWEEN ? AND ?\n" +
+                "    WHERE ngayLapHD BETWEEN ? AND ?\n" +
+                "	GROUP BY FORMAT(ngayLapHD, 'yyyy-MM-dd')\n" +
                 "    \n" +
                 "    UNION ALL\n" +
-                "   \n" +
-                "    SELECT \n" +
-                "        HDDT.maHD, \n" +
-                "        HD.ngayLapHD, \n" +
-                "        HD.tongTien, \n" +
-                "        HD.tienGiam, \n" +
-                "        SP.giaNhap, \n" +
-                "        SP.gia, \n" +
-                "        CTHD.soLuongSanPham, \n" +
-                "        SP.thue, \n" +
-                "        'DoiTra' AS LoaiHoaDon\n" +
-                "    FROM HoaDonDoiTra HDDT\n" +
-                "    JOIN HoaDon HD ON HD.maHD = HDDT.maHD\n" +
-                "    JOIN ChiTietHoaDon CTHD ON HD.maHD = CTHD.maHD\n" +
-                "    JOIN SanPham SP ON CTHD.maSP = SP.maSP\n" +
-                "    WHERE HD.ngayLapHD BETWEEN ? AND ?\n" +
-                ") AS combined_results\n" +
-                "GROUP BY FORMAT(ngayLapHD, 'yyyy-MM-dd')");
+                "\n" +
+                "	SELECT\n" +
+                "        FORMAT(ngayDoiTra, 'yyyy-MM-dd') as ngay, \n" +
+                "		slDonBan = 0,\n" +
+                "		count(distinct HDDT.maDT) as slDonDoiTra,\n" +
+                "		SUM(CASE \n" +
+                "			WHEN CTHDDT.loaiDoiTra = 'Mua' AND HDDT.tienKhachTraThem > 0 THEN (CTHDDT.soLuong * SP.gia) + HDDT.tienKhachTraThem\n" +
+                "			WHEN CTHDDT.loaiDoiTra = 'Mua' AND HDDT.tienKhachTraThem = 0 THEN 0\n" +
+                "			WHEN CTHDDT.loaiDoiTra = 'Tra' THEN - (CTHDDT.soLuong * SP.gia) - HDDT.tienTraLai\n" +
+                "			ELSE 0\n" +
+                "		END) AS tongTien,\n" +
+                "		SUM(CASE \n" +
+                "			WHEN CTHDDT.loaiDoiTra = 'Mua' THEN HDDT.tienGiam\n" +
+                "			ELSE 0\n" +
+                "		END) AS tienGiam,\n" +
+                "		SUM(CASE\n" +
+                "			WHEN CTHDDT.loaiDoiTra = 'Mua' THEN (CTHDDT.soLuong * SP.giaNhap)\n" +
+                "			WHEN CTHDDT.loaiDoiTra = 'Tra' THEN 0\n" +
+                "			ELSE 0\n" +
+                "		END) AS chiPhi,\n" +
+                "		SUM(CASE\n" +
+                "				WHEN CTHDDT.loaiDoiTra = 'Mua' THEN CTHDDT.soLuong * SP.giaNhap * sp.thue / 100 \n" +
+                "				ELSE 0\n" +
+                "			END)\n" +
+                "		AS tongThue,\n" +
+                "		SUM(CTHDDT.soLuong) as tongSLSP,\n" +
+                "		'DoiTra' AS LoaiHoaDon\n" +
+                "	FROM\n" +
+                "		HoaDonDoiTra HDDT\n" +
+                "		JOIN ChiTietHoaDonDoiTra CTHDDT ON HDDT.maDT = CTHDDT.maDT\n" +
+                "		JOIN SanPham SP ON CTHDDT.maSP = SP.maSP\n" +
+                "	WHERE HDDT.ngayDoiTra BETWEEN ? AND ?\n" +
+                "	GROUP BY\n" +
+                "		FORMAT(ngayDoiTra, 'yyyy-MM-dd')\n" +
+                ")AS combined_results\n" +
+                "GROUP BY ngay, \n" +
+                "    slDonBan,\n" +
+                "    slDonDoiTra;");
             
             LocalDate finalStartDate = startDate;
             LocalDate finalEndDate = endDate;
@@ -169,51 +187,69 @@ public class ThongKeTongQuan_DAO {
 
         try {
            ps = con.prepareStatement("SELECT \n" +
-                "    FORMAT(ngayLapHD, 'yyyy-MM-dd') AS ngay,\n" +
-                "    SUM(DISTINCT (tongTien - tienGiam)) AS doanhThu,\n" +
-                "    SUM(giaNhap * soLuongSanPham) AS chiPhi,\n" +
-                "    SUM((thue * gia / 100) * soLuongSanPham) AS tongThue,\n" +
-                "    \n" +
-                "    COUNT(DISTINCT CASE WHEN LoaiHoaDon = 'Ban' THEN 1 ELSE NULL END) AS slDonBan,\n" +
-                "    \n" +
-                "    COUNT(DISTINCT CASE WHEN LoaiHoaDon = 'DoiTra' THEN 1 ELSE NULL END) AS slDonDoiTra,\n" +
-                "    \n" +
-                "    SUM(soLuongSanPham) AS tongSoSPDaBan\n" +
+                "    ngay,\n" +
+                "    SUM( (tongTien - tienGiam)) AS doanhThu,\n" +
+                "    SUM(chiPhi) AS chiPhi,\n" +
+                "    SUM(tongThue) AS tongThue,\n" +
+                "    slDonBan,\n" +
+                "    SUM(slDonDoiTra) as slDonDoiTra,\n" +
+                "    SUM(tongSLSP) AS tongSoSPDaBan\n" +
                 "FROM (\n" +
                 "    SELECT \n" +
-                "        HD.maHD, \n" +
-                "        HD.ngayLapHD, \n" +
-                "        HD.tongTien, \n" +
-                "        HD.tienGiam, \n" +
-                "        SP.giaNhap, \n" +
-                "        SP.gia, \n" +
-                "        CTHD.soLuongSanPham, \n" +
-                "        SP.thue, \n" +
+                "        FORMAT(ngayLapHD, 'yyyy-MM-dd') as ngay, \n" +
+                "		count(distinct HD.maHD) as slDonBan ,\n" +
+                "		slDonDoiTra = 0,\n" +
+                "        sum(CTHD.soLuongSanPham * CTHD.gia) as tongTien, \n" +
+                "		sum(distinct tienGiam) as tienGiam,\n" +
+                "		SUM(giaNhap * soLuongSanPham) as chiPhi,\n" +
+                "        SUM((SP.thue * SP.gia / 100) * soLuongSanPham) as tongThue, \n" +
+                "        SUM(CTHD.soLuongSanPham) as tongSLSP, \n" +
                 "        'Ban' AS LoaiHoaDon\n" +
                 "    FROM HoaDon HD\n" +
                 "    JOIN ChiTietHoaDon CTHD ON HD.maHD = CTHD.maHD\n" +
                 "    JOIN SanPham SP ON CTHD.maSP = SP.maSP\n" +
-                "    WHERE HD.ngayLapHD BETWEEN ? AND ?\n" +
+                "    WHERE ngayLapHD BETWEEN ? AND ?\n" +
+                "	GROUP BY FORMAT(ngayLapHD, 'yyyy-MM-dd')\n" +
                 "    \n" +
                 "    UNION ALL\n" +
-                "   \n" +
-                "    SELECT \n" +
-                "        HDDT.maHD, \n" +
-                "        HD.ngayLapHD, \n" +
-                "        HD.tongTien, \n" +
-                "        HD.tienGiam, \n" +
-                "        SP.giaNhap, \n" +
-                "        SP.gia, \n" +
-                "        CTHD.soLuongSanPham, \n" +
-                "        SP.thue, \n" +
-                "        'DoiTra' AS LoaiHoaDon\n" +
-                "    FROM HoaDonDoiTra HDDT\n" +
-                "    JOIN HoaDon HD ON HD.maHD = HDDT.maHD\n" +
-                "    JOIN ChiTietHoaDon CTHD ON HD.maHD = CTHD.maHD\n" +
-                "    JOIN SanPham SP ON CTHD.maSP = SP.maSP\n" +
-                "    WHERE HD.ngayLapHD BETWEEN ? AND ?\n" +
-                ") AS combined_results\n" +
-                "GROUP BY FORMAT(ngayLapHD, 'yyyy-MM-dd')");
+                "\n" +
+                "	SELECT\n" +
+                "        FORMAT(ngayDoiTra, 'yyyy-MM-dd') as ngay, \n" +
+                "		slDonBan = 0,\n" +
+                "		count(distinct HDDT.maDT) as slDonDoiTra,\n" +
+                "		SUM(CASE \n" +
+                "			WHEN CTHDDT.loaiDoiTra = 'Mua' AND HDDT.tienKhachTraThem > 0 THEN (CTHDDT.soLuong * SP.gia) + HDDT.tienKhachTraThem\n" +
+                "			WHEN CTHDDT.loaiDoiTra = 'Mua' AND HDDT.tienKhachTraThem = 0 THEN 0\n" +
+                "			WHEN CTHDDT.loaiDoiTra = 'Tra' THEN - (CTHDDT.soLuong * SP.gia) - HDDT.tienTraLai\n" +
+                "			ELSE 0\n" +
+                "		END) AS tongTien,\n" +
+                "		SUM(CASE \n" +
+                "			WHEN CTHDDT.loaiDoiTra = 'Mua' THEN HDDT.tienGiam\n" +
+                "			ELSE 0\n" +
+                "		END) AS tienGiam,\n" +
+                "		SUM(CASE\n" +
+                "			WHEN CTHDDT.loaiDoiTra = 'Mua' THEN (CTHDDT.soLuong * SP.giaNhap)\n" +
+                "			WHEN CTHDDT.loaiDoiTra = 'Tra' THEN 0\n" +
+                "			ELSE 0\n" +
+                "		END) AS chiPhi,\n" +
+                "		SUM(CASE\n" +
+                "				WHEN CTHDDT.loaiDoiTra = 'Mua' THEN CTHDDT.soLuong * SP.giaNhap * sp.thue / 100 \n" +
+                "				ELSE 0\n" +
+                "			END)\n" +
+                "		AS tongThue,\n" +
+                "		SUM(CTHDDT.soLuong) as tongSLSP,\n" +
+                "		'DoiTra' AS LoaiHoaDon\n" +
+                "	FROM\n" +
+                "		HoaDonDoiTra HDDT\n" +
+                "		JOIN ChiTietHoaDonDoiTra CTHDDT ON HDDT.maDT = CTHDDT.maDT\n" +
+                "		JOIN SanPham SP ON CTHDDT.maSP = SP.maSP\n" +
+                "	WHERE HDDT.ngayDoiTra BETWEEN ? AND ?\n" +
+                "	GROUP BY\n" +
+                "		FORMAT(ngayDoiTra, 'yyyy-MM-dd')\n" +
+                ")AS combined_results\n" +
+                "GROUP BY ngay, \n" +
+                "    slDonBan,\n" +
+                "    slDonDoiTra;");
             
             LocalDate prevStartDate = LocalDate.now();
             LocalDate prevEndDate = endDate != null ? endDate : LocalDate.now();

@@ -64,6 +64,19 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
+    <Component class="gui.components.Card" name="card1">
+      <Properties>
+        <Property name="gradientColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="66" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="card1MouseClicked"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="card1.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;border:0,0,0,0,$Component.borderColor,,20&quot;);"/>
+      </AuxValues>
+    </Component>
     <Container class="javax.swing.JPanel" name="pnHeader">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -108,22 +121,15 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="gui.components.Card" name="card1">
-      <Properties>
-        <Property name="gradientColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="66" red="ff" type="rgb"/>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="card1.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;border:0,0,0,0,$Component.borderColor,,20&quot;);"/>
-      </AuxValues>
-    </Component>
     <Component class="gui.components.Card" name="card2">
       <Properties>
         <Property name="gradientColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="33" red="ff" type="rgb"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="card2MouseClicked"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="card2.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;border:0,0,0,0,$Component.borderColor,,20&quot;);"/>
       </AuxValues>
@@ -134,6 +140,9 @@
           <Color blue="4" green="c1" red="47" type="rgb"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="card3MouseClicked"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="card3.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;border:0,0,0,0,$Component.borderColor,,20&quot;);"/>
       </AuxValues>
@@ -144,6 +153,9 @@
           <Color blue="e0" green="b5" red="1c" type="rgb"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="card4MouseClicked"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="card4.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;                + &quot;border:0,0,0,0,$Component.borderColor,,20&quot;);"/>
       </AuxValues>

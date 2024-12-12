@@ -130,11 +130,11 @@ public class SanPhamDoiTra extends SimpleForm {
 
             },
             new String [] {
-                "Mã đổi trả ", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Thành tiền", "Trạng thái", "Thao tác"
+                "Mã đổi trả ", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Thành tiền", "Trạng thái","Tình Trạng","Vấn Đề", "Thao tác"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
+                false, false, false, false, false, false,false,false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -446,7 +446,9 @@ public class SanPhamDoiTra extends SimpleForm {
 					modal.setRowCount(0);
 					List<SanPhamDoiTra_entity> filteredProducts = spdt_DAO.timKiemSanPham(searchText);
 					for (SanPhamDoiTra_entity data : filteredProducts) {
-						modal.addRow(new Object[] {data.getMaDT(),data.getMaSP(),data.getTenSP(),data.getSoLuong(),data.getThanhTien(),data.getTrangThai()});
+						modal.addRow(new Object[] {data.getMaDT(),
+                                                    data.getMaSP(),data.getTenSP(),data.getSoLuong(),
+                                                    data.getDonGia(),data.getTrangThai()});
 					}
 				}
 				
@@ -519,7 +521,8 @@ public class SanPhamDoiTra extends SimpleForm {
 
         // Duyệt qua danh sách và thêm từng dòng vào bảng"Mã đổi trả ", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Thành tiền", "Trạng thái", "Thao tác"
         for (SanPhamDoiTra_entity data : list) {
-            model.addRow(new Object[] {data.getMaDT(),data.getMaSP(),data.getTenSP(),data.getSoLuong(),data.getThanhTien(),data.getTrangThai()});
+            model.addRow(new Object[] {data.getMaDT(),data.getMaSP(),
+                data.getTenSP(),data.getSoLuong(),data.getDonGia(),data.getTrangThai()});
         }
     }
 
@@ -553,7 +556,8 @@ public class SanPhamDoiTra extends SimpleForm {
 	    // Hiển thị dữ liệu của trang hiện tại
 	    for (int i = start; i < end; i++) {
 	    	SanPhamDoiTra_entity data = list.get(i);
-	        model.addRow(new Object[] {data.getMaDT(),data.getMaSP(),data.getTenSP(),data.getSoLuong(),data.getThanhTien(),data.getTrangThai()});
+	        model.addRow(new Object[] {data.getMaDT(),data.getMaSP(),
+                    data.getTenSP(),data.getSoLuong(),data.getDonGia(),data.getTrangThai(),data.getTinhTrang(),data.getVanDe()});
 	    }
 	    lblPageIndicator.setText(currentPage + " / " + totalPages);
 	}

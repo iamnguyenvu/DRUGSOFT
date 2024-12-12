@@ -86,6 +86,7 @@ public class Card1 extends javax.swing.JPanel{
 
         lblValues.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lblValues.setForeground(new java.awt.Color(255, 255, 255));
+        lblValues.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblValues.setPreferredSize(new java.awt.Dimension(100, 40));
 
         lblIcon.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -98,7 +99,7 @@ public class Card1 extends javax.swing.JPanel{
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblValues, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblValues, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))

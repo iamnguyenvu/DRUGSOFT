@@ -13,6 +13,8 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import dao.BanHang_DAO;
 import dao.DoiTra_DAO;
 import entity.ChiTietHoaDon;
+import entity.ChiTietHoaDonDoiTra_entity;
+import entity.HoaDonDoiTra_entity;
 import entity.HoaDon_entity;
 import entity.KhachHang_entity;
 import entity.NhanVien_entity;
@@ -1085,6 +1087,8 @@ public class DoiTra extends SimpleForm {
             return;
         }
         
+        
+        
         try {
 
             String employeeName = user != null ? user.getName() : "Nhân viên";
@@ -1099,55 +1103,15 @@ public class DoiTra extends SimpleForm {
             DefaultTableModel model1 = (DefaultTableModel) table.getModel();
             DefaultTableModel model2 = (DefaultTableModel) tableExchange.getModel();
             
-            for (int i = 0; i < model1.getRowCount(); i++) {
-                int quantity = (int) model1.getValueAt(i, 3);           // soLuong
-                if(quantity > 0) {
-                    String productName = (String) model1.getValueAt(i, 2); // tenSP
-                    double unitPrice = doiTraDao.getSP((String) model1.getValueAt(i, 1)).getGia();    // donGia
-                    double totalPrice = quantity * unitPrice;   // thanhTien
-                    String tinhTrang = String.valueOf(table.getValueAt(i, 8));
-
-                    fields.add(new FieldBillDoiTra(productName, quantity, unitPrice, totalPrice, tinhTrang, "Trả"));
-                }
-            }
             
-            for(int i = 0; i < model2.getRowCount(); i++) {
-                int quantity = (int) model2.getValueAt(i, 5);           // soLuong
-                String productName = (String) model2.getValueAt(i, 3); // tenSP
-                double unitPrice = doiTraDao.getSP((String) model2.getValueAt(i, 2)).getGia();    // donGia
-                double totalPrice = quantity * unitPrice;   // thanhTien
-
-
-                fields.add(new FieldBillDoiTra(productName, quantity, unitPrice, totalPrice, "", "Đổi"));
-            }
             
             String ptThanhToan = (String) hd.getHinhThucThanhToan();
             
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
             LocalDateTime issueDate = LocalDateTime.parse(date, formatter);
             
-//            HoaDon_entity hd = new HoaDon_entity(invoiceCode, issueDate, totalAmount, 0, ptThanhToan, true, kh.getSdtKH(), employeeId, "", ghiChu);
             
-//            if(!doiTraDao.createHDDT(hd)) {
-//                MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);
-//                refresh();
-//                return;
-//            } else {
-//                for (int i = 0; i < tableExchange.getRowCount(); ++i) {
-//                    String maSP = (String) tableExchange.getValueAt(i, 1);
-//                    int quantity = (int) model.getValueAt(i, 3); 
-//                    
-//                    double totalValue = 0;
-// 
-//                    if(!BanHang_DAO.createCTHD(new ChiTietHoaDon(invoiceCode, maSP,
-//                        (int) table.getValueAt(i, 3), totalValue))) {
-//                        System.out.println("Lỗi insert cthd");
-//                    }
-//                    
-//                }
-//                
-//                
-//            }
+            
             double tongTienHangTra = parseDoubleSafely(lblTongTienTra.getText());
             double tongPhiTraHang = parseDoubleSafely(lblPhiTraHang.getText());
             double tienHoan = parseDoubleSafely(lblTienHoan.getText());
@@ -1160,15 +1124,71 @@ public class DoiTra extends SimpleForm {
                 tienHoan = parseDoubleSafely(lblTongTienHoan.getText());
             }
             
-            System.out.println(new File("FieldBillTra_Subreport.jasper").getAbsolutePath());
+            HoaDonDoiTra_entity hddt = new HoaDonDoiTra_entity(invoiceCode, hd.getMaHD(), issueDate, tienHoan, thanhToan, ptThanhToan, ghiChu, nv.getMaNV());
+            
+            if(!doiTraDao.createHDDT(hddt)) {
+                MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);
+                refresh();
+                return;
+            } else {
+                
+                for (int i = 0; i < model1.getRowCount(); i++) {
+                    int quantity = (int) model1.getValueAt(i, 3);           // soLuong
+                    if(quantity > 0) {
+                        String productName = (String) model1.getValueAt(i, 2); // tenSP
+                        double unitPrice = doiTraDao.getSP((String) model1.getValueAt(i, 1)).getGia();    // donGia
+                        double totalPrice = quantity * unitPrice;   // thanhTien
+                        String tinhTrang = String.valueOf(table.getValueAt(i, 8));
 
+                        fields.add(new FieldBillDoiTra(productName, quantity, unitPrice, totalPrice, tinhTrang, "Trả"));
                         
-            ParameterBillDT billData = new ParameterBillDT(date, employeeName, kh.getTenKH(), 
-                    kh.getSdtKH(), tongTienHangTra, tongPhiTraHang, tienHoan, 
-                    tongTienDoi, giamTru,thanhToan,
-                    ghiChu, invoiceCode, GenerateCode.generateQrcode(invoiceCode), 
-                    fields); 
-            BillDTManeger.getInstance().printBill(billData);
+                        if(!doiTraDao.insertCTHDDT(new ChiTietHoaDonDoiTra_entity(date, date, SOMEBITS, tienHoan, thanhToan, tinhTrang)));
+                    }
+                }
+
+                for(int i = 0; i < model2.getRowCount(); i++) {
+                    int quantity = (int) model2.getValueAt(i, 5);           // soLuong
+                    String productName = (String) model2.getValueAt(i, 3); // tenSP
+                    double unitPrice = doiTraDao.getSP((String) model2.getValueAt(i, 2)).getGia();    // donGia
+                    double totalPrice = quantity * unitPrice;   // thanhTien
+
+
+                    fields.add(new FieldBillDoiTra(productName, quantity, unitPrice, totalPrice, "", "Đổi"));
+                }
+            
+                for(int i = 0; i < table.getRowCount(); ++i) {
+                   int quantity = (int) table.getValueAt(i, 3); 
+                   
+                   if(quantity > 0) {
+                       
+                   }
+                }
+                
+                for (int i = 0; i < tableExchange.getRowCount(); ++i) {
+                    String maSP = (String) tableExchange.getValueAt(i, 1);
+                    int quantity = (int) tableExchange.getValueAt(i, 3); 
+                    
+                    double totalValue = 0;
+ 
+                    if(!BanHang_DAO.createCTHD(new ChiTietHoaDon(invoiceCode, maSP,
+                        (int) table.getValueAt(i, 3), totalValue))) {
+                        System.out.println("Lỗi insert cthd");
+                    }
+                    
+                }
+                
+                
+                        
+                ParameterBillDT billData = new ParameterBillDT(date, employeeName, kh.getTenKH(), 
+                        kh.getSdtKH(), tongTienHangTra, tongPhiTraHang, tienHoan, 
+                        tongTienDoi, giamTru,thanhToan,
+                        ghiChu, invoiceCode, GenerateCode.generateQrcode(invoiceCode), 
+                        fields); 
+                BillDTManeger.getInstance().printBill(billData);
+                
+                
+            }
+            
             
             refresh();
         } catch (Exception e){

@@ -6,10 +6,12 @@ package dao;
 
 import connectDB.connectDB;
 import entity.ChiTietHoaDon;
+import entity.ChiTietHoaDonDoiTra_entity;
 import entity.HoaDonDoiTra_entity;
 import entity.HoaDon_entity;
 import entity.KhachHang_entity;
 import entity.NhanVien_entity;
+import entity.SanPhamDoiTra_entity;
 import entity.SanPham_entity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -167,34 +169,33 @@ public class DoiTra_DAO {
         return null;
     }
     
-//    public boolean createHDDT(HoaDonDoiTra_entity hd) {
-//        Connection con = connectDB.accessDataBase();
-//        PreparedStatement stmt = null;
-//        int n = 0;
-//        try {
-//                stmt = con.prepareStatement("INSERT INTO HoaDonDoiTra VALUES(?, ?, ?, ?)");
-//                stmt.setString(1, hd.getMaHD());
-//                stmt.setTimestamp(2, Timestamp.valueOf(hd.getNgayLapHD()));
-//                stmt.setDouble(3, hd.getTongTien());
-//                stmt.setDouble(4, hd.getTienGiam());
-//                stmt.setString(5, hd.getHinhThucThanhToan());
-//                stmt.setBoolean(6, true);
-//                stmt.setString(7, hd.getGhiChu());
-//                stmt.setString(8, hd.getSdtKH());
-//                stmt.setString(9, hd.getMaNV());
-//                n = stmt.executeUpdate();
-//        } catch (SQLException e) {
-//                // TODO: handle exception
-//                e.printStackTrace();
-//        } finally {
-//                 try {
-//             stmt.close();
-//         } catch (SQLException e) {
-//              e.printStackTrace();
-//         }
-//        }
-//        return n>0;
-//    }
+    public boolean createHDDT(HoaDonDoiTra_entity hd) {
+        Connection con = connectDB.accessDataBase();
+        PreparedStatement stmt = null;
+        int n = 0;
+        try {
+                stmt = con.prepareStatement("INSERT INTO HoaDonDoiTra VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+                stmt.setString(1, hd.getMaDT());
+                stmt.setString(2, hd.getMaHD());
+                stmt.setTimestamp(3, Timestamp.valueOf(hd.getNgayDoiTra()));
+                stmt.setDouble(4, hd.getTienTraLai());
+                stmt.setDouble(5, hd.getTienKhachtraThem());
+                stmt.setString(6, hd.getHinhThucThanhToan());
+                stmt.setString(7, hd.getGhiChu());
+                stmt.setString(8, hd.getMaNV());
+                n = stmt.executeUpdate();
+        } catch (SQLException e) {
+                // TODO: handle exception
+                e.printStackTrace();
+        } finally {
+                 try {
+             stmt.close();
+         } catch (SQLException e) {
+              e.printStackTrace();
+         }
+        }
+        return n>0;
+    }
     
     public static String generateInvoiceCode() throws SQLException {
         Connection con = connectDB.accessDataBase();
@@ -254,5 +255,58 @@ public class DoiTra_DAO {
         }
 
         return false; 
+    }
+
+    public boolean insertSPDT(SanPhamDoiTra_entity sp) {
+        Connection con = connectDB.accessDataBase();
+        PreparedStatement stmt = null;
+        int n = 0;
+        try {
+                stmt = con.prepareStatement("INSERT INTO SanPhamDoiTra VALUES(?, ?, ?, ?, ?)");
+                stmt.setString(1, sp.getMaDT());
+                stmt.setString(2, sp.getMaSP());
+                stmt.setInt(3, sp.getSoLuong());
+                stmt.setDouble(4, sp.getDonGia());
+                stmt.setString(5, sp.getTrangThai());
+                stmt.setString(6, sp.getVanDe());
+                stmt.setDouble(7, sp.getTinhTrang());
+                n = stmt.executeUpdate();
+        } catch (SQLException e) {
+                // TODO: handle exception
+                e.printStackTrace();
+        } finally {
+                 try {
+             stmt.close();
+         } catch (SQLException e) {
+              e.printStackTrace();
+         }
+        }
+        return n>0;
+    }
+
+    public boolean insertCTHDDT(ChiTietHoaDonDoiTra_entity hd) {
+        Connection con = connectDB.accessDataBase();
+        PreparedStatement stmt = null;
+        int n = 0;
+        try {
+                stmt = con.prepareStatement("INSERT INTO ChiTietHoaDonDoiTra VALUES(?, ?, ?, ?, ?, ?)");
+                stmt.setString(1, hd.getMaSP());
+                stmt.setString(2, hd.getMaDT());
+                stmt.setInt(3, hd.getSoLuong());
+                stmt.setDouble(4, hd.getChietKhau());
+                stmt.setDouble(5, hd.getGia());
+                stmt.setString(6, hd.getLoaiDoiTra());
+                n = stmt.executeUpdate();
+        } catch (SQLException e) {
+                // TODO: handle exception
+                e.printStackTrace();
+        } finally {
+                 try {
+             stmt.close();
+         } catch (SQLException e) {
+              e.printStackTrace();
+         }
+        }
+        return n>0;
     }
 }
