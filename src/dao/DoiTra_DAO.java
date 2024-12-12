@@ -295,7 +295,7 @@ public class DoiTra_DAO {
         PreparedStatement stmt = null;
         int n = 0;
         try {
-                stmt = con.prepareStatement("INSERT INTO SanPhamDoiTra VALUES(?, ?, ?, ?, ?)");
+                stmt = con.prepareStatement("INSERT INTO SanPhamDoiTra VALUES(?, ?, ?, ?, ?, ?, ?)");
                 stmt.setString(1, sp.getMaDT());
                 stmt.setString(2, sp.getMaSP());
                 stmt.setInt(3, sp.getSoLuong());

@@ -216,11 +216,9 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     // non user admin going to hide
                     boolean act
                             = 
-                            checkMenu(index, new int[]{6}) && 
-                            checkMenu(index, new int[]{7}) &&
-                            checkMenu(index, new int[]{8, 0})&&
-                            checkMenu(index, new int[]{8, 2})&&
-                            checkMenu(index, new int[]{9, 0});
+                            checkMenu(index, new int[]{7}) && 
+                            checkMenu(index, new int[]{8}) &&
+                            checkMenu(index, new int[]{9, 3});
                     return act;
                 }
                 return true;

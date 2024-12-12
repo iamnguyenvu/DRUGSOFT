@@ -10,6 +10,12 @@ import bill.FieldBillDoiTra;
 import bill.ParameterBillDT;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
 import dao.BanHang_DAO;
 import dao.DoiTra_DAO;
 import entity.ChiTietHoaDon;
@@ -23,18 +29,29 @@ import entity.SanPham_entity;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
+import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
@@ -46,6 +63,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
@@ -63,6 +82,8 @@ import nguyenvu.utils.DoiTraCheckboxRenderer;
 import nguyenvu.utils.DoiTraQuantityCellEditor;
 import nguyenvu.utils.DoiTraQuantityCellRenderer;
 import nguyenvu.utils.GenerateCode;
+import static nguyenvu.utils.GenerateCode.matToBufferedImage;
+import static nguyenvu.utils.GenerateCode.resizeImage;
 import nguyenvu.utils.HeaderRenderer;
 import nguyenvu.utils.ImageRenderer;
 import nguyenvu.utils.ListProductSearchPanel;
@@ -73,6 +94,10 @@ import nguyenvu.utils.QuantityCellRenderer;
 import nguyenvu.utils.RoundedTextField;
 import nguyenvu.utils.TableDeleteCellEditor;
 import nguyenvu.utils.TableDeleteEvent;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.videoio.VideoCapture;
 import raven.alerts.MessageAlerts;
 
 /**
@@ -776,7 +801,7 @@ public class DoiTra extends SimpleForm {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, true, false, false, false, true, true, true
@@ -1088,7 +1113,10 @@ public class DoiTra extends SimpleForm {
             return;
         }
         
-        
+        if(txtTienKhachDua.getText().trim().replace(",", "").isEmpty()) {
+            MessageAlerts.getInstance().showMessage("Lỗi", "Chưa nhập tiền khách đưa!", MessageAlerts.MessageType.ERROR);
+            return;
+        }
         
         try {
 
@@ -1117,7 +1145,7 @@ public class DoiTra extends SimpleForm {
             double tongTienHangTra = parseDoubleSafely(lblTongTienTra.getText());
             double tongPhiTraHang = parseDoubleSafely(lblPhiTraHang.getText());
             double tienHoan = parseDoubleSafely(lblTienHoan.getText());
-            double tongTienDoi = parseDoubleSafely(lblKhachPhaiTra.getText());;
+            double tongTienDoi = parseDoubleSafely(lblTongTien.getText());;
             double giamTru = parseDoubleSafely(lblDiemThuong.getText());
             double thanhToan = 0;
             
@@ -1146,6 +1174,7 @@ public class DoiTra extends SimpleForm {
                         double totalPrice = quantity * unitPrice;   // thanhTien
                         String tinhTrang = String.valueOf(table.getValueAt(i, 8));
                         double chietKhau = 100 - Double.parseDouble(tinhTrang.replace("%", ""));
+                        String vanDe = (String) model1.getValueAt(i, 7);
 
                         fields.add(new FieldBillDoiTra(productName, quantity, unitPrice, totalPrice, tinhTrang, "Trả"));
                         
@@ -1157,7 +1186,7 @@ public class DoiTra extends SimpleForm {
                         
                         if(!doiTraDao.insertSPDT(new SanPhamDoiTra_entity(
                                 invoiceCode, maSP, quantity, unitPrice, 
-                                "Đang chờ xác nhận", productName, (String) model1.getValueAt(i, 7), 
+                                "Đang chờ xác nhận", productName, vanDe, 
                                 Double.parseDouble(tinhTrang.replace("%", ""))
                                 ))) {
                             System.out.println("Lỗi insert spdt");
@@ -1266,6 +1295,7 @@ public class DoiTra extends SimpleForm {
 
     private void btnScanBarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScanBarcodeActionPerformed
         // TODO add your handling code here:
+        startBarcodeScanner();
     }//GEN-LAST:event_btnScanBarcodeActionPerformed
 
     private void txtTienKhachDuaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTienKhachDuaFocusGained
@@ -1316,11 +1346,11 @@ public class DoiTra extends SimpleForm {
         kh = doiTraDao.getKhachHang(maHD);
         hd = doiTraDao.getHoaDon(maHD);
         
-//        if(hd.getNgayLapHD().isBefore(LocalDateTime.now().minusDays(30)) ) {
-//            MessageAlerts.getInstance().showMessage("Không thỏa điều kiện đổi trả", "Quá thời hạn đổi trả!", MessageAlerts.MessageType.ERROR);
-//            refresh();
-//            return;
-//        }
+        if(hd.getNgayLapHD().isBefore(LocalDateTime.now().minusDays(30)) ) {
+            MessageAlerts.getInstance().showMessage("Không thỏa điều kiện đổi trả", "Quá thời hạn đổi trả!", MessageAlerts.MessageType.ERROR);
+            refresh();
+            return;
+        }
         
         if(kh == null) {
             MessageAlerts.getInstance().showMessage("Không thỏa điều kiện đổi trả", "Không có thông tin số điện thoại khách hàng!", MessageAlerts.MessageType.ERROR);
@@ -1375,6 +1405,7 @@ public class DoiTra extends SimpleForm {
         lblTongTienHoan.setText("");
         pnMuaHang.setVisible(false);
         pnKhachTra.setVisible(false);
+        lblTongTienGoc.setText("");
     }
 
     private double calculateTotalAmount() {
@@ -1450,9 +1481,9 @@ public class DoiTra extends SimpleForm {
                     return;
                 }
                 
-                table.setValueAt(existingQuantity + 1, i, 5);
-                double price = (double) table.getValueAt(i, 6);
-                table.setValueAt(price * (existingQuantity + 1), i, 7);
+                tableExchange.setValueAt(existingQuantity + 1, i, 5);
+                double price = (double) tableExchange.getValueAt(i, 6);
+                tableExchange.setValueAt(price * (existingQuantity + 1), i, 7);
                 menuProduct.setVisible(false);
                 txtProductSearch.requestFocusInWindow();
                 updateLblSoLuongSP();
@@ -1674,6 +1705,106 @@ public class DoiTra extends SimpleForm {
             return Double.parseDouble(text.replace(",", ""));
         } catch (NumberFormatException e) {
             return 0;
+        }
+    }
+    
+    private void startBarcodeScanner() {
+        System.loadLibrary("opencv_java4100");
+        VideoCapture camera = new VideoCapture(0);
+
+        if (!camera.isOpened()) {
+            MessageAlerts.getInstance().showMessage("Lỗi", "Không thể mở camera!", MessageAlerts.MessageType.ERROR);
+            return;
+        }
+
+        Mat frame = new Mat();
+        JFrame window = new JFrame("Quét mã barcode");
+        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        JLabel label = new JLabel();
+        window.add(label);
+        window.setSize(800, 700);
+        window.setResizable(false);
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
+        
+        final int scanCooldown = 1000;
+        AtomicLong lastScanTime = new AtomicLong(0);
+        
+        javax.swing.Timer timer = new javax.swing.Timer(30, e -> {
+            if (camera.read(frame)) {
+                try {
+                    BufferedImage bufferedImage = matToBufferedImage(frame);
+                    BufferedImage resizedImage = resizeImage(bufferedImage, label.getWidth(), label.getHeight());
+                    label.setIcon(new ImageIcon(resizedImage));
+
+                    long currentTime = System.currentTimeMillis();
+                    if(currentTime - lastScanTime.get() >= scanCooldown) {
+                        String barcodeText = decodeBarcode(bufferedImage);
+                        if (barcodeText != null) {
+                            playSound("barcodeSP/barcodeSound.wav");
+                            addProductToTable(new BanHang_DAO().getSP(barcodeText));
+    //                        MessageAlerts.getInstance().showMessage("Mã sản phẩm: " + barcodeText, "Barcode Scanned", MessageAlerts.MessageType.SUCCESS);
+    //                        camera.release();
+    //                        window.dispose();
+                             lastScanTime.set(currentTime);
+                        }
+                    }
+                    
+                    
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        timer.start();
+
+        window.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                camera.release();
+                timer.stop();
+            }
+        });
+        
+    }
+    
+    // Hàm chuyển đổi Mat sang BufferedImage
+    private BufferedImage matToBufferedImage(Mat mat) throws Exception {
+        MatOfByte mob = new MatOfByte();
+        Imgcodecs.imencode(".jpg", mat, mob);
+        return ImageIO.read(new ByteArrayInputStream(mob.toArray()));
+    }
+
+    // Hàm giải mã barcode từ BufferedImage
+    private String decodeBarcode(BufferedImage bufferedImage) {
+        try {
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(bufferedImage)));
+            Result result = new MultiFormatReader().decode(bitmap);
+            return result.getText(); // Trả về mã sản phẩm từ barcode
+        } catch (NotFoundException e) {
+            return null; // Không tìm thấy mã barcode trong khung hình
+        }
+    }
+    
+    private BufferedImage resizeImage(BufferedImage img, int newW, int newH) {
+        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return resized;
+    }
+    
+    private void playSound(String filePath) throws IOException {
+        try {
+            File soundFile = new File(filePath);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
         }
     }
 
