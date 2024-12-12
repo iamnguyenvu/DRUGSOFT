@@ -7,15 +7,23 @@ public class ChiTietHoaDonDoiTra_entity {
     private String maDT;          // Mã hóa đơn
     private int soLuong;          // Số lượng đổi trả
     private double chietKhau;     // Chiết khấu (lựa chọn từ combobox)
-    private double thanhTien;     // Thành tiền
+    private double gia;     // Thành tiền
     private String loaiDoiTra;			//-1 là đổi , 0 là trả. 1 là mua 
 
 	public ChiTietHoaDonDoiTra_entity() {
 		super();
 	}
+
+    public double getGia() {
+        return gia;
+    }
+
+    public void setGia(double gia) {
+        this.gia = gia;
+    }
 	
 
-
+        
 
 	public String getMaSP() {
 		return maSP;
@@ -59,13 +67,6 @@ public class ChiTietHoaDonDoiTra_entity {
 		this.chietKhau = chietKhau;
 	}
 
-	public double getThanhTien() {
-		return thanhTien;
-	}
-
-	public void setThanhTien(double thanhTien) {
-		this.thanhTien = thanhTien;
-	}
 
 	public String getLoaiDoiTra() {
 		return loaiDoiTra;
@@ -75,26 +76,26 @@ public class ChiTietHoaDonDoiTra_entity {
 		this.loaiDoiTra = loaiDoiTra;
 	}
 
-	public ChiTietHoaDonDoiTra_entity(String maSP, String tenSP, String maDT, int soLuong, double chietKhau, double thanhTien, String loaiDoiTra) {
+	public ChiTietHoaDonDoiTra_entity(String maSP, String tenSP, String maDT, int soLuong, double chietKhau, double gia, String loaiDoiTra) {
 		super();
 		this.maSP = maSP;
 		this.tenSP = tenSP;
 		this.maDT = maDT;
 		this.soLuong = soLuong;
 		this.chietKhau = chietKhau;
-		this.thanhTien = thanhTien;
+		this.gia = gia;
 		this.loaiDoiTra = loaiDoiTra;
 	}
 
 
-	public ChiTietHoaDonDoiTra_entity(String maDT, String tenSP, int soLuong, double chietKhau, double thanhTien,
+	public ChiTietHoaDonDoiTra_entity(String maDT, String tenSP, int soLuong, double chietKhau, double gia,
 			String loaiDoiTra) {
 		super();
 		this.maDT = maDT;
 		this.tenSP = tenSP;
 		this.soLuong = soLuong;
 		this.chietKhau = chietKhau;
-		this.thanhTien = thanhTien;
+		this.gia = gia;
 		this.loaiDoiTra = loaiDoiTra;
 	}
 

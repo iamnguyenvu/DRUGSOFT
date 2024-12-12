@@ -71,23 +71,6 @@ public class Login extends JPanel implements ActionListener, ItemListener, Mouse
         setPreferredSize(new Dimension(1000, 600));
         setLayout(new MigLayout("fill", "push[center][center]push", "push[center]push")); // Căn giữa panel chính
         init();
-        
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                xMouse = e.getX();
-                yMouse = e.getY();
-            }
-        });
-
-        addMouseMotionListener(new MouseAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                int x = e.getXOnScreen();
-                int y = e.getYOnScreen();
-                setLocation(x - xMouse, y - yMouse);
-            }
-        });
     }
 
     private void init() {

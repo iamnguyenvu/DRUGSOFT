@@ -567,7 +567,7 @@ public class ThongKeTongQuan extends SimpleForm {
 
         long diffDays = ChronoUnit.DAYS.between(dateStart, dateEnd);
         
-        double d = Math.ceil((diffDays / 20f));
+        double d = Math.ceil((diffDays / 10f));
         lineChart1.setLegendRenderer(new ChartLegendRenderer() {
             @Override
             public Component getLegendComponent(Object legend, int index) {
@@ -645,7 +645,7 @@ public class ThongKeTongQuan extends SimpleForm {
                 percentGiaoDich = 0; 
             }
         } else {
-            percentGiaoDich = ((sumGiaoDich - sumPrevGiaoDich) / sumPrevGiaoDich) * 100;
+            percentGiaoDich = ( (double)(sumGiaoDich - sumPrevGiaoDich) / sumPrevGiaoDich) * 100;
         }
         
         System.out.println("Current Total GiaoDich: " + sumGiaoDich);
@@ -729,7 +729,7 @@ public class ThongKeTongQuan extends SimpleForm {
                 percent = 0; 
             }
         } else {
-            percent = ((sumQuantity - sumPrevQuantity) / sumPrevQuantity) * 100;
+            percent = ((double)(sumQuantity - sumPrevQuantity) / sumPrevQuantity) * 100;
         }
         
         System.out.println("Current Total Customer: " + sumQuantity);
@@ -737,7 +737,7 @@ public class ThongKeTongQuan extends SimpleForm {
         System.err.println("Percent: " + percent);
         
 
-        lblChangeCustomer.setText(df.format(Math.abs(sumPrevQuantity)) + "%");
+        lblChangeCustomer.setText(df.format(Math.abs(percent)) + "%");
         
         if(percent == 0) {
             lblIconCustomer.setIcon(createIcon("gui/icon/minus-gray.svg", 0.7f));
