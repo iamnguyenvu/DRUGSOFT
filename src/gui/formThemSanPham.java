@@ -56,7 +56,7 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 	/**
 	 * Create the panel.
 	 */
-	public formThemSanPham(SanPham sanPham) {
+	public formThemSanPham() {
 		this.sanPham = sanPham;
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 		setPreferredSize(new Dimension(1150, 800));

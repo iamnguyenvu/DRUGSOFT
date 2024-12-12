@@ -380,7 +380,7 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 														JDialog dialog = new JDialog();
 
 														// Thêm formThemSanPham vào dialog
-														themSanPhamPanel = new formThemSanPham(SanPham.this);
+														themSanPhamPanel = new formThemSanPham();
 														dialog.getContentPane().add(themSanPhamPanel);
 
 														// Đặt kích thước cho dialog (phù hợp với formThemSanPham)

@@ -15,6 +15,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import nguyenvu.components.SimpleForm;
+import nguyenvu.menu.FormManager;
 import nguyenvu.utils.ButtonEditor;
 import nguyenvu.utils.ButtonRenderer;
 import nguyenvu.utils.DateCellEditor;
@@ -445,6 +446,14 @@ public class NhapHang extends SimpleForm {
         btnThemSP = new JButton("Thêm Sản Phẩm");
         btnThemSP.setBounds(205, 1, 166, 44);
         panel_1_1.add(btnThemSP);
+        btnThemSP.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FormManager.showForm(new formThemSanPham());
+				
+			}
+		});
 
         tfTienTra.addKeyListener(new KeyAdapter() {
             @Override

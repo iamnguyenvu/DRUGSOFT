@@ -17,9 +17,14 @@ public class MoneySuggestion {
 
         suggestions.add(tongTien);
 
-        int nearestRounded = (tongTien % 1000 == 0) ? tongTien : ((tongTien / 1000) + 1) * 1000;
-        if (nearestRounded != tongTien) {
-            suggestions.add(nearestRounded);
+        int nearestRoundedUp = (tongTien % 1000 == 0) ? tongTien : ((tongTien / 1000) + 1) * 1000;
+        if (nearestRoundedUp != tongTien && !suggestions.contains(nearestRoundedUp)) {
+            suggestions.add(nearestRoundedUp);
+        }
+
+        int nearestRoundedDown = (tongTien / 1000) * 1000;
+        if (nearestRoundedDown != tongTien && !suggestions.contains(nearestRoundedDown)) {
+            suggestions.add(nearestRoundedDown);
         }
 
         int[] increments;
