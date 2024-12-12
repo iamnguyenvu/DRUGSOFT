@@ -68,6 +68,7 @@ public class TaiKhoan_GUI extends SimpleForm {
         ySuKienFielTim();
         yCbbTenTaiKhoan();
         ySuKienPhanTrang();
+        nutChoBang();
     }
     
     private void initializeDatabase() {
@@ -666,41 +667,42 @@ public class TaiKhoan_GUI extends SimpleForm {
 
     private void btnTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimActionPerformed
         String keyword = tfTim.getText().trim();  // Lấy từ khóa tìm kiếm từ ô nhập liệu
-    if (keyword.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập tên tài khoản cần tìm!");
-        return;
-    }
-
-    DefaultTableModel model = (DefaultTableModel) tableTK.getModel();
-    DefaultTableModel filteredModel = new DefaultTableModel(
-        new Object[]{"STT", "Tên tài khoản", "Mật khẩu", "Phân quyền", "Trạng thái", "Cập nhật", "Xóa"}, 
-        0
-    );
-
-    boolean found = false;
-    for (int i = 0; i < model.getRowCount(); i++) {
-        String tenTaiKhoan = model.getValueAt(i, 1).toString();  // Lấy giá trị cột 'Tên tài khoản'
-        if (tenTaiKhoan.equalsIgnoreCase(keyword)) {
-            // Thêm dòng tìm thấy vào model mới
-            filteredModel.addRow(new Object[]{
-                model.getValueAt(i, 0),
-                model.getValueAt(i, 1),
-                model.getValueAt(i, 2),
-                model.getValueAt(i, 3),
-                model.getValueAt(i, 4),
-                model.getValueAt(i, 5),
-                model.getValueAt(i, 6)
-            });
-            found = true;
-            break;
+        if (keyword.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập tên tài khoản cần tìm!");
+            return;
         }
-    }
 
-    if (found) {
-        tableTK.setModel(filteredModel);  // Hiển thị chỉ các dòng tìm thấy
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy tài khoản với tên: " + keyword);
-    }
+        DefaultTableModel model = (DefaultTableModel) tableTK.getModel();
+        DefaultTableModel filteredModel = new DefaultTableModel(
+            new Object[]{"STT", "Tên tài khoản", "Mật khẩu", "Phân quyền", "Trạng thái", "Cập nhật", "Xóa"}, 
+            0
+        );
+
+        boolean found = false;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String tenTaiKhoan = model.getValueAt(i, 1).toString();  // Lấy giá trị cột 'Tên tài khoản'
+            if (tenTaiKhoan.equalsIgnoreCase(keyword)) {
+                // Thêm dòng tìm thấy vào model mới
+                filteredModel.addRow(new Object[]{
+                    model.getValueAt(i, 0),
+                    model.getValueAt(i, 1),
+                    model.getValueAt(i, 2),
+                    model.getValueAt(i, 3),
+                    model.getValueAt(i, 4),
+                    model.getValueAt(i, 5),
+                    model.getValueAt(i, 6)
+                });
+                found = true;
+                break;
+            }
+        }
+
+        if (found) {
+            tableTK.setModel(filteredModel);  // Hiển thị chỉ các dòng tìm thấy
+            nutChoBang();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy tài khoản với tên: " + keyword);
+        }
     }//GEN-LAST:event_btnTimActionPerformed
 
     private void radioNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioNhanVienActionPerformed
@@ -758,27 +760,44 @@ public class TaiKhoan_GUI extends SimpleForm {
 
     private void btnKhoiPhucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoiPhucActionPerformed
         if (groupPhanQuyen != null) {
-            groupPhanQuyen.clearSelection();  // Bỏ chọn tất cả radio button phân quyền
-        }
-        if (groupTrangThai != null) {
-            groupTrangThai.clearSelection();  // Bỏ chọn tất cả radio button trạng thái
-        }
+        groupPhanQuyen.clearSelection();  // Bỏ chọn tất cả radio button phân quyền
+    }
+    if (groupTrangThai != null) {
+        groupTrangThai.clearSelection();  // Bỏ chọn tất cả radio button trạng thái
+    }
 
-        // Cập nhật bảng với toàn bộ dữ liệu gốc
-        DefaultTableModel model = new DefaultTableModel(
-            new Object[]{"STT", "Tên tài khoản", "Mật khẩu", "Phân quyền", "Trạng thái", "Cập nhật", "Xóa"},
-            0
-        );
+    // Cập nhật bảng với toàn bộ dữ liệu gốc
+    DefaultTableModel model = new DefaultTableModel(
+        new Object[]{"STT", "Tên tài khoản", "Mật khẩu", "Phân quyền", "Trạng thái", "Cập nhật", "Xóa"},
+        0
+    );
 
-        // Thêm tất cả dữ liệu gốc vào bảng
-        for (Object[] row : originalData) {
-            model.addRow(row);
-        }
+    // Thêm tất cả dữ liệu gốc vào bảng
+    int stt = 1; // Đếm số thứ tự
+    for (TaiKhoan_entity row : originalData) {
+        // Lấy các giá trị từ đối tượng TaiKhoan_entity
+        String tenDangNhap = row.getTenDangNhap();
+        String matKhau = row.getMatKhau();
+        String phanQuyen = row.isPhanQuyen() ? "Quản lý" : "Nhân viên";
+        String trangThai = row.isTrangThai() ? "Hoạt động" : "Ngừng hoạt động";
 
-        tableTK.setModel(model);  // Cập nhật bảng
+        // Thêm một dòng vào bảng
+        Object[] data = new Object[]{
+            stt++,  // Cập nhật số thứ tự
+            tenDangNhap,
+            matKhau,
+            phanQuyen,
+            trangThai,
+            "Cập nhật",  // Các nút "Cập nhật" và "Xóa" cần xử lý riêng
+            "Xóa"
+        };
+        model.addRow(data);  // Thêm dòng vào bảng
+    }
 
-        // Gọi lại phương thức thiết lập nút sau khi cập nhật bảng
-        nutChoBang();
+    tableTK.setModel(model);  // Cập nhật bảng với model mới
+
+    // Gọi lại phương thức thiết lập nút sau khi cập nhật bảng
+    nutChoBang();  // Đảm bảo các nút luôn hiển thị
     }//GEN-LAST:event_btnKhoiPhucActionPerformed
 
     private void cbbPhanQuyenEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbPhanQuyenEditActionPerformed
@@ -837,19 +856,23 @@ public class TaiKhoan_GUI extends SimpleForm {
     
     private void locTaiKhoan() {
     // Lấy giá trị phân quyền và trạng thái từ radio button
-    String phanQuyen = "";
+    boolean phanQuyen = false;
     if (radioQuanLy.isSelected()) {
-        phanQuyen = "Quản lý";
+        phanQuyen = true;  // Quản lý
     } else if (radioNhanVien.isSelected()) {
-        phanQuyen = "Nhân viên";
+        phanQuyen = false;  // Nhân viên
     }
 
-    String trangThai = "";
+    boolean trangThai = false;
     if (radioHoatDong.isSelected()) {
-        trangThai = "Hoạt động";
+        trangThai = true;  // Hoạt động
     } else if (radioNgungHoatDong.isSelected()) {
-        trangThai = "Ngừng hoạt động";
+        trangThai = false;  // Ngừng hoạt động
     }
+
+    // Sử dụng phương thức trong DAO để lấy các tài khoản thỏa mãn cả 2 điều kiện
+    TaiKhoan_DAO dao = new TaiKhoan_DAO();
+    ArrayList<TaiKhoan_entity> filteredTaiKhoanList = dao.getTaiKhoanByTrangThaiAndPhanQuyen(trangThai, phanQuyen);
 
     // Tạo model mới để chứa kết quả lọc
     DefaultTableModel filteredModel = new DefaultTableModel(
@@ -857,27 +880,26 @@ public class TaiKhoan_GUI extends SimpleForm {
         0
     );
 
+    // Thêm các tài khoản lọc được vào model
     int stt = 1; // Đếm số thứ tự mới sau khi lọc
-    for (Object[] row : originalData) {
-        String tkPhanQuyen = row[3].toString();
-        String tkTrangThai = row[4].toString();
-
-        // Kiểm tra nếu tài khoản thỏa mãn cả 2 điều kiện lọc
-        boolean matchPhanQuyen = phanQuyen.isEmpty() || tkPhanQuyen.equals(phanQuyen);
-        boolean matchTrangThai = trangThai.isEmpty() || tkTrangThai.equals(trangThai);
-
-        if (matchPhanQuyen && matchTrangThai) {
-            row[0] = stt++;  // Cập nhật STT
-            filteredModel.addRow(row);
-        }
+    for (TaiKhoan_entity tk : filteredTaiKhoanList) {
+        Object[] row = new Object[] {
+            stt++,  // Cập nhật STT
+            tk.getTenDangNhap(),
+            tk.getMatKhau(),
+            tk.isPhanQuyen() ? "Quản lý" : "Nhân viên",
+            tk.isTrangThai() ? "Hoạt động" : "Ngừng hoạt động"
+        };
+        filteredModel.addRow(row);
     }
 
     // Cập nhật bảng với dữ liệu đã lọc
     tableTK.setModel(filteredModel);
-    
-    nutChoBang();
+
+    nutChoBang();  // Đảm bảo các nút luôn hiển thị
 }
-    
+
+
     public void ysetShadowPanel(){
         pnHeader.putClientProperty(FlatClientProperties.STYLE, ""
                 + "border:0,0,0,0,$Component.borderColor,,26");
@@ -1153,5 +1175,5 @@ public class TaiKhoan_GUI extends SimpleForm {
     private javax.swing.JTextField tfTenTKEdit;
     private javax.swing.JTextField tfTim;
     // End of variables declaration//GEN-END:variables
-    private List<Object[]> originalData = new ArrayList<>();
+    private List<TaiKhoan_entity> originalData = new ArrayList<>();
 }

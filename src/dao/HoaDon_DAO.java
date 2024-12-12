@@ -15,6 +15,7 @@ import connectDB.connectDB;
 import entity.HoaDon_entity;
 import entity.KhachHang_entity;
 import entity.NhanVien_entity;
+import java.util.List;
 
 public class HoaDon_DAO {
 	
@@ -149,4 +150,54 @@ public class HoaDon_DAO {
 //        return tongTien;
         return 1000000; // Hardcoded example
     }
+
+    public List<Object[]> getDoanhThuData(String timeRange, String reportType) {
+        List<Object[]> data = new ArrayList<>();
+        String query = "";
+        
+        // Xây dựng câu lệnh SQL dựa trên các tham số (timeRange, reportType)
+        if (timeRange.equals("Trong ngày")) {
+            query = "SELECT * FROM HoaDon WHERE DATEDIFF(day, NgayBan, GETDATE()) = 0"; // ví dụ
+        } else if (timeRange.equals("Trong tuần")) {
+            query = "SELECT * FROM HoaDon WHERE DATEDIFF(week, NgayBan, GETDATE()) = 0"; // ví dụ
+        } else if (timeRange.equals("Trong tháng")) {
+            query = "SELECT * FROM HoaDon WHERE DATEDIFF(month, NgayBan, GETDATE()) = 0"; // ví dụ
+        }
+        // Thêm điều kiện cho các kiểu báo cáo
+        // Ví dụ: Doanh thu theo sản phẩm, theo nhân viên, v.v.
+        if (reportType.equals("Doanh thu tổng quan")) {
+            query += " ORDER BY NgayBan"; // Đặt thêm điều kiện sắp xếp
+        } else if (reportType.equals("Doanh thu theo sản phẩm")) {
+            query += " ORDER BY SanPham"; // Sắp xếp theo sản phẩm
+        } else if (reportType.equals("Doanh thu theo nhân viên")) {
+            query += " ORDER BY NhanVien"; // Sắp xếp theo nhân viên
+        }
+        
+        try (Connection con = connectDB.accessDataBase();
+             PreparedStatement pst = con.prepareStatement(query);
+             ResultSet rs = pst.executeQuery()) {
+            
+            while (rs.next()) {
+                Object[] row = new Object[10];
+                row[0] = rs.getInt("STT"); // Số thứ tự
+                row[1] = rs.getDate("NgayBan"); // Ngày bán
+                row[2] = rs.getString("NhanVien"); // Nhân viên
+                row[3] = rs.getString("MaHoaDon"); // Mã hóa đơn
+                row[4] = rs.getString("KhachHang"); // Khách hàng
+                row[5] = rs.getDouble("ThanhTien"); // Thành tiền
+                row[6] = rs.getDouble("ThueVAT"); // Thuế VAT
+                row[7] = rs.getDouble("TongTien"); // Tổng tiền
+                row[8] = rs.getDouble("GiaVon"); // Giá vốn
+                row[9] = rs.getDouble("LoiNhuan"); // Lợi nhuận
+                
+                data.add(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
 }
+
+    
+
