@@ -153,7 +153,7 @@ public class BanHang_DAO {
         try {
                 stmt = con.prepareStatement("INSERT INTO ChiTietHoaDon VALUES(?, ?, ?, ?)");
                 stmt.setInt(1, cthd.getSoLuongSanPham());
-                stmt.setDouble(2, cthd.getThanhTien());
+                stmt.setDouble(2, cthd.getGia());
                 stmt.setString(3, cthd.getMaHD());
                 stmt.setString(4, cthd.getMaSP());
                 n = stmt.executeUpdate();

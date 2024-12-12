@@ -72,8 +72,9 @@ public class HoaDonDoiTra_DAO {
 	            String hhht = rs.getString("hinhThucThanhToan");
 	            String ghiChu = rs.getString("ghiChu");
 	            String maNV = rs.getString("maNV");
+	            double  tienGiam = rs.getDouble("tienGiam");
 
-	            HoaDonDoiTra_entity hd = new HoaDonDoiTra_entity(maDT, maHD, ngayDoiTra, tienTraLai, tienKhachTraThem, hhht, ghiChu, maNV);
+	            HoaDonDoiTra_entity hd = new HoaDonDoiTra_entity(maDT, maHD, ngayDoiTra, tienTraLai, tienKhachTraThem, hhht, ghiChu, maNV, tienGiam);
                 listSP.add(hd);
             }
         } catch (SQLException e) {
@@ -109,8 +110,9 @@ public class HoaDonDoiTra_DAO {
     	            String hhht = rs.getString("hinhThucThanhToan");
     	            String ghiChu = rs.getString("ghiChu");
     	            String maNV = rs.getString("maNV");
+    	            double  tienGiam = rs.getDouble("tienGiam");
 
-    	            HoaDonDoiTra_entity hd = new HoaDonDoiTra_entity(maDT, maHD, ngayDoiTra, tienTraLai, tienKhachTraThem, hhht, ghiChu, maNV);
+    	            HoaDonDoiTra_entity hd = new HoaDonDoiTra_entity(maDT, maHD, ngayDoiTra, tienTraLai, tienKhachTraThem, hhht, ghiChu, maNV, tienGiam);
                     return hd;
                 }
             }

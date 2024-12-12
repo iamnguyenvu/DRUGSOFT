@@ -36,12 +36,12 @@ public class DoiTra_DAO {
         ResultSet rs = null;
         ArrayList<ChiTietHoaDon> listCTHD = new ArrayList<>();
         try {
-            ps = con.prepareStatement("SELECT maHD, maSP, soLuongSanPham, thanhTien FROM ChiTietHoaDon WHERE maHD LIKE ?");
+            ps = con.prepareStatement("SELECT maHD, maSP, soLuongSanPham, gia FROM ChiTietHoaDon WHERE maHD LIKE ?");
             ps.setString(1, key);
             rs = ps.executeQuery();
             while (rs.next()) {
                 ChiTietHoaDon cthd = new ChiTietHoaDon(rs.getString("maHD"), 
-                        rs.getString("maSP"), rs.getInt("soLuongSanPham"), rs.getDouble("thanhTien")); 
+                        rs.getString("maSP"), rs.getInt("soLuongSanPham"), rs.getDouble("gia")); 
                 listCTHD.add(cthd);
             }
         } catch (SQLException e) {
@@ -174,7 +174,7 @@ public class DoiTra_DAO {
         PreparedStatement stmt = null;
         int n = 0;
         try {
-                stmt = con.prepareStatement("INSERT INTO HoaDonDoiTra VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+                stmt = con.prepareStatement("INSERT INTO HoaDonDoiTra VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 stmt.setString(1, hd.getMaDT());
                 stmt.setString(2, hd.getMaHD());
                 stmt.setTimestamp(3, Timestamp.valueOf(hd.getNgayDoiTra()));
@@ -183,6 +183,7 @@ public class DoiTra_DAO {
                 stmt.setString(6, hd.getHinhThucThanhToan());
                 stmt.setString(7, hd.getGhiChu());
                 stmt.setString(8, hd.getMaNV());
+                stmt.setDouble(9, hd.getTienGiam());
                 n = stmt.executeUpdate();
         } catch (SQLException e) {
                 // TODO: handle exception
@@ -205,6 +206,38 @@ public class DoiTra_DAO {
         
         String query = "SELECT MAX(maHD) FROM HoaDon WHERE maHD LIKE ?";
         String invoicePrefix = "HD" + currentDate;
+        
+        try (
+             PreparedStatement stmt = con.prepareStatement(query)) {
+            
+            stmt.setString(1, invoicePrefix + "%");
+            ResultSet rs = stmt.executeQuery();
+            
+            int counter = 0;
+            if (rs.next()) {
+                String maxInvoiceCode = rs.getString(1);
+                if (maxInvoiceCode != null) {
+                    String counterStr = maxInvoiceCode.substring(8); 
+                    counter = Integer.parseInt(counterStr);
+                }
+            }
+            
+            counter++;
+            
+            String counterPart = String.format("%05d", counter);
+            
+            return invoicePrefix + counterPart;
+        }
+    }
+    
+    public static String generateExchangeInvoiceCode() throws SQLException {
+        Connection con = connectDB.accessDataBase();
+        if(con == null) return null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
+        String currentDate = dateFormat.format(new Date());
+        
+        String query = "SELECT MAX(maDT) FROM HoaDonDoiTra WHERE maDT LIKE ?";
+        String invoicePrefix = "DT" + currentDate;
         
         try (
              PreparedStatement stmt = con.prepareStatement(query)) {
