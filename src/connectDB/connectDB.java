@@ -17,7 +17,7 @@ public class connectDB {
 		try {
 			String url = "jdbc:sqlserver://localhost:1433;databasename=DRUGSOFT;encryty=false;";
 			String user = "sa";
-			String password = "03082004Vu";
+			String password = "sapassword";
 
 			con =  DriverManager.getConnection(url, user, password);
 		} catch (Exception e) {
@@ -27,5 +27,7 @@ public class connectDB {
 		
 		return con;
 	}
+    
+        
 }
 
