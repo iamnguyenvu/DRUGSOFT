@@ -1062,7 +1062,7 @@
                         <Column editable="false" title="S&#x1ed1; l&#x1b0;&#x1ee3;ng t&#x1ed1;i &#x111;a" type="java.lang.Object"/>
                         <Column editable="false" title="&#x110;&#x1a1;n gi&#xe1;" type="java.lang.Double"/>
                         <Column editable="false" title="Th&#xe0;nh ti&#x1ec1;n" type="java.lang.Double"/>
-                        <Column editable="true" title="V&#x1ea5;n &#x111;&#x1ec1;" type="java.lang.Object"/>
+                        <Column editable="true" title="V&#x1ea5;n &#x111;&#x1ec1;" type="java.lang.String"/>
                         <Column editable="true" title="T&#xec;nh tr&#x1ea1;ng" type="java.lang.Object"/>
                         <Column editable="true" title="Ch&#x1ecd;n &#x111;&#x1ed5;i tr&#x1ea3;" type="java.lang.Object"/>
                       </Table>

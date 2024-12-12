@@ -81,6 +81,8 @@ public class GenerateCode {
         MatrixToImageWriter.writeToPath(bitMatrix, fileType, path);
 //        System.out.println("Barcode created for " + maSP + " at: " + path.toString());
     }
+    
+    
 
     public static BufferedImage matToBufferedImage(Mat mat) throws Exception {
         MatOfByte mob = new MatOfByte();

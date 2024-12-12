@@ -269,12 +269,12 @@ public class BanHang_DAO {
         ResultSet rs = null;
         ArrayList<ChiTietHoaDon> listCTHD = new ArrayList<>();
         try {
-            ps = con.prepareStatement("SELECT maHD, maSP, soLuongSanPham, thanhTien FROM ChiTietHoaDon WHERE maHD LIKE ?");
+            ps = con.prepareStatement("SELECT maHD, maSP, soLuongSanPham, gia FROM ChiTietHoaDon WHERE maHD LIKE ?");
             ps.setString(1, maHD);
             rs = ps.executeQuery();
             while (rs.next()) {
                 listCTHD.add(new ChiTietHoaDon(rs.getString("maHD"), 
-                        rs.getString("maSP"), rs.getInt("soLuongSanPham"), rs.getDouble("thanhTien")));
+                        rs.getString("maSP"), rs.getInt("soLuongSanPham"), rs.getDouble("gia")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
