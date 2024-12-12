@@ -79,7 +79,6 @@ public class NhapHang extends SimpleForm {
     private javax.swing.JTable table;
     private javax.swing.JTextField txtSearch;
     private JPanel panel;
-    private JButton btnThemSP;
     private JLabel lbl2;
     private JLabel lbl3;
     private JLabel lbl5;
@@ -283,11 +282,15 @@ public class NhapHang extends SimpleForm {
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
         			.addComponent(pnHeader, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-        				.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        				.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE))
-        			.addContainerGap(21, Short.MAX_VALUE))
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addPreferredGap(ComponentPlacement.UNRELATED)
+        					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 643, GroupLayout.PREFERRED_SIZE)
+        					.addContainerGap(21, Short.MAX_VALUE))
+        				.addGroup(layout.createSequentialGroup()
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 553, GroupLayout.PREFERRED_SIZE)
+        					.addGap(103))))
         );
         panel.setLayout(null);
 
@@ -303,11 +306,11 @@ public class NhapHang extends SimpleForm {
         btnThanhToan.setText("[F1] Thanh toán");
         btnThanhToan.setForeground(Color.WHITE);
         btnThanhToan.setBackground(new Color(1, 201, 16));
-        btnThanhToan.setBounds(104, 546, 178, 87);
+        btnThanhToan.setBounds(103, 435, 178, 87);
         panel.add(btnThanhToan);
         
         panel_1 = new JPanel();
-        panel_1.setBounds(10, 103, 381, 47);
+        panel_1.setBounds(10, 22, 381, 47);
         panel.add(panel_1);
         panel_1.setLayout(null);
         
@@ -323,7 +326,7 @@ public class NhapHang extends SimpleForm {
         
         panel_2 = new JPanel();
         panel_2.setLayout(null);
-        panel_2.setBounds(10, 160, 381, 47);
+        panel_2.setBounds(10, 79, 381, 47);
         panel.add(panel_2);
         
         lbl3 = new JLabel();
@@ -338,7 +341,7 @@ public class NhapHang extends SimpleForm {
         
         panel_3 = new JPanel();
         panel_3.setLayout(null);
-        panel_3.setBounds(10, 217, 381, 47);
+        panel_3.setBounds(10, 136, 381, 47);
         panel.add(panel_3);
         
         lbl5 = new JLabel();
@@ -356,7 +359,7 @@ public class NhapHang extends SimpleForm {
         
         panel_4 = new JPanel();
         panel_4.setLayout(null);
-        panel_4.setBounds(10, 274, 381, 47);
+        panel_4.setBounds(10, 193, 381, 47);
         panel.add(panel_4);
         
         JLabel lblTinTrNh = new JLabel();
@@ -376,7 +379,7 @@ public class NhapHang extends SimpleForm {
         
         panel_5 = new JPanel();
         panel_5.setLayout(null);
-        panel_5.setBounds(10, 331, 381, 47);
+        panel_5.setBounds(10, 250, 381, 47);
         panel.add(panel_5);
         
         lblPhuongThucThanhToan = new JLabel();
@@ -404,7 +407,7 @@ public class NhapHang extends SimpleForm {
         
         panel_6 = new JPanel();
         panel_6.setLayout(null);
-        panel_6.setBounds(10, 388, 381, 47);
+        panel_6.setBounds(10, 307, 381, 47);
         panel.add(panel_6);
         
         lblTinTha = new JLabel();
@@ -422,7 +425,7 @@ public class NhapHang extends SimpleForm {
         
         panel_7 = new JPanel();
         panel_7.setLayout(null);
-        panel_7.setBounds(10, 445, 381, 47);
+        panel_7.setBounds(10, 364, 381, 47);
         panel.add(panel_7);
         JLabel lbl7 = new JLabel();
         lbl7.setBounds(0, 0, 162, 47);
@@ -432,29 +435,6 @@ public class NhapHang extends SimpleForm {
         tfGhiChu.setBounds(203, 0, 178, 47);
         panel_7.add(tfGhiChu);
         tfGhiChu.setColumns(10);
-        
-        JPanel panel_1_1 = new JPanel();
-        panel_1_1.setLayout(null);
-        panel_1_1.setBounds(10, 46, 381, 47);
-        panel.add(panel_1_1);
-        
-        JLabel lblThmSnPhm = new JLabel();
-        lblThmSnPhm.setText("Thêm Sản Phẩm");
-        lblThmSnPhm.setPreferredSize(new Dimension(0, 30));
-        lblThmSnPhm.setBounds(0, 0, 174, 47);
-        panel_1_1.add(lblThmSnPhm);
-        btnThemSP = new JButton("Thêm Sản Phẩm");
-        btnThemSP.setBounds(205, 1, 166, 44);
-        panel_1_1.add(btnThemSP);
-        btnThemSP.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				FormManager.showForm(new formThemSanPham());
-				
-			}
-		});
-
         tfTienTra.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {

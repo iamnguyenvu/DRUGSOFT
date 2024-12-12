@@ -152,7 +152,7 @@ public class SanPham_DAO {
 	public boolean themSanPham(SanPham_entity sp) {
 	    Connection con = connectDB.accessDataBase();
 
-	    String sql = "INSERT INTO SanPham (maSP, tenSP, nhaCungCap, gia,giaNhap, thanhPhan, congDung, hinhAnhSP, maLoaiSP, soLuong, khoiLuong, donViTinh) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+	    String sql = "INSERT INTO SanPham (maSP, tenSP, nhaCungCap, gia,giaNhap, thanhPhan, congDung, hinhAnhSP, maLoaiSP, khoiLuong, donViTinh) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 	    try {
 	        PreparedStatement pst = con.prepareStatement(sql);
@@ -165,9 +165,8 @@ public class SanPham_DAO {
 	        pst.setString(7, sp.getCongDung());
 	        pst.setString(8, sp.getHinhAnhSP());
 	        pst.setString(9, sp.getLoaiSanPham().getMaLoaiSP());
-	        pst.setInt(10, sp.getSoLuong());
-	        pst.setDouble(11, sp.getKhoiLuong());
-	        pst.setString(12, sp.getDonViTinh());
+	        pst.setDouble(10, sp.getKhoiLuong());
+	        pst.setString(11, sp.getDonViTinh());
 
 	        int rowInserted = pst.executeUpdate();
 

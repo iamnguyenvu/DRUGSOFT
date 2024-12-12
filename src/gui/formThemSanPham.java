@@ -28,6 +28,7 @@ import javax.swing.border.LineBorder;
 
 import com.toedter.calendar.JDateChooser;
 
+import dao.SanPham_DAO;
 import entity.LoaiSanPham_entity;
 import entity.SanPham_entity;
 import nguyenvu.components.SimpleForm;
@@ -52,12 +53,13 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 	private JTextArea ta_ThanhPhan;
 	private JTextField tf_thue;
 	private JTextField tf_giaNhap;
-
+	private SanPham_DAO sp_dao;
 	/**
 	 * Create the panel.
 	 */
-	public formThemSanPham() {
+	public formThemSanPham(SanPham sanPham) {
 		this.sanPham = sanPham;
+		sp_dao = new SanPham_DAO();
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 		setPreferredSize(new Dimension(1150, 800));
 		setLayout(new BorderLayout(0, 0));
@@ -86,6 +88,8 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		pnCenter.add(lbTensp);
 
 		tf_soLuong = new JTextField();
+		tf_soLuong.setEnabled(false);
+		tf_soLuong.setEditable(false);
 		tf_soLuong.setForeground(new Color(0, 0, 0));
 		tf_soLuong.setBackground(new Color(255, 255, 255));
 		tf_soLuong.setColumns(10);
@@ -179,12 +183,13 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		lb_DonViTinh_1.setBackground(Color.WHITE);
 		
 		tf_thue = new JTextField();
+		tf_thue.setEnabled(false);
+		tf_thue.setEditable(false);
 		tf_thue.setBounds(370, 66, 135, 34);
 		pnCenter.add(tf_thue);
 		tf_thue.setForeground(Color.BLACK);
 		tf_thue.setColumns(10);
 		tf_thue.setBackground(Color.WHITE);
-
 		JLabel lb_ThemMoiSP = new JLabel("Thêm Mới Sản Phẩm");
 		lb_ThemMoiSP.setForeground(new Color(0, 0, 0));
 		lb_ThemMoiSP.setBackground(new Color(255, 255, 255));
@@ -401,13 +406,26 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		lbTP.setFont(new Font("Serif", Font.ITALIC, 12));
 		lbTP.setBounds(106, 14, 169, 22);
 		pn_HinhAnh.add(lbTP);
-
+		tf_thue.setText("5");
 		btn_Huy = new JButton("Hủy");
 		btn_Huy.setFont(new Font("Serif", Font.PLAIN, 20));
 		btn_Huy.setBounds(888, 703, 93, 42);
 		btn_Huy.addActionListener(this);
 		pnContent.add(btn_Huy);
 
+		cb_LoaiSP.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String key = cb_LoaiSP.getSelectedItem().toString();
+				if(key.equals("Thuốc")||key.equals("Thiết Bị Y Tế")) {
+					tf_thue.setText("5");
+				}else {
+					tf_thue.setText("10");
+				}
+				
+			}
+		});
 		btnXacNhan = new JButton("Xác Nhận");
 		btnXacNhan.setFont(new Font("Serif", Font.PLAIN, 20));
 		btnXacNhan.setBounds(994, 703, 115, 42);
@@ -481,11 +499,6 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 				}
 
 				String loaiSanPham = (String) cb_LoaiSP.getSelectedItem();
-				int soLuong = Integer.parseInt(tf_soLuong.getText());
-				if (soLuong <= 0) {
-					JOptionPane.showMessageDialog(null, "Số lượng phải > 0.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
 
 				// Chuyển đổi loại sản phẩm
 				if (loaiSanPham.equals("Thuốc")) {
@@ -506,12 +519,12 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 				LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
 				double giaNhap = Double.parseDouble(tf_giaNhap.getText());
 				SanPham_entity sp = new SanPham_entity(maSP, tenSP, khoiLuong, donViTinh,
-						nhaCungCap, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong,thue,giaNhap);
+						nhaCungCap, gia, thanhPhan, congDung, hinhAnh, loaiSP,thue,giaNhap);
 
 				// Thêm sản phẩm vào bảng (cần đối tượng `sanPham` để gọi phương thức
 				// `addRowTable`)
 				sanPham.addRowTable(sp);
-
+				sp_dao.themSanPham(sp);
 				// Hiển thị thông báo thành công
 				JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công!", "Thông báo",
 						JOptionPane.INFORMATION_MESSAGE);

@@ -226,6 +226,7 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 
 		            if (isDeleted) {
 		                dftb_SanPham.removeRow(row);
+		                sp_dao.xoaSanPham(maSP);
 		                JOptionPane.showMessageDialog(null, "Xóa sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 		            } else {
 		                JOptionPane.showMessageDialog(null, "Xóa sản phẩm thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -380,7 +381,7 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 														JDialog dialog = new JDialog();
 
 														// Thêm formThemSanPham vào dialog
-														themSanPhamPanel = new formThemSanPham();
+														themSanPhamPanel = new formThemSanPham(SanPham.this);
 														dialog.getContentPane().add(themSanPhamPanel);
 
 														// Đặt kích thước cho dialog (phù hợp với formThemSanPham)
