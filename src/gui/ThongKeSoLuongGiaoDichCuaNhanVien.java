@@ -71,7 +71,7 @@ public class ThongKeSoLuongGiaoDichCuaNhanVien extends SimpleForm{
 
     public ThongKeSoLuongGiaoDichCuaNhanVien(int time) {
     	tk_Dao = new ThongKe_DAO();
-		setPreferredSize(new Dimension(1041, 668));
+		setPreferredSize(new Dimension(1093, 668));
         initComponents();
         setBackground(new Color(240, 240, 240,0));
         setLayout(new BorderLayout(0, 0));

@@ -12,6 +12,12 @@ public class NhapHang_entity {
 	public NhapHang_entity() {
 		super();
 	}
+	
+	public NhapHang_entity(String maNhapHang) {
+		super();
+		this.maNhapHang = maNhapHang;
+	}
+
 	public NhapHang_entity(String maNhapHang, LocalDate ngayNhapHang, double tongTien, String ghiChu, String trangThai,String hinhThucThanhToan) {
 		super();
 		this.maNhapHang = maNhapHang;

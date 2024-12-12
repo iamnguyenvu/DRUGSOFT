@@ -2,6 +2,7 @@
 package gui;
 
 import com.formdev.flatlaf.FlatClientProperties;
+
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import dao.ChiTietNhapHang_DAO;
@@ -16,6 +17,8 @@ import java.awt.Dimension;
 import nguyenvu.components.SimpleForm;
 import nguyenvu.utils.ButtonEditor;
 import nguyenvu.utils.ButtonRenderer;
+import nguyenvu.utils.DateCellEditor;
+import nguyenvu.utils.DateCellRenderer;
 import nguyenvu.utils.EditViewButtonEditor;
 import nguyenvu.utils.EditViewButtonRenderer;
 import nguyenvu.utils.HeaderRenderer;
@@ -48,14 +51,23 @@ import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Optional;
 import java.util.Random;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import com.toedter.calendar.JDateChooser;
 
 public class NhapHang extends SimpleForm {
 	
@@ -91,7 +103,6 @@ public class NhapHang extends SimpleForm {
 	private JPanel panel_5;
 	private JPanel panel_6;
 	private JPanel panel_7;
-	private JButton btnLuuTam;
    
     public NhapHang() {
     	nhapHang_DAO = new NhapHang_DAO();
@@ -110,10 +121,6 @@ public class NhapHang extends SimpleForm {
         listProductSearch.addProductSelectListener(new ProductSelectListener() {
             @Override
             public void onProductSelected(SanPham_entity sp) {
-                if(sp.getSoLuong() < 1) {
-                    MessageAlerts.getInstance().showMessage("Cảnh báo", "Sản phẩm không đủ số lượng để thêm vào giỏ hàng!", MessageAlerts.MessageType.WARNING);
-                    return;
-                }
                 addProductToTable(sp);
                 popupMenu.setVisible(false);
                 txtSearch.requestFocusInWindow();
@@ -131,7 +138,6 @@ public class NhapHang extends SimpleForm {
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Scan barcode");
         jButton2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        btnThemSP = new JButton("Thêm Sản Phẩm");
 
         javax.swing.GroupLayout pnHeaderLayout = new javax.swing.GroupLayout(pnHeader);
         pnHeaderLayout.setHorizontalGroup(
@@ -143,20 +149,16 @@ public class NhapHang extends SimpleForm {
         			.addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(jButton2, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-        			.addGap(683)
-        			.addComponent(btnThemSP)
-        			.addContainerGap(30, Short.MAX_VALUE))
+        			.addContainerGap(822, Short.MAX_VALUE))
         );
         pnHeaderLayout.setVerticalGroup(
         	pnHeaderLayout.createParallelGroup(Alignment.LEADING)
         		.addGroup(pnHeaderLayout.createSequentialGroup()
         			.addContainerGap()
         			.addGroup(pnHeaderLayout.createParallelGroup(Alignment.TRAILING)
-        				.addGroup(pnHeaderLayout.createParallelGroup(Alignment.BASELINE)
-        					.addComponent(jButton2, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-        					.addComponent(btnThemSP, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
-        				.addComponent(jButton1, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-        				.addComponent(txtSearch, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+        				.addComponent(jButton2, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+        				.addComponent(jButton1, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+        				.addComponent(txtSearch, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
         			.addContainerGap())
         );
         pnHeader.setLayout(pnHeaderLayout);
@@ -182,7 +184,7 @@ public class NhapHang extends SimpleForm {
             }
         };
         dftable.setColumnIdentifiers(new String[]{
-            "STT", "Hình ảnh", "Mã sản phẩm", "Tên sản phẩm", "Đơn Vị Tính", "Số lượng","Thuế", "Đơn giá", "Thành tiền","Xóa"
+            "STT", "Hình ảnh", "Mã sản phẩm", "Tên sản phẩm", "Đơn Vị Tính", "Số lượng","Thuế", "Đơn giá", "Thành tiền","Ngày Sản Xuất","Ngày Hết Hạn","Xóa"
         });
         table.setModel(dftable);
         table.setRowHeight(50);
@@ -197,19 +199,23 @@ public class NhapHang extends SimpleForm {
             table.getColumnModel().getColumn(2).setResizable(false);
             table.getColumnModel().getColumn(2).setPreferredWidth(100);
             table.getColumnModel().getColumn(3).setResizable(false);
-            table.getColumnModel().getColumn(3).setPreferredWidth(200);
+            table.getColumnModel().getColumn(3).setPreferredWidth(100);
             table.getColumnModel().getColumn(4).setResizable(false);
-            table.getColumnModel().getColumn(4).setPreferredWidth(50);
+            table.getColumnModel().getColumn(4).setPreferredWidth(80);
             table.getColumnModel().getColumn(5).setResizable(false);
-            table.getColumnModel().getColumn(5).setPreferredWidth(100);
+            table.getColumnModel().getColumn(5).setPreferredWidth(60);
             table.getColumnModel().getColumn(6).setResizable(false);
             table.getColumnModel().getColumn(6).setPreferredWidth(60);
             table.getColumnModel().getColumn(7).setResizable(false);
-            table.getColumnModel().getColumn(7).setPreferredWidth(100);
+            table.getColumnModel().getColumn(7).setPreferredWidth(80);
             table.getColumnModel().getColumn(8).setResizable(false);
-            table.getColumnModel().getColumn(8).setPreferredWidth(100);
+            table.getColumnModel().getColumn(8).setPreferredWidth(80);
             table.getColumnModel().getColumn(9).setResizable(false);
-            table.getColumnModel().getColumn(9).setPreferredWidth(80);
+            table.getColumnModel().getColumn(9).setPreferredWidth(150);
+            table.getColumnModel().getColumn(10).setResizable(false);
+            table.getColumnModel().getColumn(10).setPreferredWidth(150);
+            table.getColumnModel().getColumn(11).setResizable(false);
+            table.getColumnModel().getColumn(11).setPreferredWidth(80);
         }
         table.getTableHeader().setDefaultRenderer(new HeaderRenderer());
         table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));
@@ -217,6 +223,12 @@ public class NhapHang extends SimpleForm {
         table.getTableHeader().setForeground(Color.WHITE);
         table.getColumnModel().getColumn(5).setCellEditor(new QuantityCellEditor(this));
         table.getColumnModel().getColumn(5).setCellRenderer(new QuantityCellRenderer());
+        table.getColumnModel().getColumn(9).setCellRenderer(new DateCellRenderer());
+        table.getColumnModel().getColumn(9).setCellEditor(new DateCellEditor());
+        table.getColumnModel().getColumn(10).setCellRenderer(new DateCellRenderer());
+        table.getColumnModel().getColumn(10).setCellEditor(new DateCellEditor());
+
+  
         table.getColumn("Xóa").setCellRenderer(new ButtonRenderer("Xóa"));
         table.getColumn("Xóa").setCellEditor(new ButtonEditor("Xóa", e -> {
         	removeSelectedRow();
@@ -271,9 +283,9 @@ public class NhapHang extends SimpleForm {
         		.addGroup(layout.createSequentialGroup()
         			.addComponent(pnHeader, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 643, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(panel, GroupLayout.PREFERRED_SIZE, 537, GroupLayout.PREFERRED_SIZE))
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        				.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE))
         			.addContainerGap(21, Short.MAX_VALUE))
         );
         panel.setLayout(null);
@@ -290,23 +302,11 @@ public class NhapHang extends SimpleForm {
         btnThanhToan.setText("[F1] Thanh toán");
         btnThanhToan.setForeground(Color.WHITE);
         btnThanhToan.setBackground(new Color(1, 201, 16));
-        btnThanhToan.setBounds(213, 440, 178, 87);
+        btnThanhToan.setBounds(104, 546, 178, 87);
         panel.add(btnThanhToan);
         
-        btnLuuTam = new JButton();
-        btnLuuTam.setText("[F7] Lưu tạm");
-        btnLuuTam.setForeground(Color.WHITE);
-        btnLuuTam.setBackground(new Color(183, 218, 246));
-        btnLuuTam.setBounds(10, 440, 162, 87);
-        panel.add(btnLuuTam);
-        btnLuuTam.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	insertNhapHangLuuTam();
-            }
-        });
-        
         panel_1 = new JPanel();
-        panel_1.setBounds(10, 29, 381, 47);
+        panel_1.setBounds(10, 103, 381, 47);
         panel.add(panel_1);
         panel_1.setLayout(null);
         
@@ -322,7 +322,7 @@ public class NhapHang extends SimpleForm {
         
         panel_2 = new JPanel();
         panel_2.setLayout(null);
-        panel_2.setBounds(10, 86, 381, 47);
+        panel_2.setBounds(10, 160, 381, 47);
         panel.add(panel_2);
         
         lbl3 = new JLabel();
@@ -337,7 +337,7 @@ public class NhapHang extends SimpleForm {
         
         panel_3 = new JPanel();
         panel_3.setLayout(null);
-        panel_3.setBounds(10, 143, 381, 47);
+        panel_3.setBounds(10, 217, 381, 47);
         panel.add(panel_3);
         
         lbl5 = new JLabel();
@@ -355,7 +355,7 @@ public class NhapHang extends SimpleForm {
         
         panel_4 = new JPanel();
         panel_4.setLayout(null);
-        panel_4.setBounds(10, 200, 381, 47);
+        panel_4.setBounds(10, 274, 381, 47);
         panel.add(panel_4);
         
         JLabel lblTinTrNh = new JLabel();
@@ -375,7 +375,7 @@ public class NhapHang extends SimpleForm {
         
         panel_5 = new JPanel();
         panel_5.setLayout(null);
-        panel_5.setBounds(10, 257, 381, 47);
+        panel_5.setBounds(10, 331, 381, 47);
         panel.add(panel_5);
         
         lblPhuongThucThanhToan = new JLabel();
@@ -385,11 +385,25 @@ public class NhapHang extends SimpleForm {
         
         cbbPhuongThucThanhToan = new JComboBox<String>();
         cbbPhuongThucThanhToan.setBounds(203, 0, 178, 47);
+        cbbPhuongThucThanhToan.addItem("Tiền Mặt");
+        cbbPhuongThucThanhToan.addItem("Chuyển Khoản");
+        cbbPhuongThucThanhToan.addItem("Thẻ Tín Dụng");
         panel_5.add(cbbPhuongThucThanhToan);
+        cbbPhuongThucThanhToan.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                // Kiểm tra xem ComboBox có mục được chọn hay không
+                if (cbbPhuongThucThanhToan.getSelectedIndex() == -1) {
+                    // Set giá trị mặc định nếu không có lựa chọn nào
+                    cbbPhuongThucThanhToan.setSelectedIndex(0);
+                }
+            }
+        });
+
         
         panel_6 = new JPanel();
         panel_6.setLayout(null);
-        panel_6.setBounds(10, 314, 381, 47);
+        panel_6.setBounds(10, 388, 381, 47);
         panel.add(panel_6);
         
         lblTinTha = new JLabel();
@@ -407,7 +421,7 @@ public class NhapHang extends SimpleForm {
         
         panel_7 = new JPanel();
         panel_7.setLayout(null);
-        panel_7.setBounds(10, 371, 381, 47);
+        panel_7.setBounds(10, 445, 381, 47);
         panel.add(panel_7);
         JLabel lbl7 = new JLabel();
         lbl7.setBounds(0, 0, 162, 47);
@@ -417,9 +431,21 @@ public class NhapHang extends SimpleForm {
         tfGhiChu.setBounds(203, 0, 178, 47);
         panel_7.add(tfGhiChu);
         tfGhiChu.setColumns(10);
-        cbbPhuongThucThanhToan.addItem("Tiền Mặt");
-        cbbPhuongThucThanhToan.addItem("Chuyển Khoản");
-        cbbPhuongThucThanhToan.addItem("Thẻ Tín Dụng");
+        
+        JPanel panel_1_1 = new JPanel();
+        panel_1_1.setLayout(null);
+        panel_1_1.setBounds(10, 46, 381, 47);
+        panel.add(panel_1_1);
+        
+        JLabel lblThmSnPhm = new JLabel();
+        lblThmSnPhm.setText("Thêm Sản Phẩm");
+        lblThmSnPhm.setPreferredSize(new Dimension(0, 30));
+        lblThmSnPhm.setBounds(0, 0, 174, 47);
+        panel_1_1.add(lblThmSnPhm);
+        btnThemSP = new JButton("Thêm Sản Phẩm");
+        btnThemSP.setBounds(205, 1, 166, 44);
+        panel_1_1.add(btnThemSP);
+
         tfTienTra.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -447,62 +473,11 @@ public class NhapHang extends SimpleForm {
             + "border:0,0,0,0,$Component.borderColor,,20");
     }
 
-
-//public void addProductToTable(SanPham_entity sp) {
-//    for (int i = 0; i < table.getRowCount(); i++) {
-//        String existingMaSP = (String) table.getValueAt(i, 1);
-//        if (existingMaSP.equals(sp.getMaSP())) {
-//            int existingQuantity = (int) table.getValueAt(i, 3);
-//            
-//            if(existingQuantity == sp.getSoLuong()) {
-//                MessageAlerts.getInstance().showMessage("Cảnh báo", "Vượt quá số lượng tồn kho!", MessageAlerts.MessageType.WARNING);
-//                return;
-//            }
-//            
-//            if(existingQuantity == 50) {
-//                MessageAlerts.getInstance().showMessage("Cảnh báo", "Số lượng tối đa cho phép là 50", MessageAlerts.MessageType.WARNING);
-//                return;
-//            }
-//            
-//            table.setValueAt(existingQuantity + 1, i, 5);
-//            double price = (double) table.getValueAt(i, 6);
-//            table.setValueAt(price * (existingQuantity + 1), i, 7);
-//            popupMenu.setVisible(false);
-//            txtSearch.requestFocusInWindow();
-////            updateLblSoLuongSP();
-//            return;
-//        }
-//    }
-//    
-////	    DefaultTableModel model = (DefaultTableModel) table.getModel();
-//	    ImageIcon iiSP = new ImageIcon(getClass().getResource(sp.getHinhAnhSP()));
-//	Image imgSP = iiSP.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-//	    Object[] rowData = new Object[] {
-//	        dftable.getRowCount() + 1, // STT
-//	        new ImageIcon(imgSP), // hinhAnh
-//	        sp.getMaSP(), // maSP
-//	        sp.getTenSP(), // tenSP
-//	        sp.getDonViTinh(), // donVi
-//	        1, // soLuong (mặc định là 1)
-//	        sp.getGia(), // donGia
-//	        sp.getGia()
-//	    };
-//	    dftable.addRow(rowData);
-////    updateLblSoLuongSP();
-//}
     public void addProductToTable(SanPham_entity sp) {
         for (int i = 0; i < table.getRowCount(); i++) {
             String existingMaSP = (String) table.getValueAt(i, 2); // Cột Mã sản phẩm
             if (existingMaSP.equals(sp.getMaSP())) {
                 int existingQuantity = (int) table.getValueAt(i, 5); // Cột Số lượng
-                if (existingQuantity == sp.getSoLuong()) {
-                    MessageAlerts.getInstance().showMessage("Cảnh báo", "Vượt quá số lượng tồn kho!", MessageAlerts.MessageType.WARNING);
-                    return;
-                }
-                if (existingQuantity == 50) {
-                    MessageAlerts.getInstance().showMessage("Cảnh báo", "Số lượng tối đa cho phép là 50", MessageAlerts.MessageType.WARNING);
-                    return;
-                }
                 table.setValueAt(existingQuantity + 1, i, 5); // Cập nhật số lượng
                 double price = (double) table.getValueAt(i, 6); // Đơn giá
                 table.setValueAt(price * (existingQuantity + 1), i, 7); // Thành tiền
@@ -583,106 +558,84 @@ public class NhapHang extends SimpleForm {
 	    return ma;
 	}
 	public void insertNhapHang() {
-        // Kiểm tra danh sách sản phẩm
-        if (table.getRowCount() == 0) { // Kiểm tra nếu bảng sản phẩm trống
-            MessageAlerts.getInstance().showMessage(
-                "Cảnh báo",
-                "Vui lòng thêm ít nhất một sản phẩm trước khi thanh toán!",
-                MessageAlerts.MessageType.WARNING
-            );
-            return; // Ngừng xử lý tiếp
-        }
+	    // Kiểm tra danh sách sản phẩm
+	    if (table.getRowCount() == 0) {
+	        showWarning("Cảnh báo", "Vui lòng thêm ít nhất một sản phẩm trước khi lưu tạm!");
+	        return;
+	    }
 
-        // Lấy số tiền người dùng nhập
-        double tientra = Double.parseDouble(tfTienTra.getText());
-        double tienCanTra = Double.parseDouble(lblTienCanTra.getText());
+	    // Lấy số tiền người dùng nhập
+	    double tientra = parseDouble(tfTienTra.getText());
+	    double tienCanTra = parseDouble(lblTienCanTra.getText());
 
-        // Kiểm tra số tiền trả và số tiền cần trả
-        if (tienCanTra > tientra || tientra == 0) {
-            MessageAlerts.getInstance().showMessage(
-                "Cảnh báo",
-                "Tiền Trả phải lớn hơn Tiền Cần Trả!",
-                MessageAlerts.MessageType.WARNING
-            );
-        } else {
-        	String maNhapHang = generateMovieCode("NH");
-        	LocalDate ngayNhapHang = LocalDate.now();
-        	double tongTien = tienCanTra;
-        	String ghiChu = tfGhiChu.getText();
-        	String hhht = (String) cbbPhuongThucThanhToan.getSelectedItem();
-        	NhapHang_entity nh = new NhapHang_entity(maNhapHang, ngayNhapHang, tongTien, ghiChu, "Đã Thanh Toán",hhht);
-        	System.out.println(nh.toString());
-        	nhapHang_DAO.insert(nh);
-        	
-        	for (int row = 0; row < table.getRowCount(); row++) {
-        	    String maSanPham = (String) table.getValueAt(row, 2); // Product Code
-        	    int soLuong = (int) table.getValueAt(row, 5); // Quantity
-        	    double thanhTien = (double) table.getValueAt(row, 8); 
-        	    
-        	    SanPham_entity sp = new SanPham_entity(maSanPham);
-        	    
-        	    
-        	    ChiTietNhapHang_entity ctnh = new ChiTietNhapHang_entity(nh, sp, soLuong, thanhTien);
-        	    chiTietNhapHang_DAO.insert(ctnh); 
-        	    nhapHang_DAO.UpdateQuantity(maSanPham, soLuong);
-            MessageAlerts.getInstance().showMessage(
-                "Thông báo",
-                "Thanh toán thành công!",
-                MessageAlerts.MessageType.SUCCESS
-            );
-        }
-        	xoaTrong();
+	    // Kiểm tra số tiền trả và số tiền cần trả
+	    if (tienCanTra > tientra || tientra == 0) {
+	        showWarning("Cảnh báo", "Tiền Trả phải lớn hơn Tiền Cần Trả!");
+	        return;
+	    }
+
+	    // Tạo mã nhập hàng và ngày nhập
+	    String maNhapHang = generateMovieCode("NH");
+	    LocalDate ngayNhapHang = LocalDate.now();
+	    String ghiChu = tfGhiChu.getText();
+	    String hhht = (String) cbbPhuongThucThanhToan.getSelectedItem();
+	    
+	    // Tạo đối tượng nhập hàng
+	    NhapHang_entity nh = new NhapHang_entity(maNhapHang, ngayNhapHang, tienCanTra, ghiChu, "Đã Thanh Toán", hhht);
+	    System.out.println(nh.toString());
+	    nhapHang_DAO.insert(nh);
+
+	 // Xử lý chi tiết nhập hàng
+	    for (int row = 0; row < table.getRowCount(); row++) {
+	        String maSanPham = (String) table.getValueAt(row, 2);
+	        int soLuong = (int) table.getValueAt(row, 5);
+	        double thanhTien = (double) table.getValueAt(row, 8);
+
+	        LocalDate ngaySanXuat = null;
+	        LocalDate ngayHetHan = null;
+
+	     // Lấy giá trị ngày sản xuất và ngày hết hạn từ bảng
+	        Object objSX = table.getValueAt(row, 9);
+	        Object objHH = table.getValueAt(row, 10);
+
+	        if (objSX instanceof java.util.Date) {
+	            ngaySanXuat = ((java.util.Date) objSX).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	        }
+
+	        if (objHH instanceof java.util.Date) {
+	            ngayHetHan = ((java.util.Date) objHH).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	        }
+	        System.out.println(ngaySanXuat);
+	        System.out.println(ngayHetHan);
+
+
+	        SanPham_entity sp = new SanPham_entity(maSanPham);
+	        ChiTietNhapHang_entity ctnh = new ChiTietNhapHang_entity(nh, sp, ngaySanXuat, ngayHetHan, soLuong, thanhTien);
+	        chiTietNhapHang_DAO.insert(ctnh);
+
+	        // Cập nhật số lượng sản phẩm
+	        nhapHang_DAO.UpdateQuantity(maSanPham, soLuong);
+	    }
+	    showSuccess("Thông báo", "Thanh toán thành công!");
+	    xoaTrong();
 	}
-	}
-	public void insertNhapHangLuuTam() {
-        // Kiểm tra danh sách sản phẩm
-        if (table.getRowCount() == 0) { // Kiểm tra nếu bảng sản phẩm trống
-            MessageAlerts.getInstance().showMessage(
-                "Cảnh báo",
-                "Vui lòng thêm ít nhất một sản phẩm trước khi lưu tạm!",
-                MessageAlerts.MessageType.WARNING
-            );
-            return; // Ngừng xử lý tiếp
-        }
 
-        // Lấy số tiền người dùng nhập
-        double tientra = Double.parseDouble(tfTienTra.getText());
-        double tienCanTra = Double.parseDouble(lblTienCanTra.getText());
 
-        // Kiểm tra số tiền trả và số tiền cần trả
-        if (tienCanTra > tientra || tientra == 0) {
-            MessageAlerts.getInstance().showMessage(
-                "Cảnh báo",
-                "Tiền Trả phải lớn hơn Tiền Cần Trả!",
-                MessageAlerts.MessageType.WARNING
-            );
-        } else {
-        	String maNhapHang = generateMovieCode("NH");
-        	LocalDate ngayNhapHang = LocalDate.now();
-        	double tongTien = tienCanTra;
-        	String ghiChu = tfGhiChu.getText();
-        	String hhht = (String) cbbPhuongThucThanhToan.getSelectedItem();
-        	NhapHang_entity nh = new NhapHang_entity(maNhapHang, ngayNhapHang, tongTien, ghiChu, "Lưu Tạm",hhht);
-        	System.out.println(nh.toString());
-        	nhapHang_DAO.insert(nh);
-        	
-        	for (int row = 0; row < table.getRowCount(); row++) {
-        	    String maSanPham = (String) table.getValueAt(row, 2); // Product Code
-        	    int soLuong = (int) table.getValueAt(row, 5); // Quantity
-        	    double thanhTien = (double) table.getValueAt(row, 8); 
-        	    
-        	    SanPham_entity sp = new SanPham_entity(maSanPham);
-        	    ChiTietNhapHang_entity ctnh = new ChiTietNhapHang_entity(nh, sp, soLuong, thanhTien);
-        	    chiTietNhapHang_DAO.insert(ctnh); 
-        	    nhapHang_DAO.UpdateQuantity(maSanPham, soLuong);
-            MessageAlerts.getInstance().showMessage(
-                "Thông báo",
-                "Thanh toán thành công!",
-                MessageAlerts.MessageType.SUCCESS
-            );
-        }
-        	xoaTrong();
+
+	private void showWarning(String title, String message) {
+	    MessageAlerts.getInstance().showMessage(title, message, MessageAlerts.MessageType.WARNING);
 	}
+
+	private void showSuccess(String title, String message) {
+	    MessageAlerts.getInstance().showMessage(title, message, MessageAlerts.MessageType.SUCCESS);
+	}
+
+	private double parseDouble(String text) {
+	    try {
+	        return Double.parseDouble(text);
+	    } catch (NumberFormatException e) {
+	        return 0.0; // Return 0 if the value is invalid
+	    }
 	}
 	public void xoaTrong() {
 		dftable.setRowCount(0);

@@ -46,8 +46,6 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 	private JComboBox cb_DonViTinh;
 	private JButton btnXacNhan;
 	private JButton btn_Huy;
-	private JDateChooser dcNgaySanXuat;
-	private JDateChooser dcNgayHetHan;
 	private JTextArea ta_CongDung;
 	private JComboBox cb_LoaiSP;
 	private SanPham sanPham;
@@ -92,29 +90,14 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		tf_soLuong.setBackground(new Color(255, 255, 255));
 		tf_soLuong.setColumns(10);
 		tf_soLuong.setBorder(border);
-		tf_soLuong.setBounds(20, 166, 211, 34);
+		tf_soLuong.setBounds(20, 166, 226, 34);
 		pnCenter.add(tf_soLuong);
-
-		JLabel lb_Gia = new JLabel("Giá Nhập");
-		lb_Gia.setForeground(new Color(0, 0, 0));
-		lb_Gia.setBackground(new Color(255, 255, 255));
-		lb_Gia.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_Gia.setBounds(322, 10, 86, 46);
-		pnCenter.add(lb_Gia);
-
-		tf_Gia = new JTextField();
-		tf_Gia.setForeground(new Color(0, 0, 0));
-		tf_Gia.setBackground(new Color(255, 255, 255));
-		tf_Gia.setColumns(10);
-		tf_Gia.setBounds(517, 66, 158, 34);
-		tf_Gia.setBorder(border);
-		pnCenter.add(tf_Gia);
 
 		JLabel lb_HinhAnh = new JLabel("Hình Ảnh");
 		lb_HinhAnh.setForeground(new Color(0, 0, 0));
 		lb_HinhAnh.setBackground(new Color(255, 255, 255));
 		lb_HinhAnh.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_HinhAnh.setBounds(322, 110, 105, 46);
+		lb_HinhAnh.setBounds(370, 110, 105, 46);
 		pnCenter.add(lb_HinhAnh);
 
 		tf_HinhAnh = new JTextField();
@@ -122,7 +105,7 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		tf_HinhAnh.setBackground(new Color(255, 255, 255));
 		tf_HinhAnh.setColumns(10);
 		tf_HinhAnh.setBorder(border);
-		tf_HinhAnh.setBounds(322, 166, 274, 34);
+		tf_HinhAnh.setBounds(370, 166, 226, 34);
 		pnCenter.add(tf_HinhAnh);
 
 		btnChonHinhAnh = new JButton("Chọn");
@@ -158,7 +141,7 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		tf_Tensp.setBackground(new Color(255, 255, 255));
 		tf_Tensp.setColumns(10);
 		tf_Tensp.setBorder(border);
-		tf_Tensp.setBounds(22, 66, 209, 34);
+		tf_Tensp.setBounds(22, 66, 224, 34);
 		pnCenter.add(tf_Tensp);
 
 		JLabel lb_soLuong = new JLabel("Số Lượng");
@@ -176,12 +159,6 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 
 		pnCenter.add(lbCanhBaoTen);
 
-		JLabel lblCanhBaoGia = new JLabel("*");
-		lblCanhBaoGia.setForeground(new Color(255, 0, 0));
-		lblCanhBaoGia.setFont(new Font("Serif", Font.ITALIC, 12));
-		lblCanhBaoGia.setBounds(392, 28, 29, 13);
-		pnCenter.add(lblCanhBaoGia);
-
 		JLabel lbCanhBaoSoLuong = new JLabel("*");
 		lbCanhBaoSoLuong.setForeground(new Color(255, 0, 0));
 		lbCanhBaoSoLuong.setFont(new Font("Serif", Font.ITALIC, 12));
@@ -191,29 +168,22 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		JLabel lblCui = new JLabel("* Có Đuôi .png hoặc .svg");
 		lblCui.setForeground(new Color(255, 0, 0));
 		lblCui.setFont(new Font("Serif", Font.ITALIC, 12));
-		lblCui.setBounds(392, 128, 166, 13);
+		lblCui.setBounds(447, 128, 166, 13);
 		pnCenter.add(lblCui);
 		
-		tf_giaNhap = new JTextField();
-		tf_giaNhap.setForeground(Color.BLACK);
-		tf_giaNhap.setColumns(10);
-		tf_giaNhap.setBackground(Color.WHITE);
-		tf_giaNhap.setBounds(322, 66, 158, 34);
-		tf_giaNhap.setBorder(border);
-		pnCenter.add(tf_giaNhap);
+		JLabel lb_DonViTinh_1 = new JLabel("Thuế");
+		lb_DonViTinh_1.setBounds(370, 10, 105, 46);
+		pnCenter.add(lb_DonViTinh_1);
+		lb_DonViTinh_1.setForeground(Color.BLACK);
+		lb_DonViTinh_1.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+		lb_DonViTinh_1.setBackground(Color.WHITE);
 		
-		JLabel lb_Gia_1 = new JLabel("Giá Bán");
-		lb_Gia_1.setForeground(Color.BLACK);
-		lb_Gia_1.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_Gia_1.setBackground(Color.WHITE);
-		lb_Gia_1.setBounds(517, 10, 86, 46);
-		pnCenter.add(lb_Gia_1);
-		
-		JLabel lblCanhBaoGia_1 = new JLabel("*");
-		lblCanhBaoGia_1.setForeground(Color.RED);
-		lblCanhBaoGia_1.setFont(new Font("Serif", Font.ITALIC, 12));
-		lblCanhBaoGia_1.setBounds(573, 29, 29, 13);
-		pnCenter.add(lblCanhBaoGia_1);
+		tf_thue = new JTextField();
+		tf_thue.setBounds(370, 66, 135, 34);
+		pnCenter.add(tf_thue);
+		tf_thue.setForeground(Color.BLACK);
+		tf_thue.setColumns(10);
+		tf_thue.setBackground(Color.WHITE);
 
 		JLabel lb_ThemMoiSP = new JLabel("Thêm Mới Sản Phẩm");
 		lb_ThemMoiSP.setForeground(new Color(0, 0, 0));
@@ -229,57 +199,54 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		pnContent.add(pn_Ngay);
 		pn_Ngay.setLayout(null);
 
-		dcNgayHetHan = new JDateChooser();
-		dcNgayHetHan.setForeground(new Color(0, 0, 0));
-		dcNgayHetHan.setDateFormatString("dd-MM-yyyy");
-		dcNgayHetHan.setBackground(new Color(255, 255, 255));
-		dcNgayHetHan.setBounds(414, 101, 254, 34);
-		dcNgayHetHan.setBackground(new Color(255, 255, 255));
-		dcNgayHetHan.getDateEditor().getUiComponent().setBackground(new Color(255, 255, 255));
-		dcNgayHetHan.setBorder(border);
-		pn_Ngay.add(dcNgayHetHan);
-
-		JLabel lbNgayHetHan = new JLabel("Ngày Hết Hạn");
-		lbNgayHetHan.setForeground(new Color(0, 0, 0));
-		lbNgayHetHan.setBackground(new Color(255, 255, 255));
-		lbNgayHetHan.setBounds(414, 45, 105, 46);
-		pn_Ngay.add(lbNgayHetHan);
-		lbNgayHetHan.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-
-		dcNgaySanXuat = new JDateChooser();
-		dcNgaySanXuat.setBackground(new Color(255, 255, 255));
-		dcNgaySanXuat.getDateEditor().getUiComponent().setBackground(new Color(255, 255, 255));
-		dcNgaySanXuat.setForeground(new Color(0, 0, 0));
-		dcNgaySanXuat.setDateFormatString("dd-MM-yyyy");
-		dcNgaySanXuat.setBounds(24, 101, 287, 34);
-		dcNgaySanXuat.setBorder(border);
-		pn_Ngay.add(dcNgaySanXuat);
-
-		JLabel lbNgaySanXuat = new JLabel("Ngày Sản Xuất");
-		lbNgaySanXuat.setForeground(new Color(0, 0, 0));
-		lbNgaySanXuat.setBackground(new Color(255, 255, 255));
-		lbNgaySanXuat.setBounds(24, 45, 105, 46);
-		pn_Ngay.add(lbNgaySanXuat);
-		lbNgaySanXuat.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-
 		JLabel lb_ngay = new JLabel("Thời Gian");
 		lb_ngay.setForeground(new Color(0, 0, 0));
 		lb_ngay.setBackground(new Color(255, 255, 255));
 		lb_ngay.setFont(new Font("Serif", Font.PLAIN, 20));
 		lb_ngay.setBounds(24, 10, 105, 34);
 		pn_Ngay.add(lb_ngay);
-
-		JLabel lbCanhBaoNSX = new JLabel("*");
-		lbCanhBaoNSX.setForeground(new Color(255, 0, 0));
-		lbCanhBaoNSX.setFont(new Font("Serif", Font.ITALIC, 12));
-		lbCanhBaoNSX.setBounds(127, 61, 184, 17);
-		pn_Ngay.add(lbCanhBaoNSX);
-
-		JLabel lbCanhBaoNHH = new JLabel("*");
-		lbCanhBaoNHH.setForeground(new Color(255, 0, 0));
-		lbCanhBaoNHH.setFont(new Font("Serif", Font.ITALIC, 12));
-		lbCanhBaoNHH.setBounds(522, 61, 184, 17);
-		pn_Ngay.add(lbCanhBaoNHH);
+		
+		tf_giaNhap = new JTextField();
+		tf_giaNhap.setBounds(24, 91, 226, 34);
+		pn_Ngay.add(tf_giaNhap);
+		tf_giaNhap.setForeground(Color.BLACK);
+		tf_giaNhap.setColumns(10);
+		tf_giaNhap.setBackground(Color.WHITE);
+		tf_giaNhap.setBorder(border);
+		
+				JLabel lb_Gia = new JLabel("Giá Nhập");
+				lb_Gia.setBounds(24, 50, 86, 46);
+				pn_Ngay.add(lb_Gia);
+				lb_Gia.setForeground(new Color(0, 0, 0));
+				lb_Gia.setBackground(new Color(255, 255, 255));
+				lb_Gia.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+				
+						JLabel lblCanhBaoGia = new JLabel("*");
+						lblCanhBaoGia.setBounds(100, 68, 29, 13);
+						pn_Ngay.add(lblCanhBaoGia);
+						lblCanhBaoGia.setForeground(new Color(255, 0, 0));
+						lblCanhBaoGia.setFont(new Font("Serif", Font.ITALIC, 12));
+						
+								tf_Gia = new JTextField();
+								tf_Gia.setBounds(375, 91, 226, 34);
+								pn_Ngay.add(tf_Gia);
+								tf_Gia.setForeground(new Color(0, 0, 0));
+								tf_Gia.setBackground(new Color(255, 255, 255));
+								tf_Gia.setColumns(10);
+								tf_Gia.setBorder(border);
+								
+								JLabel lb_Gia_1 = new JLabel("Giá Bán");
+								lb_Gia_1.setBounds(375, 50, 86, 46);
+								pn_Ngay.add(lb_Gia_1);
+								lb_Gia_1.setForeground(Color.BLACK);
+								lb_Gia_1.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+								lb_Gia_1.setBackground(Color.WHITE);
+								
+								JLabel lblCanhBaoGia_1 = new JLabel("*");
+								lblCanhBaoGia_1.setBounds(440, 68, 29, 13);
+								pn_Ngay.add(lblCanhBaoGia_1);
+								lblCanhBaoGia_1.setForeground(Color.RED);
+								lblCanhBaoGia_1.setFont(new Font("Serif", Font.ITALIC, 12));
 
 		JPanel pn_KhoHang = new JPanel();
 		pn_KhoHang.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
@@ -306,7 +273,7 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		tf_KhoiLuong.setForeground(new Color(0, 0, 0));
 		tf_KhoiLuong.setBackground(new Color(255, 255, 255));
 		tf_KhoiLuong.setColumns(10);
-		tf_KhoiLuong.setBounds(24, 104, 198, 34);
+		tf_KhoiLuong.setBounds(24, 104, 225, 34);
 		tf_KhoiLuong.setBorder(border);
 		pn_KhoHang.add(tf_KhoiLuong);
 
@@ -314,13 +281,13 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		lb_DonViTinh.setForeground(new Color(0, 0, 0));
 		lb_DonViTinh.setBackground(new Color(255, 255, 255));
 		lb_DonViTinh.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_DonViTinh.setBounds(279, 48, 105, 46);
+		lb_DonViTinh.setBounds(376, 48, 105, 46);
 		pn_KhoHang.add(lb_DonViTinh);
 		
 
 		cb_DonViTinh = new JComboBox();
 		cb_DonViTinh.setForeground(new Color(0, 0, 0));
-		cb_DonViTinh.setBounds(279, 103, 130, 34);
+		cb_DonViTinh.setBounds(378, 103, 225, 34);
 		cb_DonViTinh.addItem("Vỉ");
 		cb_DonViTinh.addItem("Viên");
 		cb_DonViTinh.addItem("Chai");
@@ -335,20 +302,6 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 		lbCanhBaoKL.setFont(new Font("Serif", Font.ITALIC, 12));
 		lbCanhBaoKL.setBounds(112, 63, 198, 17);
 		pn_KhoHang.add(lbCanhBaoKL);
-		
-		JLabel lb_DonViTinh_1 = new JLabel("Thuế");
-		lb_DonViTinh_1.setForeground(Color.BLACK);
-		lb_DonViTinh_1.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		lb_DonViTinh_1.setBackground(Color.WHITE);
-		lb_DonViTinh_1.setBounds(530, 48, 105, 46);
-		pn_KhoHang.add(lb_DonViTinh_1);
-		
-		tf_thue = new JTextField();
-		tf_thue.setForeground(Color.BLACK);
-		tf_thue.setColumns(10);
-		tf_thue.setBackground(Color.WHITE);
-		tf_thue.setBounds(530, 104, 135, 34);
-		pn_KhoHang.add(tf_thue);
 
 		JPanel pn_PhanLoai = new JPanel();
 		pn_PhanLoai.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
@@ -492,29 +445,6 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 					return;
 				}
 
-				// Lấy ngày sản xuất và ngày hết hạn từ JDateChooser
-				java.util.Date ngaySX = dcNgaySanXuat.getDate();
-				LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-						: null;
-
-				java.util.Date ngayHH = dcNgayHetHan.getDate();
-				LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-						: null;
-
-				LocalDate today = LocalDate.now(); // Lấy ngày hiện tại
-
-				// Kiểm tra điều kiện ngày sản xuất và ngày hết hạn
-				if (lcNgaySX == null || lcNgaySX.isAfter(today)) {
-					JOptionPane.showMessageDialog(null, "Ngày sản xuất không được sau ngày hiện tại.", "Lỗi",
-							JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-
-				if (lcNgayHH == null || !lcNgayHH.isAfter(today)) {
-					JOptionPane.showMessageDialog(null, "Ngày hết hạn phải lớn hơn ngày hiện tại.", "Lỗi",
-							JOptionPane.ERROR_MESSAGE);
-					return;
-				}
 
 				// Lấy các giá trị còn lại
 				double khoiLuong = Double.parseDouble(tf_KhoiLuong.getText());
@@ -575,7 +505,7 @@ public class formThemSanPham extends SimpleForm implements ActionListener {
 				// Tạo đối tượng SanPham
 				LoaiSanPham_entity loaiSP = new LoaiSanPham_entity(loaiSanPham);
 				double giaNhap = Double.parseDouble(tf_giaNhap.getText());
-				SanPham_entity sp = new SanPham_entity(maSP, tenSP, lcNgaySX, lcNgayHH, khoiLuong, donViTinh,
+				SanPham_entity sp = new SanPham_entity(maSP, tenSP, khoiLuong, donViTinh,
 						nhaCungCap, gia, thanhPhan, congDung, hinhAnh, loaiSP, soLuong,thue,giaNhap);
 
 				// Thêm sản phẩm vào bảng (cần đối tượng `sanPham` để gọi phương thức

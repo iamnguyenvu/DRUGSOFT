@@ -608,7 +608,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSuggest1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="[1]"/>
+                    <Property name="text" type="java.lang.String" value="N/A"/>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
@@ -627,7 +627,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSuggest2">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="[2]"/>
+                    <Property name="text" type="java.lang.String" value="N/A"/>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
@@ -636,7 +636,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSuggest3">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="[3]"/>
+                    <Property name="text" type="java.lang.String" value="N/A"/>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
@@ -664,19 +664,19 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSuggest4">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="[4]"/>
+                    <Property name="text" type="java.lang.String" value="N/A"/>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSuggest5">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="[5]"/>
+                    <Property name="text" type="java.lang.String" value="N/A"/>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSuggest6">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="[6]"/>
+                    <Property name="text" type="java.lang.String" value="N/A"/>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>

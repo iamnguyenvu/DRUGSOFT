@@ -6,6 +6,7 @@ package bill;
 
 import java.util.HashMap;
 import java.util.Map;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -19,11 +20,11 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author HP
  */
 public class BillDTManeger {
-    
+
     private static BillDTManeger instance;
-    
+
     private JasperReport bill;
-    
+
     public static BillDTManeger getInstance() {
         if (instance == null) {
             instance = new BillDTManeger();
@@ -36,17 +37,15 @@ public class BillDTManeger {
         return instance;
     }
 
-
     private BillDTManeger() {
     }
-    
+
     public void compileBill() throws JRException {
         System.out.println("Compiling HoaDon.jrxml...");
         bill = JasperCompileManager.compileReport(getClass().getResourceAsStream("/bill/Blank_A4_2.jrxml"));
         System.out.println("Compilation successful.");
     }
 
-    
     public void printBill(ParameterBillDT data) throws JRException {
         Map para = new HashMap();
         para.put("ngayLapHD", data.getNgayLapHD());
@@ -54,14 +53,15 @@ public class BillDTManeger {
         para.put("tenKH", data.getTenKH());
         para.put("SDT", data.getSDT());
         para.put("qrcode", data.getQrcode());
+        para.put("tongTienHangTra", data.getTongTienHangTra());
+        para.put("tongPhiTraHang", data.getTongPhiTraHang());
         para.put("tienHoan", data.getTienHoan());
-        para.put("loaiDoiTra", data.getLoaiDoiTra());
-        para.put("lyDo", data.getLyDo());
+        para.put("tongTienDoi", data.getTongTienDoi());
+        para.put("giamTru", data.getGiamTru());
+        para.put("thanhToan", data.getThanhToan());
+        para.put("daThanhToan", data.getThanhToan());
+        para.put("ghiChu", data.getGhiChu());
         para.put("maHD", data.getMaHD());
-        
-        data.getListFB().forEach(field -> {
-            System.out.println("Field in FieldBillDT: " + field);
-        });
 
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(data.getListFB());
         System.out.println("dataSource");
@@ -69,7 +69,7 @@ public class BillDTManeger {
         System.out.println("print");
         view(print);
     }
-    
+
     private void view(JasperPrint print) throws JRException {
         JasperViewer.viewReport(print, false);
     }

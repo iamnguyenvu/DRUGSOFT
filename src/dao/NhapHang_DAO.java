@@ -28,13 +28,6 @@ public class NhapHang_DAO {
             while (rs.next()) {
             	String masp = rs.getString("maSP");
 	            String tensp = rs.getString("tenSP");
-	            int soLuong = rs.getInt("soLuong");
-	            Date ngaySX = rs.getDate("ngaySanXuat");
-	            Date ngayHH = rs.getDate("ngayHetHan");
-
-	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null;
-	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null;
-
 	            double khoiLuong = rs.getDouble("khoiLuong");
 	            String donViTinh = rs.getString("donViTinh");
 	            String Nhacc = rs.getString("nhaCungCap");
@@ -47,7 +40,7 @@ public class NhapHang_DAO {
 	            double giaNhap = rs.getDouble("giaNhap");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue,giaNhap);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp,thue,giaNhap);
                 listSP.add(sp);
             }
         } catch (SQLException e) {
@@ -64,6 +57,41 @@ public class NhapHang_DAO {
         
         return listSP;
     }
+    public NhapHang_entity searcNhapHang(String key) {
+        Connection con = connectDB.accessDataBase();
+        if(con == null) return null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        NhapHang_entity nh = null;
+        try {
+            ps = con.prepareStatement("SELECT * FROM NhapHang WHERE maNhapHang =  ?");
+            ps.setString(1,key );
+            rs = ps.executeQuery();
+            while (rs.next()) {
+            	String maNH = rs.getString("maNhapHang");
+            	LocalDate ngayNhapHang = rs.getDate("ngayNhapHang").toLocalDate();
+
+	            double  tongTien = rs.getDouble("tongTien");
+	            String ghiChi = rs.getString("ghiChu");
+	            String trangThai = rs.getString("trangThai");
+	            String httt = rs.getString("phuongThucThanhToan");
+
+	            nh = new NhapHang_entity(maNH, ngayNhapHang, tongTien, ghiChi, trangThai, httt);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return nh;
+    }
     public ArrayList<SanPham_entity> timKiemChiTietSanPham(String key) {
         Connection con = connectDB.accessDataBase();
         if(con == null) return null;
@@ -78,12 +106,6 @@ public class NhapHang_DAO {
             while (rs.next()) {
             	String masp = rs.getString("maSP");
 	            String tensp = rs.getString("tenSP");
-	            int soLuong = rs.getInt("soLuong");
-	            Date ngaySX = rs.getDate("ngaySanXuat");
-	            Date ngayHH = rs.getDate("ngayHetHan");
-
-	            LocalDate lcNgaySX = (ngaySX != null) ? ngaySX.toLocalDate() : null;
-	            LocalDate lcNgayHH = (ngayHH != null) ? ngayHH.toLocalDate() : null;
 
 	            double khoiLuong = rs.getDouble("khoiLuong");
 	            String donViTinh = rs.getString("donViTinh");
@@ -97,7 +119,7 @@ public class NhapHang_DAO {
 	            double giaNhap = rs.getDouble("giaNhap");
 	            LoaiSanPham_entity loaisp = new LoaiSanPham_entity(maLoaiSP);
 
-	            SanPham_entity sp = new SanPham_entity(masp, tensp, lcNgaySX, lcNgayHH, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp, soLuong,thue,giaNhap);
+	            SanPham_entity sp = new SanPham_entity(masp, tensp, khoiLuong, donViTinh, Nhacc, gia, thanhPhan, congDung, hinhAnhsp, loaisp,thue,giaNhap);
                 listSP.add(sp);
             }
         } catch (SQLException e) {
@@ -164,6 +186,41 @@ public class NhapHang_DAO {
 	        }
 	    }
 	}
+    public ArrayList<NhapHang_entity> getALLNHAPHANG() {
+        Connection con = connectDB.accessDataBase();
+        if(con == null) return null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<NhapHang_entity> listSP = new ArrayList<>();
+        try {
+            ps = con.prepareStatement("SELECT * FROM NhapHang");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+            	String maNH = rs.getString("maNhapHang");
+            	LocalDate ngayNhapHang = rs.getDate("ngayNhapHang").toLocalDate();
+
+	            double  tongTien = rs.getDouble("tongTien");
+	            String ghiChi = rs.getString("ghiChu");
+	            String trangThai = rs.getString("trangThai");
+	            String httt = rs.getString("phuongThucThanhToan");
+
+	            NhapHang_entity nh = new NhapHang_entity(maNH, ngayNhapHang, tongTien, ghiChi, trangThai, httt);
+                listSP.add(nh);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return listSP;
+    }
 
 
 }

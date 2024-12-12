@@ -2,11 +2,13 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,12 @@ import entity.NhanVien_entity;
 
 public class NhanVien_DAO {
 
-    // Lấy thông tin nhân viên đầy đủ dựa trên mã nhân viên
+    private Connection stmt;
+	private Object conn;
+	private String maLoaiNV;
+	private String hoTenNV;
+
+	// Lấy thông tin nhân viên đầy đủ dựa trên mã nhân viên
     public NhanVien_entity getNhanVienInfo(String maNV) {
         NhanVien_entity nhanVien = null;
         String sql = "SELECT * FROM NhanVien WHERE maNV = ?";
@@ -35,6 +42,22 @@ public class NhanVien_DAO {
         return nhanVien;
     }
 
+    public ArrayList<String> getAllMaNhanVien() {
+        ArrayList<String> dsMaNV = new ArrayList<>();
+        String sql = "SELECT maNV FROM NhanVien";
+
+        try (Connection con = connectDB.accessDataBase();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                dsMaNV.add(rs.getString("maNV"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dsMaNV;
+    }
     // Lấy tất cả nhân viên
     public List<NhanVien_entity> getAllNhanVien() {
         List<NhanVien_entity> nhanVienList = new ArrayList<>();
@@ -82,6 +105,7 @@ public class NhanVien_DAO {
                 "hoTenNV = ?, " +
                 "gioiTinh = ?, " +
                 "sdt = ?, " +
+                "email = ?, " +
                 "cccd = ?, " +
                 "diaChi = ?, " +
                 "ngaySinh = ?, " +
@@ -97,14 +121,15 @@ public class NhanVien_DAO {
             pstmt.setString(1, nhanVien.getHoTenNV());
             pstmt.setString(2, nhanVien.getGioiTinh());
             pstmt.setString(3, nhanVien.getSdt());
-            pstmt.setString(4, nhanVien.getCccd());
-            pstmt.setString(5, nhanVien.getDiaChi());
-            pstmt.setDate(6, Date.valueOf(nhanVien.getNgaySinh()));
-            pstmt.setBoolean(7, nhanVien.isTrangThai());
-            pstmt.setDate(8, Date.valueOf(nhanVien.getNgayVaoLam()));
-            pstmt.setString(9, nhanVien.getHinhAnhNV());
-            pstmt.setString(10, nhanVien.getMaLoaiNV());
-            pstmt.setString(11, nhanVien.getMaNV());
+            pstmt.setString(4, nhanVien.getEmail());
+            pstmt.setString(5, nhanVien.getCccd());
+            pstmt.setString(6, nhanVien.getDiaChi());
+            pstmt.setDate(7, Date.valueOf(nhanVien.getNgaySinh()));
+            pstmt.setBoolean(8, nhanVien.isTrangThai());
+            pstmt.setDate(9, Date.valueOf(nhanVien.getNgayVaoLam()));
+            pstmt.setString(10, nhanVien.getHinhAnhNV());
+            pstmt.setString(11, nhanVien.getMaLoaiNV());
+            pstmt.setString(12, nhanVien.getMaNV());
 
             int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
@@ -119,6 +144,7 @@ public class NhanVien_DAO {
 
         return false;
     }
+    
     // Xóa nhân viên dựa trên mã nhân viên
     public boolean deleteNhanVien(String maNV) {
         String sql = "DELETE FROM NhanVien WHERE maNV = ?";
@@ -157,32 +183,46 @@ public class NhanVien_DAO {
 
     public List<NhanVien_entity> locNhanVien(String loaiNV, boolean sortAsc) {
         List<NhanVien_entity> nhanVienList = new ArrayList<>();
-        StringBuilder query = new StringBuilder("SELECT * FROM NhanVien");
-
-        // Filter by type if not "Tất cả"
-        if (!"Tất cả".equals(loaiNV)) {
-            query.append(" WHERE maLoaiNV = ?");
+        String query = "SELECT * FROM NhanVien WHERE 1=1"; // Phần này luôn đúng
+        
+        // Thêm điều kiện lọc loại nhân viên
+        if (!loaiNV.equals("Tất cả")) {
+            query += " AND maLoaiNV = '" + loaiNV + "'";
         }
 
-        // Add ordering
-        query.append(" ORDER BY hoTenNV ");
-        query.append(sortAsc ? "ASC" : "DESC");
+        // Thêm điều kiện sắp xếp
+        if (sortAsc) {
+            query += " ORDER BY hoTenNV ASC"; // Sắp xếp tên theo A-Z
+        } else {
+            query += " ORDER BY hoTenNV DESC"; // Sắp xếp tên theo Z-A
+        }
 
-        try (Connection con = connectDB.accessDataBase();
-                PreparedStatement pstmt = con.prepareStatement(query.toString())) {
+        // Kết nối và thực hiện truy vấn SQL (Ví dụ sử dụng JDBC)
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:sqlserver://localhost:1433;databaseName=DRUGSOFT;", 
+                "sa", 
+                "159357");
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
 
-            // Set parameter if needed
-            if (!"Tất cả".equals(loaiNV)) {
-                pstmt.setString(1, loaiNV);
-            }
+            while (rs.next()) {
+                NhanVien_entity nv = new NhanVien_entity();
+                nv.setMaNV(rs.getString("maNV"));
+                nv.setHoTenNV(rs.getString("hoTenNV"));
+                nv.setSdt(rs.getString("sdt"));
+                nv.setEmail(rs.getString("email"));
+                nv.setCccd(rs.getString("cccd"));
+                nv.setDiaChi(rs.getString("diaChi"));
+                nv.setNgaySinh(rs.getDate("ngaySinh").toLocalDate());
+                nv.setTrangThai(rs.getBoolean("trangThai"));
+                nv.setMaLoaiNV(rs.getString("maLoaiNV"));
 
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    nhanVienList.add(mapResultSetToNhanVien(rs));
-                }
+                nhanVienList.add(nv);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Print exception for debugging
+            e.printStackTrace();
+            System.err.println("Error Code: " + e.getErrorCode());
+            System.err.println("SQL State: " + e.getSQLState());
         }
 
         return nhanVienList;
@@ -191,11 +231,13 @@ public class NhanVien_DAO {
     // Ánh xạ ResultSet tới NhanVien_entity
     private NhanVien_entity mapResultSetToNhanVien(ResultSet rs) throws SQLException {
         NhanVien_entity nhanVien = new NhanVien_entity();
+       // nhanVien.setMaNV(rs.getString("maNV"));
         nhanVien.setMaNV(rs.getString("maNV"));
         nhanVien.setHoTenNV(rs.getString("hoTenNV"));
         nhanVien.setNgaySinh(rs.getDate("ngaySinh") != null ? rs.getDate("ngaySinh").toLocalDate() : null);
         nhanVien.setDiaChi(rs.getString("diaChi"));
         nhanVien.setSdt(rs.getString("sdt"));
+        nhanVien.setEmail(rs.getString("email"));
         nhanVien.setCccd(rs.getString("cccd"));
         nhanVien.setNgayVaoLam(rs.getDate("ngayVaoLam") != null ? rs.getDate("ngayVaoLam").toLocalDate() : null);
         nhanVien.setTrangThai(rs.getBoolean("trangThai"));
@@ -211,13 +253,14 @@ public class NhanVien_DAO {
         ps.setDate(2, Date.valueOf(nhanVien.getNgaySinh())); // 2. ngaySinh
         ps.setString(3, nhanVien.getDiaChi()); // 3. diaChi
         ps.setString(4, nhanVien.getSdt()); // 4. sdt
-        ps.setString(5, nhanVien.getCccd()); // 5. cccd
-        ps.setDate(6, Date.valueOf(nhanVien.getNgayVaoLam())); // 6. ngayVaoLam
-        ps.setBoolean(7, nhanVien.isTrangThai()); // 7. trangThai
-        ps.setString(8, nhanVien.getGioiTinh()); // 8. gioiTinh
-        ps.setString(9, nhanVien.getHinhAnhNV()); // 9. hinhAnhNV
-        ps.setString(10, nhanVien.getMaLoaiNV()); // 10. maLoaiNV
-        ps.setString(11, nhanVien.getMaNV()); // 11. maNV (trong WHERE)
+        ps.setString(5, nhanVien.getEmail()); // 5. cccd
+        ps.setString(6, nhanVien.getCccd()); // 5. cccd
+        ps.setDate(7, Date.valueOf(nhanVien.getNgayVaoLam())); // 6. ngayVaoLam
+        ps.setBoolean(8, nhanVien.isTrangThai()); // 7. trangThai
+        ps.setString(9, nhanVien.getGioiTinh()); // 8. gioiTinh
+        ps.setString(10, nhanVien.getHinhAnhNV()); // 9. hinhAnhNV
+        ps.setString(11, nhanVien.getMaLoaiNV()); // 10. maLoaiNV
+        ps.setString(12, nhanVien.getMaNV()); // 11. maNV (trong WHERE)
     }
 
     //
@@ -234,7 +277,53 @@ public class NhanVien_DAO {
     // }
     // return false;
     // }
+    
+ // Lấy danh sách nhân viên theo loại
+    public List<NhanVien_entity> getNhanVienTheoLoai(String loai, String sapXep) {
+        List<NhanVien_entity> danhSachNhanVien = new ArrayList<>();
+        String sql = "SELECT * FROM NhanVien WHERE maLoaiNV = ? ";
 
+        // Kiểm tra giá trị 'loai' và chuẩn bị tham số
+        try (Connection con = connectDB.accessDataBase();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            System.out.println("Loại nhân viên: " + loai); // Kiểm tra giá trị 'loai'
+
+            // Kiểm tra giá trị loai
+            if ("Quản lý".equals(loai)) {
+                ps.setString(1, "QL");
+            } else if ("Nhân viên".equals(loai)) {
+                ps.setString(1, "NV");
+            } else {
+                throw new IllegalArgumentException("Loại nhân viên không hợp lệ");
+            }
+
+          
+            // Cập nhật PreparedStatement với câu lệnh SQL đã được thay đổi
+            ps.close();  // Đóng PreparedStatement hiện tại trước khi tạo lại
+            try (PreparedStatement newPs = con.prepareStatement(sql)) {
+                if ("Quản lý".equals(loai)) {
+                    newPs.setString(1, "QL");
+                } else if ("Nhân viên".equals(loai)) {
+                    newPs.setString(1, "NV");
+                }
+
+                // Thực thi truy vấn
+                try (ResultSet rs = newPs.executeQuery()) {
+                    while (rs.next()) {
+                        danhSachNhanVien.add(mapResultSetToNhanVien(rs));
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return danhSachNhanVien;
+    }
+   
     // Thực hiện cập nhật nhân viên
     private boolean executeUpdate(NhanVien_entity nhanVien, String sql) {
         try (Connection con = connectDB.accessDataBase();
@@ -269,25 +358,7 @@ public class NhanVien_DAO {
 
         return result;
     }
-    
-    public ArrayList<String> getAllMaNhanVien() {
-        ArrayList<String> dsMaNV = new ArrayList<>();
-        String sql = "SELECT maNV FROM NhanVien";
 
-        try (Connection con = connectDB.accessDataBase();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                dsMaNV.add(rs.getString("maNV"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return dsMaNV;
-    }
-
-    
     // public boolean insertEmployee(NhanVien_entity nhanVien) {
     // // TODO Auto-generated method stub
     // String sql = "INSERT INTO NhanVien(maNV, hotenNV, gioiTinh, sdt, cccd,
@@ -314,8 +385,10 @@ public class NhanVien_DAO {
     // return false;
     // }
     // }
+    
+    /*
     public boolean saveEmployee(NhanVien_entity employee) {
-        String sql = "INSERT INTO NhanVien (maNV, hoTenNV, gioiTinh, sdt, cccd, diaChi, ngaySinh, trangThai, ngayVaoLam, hinhAnhNV, maLoaiNV) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO NhanVien (maNV, hoTenNV, gioiTinh, sdt, email, cccd, diaChi, ngaySinh, trangThai, ngayVaoLam, hinhAnhNV, maLoaiNV) VALUES (?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?)";
 
         try (Connection conn = connectDB.accessDataBase();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -323,13 +396,14 @@ public class NhanVien_DAO {
             pstmt.setString(2, employee.getHoTenNV());
             pstmt.setString(3, employee.getGioiTinh());
             pstmt.setString(4, employee.getSdt());
-            pstmt.setString(5, employee.getCccd());
-            pstmt.setString(6, employee.getDiaChi());
-            pstmt.setDate(7, java.sql.Date.valueOf(employee.getNgaySinh()));
-            pstmt.setBoolean(8, employee.isTrangThai());
-            pstmt.setDate(9, java.sql.Date.valueOf(employee.getNgayVaoLam()));
-            pstmt.setString(10, employee.getHinhAnhNV());
-            pstmt.setString(11, employee.getMaLoaiNV());
+            pstmt.setString(5, employee.getEmail());
+            pstmt.setString(6, employee.getCccd());
+            pstmt.setString(7, employee.getDiaChi());
+            pstmt.setDate(8, java.sql.Date.valueOf(employee.getNgaySinh()));
+            pstmt.setBoolean(9, employee.isTrangThai());
+            pstmt.setDate(10, java.sql.Date.valueOf(employee.getNgayVaoLam()));
+            pstmt.setString(11, employee.getHinhAnhNV());
+            pstmt.setString(12, employee.getMaLoaiNV());
 
             int rowsInserted = pstmt.executeUpdate();
             return rowsInserted > 0; // Return true if at least one row was inserted
@@ -338,4 +412,134 @@ public class NhanVien_DAO {
             return false; // Return false if an exception occurs
         }
     }
-}
+    */
+    public boolean saveEmployee(NhanVien_entity employee) {
+        String sql = "INSERT INTO NhanVien (maNV, hoTenNV, gioiTinh, ngaySinh, ngayVaoLam, diaChi, sdt, email, cccd, trangThai, maLoaiNV, hinhAnhNV) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = connectDB.accessDataBase();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, employee.getMaNV());
+            stmt.setString(2, employee.getHoTenNV());
+            stmt.setString(3, employee.getGioiTinh());
+            stmt.setDate(4, Date.valueOf(employee.getNgaySinh()));
+            stmt.setDate(5, Date.valueOf(employee.getNgayVaoLam()));
+            stmt.setString(6, employee.getDiaChi());
+            stmt.setString(7, employee.getSdt());
+           
+            stmt.setString(8, employee.getEmail());
+            stmt.setString(9, employee.getCccd());
+            stmt.setBoolean(10, employee.isTrangThai());
+            stmt.setString(11, employee.getMaLoaiNV());
+            stmt.setString(12, employee.getHinhAnhNV());
+
+            int result = stmt.executeUpdate();
+            return result > 0; // Trả về true nếu thành công
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+//    truyễn manv, lấy ho ten, sdt
+	public NhanVien_entity getNhanVien(String maNV) {
+		NhanVien_entity nhanVien = null;
+		String sql = "SELECT hoTenNV, sdt FROM NhanVien WHERE maNV = ?";
+
+		try (Connection con = connectDB.accessDataBase(); PreparedStatement ps = con.prepareStatement(sql)) {
+
+			ps.setString(1, maNV);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					nhanVien = new NhanVien_entity();
+					nhanVien.setHoTenNV(rs.getString("hoTenNV"));
+					nhanVien.setSdt(rs.getString("sdt"));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return nhanVien;
+	}
+
+	public NhanVien_entity getNhanVienByMa(String maNV) {
+        NhanVien_entity nhanVien = null;
+        String sql = "SELECT * FROM NhanVien WHERE maNV = ?";
+
+        try (Connection con = connectDB.accessDataBase();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, maNV);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    nhanVien = new NhanVien_entity(rs.getString("maNV"), rs.getString("hoTenNV"), rs.getString("gioiTinh"), rs.getString("sdt"), rs.getString("cccd"), rs.getString("diaChi"), rs.getDate("ngaySinh").toLocalDate(), rs.getBoolean("trangThai"), rs.getDate("ngayVaoLam").toLocalDate(), null, null, rs.getString("hinhAnhNV"), rs.getString("maLoaiNV"), rs.getString("email"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nhanVien;
+    }
+
+	public static boolean updateEmployee(NhanVien_entity employee) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+//	public List<NhanVien_entity> locNhanVienTheoTen(boolean sortAsc) {
+//		
+//		        List<NhanVien_entity> danhSachNhanVien = new ArrayList<>();
+//		        
+//		        // Câu lệnh SQL cơ bản với điều kiện lọc theo loại và tên nhân viên
+//		        String sql = "SELECT * FROM NhanVien WHERE maLoaiNV = ? ";
+//		        
+//		        // Nếu có yêu cầu lọc thêm theo tên nhân viên
+//		        if (hoTenNV != null && !hoTenNV.isEmpty()) {
+//		            sql += "AND hoTenNV LIKE ? ";
+//		        }
+//
+//		        // Thêm điều kiện sắp xếp nếu có
+//		        if ("A-Z".equals(sortAsc)) {
+//		            sql += "ORDER BY hoTenNV ASC";
+//		        } else if ("Z-A".equals(sortAsc)) {
+//		            sql += "ORDER BY hoTenNV DESC";
+//		        }
+//
+//		        // Kiểm tra giá trị 'loai' và chuẩn bị tham số
+//		        try (Connection con = connectDB.accessDataBase();
+//		             PreparedStatement ps = con.prepareStatement(sql)) {
+//
+////		            // Kiểm tra giá trị loai
+////		            if ("Quản lý".equals(maLoaiNV)) {
+////		                ps.setString(1, "QL");
+////		            } else if ("Nhân viên".equals(maLoaiNV)) {
+////		                ps.setString(1, "NV");
+////		            } else {
+////		                throw new IllegalArgumentException("Loại nhân viên không hợp lệ");
+////		            }
+////
+////		            // Nếu có yêu cầu lọc theo tên nhân viên
+////		            if (hoTenNV != null && !hoTenNV.isEmpty()) {
+////		                ps.setString(2, "%" + hoTenNV + "%");
+////		            }
+////
+////		            // Thực thi truy vấn
+////		            try (ResultSet rs = ps.executeQuery()) {
+////		                while (rs.next()) {
+////		                    danhSachNhanVien.add(mapResultSetToNhanVien(rs));
+////		                }
+////		            }
+//
+//		        } catch (SQLException e) {
+//		            e.printStackTrace();
+//		        } catch (IllegalArgumentException e) {
+//		            System.out.println(e.getMessage());
+//		        }
+//		        
+//		        return danhSachNhanVien;
+//		    }
+//
+//	
+//
+//            
+                }

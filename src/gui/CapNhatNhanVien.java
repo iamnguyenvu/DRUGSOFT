@@ -40,7 +40,7 @@ import entity.NhanVien_entity;
 public class CapNhatNhanVien extends JFrame {
     private static final long serialVersionUID = 1L;
     private JTextField txtFullName, txtAddress,
-            txtPhone, txtCCCD, txtMaNV;
+            txtPhone, txtEmail, txtCCCD, txtMaNV;
     private JComboBox<String> cboEmployeeType; // maLoaiNV dropdown
     private JButton btnUploadImage; // Button for image upload
     private JLabel lblPhoto, lblEmployeeId; // Label for displaying employee ID
@@ -53,18 +53,18 @@ public class CapNhatNhanVien extends JFrame {
     private String hinhAnhNV;
 
     public static void main(String[] args) {
-        new CapNhatNhanVien("NV24119212", "dfdfhfdhfdjf", "01/01/1990", "123 Đường ABC", "0935201508", "123456789012",
+        new CapNhatNhanVien("NV24119212", "dfdfhfdhfdjf", "01/01/1990", "123 Đường ABC", "abc@gamil.com", "0935201508", "123456789012",
                 "01/01/2020", true, "Nam", "D:\\Anh1.jpg", "NV");
     }
 
-    public CapNhatNhanVien(String maNV, String hoTenNV, String ngaySinh, String diaChi, String sdt, String cccd,
+    public CapNhatNhanVien(String maNV, String hoTenNV, String ngaySinh, String diaChi, String sdt, String email, String cccd,
             String ngayVaoLam, boolean trangThai, String gioiTinh, String hinhAnh, String maLoaiNV) {
         setSize(915, 702);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
         getContentPane().setLayout(new BorderLayout());
-
+        
         // Search Panel
         JPanel searchPanel = new JPanel();
         searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.Y_AXIS));
@@ -82,13 +82,13 @@ public class CapNhatNhanVien extends JFrame {
         formPanel.setBackground(Color.WHITE);
 
         lblPhoto = new JLabel(); // Initialize the label for photo display
-        lblPhoto.setBounds(227, 39, 132, 137);
+        lblPhoto.setBounds(400, 39, 132, 137);
         lblPhoto.setBorder(BorderFactory.createLineBorder(new Color(70, 130, 180), 2));
         formPanel.add(lblPhoto);
 
         // Upload Image Button
         btnUploadImage = new JButton("Tải ảnh");
-        btnUploadImage.setBounds(227, 185, 132, 30);
+        btnUploadImage.setBounds(400, 185, 132, 30);
         btnUploadImage.addActionListener(this::uploadImage);
         formPanel.add(btnUploadImage);
 
@@ -105,6 +105,8 @@ public class CapNhatNhanVien extends JFrame {
 
         txtAddress = createTextField(560, 250, 270, 40);
         txtPhone = createTextField(560, 300, 270, 40);
+        txtEmail = createTextField(560, 450, 270, 40); // Thêm dòng này
+        formPanel.add(txtEmail);
         txtCCCD = createTextField(560, 400, 270, 40);
 
         // ComboBox for maLoaiNV (employee type)
@@ -150,9 +152,13 @@ public class CapNhatNhanVien extends JFrame {
 
         formPanel.add(createLabel("Địa chỉ:", 480, 250, 100, 40));
         formPanel.add(txtAddress);
-        formPanel.add(createLabel("SĐT:", 480, 300, 100, 40));
+        formPanel.add(createLabel("SĐT:", 480, 450, 100, 40));
         formPanel.add(txtPhone);
+        
+        formPanel.add(createLabel("Email:", 480, 300, 100, 40));
+        formPanel.add(txtEmail);
 
+        
         statusMap = new HashMap<>();
         statusMap.put("Đang làm", 1);
         statusMap.put("Đã nghỉ việc", 0);
@@ -171,15 +177,18 @@ public class CapNhatNhanVien extends JFrame {
 
         // Update button
         btnUpdate = new JButton("Cập nhật");
-        btnUpdate.setBounds(680, 450, 132, 40);
+        btnUpdate.setBounds(680, 550, 140, 45);
         btnUpdate.addActionListener(this::saveEmployee);
+        btnUpdate.setBackground(new Color(70, 130, 180));
+        btnUpdate.setForeground(Color.WHITE);
+        btnUpdate.setFont(new Font("Arial", Font.BOLD, 18));
         formPanel.add(btnUpdate);
 
         // Add panels to main container
         getContentPane().add(searchPanel, BorderLayout.NORTH);
         getContentPane().add(formPanel, BorderLayout.CENTER);
 
-        loadData(maNV, hoTenNV, ngaySinh, diaChi, sdt, cccd, ngayVaoLam, trangThai, gioiTinh, hinhAnh, maLoaiNV);
+        loadData(maNV, hoTenNV, ngaySinh, diaChi, sdt, email, cccd, ngayVaoLam, trangThai, gioiTinh, hinhAnh, maLoaiNV);
         setVisible(true);
 
     }
@@ -206,7 +215,7 @@ public class CapNhatNhanVien extends JFrame {
         }
     }
 
-    private void loadData(String maNV, String hoTenNV, String ngaySinh, String diaChi, String sdt, String cccd,
+    private void loadData(String maNV, String hoTenNV, String ngaySinh, String diaChi, String sdt, String email, String cccd,
             String ngayVaoLam, boolean trangThai, String gioiTinh, String hinhAnh, String maLoaiNV) {
 
         txtMaNV.setText(maNV);
@@ -225,6 +234,7 @@ public class CapNhatNhanVien extends JFrame {
         }
         txtAddress.setText(diaChi);
         txtPhone.setText(sdt);
+        txtEmail.setText(email);
         // txtStatus.setText(trangThai ? "Đang làm" : "Nghỉ việc"); // Simplified status
         cboStatus.setSelectedItem(trangThai ? "Đang làm" : "Đã nghỉ việc");
         txtCCCD.setText(cccd);
@@ -274,6 +284,8 @@ public class CapNhatNhanVien extends JFrame {
         String joinDateStr = joinDateChooser.getDate() != null ? dateFormat.format(joinDateChooser.getDate()) : "";
         String address = txtAddress.getText();
         String phone = txtPhone.getText();
+        String email = txtEmail.getText();
+        
         String cccd = txtCCCD.getText();
         String maLoaiNV = (String) cboEmployeeType.getSelectedItem();
 
@@ -289,7 +301,7 @@ public class CapNhatNhanVien extends JFrame {
         }
 
         // Validate input fields
-        if (!isValidInput(fullName, birthDateStr, joinDateStr, address, phone, cccd)) {
+        if (!isValidInput(fullName, birthDateStr, joinDateStr, address, phone, email, cccd)) {
             return; // Exit if validation fails
         }
 
@@ -304,13 +316,14 @@ public class CapNhatNhanVien extends JFrame {
 
         // Creating employee entity
         NhanVien_entity employee = new NhanVien_entity();
-        employee.setMaNV(txtMaNV.getText());
+       employee.setMaNV(txtMaNV.getText());
         employee.setHoTenNV(fullName);
         employee.setGioiTinh(gioiTinh); // Set gender
         employee.setNgaySinh(birthDate);
         employee.setNgayVaoLam(joinDate);
         employee.setDiaChi(address);
         employee.setSdt(phone);
+        employee.setEmail(email);
         employee.setCccd(cccd);
         employee.setTrangThai(true);
         employee.setMaLoaiNV(maLoaiNV.substring(0, 2));
@@ -325,7 +338,7 @@ public class CapNhatNhanVien extends JFrame {
     }
 
     private boolean isValidInput(String fullName, String birthDateStr, String joinDateStr, String address, String phone,
-            String cccd) {
+            String email, String cccd) {
         if (fullName.isEmpty() || !Pattern.matches("^[\\p{L}\\s]+$", fullName)) {
             JOptionPane.showMessageDialog(this, "Họ tên không hợp lệ!");
             return false;
@@ -380,4 +393,4 @@ public class CapNhatNhanVien extends JFrame {
         return true;
     }
 
-}
+} 

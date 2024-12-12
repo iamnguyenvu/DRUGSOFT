@@ -12,31 +12,59 @@ import java.util.List;
  * @author HP
  */
 public class ParameterBillDT {
+
     private String ngayLapHD;
     private String tenNV;
     private String tenKH;
     private String SDT;
+    private double tongTienHangTra;
+    private double tongPhiTraHang;
     private double tienHoan;
-    private String loaiDoiTra;
-    private String lyDo;
+    private double tongTienDoi;
+    private double giamTru;
+    private double thanhToan;
+    private String ghiChu;
     private String maHD;
     private InputStream qrcode;
-    private List<FieldBillDT> listFB;
+    private List<FieldBillDoiTra> listFB;
 
     public ParameterBillDT() {
     }
 
-    public ParameterBillDT(String ngayLapHD, String tenNV, String tenKH, String SDT, double tienHoan, String loaiDoiTra, String lyDo, String maHD, InputStream qrcode, List<FieldBillDT> listFB) {
+    public ParameterBillDT(String ngayLapHD, String tenNV, String tenKH, String SDT,
+            double tongTienHangTra, double tongPhiTraHang, double tienHoan,
+            double tongTienDoi, double giamTru, double thanhToan, String ghiChu,
+            String maHD, InputStream qrcode, List<FieldBillDoiTra> listFB) {
         this.ngayLapHD = ngayLapHD;
         this.tenNV = tenNV;
         this.tenKH = tenKH;
         this.SDT = SDT;
+        this.tongTienHangTra = tongTienHangTra;
+        this.tongPhiTraHang = tongPhiTraHang;
         this.tienHoan = tienHoan;
-        this.loaiDoiTra = loaiDoiTra;
-        this.lyDo = lyDo;
+        this.tongTienDoi = tongTienDoi;
+        this.giamTru = giamTru;
+        this.thanhToan = thanhToan;
+        this.ghiChu = ghiChu;
         this.maHD = maHD;
         this.qrcode = qrcode;
         this.listFB = listFB;
+    }
+
+    public double getTongTienHangTra() {
+        return tongTienHangTra;
+    }
+
+    public void setTongTienHangTra(double tongTienHangTra) {
+        this.tongTienHangTra = tongTienHangTra;
+    }
+
+    public double getTongPhiTraHang() {
+        return tongPhiTraHang;
+    }
+
+    public void setTongPhiTraHang(double tongPhiTraHang) {
+        this.tongPhiTraHang = tongPhiTraHang;
     }
 
     public String getNgayLapHD() {
@@ -79,20 +107,36 @@ public class ParameterBillDT {
         this.tienHoan = tienHoan;
     }
 
-    public String getLoaiDoiTra() {
-        return loaiDoiTra;
+    public double getTongTienDoi() {
+        return tongTienDoi;
     }
 
-    public void setLoaiDoiTra(String loaiDoiTra) {
-        this.loaiDoiTra = loaiDoiTra;
+    public void setTongTienDoi(double tongTienDoi) {
+        this.tongTienDoi = tongTienDoi;
     }
 
-    public String getLyDo() {
-        return lyDo;
+    public double getGiamTru() {
+        return giamTru;
     }
 
-    public void setLyDo(String lyDo) {
-        this.lyDo = lyDo;
+    public void setGiamTru(double giamTru) {
+        this.giamTru = giamTru;
+    }
+
+    public double getThanhToan() {
+        return thanhToan;
+    }
+
+    public void setThanhToan(double thanhToan) {
+        this.thanhToan = thanhToan;
+    }
+
+    public String getGhiChu() {
+        return ghiChu;
+    }
+
+    public void setGhiChu(String ghiChu) {
+        this.ghiChu = ghiChu;
     }
 
     public String getMaHD() {
@@ -111,14 +155,12 @@ public class ParameterBillDT {
         this.qrcode = qrcode;
     }
 
-    public List<FieldBillDT> getListFB() {
+    public List<FieldBillDoiTra> getListFB() {
         return listFB;
     }
 
-    public void setListFB(List<FieldBillDT> listFB) {
+    public void setListFB(List<FieldBillDoiTra> listFB) {
         this.listFB = listFB;
     }
-    
-    
 
 }

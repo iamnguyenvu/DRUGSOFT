@@ -73,10 +73,10 @@ public class ThongKeDoanhSoBanHangCuaNhanVien extends SimpleForm{
      */
     public ThongKeDoanhSoBanHangCuaNhanVien(int time) {
     	tk_Dao = new ThongKe_DAO();
-		setPreferredSize(new Dimension(1041, 668));
+		setPreferredSize(new Dimension(1093, 668));
         initComponents();
         setBackground(new Color(240, 240, 240,0));
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setLayout(new BorderLayout(0, 0));
         add(pnCenter);
         
         Border border = BorderFactory.createLineBorder(Color.BLACK, 1);

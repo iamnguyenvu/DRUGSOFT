@@ -35,6 +35,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.OverlayLayout;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.AbstractBorder;
@@ -247,15 +248,53 @@ public class Login extends JPanel implements ActionListener, ItemListener, Mouse
         pnRight.add(txtUsername, "growx, wrap");
 
         // Password Label and Input Field
-        JLabel lblPassword = createLabel("Mật khẩu");
-        pnRight.add(lblPassword, "wrap, left");
+// Panel chứa JPasswordField và nút toggle
+JPanel passwordPanel = new JPanel();
+passwordPanel.setOpaque(false);
+passwordPanel.setLayout(new BorderLayout());
 
-        txtPassword = new JPasswordField();
-        txtPassword.setOpaque(false);
-        txtPassword.setBorder(new RoundedBorder(10));
-        txtPassword.setForeground(Color.WHITE);
-        txtPassword.setPreferredSize(new Dimension(360, 50)); // Tăng kích thước
-        pnRight.add(txtPassword, "growx, wrap");
+// Tạo JPasswordField
+txtPassword = new JPasswordField();
+txtPassword.setOpaque(false);
+txtPassword.setBorder(new RoundedBorder(10));
+txtPassword.setForeground(Color.WHITE);
+txtPassword.setPreferredSize(new Dimension(320, 50)); // Tăng kích thước
+
+// Tạo nút toggle icon
+JButton btnTogglePassword = new JButton(new FlatSVGIcon("gui/icon/white_eye_hide_vi.svg", 0.05f));
+btnTogglePassword.setOpaque(false);
+btnTogglePassword.setContentAreaFilled(false);
+btnTogglePassword.setFocusPainted(false);
+btnTogglePassword.setBorder(BorderFactory.createEmptyBorder());
+btnTogglePassword.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+// Xử lý sự kiện hiển thị/ẩn mật khẩu
+btnTogglePassword.addActionListener(e -> {
+    if (txtPassword.getEchoChar() != '\0') {
+        txtPassword.setEchoChar('\0'); // Hiển thị mật khẩu
+        btnTogglePassword.setIcon(new FlatSVGIcon("gui/icon/white_eye_vi.svg", 0.05f));
+    } else {
+        txtPassword.setEchoChar('*'); // Ẩn mật khẩu
+        btnTogglePassword.setIcon(new FlatSVGIcon("gui/icon/white_eye_hide_vi.svg", 0.05f));
+    }
+});
+
+// Thêm JPasswordField vào lớp phủ
+passwordPanel.add(txtPassword, BorderLayout.CENTER);
+
+// Thêm nút toggle vào lớp phủ với kích thước phù hợp
+JPanel togglePanel = new JPanel();
+togglePanel.setOpaque(false);
+togglePanel.setLayout(new BorderLayout());
+togglePanel.add(btnTogglePassword, BorderLayout.EAST);
+togglePanel.setPreferredSize(new Dimension(50, 50)); // Đảm bảo kích thước nút toggle vừa vặn
+
+// Thêm lớp phủ vào layout
+passwordPanel.add(togglePanel, BorderLayout.EAST);
+
+// Thêm vào layout của panel chính
+pnRight.add(passwordPanel, "growx, wrap");
+
 
         // Remember me Checkbox and Forgot Password Button
         JPanel pnOptions = new JPanel(new MigLayout("insets 0", "[]push[]", "[]"));
