@@ -51,7 +51,7 @@ public class Card extends javax.swing.JPanel{
         lblTitle.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle.setPreferredSize(new java.awt.Dimension(150, 40));
 
-        lblValues.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        lblValues.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblValues.setForeground(new java.awt.Color(255, 255, 255));
         lblValues.setPreferredSize(new java.awt.Dimension(100, 40));
 

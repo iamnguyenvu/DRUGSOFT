@@ -81,6 +81,8 @@ public class FormCapNhapSanPhamDoiTra extends SimpleForm implements ActionListen
 	private SanPhamDoiTra_DAO spdt_DAO;
 	private gui.SanPhamDoiTra spdt;
 	private final Action action = new SwingAction();
+	private JTextField tfTinhTrang;
+	private JTextField tfVanDe;
 	public void tat() {
 		this.setVisible(false);
 	}
@@ -121,7 +123,7 @@ public class FormCapNhapSanPhamDoiTra extends SimpleForm implements ActionListen
 		lblNewLabel_1.setFont(new Font("Serif", Font.PLAIN, 15));
 		
 		JLabel lblNewLabel_3 = new JLabel("Số Lượng đổi trả:");
-		lblNewLabel_3.setBounds(378, 58, 126, 13);
+		lblNewLabel_3.setBounds(372, 28, 126, 23);
 		panel.add(lblNewLabel_3);
 		lblNewLabel_3.setFont(new Font("Serif", Font.PLAIN, 15));
 
@@ -140,19 +142,29 @@ public class FormCapNhapSanPhamDoiTra extends SimpleForm implements ActionListen
 						JPanel panel_1 = new JPanel();
 						panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
 						panel_1.setBackground(new Color(255, 255, 255));
-						panel_1.setBounds(20, 155, 356, 75);
+						panel_1.setBounds(10, 155, 366, 139);
 						panel.add(panel_1);
 						panel_1.setLayout(null);
 						
 						JLabel lblTngTin = new JLabel("Thành Tiền:");
 						lblTngTin.setFont(new Font("Serif", Font.PLAIN, 15));
-						lblTngTin.setBounds(14, 28, 132, 13);
+						lblTngTin.setBounds(10, 98, 132, 13);
 						panel_1.add(lblTngTin);
 						
 						tf_ThanhTien = new JTextField();
 						tf_ThanhTien.setColumns(10);
-						tf_ThanhTien.setBounds(156, 20, 163, 26);
+						tf_ThanhTien.setBounds(152, 94, 163, 26);
 						panel_1.add(tf_ThanhTien);
+						
+						JLabel lblNewLabel_2 = new JLabel("Tình Trạng:");
+						lblNewLabel_2.setBounds(10, 25, 109, 23);
+						panel_1.add(lblNewLabel_2);
+						lblNewLabel_2.setFont(new Font("Serif", Font.PLAIN, 17));
+						
+						tfTinhTrang = new JTextField();
+						tfTinhTrang.setColumns(10);
+						tfTinhTrang.setBounds(152, 22, 163, 26);
+						panel_1.add(tfTinhTrang);
 						
 						JPanel panel_2 = new JPanel();
 						panel_2.setBorder(new TitledBorder(null, "C\u1EADp Nh\u1EADt Tr\u1EA1ng Th\u00E1i", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -162,16 +174,19 @@ public class FormCapNhapSanPhamDoiTra extends SimpleForm implements ActionListen
 						panel_2.setLayout(null);
 						
 						rdoCho = new JRadioButton("Chờ Xác Nhận");
+						rdoCho.setFont(new Font("Serif", Font.PLAIN, 15));
 						rdoCho.setBackground(new Color(255, 255, 255));
-						rdoCho.setBounds(18, 54, 127, 21);
+						rdoCho.setBounds(18, 54, 151, 21);
 						panel_2.add(rdoCho);
 						
 						rdoXacNhan = new JRadioButton("Xác Nhận");
+						rdoXacNhan.setFont(new Font("Serif", Font.PLAIN, 15));
 						rdoXacNhan.setBackground(new Color(255, 255, 255));
 						rdoXacNhan.setBounds(18, 116, 103, 21);
 						panel_2.add(rdoXacNhan);
 						
 						rdotuChoi = new JRadioButton("Từ Chối");
+						rdotuChoi.setFont(new Font("Serif", Font.PLAIN, 15));
 						rdotuChoi.setBackground(new Color(255, 255, 255));
 						rdotuChoi.setBounds(191, 54, 103, 21);
 						panel_2.add(rdotuChoi);
@@ -233,8 +248,18 @@ public class FormCapNhapSanPhamDoiTra extends SimpleForm implements ActionListen
 						
 						tf_sldt = new JTextField();
 						tf_sldt.setColumns(10);
-						tf_sldt.setBounds(514, 53, 165, 28);
+						tf_sldt.setBounds(514, 23, 165, 28);
 						panel.add(tf_sldt);
+						
+						JLabel lblNewLabel_2_1 = new JLabel("Vấn Đề:");
+						lblNewLabel_2_1.setFont(new Font("Serif", Font.PLAIN, 16));
+						lblNewLabel_2_1.setBounds(372, 76, 109, 23);
+						panel.add(lblNewLabel_2_1);
+						
+						tfVanDe = new JTextField();
+						tfVanDe.setColumns(10);
+						tfVanDe.setBounds(516, 78, 163, 26);
+						panel.add(tfVanDe);
 						
 						JPanel pnHeading = new JPanel();
 						pnHeading.setLayout(null);
@@ -261,9 +286,9 @@ public class FormCapNhapSanPhamDoiTra extends SimpleForm implements ActionListen
 		tf_Madt.setText(spdt.getMaDT());
 		tf_Masp.setText(spdt.getMaSP()+"");
 		tf_sldt.setText(spdt.getSoLuong()+"");
-//		tf_chietKhau.setText(spdt.getChietKhau()+"");
-		tf_ThanhTien.setText(spdt.getThanhTien()+"");
-//		tf_loaiDoiTra.setText(spdt.getLoaiDoiTra());
+		tfTinhTrang.setText(spdt.getTinhTrang()+"");
+		tf_ThanhTien.setText(spdt.getDonGia()+"");
+		tfVanDe.setText(spdt.getVanDe());
 	}
 
 	private class SwingAction extends AbstractAction {

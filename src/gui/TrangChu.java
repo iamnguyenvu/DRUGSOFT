@@ -12,6 +12,7 @@ import gui.components.SellTransactionPanel;
 import java.util.ArrayList;
 import net.miginfocom.swing.MigLayout;
 import nguyenvu.components.SimpleForm;
+import nguyenvu.menu.FormManager;
 import nguyenvu.model.ModelCard;
 import nguyenvu.model.ModelSellTransaction;
 import nguyenvu.model.ModelTransaction;
@@ -58,9 +59,9 @@ public class TrangChu extends SimpleForm {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        card1 = new gui.components.Card();
         pnHeader = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        card1 = new gui.components.Card();
         card2 = new gui.components.Card();
         card3 = new gui.components.Card();
         card4 = new gui.components.Card();
@@ -68,6 +69,13 @@ public class TrangChu extends SimpleForm {
         pnTransaction = new javax.swing.JPanel();
 
         setPreferredSize(new java.awt.Dimension(1470, 730));
+
+        card1.setGradientColor(new java.awt.Color(255, 102, 51));
+        card1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                card1MouseClicked(evt);
+            }
+        });
 
         pnHeader.setBackground(new java.awt.Color(11, 101, 136));
 
@@ -92,13 +100,26 @@ public class TrangChu extends SimpleForm {
                 .addContainerGap())
         );
 
-        card1.setGradientColor(new java.awt.Color(255, 102, 51));
-
         card2.setGradientColor(new java.awt.Color(255, 51, 51));
+        card2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                card2MouseClicked(evt);
+            }
+        });
 
         card3.setGradientColor(new java.awt.Color(71, 193, 4));
+        card3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                card3MouseClicked(evt);
+            }
+        });
 
         card4.setGradientColor(new java.awt.Color(28, 181, 224));
+        card4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                card4MouseClicked(evt);
+            }
+        });
 
         spTransaction.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(11, 101, 136), 1, true), "Các hoạt động gần đây", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(11, 101, 136))); // NOI18N
 
@@ -152,9 +173,9 @@ public class TrangChu extends SimpleForm {
                 .addContainerGap())
         );
 
-        pnHeader.putClientProperty(FlatClientProperties.STYLE, ""
-            + "border:0,0,0,0,$Component.borderColor,,20");
         card1.putClientProperty(FlatClientProperties.STYLE, ""
+            + "border:0,0,0,0,$Component.borderColor,,20");
+        pnHeader.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:0,0,0,0,$Component.borderColor,,20");
         card2.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:0,0,0,0,$Component.borderColor,,20");
@@ -163,6 +184,26 @@ public class TrangChu extends SimpleForm {
         card4.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:0,0,0,0,$Component.borderColor,,20");
     }// </editor-fold>//GEN-END:initComponents
+
+    private void card1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_card1MouseClicked
+        // TODO add your handling code here:
+        FormManager.showForm(new ThongKeSanPham_GUI());
+    }//GEN-LAST:event_card1MouseClicked
+
+    private void card2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_card2MouseClicked
+        // TODO add your handling code here:
+        FormManager.showForm(new ThongKeSanPham_GUI());
+    }//GEN-LAST:event_card2MouseClicked
+
+    private void card3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_card3MouseClicked
+        // TODO add your handling code here:
+        FormManager.showForm(new ThongKeDoanhThu_GUI(user));
+    }//GEN-LAST:event_card3MouseClicked
+
+    private void card4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_card4MouseClicked
+        // TODO add your handling code here:.
+        FormManager.showForm(new ThongKeDoanhThu_GUI(user));
+    }//GEN-LAST:event_card4MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

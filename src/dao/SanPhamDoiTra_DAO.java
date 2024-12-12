@@ -37,17 +37,19 @@ public class SanPhamDoiTra_DAO {
         ResultSet rs = null;
         SanPhamDoiTra_entity sp = null;
         try {
-            ps = con.prepareStatement("select maDT,spdt.maSP,tenSP,spdt.soLuong,spdt.thanhTien,trangThai from SanPhamDoiTra spdt join SanPham sp on spdt.maSP = sp.maSP WHERE maDT = ?");
+            ps = con.prepareStatement("select maDT,spdt.maSP,tenSP,spdt.soLuong,spdt.thanhTien,trangThai,[tinhTrang],[vanDe] from SanPhamDoiTra spdt join SanPham sp on spdt.maSP = sp.maSP WHERE maDT = ?");
             ps.setString(1, maDT);
             rs = ps.executeQuery();
             if (rs.next()) {
 
             	String maSP = rs.getString("maSP");
             	int soLuong = rs.getInt("soLuong");
-            	double thanhTien = rs.getDouble("thanhTien");
+            	double gia = rs.getDouble("donGia");
             	String trangThai = rs.getString("trangThai");
             	String tenSP = rs.getString("tenSP");
-	            sp = new SanPhamDoiTra_entity(maDT, maSP, soLuong, thanhTien, trangThai, tenSP);
+            	double tinhTrang = rs.getDouble("tinhTrang");
+            	String vanDe = rs.getString("vanDe");
+	            sp = new SanPhamDoiTra_entity(maDT, maSP, soLuong, gia, trangThai,tenSP,vanDe,tinhTrang);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,7 +91,7 @@ public class SanPhamDoiTra_DAO {
 	    if (con == null) {
 	        return null;
 	    }
-	    String sql = "select maDT,spdt.maSP,tenSP,spdt.soLuong,spdt.thanhTien,trangThai from SanPhamDoiTra spdt join SanPham sp on spdt.maSP = sp.maSP";
+	    String sql = "select maDT,spdt.maSP,tenSP,spdt.soLuong,spdt.donGia,trangThai,vanDe,tinhTrang from SanPhamDoiTra spdt join SanPham sp on spdt.maSP = sp.maSP";
 	    try {
 	        java.sql.Statement st = con.createStatement();  
 	        ResultSet rs = st.executeQuery(sql);
@@ -98,10 +100,11 @@ public class SanPhamDoiTra_DAO {
                 spdt.setMaDT(rs.getString("MaDT"));
                 spdt.setMaSP(rs.getString("maSP"));
                 spdt.setSoLuong(rs.getInt("soLuong"));
-                spdt.setThanhTien(rs.getDouble("thanhTien"));
+                spdt.setDonGia(rs.getDouble("donGia"));
                 spdt.setTrangThai(rs.getString("trangThai"));
                 spdt.setTenSP(rs.getString("tenSP"));
-
+                spdt.setVanDe(rs.getString("vanDe"));
+                spdt.setTinhTrang(rs.getDouble("tinhTrang"));
                 dssp.add(spdt);
             }
 	    } catch (SQLException e) {
@@ -124,7 +127,7 @@ public class SanPhamDoiTra_DAO {
                     spdt.setMaSP(rs.getString("MaSP"));
                     spdt.setSoLuong(rs.getInt("soLuong"));
                     spdt.setChietKhau(rs.getDouble("chietKhau"));
-                    spdt.setThanhTien(rs.getDouble("thanhTien"));
+                    spdt.setGia(rs.getDouble("gia"));
                     spdt.setLoaiDoiTra(rs.getString("loaiDoiTra"));
                     return spdt;
                 }
@@ -189,7 +192,7 @@ public class SanPhamDoiTra_DAO {
                 	ps.setString(1, spdt.getMaDT());
                     ps.setString(2, spdt.getMaSP());
                     ps.setDouble(3, spdt.getChietKhau());
-                    ps.setDouble(4, spdt.getThanhTien());
+                    ps.setDouble(4, spdt.getGia());
                     ps.setString(6, spdt.getLoaiDoiTra());
                     ps.addBatch();
                 }
@@ -230,7 +233,7 @@ public class SanPhamDoiTra_DAO {
                 spdt.getTenSP(),
                 spdt.getSoLuong(),
                 spdt.getTrangThai(),
-                spdt.getThanhTien(),
+                spdt.getDonGia(),
             };
             model.addRow(rowData);
         }
@@ -252,15 +255,16 @@ public class SanPhamDoiTra_DAO {
             ResultSet rs = ps.executeQuery(); // Remove the sql parameter here
             
             while (rs.next()) {
-                SanPhamDoiTra_entity spdt = new SanPhamDoiTra_entity();
-                spdt.setMaDT(rs.getString("MaDT"));
-                spdt.setMaSP(rs.getString("maSP"));
-                spdt.setSoLuong(rs.getInt("soLuong"));
-                spdt.setThanhTien(rs.getDouble("thanhTien"));
-                spdt.setTrangThai(rs.getString("trangThai"));
-                spdt.setTenSP(rs.getString("tenSP"));
-
-                dssp.add(spdt);
+                String maDT = rs.getString("maDT");
+            	String maSP = rs.getString("maSP");
+            	int soLuong = rs.getInt("soLuong");
+            	double gia = rs.getDouble("donGia");
+            	String trangThai = rs.getString("trangThai");
+            	String tenSP = rs.getString("tenSP");
+            	double tinhTrang = rs.getDouble("tinhTrang");
+            	String vanDe = rs.getString("vanDe");
+            	SanPhamDoiTra_entity sp = new SanPhamDoiTra_entity(maDT, maSP, soLuong, gia, trangThai, tenSP,vanDe,tinhTrang);
+                dssp.add(sp);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -290,7 +294,7 @@ public class SanPhamDoiTra_DAO {
 					sp.setSoLuong(rs.getInt("soLuong"));
 					// sp.setVanDe(rs.getString("vanDe"));
 					sp.setChietKhau(rs.getDouble("chietKhau"));
-					sp.setThanhTien(rs.getDouble("thanhTien"));
+					sp.setGia(rs.getDouble("donGia"));
 					sp.setLoaiDoiTra(rs.getString("loaiDoiTra"));
                 	
 
