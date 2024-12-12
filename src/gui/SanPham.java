@@ -226,6 +226,7 @@ public class SanPham extends SimpleForm implements ActionListener,MouseListener 
 
 		            if (isDeleted) {
 		                dftb_SanPham.removeRow(row);
+		                sp_dao.xoaSanPham(maSP);
 		                JOptionPane.showMessageDialog(null, "Xóa sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 		            } else {
 		                JOptionPane.showMessageDialog(null, "Xóa sản phẩm thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);

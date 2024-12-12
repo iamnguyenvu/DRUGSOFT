@@ -12,10 +12,34 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class ChiTietHoaDon_DAO {
+	
+	public List<ChiTietHoaDon> getChiTietHoaDonByMaHD(String maHD) {
+        List<ChiTietHoaDon> chiTietList = new ArrayList<>();
+        try (Connection conn = connectDB.accessDataBase()) {
+            String sql = "SELECT sp.maSP, cthd.soLuongSanPham, sp.gia,tenSP FROM ChiTietHoaDon cthd JOIN SanPham sp on cthd.maSP = sp.maSP WHERE maHD = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, maHD);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String maSP = rs.getString("maSP");
+                int soLuong = rs.getInt("soLuongSanPham");
+                double thanhTien = rs.getDouble("gia");
+
+                // Lấy tên sản phẩm từ SanPham_DAO
+                String tenSP = rs.getString("tenSP");;
+
+                // Tạo đối tượng ChiTietHoaDon (kèm tên sản phẩm)
+                ChiTietHoaDon chiTiet = new ChiTietHoaDon(maHD, maSP, soLuong, thanhTien, tenSP);
+                chiTietList.add(chiTiet);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return chiTietList;
+    }
     
     public List<Object[]> getBaoCaoDoanhThu() {
     List<Object[]> danhSach = new ArrayList<>();
-
     String sql = "SELECT \n" +
                  "    hd.ngayLapHD AS NgayLapHoaDon,\n" +
                  "    nv.hoTenNV AS TenNhanVien,\n" +

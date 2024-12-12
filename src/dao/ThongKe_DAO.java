@@ -37,7 +37,9 @@ public class ThongKe_DAO {
 	    int soSanPham = 0;
 	    
 	    try {
-	        String sql = "SELECT COUNT(*) AS TongSanPhamSapHetHan FROM SanPham WHERE DATEDIFF(DAY, GETDATE(), ngayHetHan) < 30";
+	        String sql = "SELECT COUNT(*) AS TongSanPhamSapHetHan FROM SanPham sp JOIN\r\n"
+	        		+ "ChiTietNhapHang ctnh on sp.maSP = ctnh.maSP\r\n"
+	        		+ " WHERE DATEDIFF(DAY, GETDATE(), ngayHetHan) < 30";
 	        ps = con.prepareStatement(sql);
 	        rs = ps.executeQuery();
 	        
@@ -67,7 +69,9 @@ public class ThongKe_DAO {
 	    int soSanPham = 0;
 	    
 	    try {
-	        String sql = "SELECT COUNT(*) AS TongSanPhamSapHetHan FROM SanPham WHERE ngayHetHan < GETDATE()";
+	        String sql = "SELECT COUNT(*) AS TongSanPhamSapHetHan FROM SanPham sp JOIN\r\n"
+	        		+ "ChiTietNhapHang ctnh on sp.maSP = ctnh.maSP\r\n"
+	        		+ "WHERE ngayHetHan < GETDATE()";
 	        ps = con.prepareStatement(sql);
 	        rs = ps.executeQuery();
 	        
@@ -99,7 +103,11 @@ public class ThongKe_DAO {
 	    try {
 	        String sql = "SELECT COUNT(*) AS TongSanPhamSapHetHang\r\n"
 	        		+ "FROM SanPham\r\n"
-	        		+ "WHERE soLuong < 50";
+	        		+ "WHERE \r\n"
+	        		+ "    (maLoaiSP = 'Thuoc' AND soLuong < 50) \r\n"
+	        		+ "    OR (maLoaiSP = 'TPCN' AND soLuong < 30)\r\n"
+	        		+ "    OR (maLoaiSP = 'TBYT' AND soLuong < 10);\r\n"
+	        		+ "";
 	        ps = con.prepareStatement(sql);
 	        rs = ps.executeQuery();
 	        
@@ -253,7 +261,7 @@ public class ThongKe_DAO {
 	    if (con == null) {
 	        return null;
 	    }
-	    String sql = "SELECT sp.maSP,tenSP,ctnh.soLuong,khoiLuong,donViTinh,nhaCungCap,gia,congDung,hinhAnhSP,maLoaiSP,thue,giaNhap\r\n"
+	    String sql = "SELECT sp.maSP,tenSP,ctnh.soLuong,khoiLuong,donViTinh,nhaCungCap,thanhPhan,gia,congDung,hinhAnhSP,maLoaiSP,thue,giaNhap\r\n"
 	    		+ "FROM SanPham sp join ChiTietNhapHang ctnh on sp.maSP = ctnh.maSP\r\n"
 	    		+ "WHERE ctnh.ngayHetHan < GETDATE()";
 	    try {
@@ -291,7 +299,7 @@ public class ThongKe_DAO {
 	    if (con == null) {
 	        return null;
 	    }
-	    String sql = "SELECT sp.maSP,tenSP,ctnh.soLuong,khoiLuong,donViTinh,nhaCungCap,gia,congDung,hinhAnhSP,maLoaiSP,thue,giaNhap FROM SanPham sp join ChiTietNhapHang ctnh on sp.maSP = ctnh.maSP WHERE DATEDIFF(DAY, GETDATE(), ngayHetHan) < 30";
+	    String sql = "SELECT sp.maSP,tenSP,ctnh.soLuong,khoiLuong,donViTinh,nhaCungCap,thanhPhan,gia,congDung,hinhAnhSP,maLoaiSP,thue,giaNhap FROM SanPham sp join ChiTietNhapHang ctnh on sp.maSP = ctnh.maSP WHERE DATEDIFF(DAY, GETDATE(), ngayHetHan) < 30";
 	    try {
 	        java.sql.Statement st = con.createStatement();  
 	        ResultSet rs = st.executeQuery(sql);
@@ -326,7 +334,14 @@ public class ThongKe_DAO {
 	    if (con == null) {
 	        return null;
 	    }
-	    String sql = "SELECT * FROM SanPham WHERE soLuong < 50";
+	    String sql = "SELECT * \r\n"
+	    		+ "FROM SanPham\r\n"
+	    		+ "WHERE \r\n"
+	    		+ "    (maLoaiSP = 'Thuoc' AND soLuong < 50) \r\n"
+	    		+ "    OR (maLoaiSP = 'TPCN' AND soLuong < 30)\r\n"
+	    		+ "    OR (maLoaiSP = 'TBYT' AND soLuong < 10)\r\n"
+	    		+ "ORDER BY maLoaiSP, soLuong ASC;\r\n"
+	    		+ "";
 	    try {
 	        java.sql.Statement st = con.createStatement();  
 	        ResultSet rs = st.executeQuery(sql);

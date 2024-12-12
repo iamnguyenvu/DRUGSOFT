@@ -84,5 +84,7 @@
 	<classpathentry kind="lib" path="library/jgoodies-forms-1.8.0.jar"/>
 	<classpathentry kind="lib" path="library/swing-chart-1.1.1.jar"/>
 	<classpathentry kind="lib" path="library/swing-datetime-picker-1.2.3.jar"/>
+	<classpathentry kind="lib" path="library/itextpdf-5.5.9.jar"/>
+	<classpathentry kind="lib" path="library/pdfbox-app-3.0.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

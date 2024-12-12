@@ -14,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JTextField;
@@ -22,6 +24,8 @@ import javax.swing.table.DefaultTableModel;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import dao.HoaDon_DAO;
+import dao.KhachHang_DAO;
+import dao.NhanVien_DAO;
 import entity.HoaDon_entity;
 import entity.SanPham_entity;
 
@@ -147,6 +151,23 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		tb_HoaDon.setFont(new Font("Arial", Font.PLAIN, 12));
 		tb_HoaDon.setBounds(33, 29, 1186, 669);
 		
+		// Thêm sự kiện nhấn chuột cho bảng tb_HoaDon
+		// Thêm sự kiện MouseListener cho bảng
+		tb_HoaDon.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        int row = tb_HoaDon.getSelectedRow();
+
+		        if (row != -1) {
+		            String maHD = tb_HoaDon.getValueAt(row, 0).toString();
+		            System.out.println(maHD);
+		            new XemChiTiet(maHD); // Mở cửa sổ chi tiết
+		            
+		        }
+		    }
+		});
+        
+        
 		sp_HoaDon = new JScrollPane(tb_HoaDon);
 		sp_HoaDon.setBounds(23, 22, 1094, 678);
 		pnCenter.add(sp_HoaDon);
@@ -240,6 +261,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 		});
 
 	}
+
 	 
 	//Phương thức thêm tất cả dữ liệu vào bảng
 	private void docDuLieuVaoTable() {
@@ -248,6 +270,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 			df_HoaDon.addRow(new Object[] {hd.getMaHD(),hd.getNgayLapHD(),hd.getTongTien(),hd.getTienGiam(),hd.getHinhThucThanhToan(),hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành",hd.getSdtKH(),hd.getMaNV()});
 		}
 	}
+	
 	private void locHoaDon() {
 	    df_HoaDon.setRowCount(0); // Xóa sạch dữ liệu cũ trong bảng
 
@@ -260,7 +283,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 	    }
 	    else {
 	    	tt = false;
-	    }
+	    } 
 
 	    List<HoaDon_entity> danhSachHoaDon = hd_Dao.getALLHoaDon();
 
@@ -295,7 +318,7 @@ public class HoaDon extends SimpleForm implements ActionListener{
 	            hd.getHinhThucThanhToan(),
 	            hd.isTrangThai() ? "Hoàn Thành" : "Chưa Hoàn Thành", // Hiển thị trạng thái bằng chuỗi
 	            hd.getSdtKH(),
-	            hd.getMaNV(),
+	            hd.getMaNV()
 	        });
 	    }
 	}

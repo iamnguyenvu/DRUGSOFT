@@ -6,11 +6,32 @@ public class ChiTietHoaDon {
     private int soLuongSanPham; // Số lượng sản phẩm
     private double gia;
 
+    private String tenSP;
     // Constructor mặc định
     public ChiTietHoaDon() {
     }
+    
+    public ChiTietHoaDon(String maHD, String maSP, int soLuongSanPham, double gia, String tenSP) {
+		super();
+		this.maHD = maHD;
+		this.maSP = maSP;
+		this.soLuongSanPham = soLuongSanPham;
+		this.gia = gia;
+		this.tenSP = tenSP;
+	}
 
-    public ChiTietHoaDon(String maHD, String maSP, int soLuongSanPham, double gia) {
+
+	public String getTenSP() {
+		return tenSP;
+	}
+
+
+	public void setTenSP(String tenSP) {
+		this.tenSP = tenSP;
+	}
+
+
+	public ChiTietHoaDon(String maHD, String maSP, int soLuongSanPham, double thanhTien) {
         this.maHD = maHD;
         this.maSP = maSP;
         this.soLuongSanPham = soLuongSanPham;

@@ -12,6 +12,8 @@ import entity.SanPham_entity;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import nguyenvu.components.SimpleForm;
 import nguyenvu.utils.ButtonEditor;
@@ -31,21 +33,45 @@ public class QuanLyNhapHang extends SimpleForm {
     	nhapHang_DAO = new NhapHang_DAO();
         initComponents();
     }
+    private void timKiemNhapHang() {
+    	String key = txtSearch.getText();
+    	if(key.equals("")|| key.equals(null)) {
+    		loadDataToTable();
+    		
+    	}
+    	
+    	NhapHang_entity data = nhapHang_DAO.searcNhapHang(key);
+    	DefaultTableModel model = (DefaultTableModel) table.getModel();
+    	model.setRowCount(0);
+    	model.addRow(new Object[] {data.getMaNhapHang(),data.getNgayNhapHang(),data.getTongTien(),data.getHinhThucThanhToan(),data.getTrangThai()});
+    }
+    private void loadDataToTable() {
+        // Lấy mô hình của bảng
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        ArrayList<NhapHang_entity> list = nhapHang_DAO.getALLNHAPHANG();
+        // Xóa dữ liệu cũ
+        model.setRowCount(0);
+
+        // Duyệt qua danh sách và thêm từng dòng vào bảng
+        for (NhapHang_entity data : list) {
+            model.addRow(new Object[] {data.getMaNhapHang(),data.getNgayNhapHang(),data.getTongTien(),data.getHinhThucThanhToan(),data.getTrangThai()});
+        }
+    }
     private void initComponents() {
         pnHeader = new javax.swing.JPanel();
         pnHeader.setBounds(0, 0, 1470, 50);
         txtSearch = new RoundedTextField(40);
-        jButton1 = new javax.swing.JButton();
+        btnTimKiem = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel1.setBounds(20, 60, 248, 30);
         setPreferredSize(new java.awt.Dimension(1470, 730));
         pnHeader.setBackground(new java.awt.Color(11, 101, 136));
         pnHeader.setPreferredSize(new java.awt.Dimension(1470, 50));
-        jButton1.setBackground(new java.awt.Color(11, 101, 136));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Tìm kiếm");
-        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnTimKiem.setBackground(new java.awt.Color(11, 101, 136));
+        btnTimKiem.setForeground(new java.awt.Color(255, 255, 255));
+        btnTimKiem.setText("Tìm kiếm");
+        btnTimKiem.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jButton2.setBackground(new java.awt.Color(11, 101, 136));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
@@ -60,7 +86,7 @@ public class QuanLyNhapHang extends SimpleForm {
                 .addGap(20, 20, 20)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -71,7 +97,7 @@ public class QuanLyNhapHang extends SimpleForm {
                 .addContainerGap()
                 .addGroup(pnHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -89,11 +115,11 @@ public class QuanLyNhapHang extends SimpleForm {
         add(pnHeader);
         
         pnTable = new JPanel();
-        pnTable.setBounds(20, 100, 1172, 560);
+        pnTable.setBounds(20, 100, 1440, 560);
         add(pnTable);
         pnTable.setLayout(null);
         jScrollPane1 = new javax.swing.JScrollPane();
-        jScrollPane1.setBounds(0, 0, 1172, 491);
+        jScrollPane1.setBounds(0, 0, 1430, 491);
         pnTable.add(jScrollPane1);
         table = new javax.swing.JTable();
         
@@ -130,11 +156,6 @@ public class QuanLyNhapHang extends SimpleForm {
                 jButton6 = new javax.swing.JButton(new FlatSVGIcon("gui/icon/last-page.svg", 0.03f));
                 jButton6.setBounds(220, 513, 60, 33);
                 pnTable.add(jButton6);
-                
-                panel = new JPanel();
-                panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-                panel.setBounds(1202, 100, 258, 255);
-                add(panel);
                 table.getTableHeader().setDefaultRenderer(new HeaderRenderer());
                 table.getTableHeader().setPreferredSize(new Dimension(table.getWidth(), 40));
                 table.getTableHeader().setBackground(new Color(11,101,136));
@@ -157,7 +178,15 @@ public class QuanLyNhapHang extends SimpleForm {
         pnHeader.putClientProperty(FlatClientProperties.STYLE, ""
             + "border:0,0,0,0,$Component.borderColor,,20");
         
-        
+        btnTimKiem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stu
+				timKiemNhapHang();
+				
+			}
+		});
         table.getColumn("Thao tác").setCellRenderer(new ButtonRenderer("Xem"));
         table.getColumn("Thao tác").setCellEditor(new ButtonEditor("Xem", e -> {
 		    try {
@@ -183,21 +212,10 @@ public class QuanLyNhapHang extends SimpleForm {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void loadDataToTable() {
-        // Lấy mô hình của bảng
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        ArrayList<NhapHang_entity> list = nhapHang_DAO.getALLNHAPHANG();
-        // Xóa dữ liệu cũ
-        model.setRowCount(0);
 
-        // Duyệt qua danh sách và thêm từng dòng vào bảng
-        for (NhapHang_entity data : list) {
-            model.addRow(new Object[] {data.getMaNhapHang(),data.getNgayNhapHang(),data.getTongTien(),data.getHinhThucThanhToan(),data.getTrangThai()});
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -210,6 +228,5 @@ public class QuanLyNhapHang extends SimpleForm {
     private javax.swing.JTextField txtSearch;
     private JPanel pnTable;
     private NhapHang_DAO nhapHang_DAO;
-    private JPanel panel;
     // End of variables declaration//GEN-END:variables
 }

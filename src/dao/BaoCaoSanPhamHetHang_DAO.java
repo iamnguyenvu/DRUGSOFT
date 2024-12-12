@@ -35,7 +35,7 @@ public class BaoCaoSanPhamHetHang_DAO {
                     "LEFT JOIN \n" +
                     "    LoaiSanPham lsp ON sp.maLoaiSP = lsp.maLoaiSP\n" +
                     "WHERE \n" +
-                    "    sp.soLuong < 50;";
+                    "    sp.soLuong = 0;";
 	    try {
 	        java.sql.Statement st = con.createStatement();  
 	        ResultSet rs = st.executeQuery(sql);
