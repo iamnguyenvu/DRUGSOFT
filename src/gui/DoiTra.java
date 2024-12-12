@@ -18,6 +18,7 @@ import entity.HoaDonDoiTra_entity;
 import entity.HoaDon_entity;
 import entity.KhachHang_entity;
 import entity.NhanVien_entity;
+import entity.SanPhamDoiTra_entity;
 import entity.SanPham_entity;
 import java.awt.Color;
 import java.awt.Component;
@@ -1095,7 +1096,8 @@ public class DoiTra extends SimpleForm {
             String employeeId = user != null ? user.getUserName() : "";
              
             String ghiChu = txtNote.getText();
-            String invoiceCode = doiTraDao.generateInvoiceCode();
+            String invoiceCode = doiTraDao.generateExchangeInvoiceCode();
+            System.out.println("gui.DoiTra.generateExchangeInvoiceCode(): " + invoiceCode);
             String date = getCurrentDate();
            
             List<FieldBillDoiTra> fields = new ArrayList<>();
@@ -1124,7 +1126,10 @@ public class DoiTra extends SimpleForm {
                 tienHoan = parseDoubleSafely(lblTongTienHoan.getText());
             }
             
-            HoaDonDoiTra_entity hddt = new HoaDonDoiTra_entity(invoiceCode, hd.getMaHD(), issueDate, tienHoan, thanhToan, ptThanhToan, ghiChu, nv.getMaNV());
+            HoaDonDoiTra_entity hddt = new HoaDonDoiTra_entity(invoiceCode, 
+                    hd.getMaHD(), issueDate, tienHoan, thanhToan, 
+                    ptThanhToan, ghiChu, nv.getMaNV(), 
+                    giamTru);
             
             if(!doiTraDao.createHDDT(hddt)) {
                 MessageAlerts.getInstance().showMessage("LỖI", "Không thể tạo hóa đơn!", MessageAlerts.MessageType.ERROR);
@@ -1136,13 +1141,27 @@ public class DoiTra extends SimpleForm {
                     int quantity = (int) model1.getValueAt(i, 3);           // soLuong
                     if(quantity > 0) {
                         String productName = (String) model1.getValueAt(i, 2); // tenSP
-                        double unitPrice = doiTraDao.getSP((String) model1.getValueAt(i, 1)).getGia();    // donGia
+                        String maSP = (String) model1.getValueAt(i, 1);
+                        double unitPrice = doiTraDao.getSP(maSP).getGia();    // donGia
                         double totalPrice = quantity * unitPrice;   // thanhTien
                         String tinhTrang = String.valueOf(table.getValueAt(i, 8));
+                        double chietKhau = 100 - Double.parseDouble(tinhTrang.replace("%", ""));
 
                         fields.add(new FieldBillDoiTra(productName, quantity, unitPrice, totalPrice, tinhTrang, "Trả"));
                         
-                        if(!doiTraDao.insertCTHDDT(new ChiTietHoaDonDoiTra_entity(date, date, SOMEBITS, tienHoan, thanhToan, tinhTrang)));
+                        if(!doiTraDao.insertCTHDDT(new ChiTietHoaDonDoiTra_entity(maSP, productName, 
+                                invoiceCode, quantity, chietKhau, 
+                                unitPrice, "Trả"))) {
+                            System.out.println("Lỗi insert cthddt");
+                        }
+                        
+                        if(!doiTraDao.insertSPDT(new SanPhamDoiTra_entity(
+                                invoiceCode, maSP, quantity, unitPrice, 
+                                "Đang chờ xác nhận", productName, (String) model1.getValueAt(i, 7), 
+                                Double.parseDouble(tinhTrang.replace("%", ""))
+                                ))) {
+                            System.out.println("Lỗi insert spdt");
+                        }
                     }
                 }
 
@@ -1154,26 +1173,12 @@ public class DoiTra extends SimpleForm {
 
 
                     fields.add(new FieldBillDoiTra(productName, quantity, unitPrice, totalPrice, "", "Đổi"));
-                }
-            
-                for(int i = 0; i < table.getRowCount(); ++i) {
-                   int quantity = (int) table.getValueAt(i, 3); 
-                   
-                   if(quantity > 0) {
-                       
-                   }
-                }
-                
-                for (int i = 0; i < tableExchange.getRowCount(); ++i) {
-                    String maSP = (String) tableExchange.getValueAt(i, 1);
-                    int quantity = (int) tableExchange.getValueAt(i, 3); 
-                    
-                    double totalValue = 0;
- 
-                    if(!BanHang_DAO.createCTHD(new ChiTietHoaDon(invoiceCode, maSP,
-                        (int) table.getValueAt(i, 3), totalValue))) {
-                        System.out.println("Lỗi insert cthd");
-                    }
+                    if(!doiTraDao.insertCTHDDT(new ChiTietHoaDonDoiTra_entity((String) model2.getValueAt(i, 2), 
+                            productName, 
+                                invoiceCode, quantity, 0, 
+                                unitPrice, "Mua"))) {
+                            System.out.println("Lỗi insert cthddt");
+                        }
                     
                 }
                 
@@ -1230,7 +1235,7 @@ public class DoiTra extends SimpleForm {
         refresh();
         
         String maHD = GenerateCode.startQrcodeScanner();
-//        System.out.println("maHD: " +  maHD);
+        System.out.println("maHD: " +  maHD);
         if(maHD == null) {
             MessageAlerts.getInstance().showMessage("Lỗi", "Không thể quét mã QR hoặc mã không hợp lệ.", MessageAlerts.MessageType.ERROR);
             return;
@@ -1342,7 +1347,7 @@ public class DoiTra extends SimpleForm {
                     sp.getTenSP(),  
                     0,
                     cthd.getSoLuongSanPham(),
-                    cthd.getThanhTien(),
+                    cthd.getGia(),
                     0,
                     "",
                     "100%"
